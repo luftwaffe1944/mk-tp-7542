@@ -1,5 +1,6 @@
 #include "../headers/MKGame.h"
 #include "../headers/Constants.h"
+#include "../src/Log.h"
 
 // our Game object
 MKGame* mkGame = 0;
