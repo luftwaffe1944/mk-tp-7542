@@ -24,13 +24,14 @@ GameGUI* GameGUIBuilder::create() {
 	Json::Value root;
 	Json::Reader reader;
 
+	//TODO refactor harcodede file path
 	ifstream gameConfig("src/stagseConfig.json", std::ifstream::binary);
 
 	if (!gameConfig.good()) {
 		//TODO log message
 		cout << FILE_CONFIG_NOT_FOUND << WHITE_SPACE << FILE_CONFIG_DO_NOT_WORRY
 				<< endl;
-		return NULL;
+		return createDefault();
 	}
 
 	bool parsingSuccessful = reader.parse(gameConfig, root, false);
