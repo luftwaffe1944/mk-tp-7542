@@ -5,7 +5,7 @@
 #include <string>
 #include <cstdio>
 
-inline std::string NowTime();
+inline std::string nowTime();
 
 enum TLogLevel {logERROR, logWARNING, logDEBUG};
 
@@ -15,11 +15,11 @@ class Log
 public:
     Log();
     virtual ~Log();
-    std::ostringstream& Get(TLogLevel level = logDEBUG);
+    std::ostringstream& get(TLogLevel level = logDEBUG);
 public:
-    static TLogLevel& ReportingLevel();
-    static std::string ToString(TLogLevel level);
-    static TLogLevel FromString(const std::string& level);
+    static TLogLevel& reportingLevel();
+    static std::string toString(TLogLevel level);
+    static TLogLevel fromString(const std::string& level);
 protected:
     std::ostringstream os;
 private:
@@ -33,10 +33,10 @@ Log<T>::Log()
 }
 
 template <typename T>
-std::ostringstream& Log<T>::Get(TLogLevel level)
+std::ostringstream& Log<T>::get(TLogLevel level)
 {
-    os << "- " << NowTime();
-    os << " " << ToString(level) << ": ";
+    os << "- " << nowTime();
+    os << " " << toString(level) << ": ";
     return os;
 }
 
@@ -48,21 +48,21 @@ Log<T>::~Log()
 }
 
 template <typename T>
-TLogLevel& Log<T>::ReportingLevel()
+TLogLevel& Log<T>::reportingLevel()
 {
     static TLogLevel reportingLevel = logDEBUG;
     return reportingLevel;
 }
 
 template <typename T>
-std::string Log<T>::ToString(TLogLevel level)
+std::string Log<T>::toString(TLogLevel level)
 {
 	static const char* const buffer[] = {"ERROR", "WARNING", "DEBUG"};
     return buffer[level];
 }
 
 template <typename T>
-TLogLevel Log<T>::FromString(const std::string& level)
+TLogLevel Log<T>::fromString(const std::string& level)
 {
     if (level == "DEBUG")
         return logDEBUG;
@@ -77,19 +77,19 @@ TLogLevel Log<T>::FromString(const std::string& level)
 class Output2FILE
 {
 public:
-    static FILE*& Stream();
-    static void Output(const std::string& msg);
+    static FILE*& stream();
+    static void output(const std::string& msg);
 };
 
-inline FILE*& Output2FILE::Stream()
+inline FILE*& Output2FILE::stream()
 {
     static FILE* pStream = fopen("mortal_kombat.log", "a");
     return pStream;
 }
 
-inline void Output2FILE::Output(const std::string& msg)
+inline void Output2FILE::output(const std::string& msg)
 {
-    FILE* pStream = Stream();
+    FILE* pStream = stream();
     if (!pStream)
         return;
     fprintf(pStream, "%s", msg.c_str());

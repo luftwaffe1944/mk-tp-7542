@@ -14,13 +14,19 @@
 #include "GameGUI.h"
 #include "Constants.h"
 #include "Messages.h"
+#include "MessageError.h"
+#include "Log.h"
+#include <json/reader.h>
 
 class GameGUIBuilder {
 public:
+
 	GameGUIBuilder();
 	GameGUI* create();
 	GameGUI* createDefault();
+	void handleError(string msgError);
 	virtual ~GameGUIBuilder();
+
 };
 
 #endif /* GAMEGUIBUILDER_H_ */

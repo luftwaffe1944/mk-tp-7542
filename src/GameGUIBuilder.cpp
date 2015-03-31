@@ -24,21 +24,23 @@ GameGUI* GameGUIBuilder::create() {
 	Json::Value root;
 	Json::Reader reader;
 
-	//TODO refactor harcodede file path
-	ifstream gameConfig("src/stagseConfig.json", std::ifstream::binary);
+	//TODO refactor harcoded file path
+	ifstream gameConfig("src/stageConfig.json", std::ifstream::binary);
+
+	TLogLevel errorLevel = logERROR;
 
 	if (!gameConfig.good()) {
 		//TODO log message
-		cout << FILE_CONFIG_NOT_FOUND << WHITE_SPACE << FILE_CONFIG_DO_NOT_WORRY
-				<< endl;
+		cout << ERROR_FILE_NOT_FOUND << WHITE_SPACE << FILE_CONFIG_NOT_FOUND << endl;
+		MessageError fileNotFound(ERROR_FILE_NOT_FOUND, FILE_CONFIG_NOT_FOUND, errorLevel);
 		return createDefault();
 	}
 
 	bool parsingSuccessful = reader.parse(gameConfig, root, false);
 	if (!parsingSuccessful) {
-		// report to the user the failure and their locations in the document.
-		cout << reader.getFormatedErrorMessages() << "\n";
-		return createDefault();
+		//TODO log message
+		cout << ERROR_PARSER_JSON << WHITE_SPACE << reader.getFormattedErrorMessages() << endl;
+		MessageError parseException(ERROR_PARSER_JSON, reader.getFormattedErrorMessages(), errorLevel);
 	}
 
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
@@ -87,13 +89,13 @@ GameGUI* GameGUIBuilder::createDefault() {
 	GameGUI *gameGUI = GameGUI::getInstance();
 
 	Window window(DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX,
-			DEFAULT_WINDOW_WIDTH);
+	DEFAULT_WINDOW_WIDTH);
 	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT,
-			DEFAULT_STAGE_YFLOOR);
+	DEFAULT_STAGE_YFLOOR);
 
 	vector<Character> characters;
 	Character character(DEFAULT_CHARACTER_WIDTH, DEFAULT_CHARACTER_HEIGHT,
-			DEFAULT_CHARACTER_ZINDEX);
+	DEFAULT_CHARACTER_ZINDEX);
 	characters.push_back(character);
 
 	vector<Layer> layers;
@@ -108,6 +110,13 @@ GameGUI* GameGUIBuilder::createDefault() {
 	gameGUI->setLayers(layers);
 
 	return gameGUI;
+
+}
+
+void GameGUIBuilder::handleError(string msgError) {
+
+	//TODO log msg in level ERROR
+	cout << msgError << endl;
 
 }
 
