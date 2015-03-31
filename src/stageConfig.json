@@ -22,7 +22,6 @@
 	"personaje": {
 		"ancho": 20,
 		"alto": 35,
-		"zindex": 1,
-		"sprites": ?
+		"zindex": 1
 	}
 }

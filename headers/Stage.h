@@ -9,8 +9,13 @@
 #define STAGE_H_
 
 class Stage {
+private:
+	int width;
+	int height;
+	int yfloor;
 public:
 	Stage();
+	Stage(int witdh, int height, int yfloor);
 	virtual ~Stage();
 };
 
