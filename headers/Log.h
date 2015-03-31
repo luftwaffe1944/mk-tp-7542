@@ -5,7 +5,7 @@
 #include <string>
 #include <cstdio>
 
-inline std::string NowTime();
+inline std::string nowTime();
 
 enum TLogLevel {logERROR, logWARNING, logDEBUG};
 
@@ -17,9 +17,9 @@ public:
     virtual ~Log();
     std::ostringstream& Get(TLogLevel level = logDEBUG);
 public:
-    static TLogLevel& ReportingLevel();
-    static std::string ToString(TLogLevel level);
-    static TLogLevel FromString(const std::string& level);
+    static TLogLevel& reportingLevel();
+    static std::string toString(TLogLevel level);
+    static TLogLevel fromString(const std::string& level);
 protected:
     std::ostringstream os;
 private:
@@ -35,8 +35,8 @@ Log<T>::Log()
 template <typename T>
 std::ostringstream& Log<T>::Get(TLogLevel level)
 {
-    os << "- " << NowTime();
-    os << " " << ToString(level) << ": ";
+    os << "- " << nowTime();
+    os << " " << toString(level) << ": ";
     return os;
 }
 
@@ -48,21 +48,21 @@ Log<T>::~Log()
 }
 
 template <typename T>
-TLogLevel& Log<T>::ReportingLevel()
+TLogLevel& Log<T>::reportingLevel()
 {
     static TLogLevel reportingLevel = logDEBUG;
     return reportingLevel;
 }
 
 template <typename T>
-std::string Log<T>::ToString(TLogLevel level)
+std::string Log<T>::toString(TLogLevel level)
 {
 	static const char* const buffer[] = {"ERROR", "WARNING", "DEBUG"};
     return buffer[level];
 }
 
 template <typename T>
-TLogLevel Log<T>::FromString(const std::string& level)
+TLogLevel Log<T>::fromString(const std::string& level)
 {
     if (level == "DEBUG")
         return logDEBUG;
@@ -122,7 +122,7 @@ class FILELOG_DECLSPEC FILELog : public Log<Output2FILE> {};
 
 #include <sys/time.h>
 
-inline std::string NowTime()
+inline std::string nowTime()
 {
     char buffer[11];
     time_t t;
