@@ -44,7 +44,7 @@ template <typename T>
 Log<T>::~Log()
 {
     os << std::endl;
-    T::Output(os.str());
+    T::output(os.str());
 }
 
 template <typename T>
@@ -70,7 +70,7 @@ TLogLevel Log<T>::fromString(const std::string& level)
         return logWARNING;
     if (level == "ERROR")
         return logERROR;
-    Log<T>().Get(logWARNING) << "Unknown logging level '" << level << "'. Using WARNING level as default.";
+    Log<T>().get(logWARNING) << "Unknown logging level '" << level << "'. Using WARNING level as default.";
     return logWARNING;
 }
 
@@ -83,7 +83,7 @@ public:
 
 inline FILE*& Output2FILE::stream()
 {
-    static FILE* pStream = fopen("mortal_kombat.log", "a");
+    static FILE* pStream = fopen("log/mortal_kombat.log", "a");
     return pStream;
 }
 
@@ -117,8 +117,28 @@ class FILELOG_DECLSPEC FILELog : public Log<Output2FILE> {};
 
 #define FILE_LOG(level) \
     if (level > FILELOG_MAX_LEVEL) ;\
-    else if (level > FILELog::ReportingLevel() || !Output2FILE::Stream()) ; \
-    else FILELog().Get(level)
+    else if (level > FILELog::reportingLevel() || !Output2FILE::stream()) ; \
+    else FILELog().get(level)
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
+
+#include <windows.h>
+
+inline std::string nowTime()
+{
+    const int MAX_LEN = 200;
+    char buffer[MAX_LEN];
+    if (GetTimeFormatA(LOCALE_USER_DEFAULT, 0, 0,
+            "HH':'mm':'ss", buffer, MAX_LEN) == 0)
+        return "Error in NowTime()";
+
+    char result[100] = {0};
+    static DWORD first = GetTickCount();
+    std::sprintf(result, "%s.%03ld", buffer, (long)(GetTickCount() - first) % 1000);
+    return result;
+}
+
+#else
 
 #include <sys/time.h>
 
@@ -135,5 +155,7 @@ inline std::string nowTime()
     std::sprintf(result, "%s.%03ld", buffer, (long)tv.tv_usec / 1000);
     return result;
 }
+
+#endif //WIN32
 
 #endif //__LOG_H__
