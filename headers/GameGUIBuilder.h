@@ -13,11 +13,13 @@
 #include <json/json.h>
 #include "GameGUI.h"
 #include "Constants.h"
+#include "Messages.h"
 
 class GameGUIBuilder {
 public:
 	GameGUIBuilder();
 	GameGUI* create();
+	GameGUI* createDefault();
 	virtual ~GameGUIBuilder();
 };
 

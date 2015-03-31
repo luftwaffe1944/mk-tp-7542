@@ -8,6 +8,7 @@
 MKGame* mkGame = 0;
 
 int main(int argc, char* argv[]){
+
 //	mkGame = new MKGame();
 //	mkGame->init(GAME_TITLE, 100, 100, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, 0);
 //	while(mkGame->running()) {

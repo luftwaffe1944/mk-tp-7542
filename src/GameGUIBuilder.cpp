@@ -24,12 +24,20 @@ GameGUI* GameGUIBuilder::create() {
 	Json::Value root;
 	Json::Reader reader;
 
-	std::ifstream stage_config("src/stageConfig.json", std::ifstream::binary);
+	ifstream gameConfig("src/stagseConfig.json", std::ifstream::binary);
 
-	bool parsingSuccessful = reader.parse(stage_config, root, false);
+	if (!gameConfig.good()) {
+		//TODO log message
+		cout << FILE_CONFIG_NOT_FOUND << WHITE_SPACE << FILE_CONFIG_DO_NOT_WORRY
+				<< endl;
+		return NULL;
+	}
+
+	bool parsingSuccessful = reader.parse(gameConfig, root, false);
 	if (!parsingSuccessful) {
 		// report to the user the failure and their locations in the document.
 		cout << reader.getFormatedErrorMessages() << "\n";
+		return createDefault();
 	}
 
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
@@ -49,7 +57,8 @@ GameGUI* GameGUIBuilder::create() {
 	string backgroundImage;
 	int layerWidth;
 	for (unsigned int index = 0; index < array.size(); ++index) {
-		backgroundImage = array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
+		backgroundImage =
+				array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
 		layerWidth = array[index].get(JSON_KEY_ANCHO, 50).asInt();
 		Layer layer(backgroundImage, layerWidth);
 		layers.push_back(layer);
@@ -62,6 +71,35 @@ GameGUI* GameGUIBuilder::create() {
 	vector<Character> characters;
 	Character character(character_width, character_height, character_zindex);
 	characters.push_back(character);
+
+	gameGUI->setWindow(window);
+	gameGUI->setStage(stage);
+	gameGUI->setCharacters(characters);
+	gameGUI->setLayers(layers);
+
+	return gameGUI;
+
+}
+
+GameGUI* GameGUIBuilder::createDefault() {
+
+	GameGUI *gameGUI = GameGUI::getInstance();
+
+	Window window(DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX,
+			DEFAULT_WINDOW_WIDTH);
+	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT,
+			DEFAULT_STAGE_YFLOOR);
+
+	vector<Character> characters;
+	Character character(DEFAULT_CHARACTER_WIDTH, DEFAULT_CHARACTER_HEIGHT,
+			DEFAULT_CHARACTER_ZINDEX);
+	characters.push_back(character);
+
+	vector<Layer> layers;
+	Layer layer(DEFAULT_LAYER1_IMAGE, DEFAULT_LAYER1_WIDTH);
+	layers.push_back(layer);
+	Layer layer2(DEFAULT_LAYER2_IMAGE, DEFAULT_LAYER2_WIDTH);
+	layers.push_back(layer2);
 
 	gameGUI->setWindow(window);
 	gameGUI->setStage(stage);
