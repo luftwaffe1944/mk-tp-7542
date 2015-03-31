@@ -15,7 +15,7 @@ class Log
 public:
     Log();
     virtual ~Log();
-    std::ostringstream& Get(TLogLevel level = logDEBUG);
+    std::ostringstream& get(TLogLevel level = logDEBUG);
 public:
     static TLogLevel& reportingLevel();
     static std::string toString(TLogLevel level);
@@ -33,7 +33,7 @@ Log<T>::Log()
 }
 
 template <typename T>
-std::ostringstream& Log<T>::Get(TLogLevel level)
+std::ostringstream& Log<T>::get(TLogLevel level)
 {
     os << "- " << nowTime();
     os << " " << toString(level) << ": ";
@@ -77,19 +77,19 @@ TLogLevel Log<T>::fromString(const std::string& level)
 class Output2FILE
 {
 public:
-    static FILE*& Stream();
-    static void Output(const std::string& msg);
+    static FILE*& stream();
+    static void output(const std::string& msg);
 };
 
-inline FILE*& Output2FILE::Stream()
+inline FILE*& Output2FILE::stream()
 {
     static FILE* pStream = fopen("mortal_kombat.log", "a");
     return pStream;
 }
 
-inline void Output2FILE::Output(const std::string& msg)
+inline void Output2FILE::output(const std::string& msg)
 {
-    FILE* pStream = Stream();
+    FILE* pStream = stream();
     if (!pStream)
         return;
     fprintf(pStream, "%s", msg.c_str());
