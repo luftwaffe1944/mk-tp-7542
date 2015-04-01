@@ -7,6 +7,7 @@
 
 #include "../headers/MKGame.h"
 #include "../headers/Log.h"
+#include "../headers/TextureManager.h"
 #include <SDL.h>
 #include <stdio.h>
 #include <iostream>
@@ -25,13 +26,21 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 			if(m_pRenderer != 0) {
 				FILE_LOG(logDEBUG) << "renderer creation success";
 				//SDL_SetRenderDrawColor(m_pRenderer, 255,255,255,255);
-				SDL_Surface* pTempSurface = IMG_Load("images/scorpion_fighting_stance/sfsGIF.gif");
-				m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
-				SDL_FreeSurface(pTempSurface);
-				SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
 
-				/*m_sourceRectangle.w = 50;
-				m_sourceRectangle.h = 50;*/
+
+				std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
+				if (!TextureManager::Instance()->load(path_img_sc, "scorpion", m_pRenderer)) {
+					cout << "error con el load";
+				}
+
+				/* TODO calcular el alto y el ancho, estos valores vienen en el json
+				 * en teoria no se deberia calcular con el query
+				 * SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+				 */
+
+				m_sourceRectangle.w = TextureManager::Instance()->queryTexture("scorpion").w;
+				m_sourceRectangle.h = TextureManager::Instance()->queryTexture("scorpion").h;
+
 
 				m_destinationRectangle.x = m_sourceRectangle.x = 0;
 				m_destinationRectangle.y = m_sourceRectangle.y = 0;
@@ -56,14 +65,13 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle,
-	&m_destinationRectangle);
+	TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer);
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 
 }
 
 void MKGame::clean() {
-	std::cout << "cleaning game\n";
+	FILE_LOG(logDEBUG) << "cleaning game\n";
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();

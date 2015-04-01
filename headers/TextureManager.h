@@ -16,11 +16,8 @@ using namespace std;
 class TextureManager {
 public:
 	static TextureManager* Instance() {
-		if (t_pInstance == 0) {
-			t_pInstance = new TextureManager();
-			return t_pInstance;
-		}
-		return t_pInstance;
+		static TextureManager t_pInstance;
+		return &t_pInstance;
 	}
 
 	bool load(std::string fileName, std::string id, SDL_Renderer* pRenderer);
@@ -34,18 +31,16 @@ public:
 			int currentRow, int currentFrame, SDL_Renderer* pRenderer,
 			SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-	static void destroy() {
-		delete t_pInstance;
-		t_pInstance = NULL;
+	SDL_Rect queryTexture(std::string id) {
+		SDL_Rect tRect;
+		SDL_QueryTexture(m_textureMap[id], NULL, NULL, &tRect.w, &tRect.h);
+		return tRect;
 	}
 
-	virtual ~TextureManager();
-
 private:
-
-	static TextureManager* t_pInstance;
 	TextureManager();
 	std::map<std::string, SDL_Texture*> m_textureMap;
+	virtual ~TextureManager();
 };
 
 #endif /* TEXTUREMANAGER_H_ */
