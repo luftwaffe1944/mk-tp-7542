@@ -9,6 +9,9 @@ MKGame* mkGame = 0;
 
 int main(int argc, char* argv[]){
 
+	//TODO tomar por parametro el nivel de log hardcodeado
+	FILELog::reportingLevel() = FILELog::fromString("DEBUG");
+
 	mkGame = new MKGame();
 	mkGame->init(GAME_TITLE, 100, 100, DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, 0);
 	while(mkGame->running()) {
