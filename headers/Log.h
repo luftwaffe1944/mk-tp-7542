@@ -154,6 +154,8 @@ inline std::string nowTime() {
 	return result;
 }
 
+#endif //WIN32
+
 template<typename T>
 void Log<T>::logMsgError(MessageError msgError) {
 
@@ -175,7 +177,5 @@ void Log<T>::logMsgError(MessageError msgError) {
 	}
 
 }
-
-#endif //WIN32
 
 #endif //__LOG_H__
