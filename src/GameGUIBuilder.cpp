@@ -27,20 +27,16 @@ GameGUI* GameGUIBuilder::create() {
 	//TODO refactor harcoded file path
 	ifstream gameConfig("src/stageConfig.json", std::ifstream::binary);
 
-	TLogLevel errorLevel = logERROR;
-
 	if (!gameConfig.good()) {
-		//TODO log message
-		cout << ERROR_FILE_NOT_FOUND << WHITE_SPACE << FILE_CONFIG_NOT_FOUND << endl;
-		MessageError fileNotFound(ERROR_FILE_NOT_FOUND, FILE_CONFIG_NOT_FOUND, errorLevel);
+		MessageError fileNotFound(ERROR_FILE_NOT_FOUND, FILE_CONFIG_NOT_FOUND, LOG_LEVEL_ERROR);
+		Log<Output2FILE>::logMsgError(fileNotFound);
 		return createDefault();
 	}
 
 	bool parsingSuccessful = reader.parse(gameConfig, root, false);
 	if (!parsingSuccessful) {
-		//TODO log message
-		cout << ERROR_PARSER_JSON << WHITE_SPACE << reader.getFormattedErrorMessages() << endl;
-		MessageError parseException(ERROR_PARSER_JSON, reader.getFormattedErrorMessages(), errorLevel);
+		MessageError parseException(ERROR_PARSER_JSON, reader.getFormattedErrorMessages(), LOG_LEVEL_ERROR);
+		Log<Output2FILE>::logMsgError(parseException);
 	}
 
 	Json::Value windowValue = root[JSON_KEY_VENTANA];

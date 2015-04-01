@@ -8,27 +8,25 @@
 #ifndef MESSAGEERROR_H_
 #define MESSAGEERROR_H_
 
+#include <string>
 using namespace std;
-#include "Log.h"
 
-class MessageError {
+class MessageError{
 private:
 	string headMsg;
 	string detailMsg;
-	TLogLevel logLevel;
+	string logLevel;
 public:
 	MessageError();
-	MessageError(string headMsg, string detailMsg, TLogLevel logLevel) {
-		this->headMsg = headMsg;
-		this->detailMsg = detailMsg;
-		this->logLevel = logLevel;
-	};
+	MessageError(string headMsg, string detailMsg, string logLevel);
 	string getHeadMsg();
 	string getDetailMsg();
-	TLogLevel getLogLevel();
+	string getLogLevel();
 	virtual ~MessageError(){
 
 	};
 };
 
 #endif /* MESSAGEERROR_H_ */
+
+
