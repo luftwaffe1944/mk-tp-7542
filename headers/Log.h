@@ -10,6 +10,7 @@ inline std::string nowTime();
 #define LOG_LEVEL_DEBUG "DEBUG"
 #define LOG_LEVEL_ERROR "ERROR"
 #define LOG_LEVEL_WARNING "WARNING"
+#define WHITE_SPACE " "
 
 enum TLogLevel {
 	logERROR, logWARNING, logDEBUG

@@ -6,6 +6,7 @@
  */
 
 #include "../headers/MKGame.h"
+#include "../headers/Log.h"
 #include <SDL.h>
 #include <stdio.h>
 #include <iostream>
@@ -15,14 +16,14 @@ using namespace std;
 bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, int flags) {
 	// attempt to initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-		std::cout << "SDL init success\n";
+		FILE_LOG(logDEBUG) << "SDL init success";
 		// init the window
 		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 		if(m_pWindow != 0) {
-			std::cout << "window creation success\n";
+			FILE_LOG(logDEBUG) << "window creation success";
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if(m_pRenderer != 0) {
-				std::cout << "renderer creation success\n";
+				FILE_LOG(logDEBUG) << "renderer creation success";
 				//SDL_SetRenderDrawColor(m_pRenderer, 255,255,255,255);
 				SDL_Surface* pTempSurface = IMG_Load("images/scorpion_fighting_stance/sfsGIF.gif");
 				m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
@@ -37,18 +38,18 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 				m_destinationRectangle.w = m_sourceRectangle.w;
 				m_destinationRectangle.h = m_sourceRectangle.h;
 			} else {
-				std::cout << "renderer init fail\n";
+				FILE_LOG(logERROR) << "renderer init fail";
 				return false; // renderer init fail
 			}
 		} else {
-			std::cout << "window init fail\n";
+			FILE_LOG(logERROR) << "window init fail";
 			return false; // window init fail
 		}
 	} else {
-		std::cout << "SDL init fail\n";
+		FILE_LOG(logERROR) << "SDL init fail";
 		return false; // SDL init fail
 	}
-	std::cout << "init success\n";
+	FILE_LOG(logDEBUG) << "init success";
 	m_bRunning = true; // everything inited successfully,
 	return true;
 }
