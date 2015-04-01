@@ -34,11 +34,17 @@ public:
 			int currentRow, int currentFrame, SDL_Renderer* pRenderer,
 			SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+	static void destroy() {
+		delete t_pInstance;
+		t_pInstance = NULL;
+	}
+
+	virtual ~TextureManager();
+
 private:
 
 	static TextureManager* t_pInstance;
 	TextureManager();
-	virtual ~TextureManager();
 	std::map<std::string, SDL_Texture*> m_textureMap;
 };
 
