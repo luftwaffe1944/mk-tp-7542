@@ -13,7 +13,7 @@
 
 
 
-#include "../header/InputControl.h"
+#include "../headers/InputControl.h"
 #include "SDL.h"
 #include <stddef.h>
 
