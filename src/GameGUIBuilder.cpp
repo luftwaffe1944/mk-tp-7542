@@ -59,7 +59,7 @@ GameGUI* GameGUIBuilder::create() {
 		backgroundImage =
 				array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
 		layerWidth = array[index].get(JSON_KEY_ANCHO, 50).asInt();
-		Layer layer(backgroundImage, layerWidth);
+		Layer layer(backgroundImage, layerWidth, index);
 		layers.push_back(layer);
 	}
 
@@ -98,9 +98,9 @@ GameGUI* GameGUIBuilder::createDefault() {
 	characters.push_back(character);
 
 	vector<Layer> layers;
-	Layer layer(DEFAULT_LAYER1_IMAGE, DEFAULT_LAYER1_WIDTH);
+	Layer layer(DEFAULT_LAYER1_IMAGE, DEFAULT_LAYER1_WIDTH, 0);
 	layers.push_back(layer);
-	Layer layer2(DEFAULT_LAYER2_IMAGE, DEFAULT_LAYER2_WIDTH);
+	Layer layer2(DEFAULT_LAYER2_IMAGE, DEFAULT_LAYER2_WIDTH, 1);
 	layers.push_back(layer2);
 
 	gameGUI->setWindow(window);

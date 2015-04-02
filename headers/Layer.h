@@ -8,16 +8,21 @@
 #ifndef LAYER_H_
 #define LAYER_H_
 #include <string>
+#include "SDL.h"
+#include "TextureManager.h"
 using namespace std;
 
 class Layer {
 private:
 	string backgroundImage;
 	int width;
+	int zIndex;
 
 public:
 	Layer();
-	Layer(string image, int width);
+	Layer(string image, int width, int zIndex);
+	bool load(SDL_Renderer* render);
+	bool render(SDL_Renderer* render);
 	virtual ~Layer();
 };
 
