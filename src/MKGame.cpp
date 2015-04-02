@@ -8,6 +8,7 @@
 #include "../headers/MKGame.h"
 #include "../headers/Log.h"
 #include "../headers/TextureManager.h"
+#include "../headers/InputControl.h"
 #include <SDL.h>
 #include <stdio.h>
 #include <iostream>
@@ -28,24 +29,32 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 				//SDL_SetRenderDrawColor(m_pRenderer, 255,255,255,255);
 
 
-				std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
-				if (!TextureManager::Instance()->load(path_img_sc, "scorpion", m_pRenderer)) {
+				std::string path_img_sz_walk = "images/spritesheets_subzero/UMK3_Sub-Zero_walk.png";
+				if (!TextureManager::Instance()->load(path_img_sz_walk, "subzerowalk", m_pRenderer)) {
 					cout << "error con el load";
 				}
+
+				std::string path_img_sz_stand = "images/spritesheets_subzero/UMK3_Sub-Zero_stance.png";
+				if (!TextureManager::Instance()->load(path_img_sz_stand, "subzerostand", m_pRenderer)) {
+					cout << "error con el load";
+				}
+
+				Character subzero = Character(66,134,1,"subzerowalk","subzerostand");
+				this->pCharacter = subzero;
 
 				/* TODO calcular el alto y el ancho, estos valores vienen en el json
 				 * en teoria no se deberia calcular con el query
 				 * SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
 				 */
 
-				m_sourceRectangle.w = TextureManager::Instance()->queryTexture("scorpion").w;
-				m_sourceRectangle.h = TextureManager::Instance()->queryTexture("scorpion").h;
+				m_sourceRectangle.w = TextureManager::Instance()->queryTexture("subzerowalk").w;
+				m_sourceRectangle.h = TextureManager::Instance()->queryTexture("subzerowalk").h;
 
 
 				m_destinationRectangle.x = m_sourceRectangle.x = 0;
 				m_destinationRectangle.y = m_sourceRectangle.y = 0;
-				m_destinationRectangle.w = m_sourceRectangle.w;
-				m_destinationRectangle.h = m_sourceRectangle.h;
+				m_destinationRectangle.w = m_sourceRectangle.w = 63;
+				m_destinationRectangle.h = m_sourceRectangle.h = 134;
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
 				return false; // renderer init fail
@@ -65,7 +74,8 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-	TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer);
+	TextureManager::Instance()->drawFrame(pCharacter.getActiveSprite(), m_destinationRectangle.x, m_destinationRectangle.y, pCharacter.w(), pCharacter.h(),1,pCharacter.getNextFrame(), m_pRenderer,SDL_FLIP_NONE);
+
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 
 }
@@ -79,7 +89,7 @@ void MKGame::clean() {
 
 void MKGame::handleEvents() {
 	SDL_Event event;
-	if(SDL_PollEvent(&event)) {
+	while(SDL_PollEvent(&event)) {
 		switch (event.type) {
 			case SDL_QUIT:
 				m_bRunning = false;
@@ -88,4 +98,24 @@ void MKGame::handleEvents() {
 				break;
 		}
 	}
+
+	InputControl keyboardControl = InputControl();
+	keyboardControl.refreshInputs();
+
+	InputCommand playerCommand = keyboardControl.getFirstPlayerMove();
+	InputCommand optionCommand = keyboardControl.getControlOption();
+		switch(playerCommand){
+		case FIRST_PLAYER_MOVE_RIGHT:
+			m_destinationRectangle.x= m_destinationRectangle.x+2;
+			this->pCharacter.setActiveSprite("subzerowalk");
+			break;
+		case FIRST_PLAYER_MOVE_LEFT:
+			m_destinationRectangle.x= m_destinationRectangle.x-2;
+			break;
+		case NO_INPUT:
+			this->pCharacter.setActiveSprite("subzerostand");
+			break;
+		}
+
+		SDL_Delay( 75 );
 }

@@ -10,6 +10,7 @@
 #include "SDL.h"
 #include <SDL_image.h>
 #include <iostream>
+#include "Character.h"
 using namespace std;
 
 class MKGame {
@@ -21,6 +22,7 @@ class MKGame {
 		SDL_Texture* m_pTexture; // the new SDL_Texture variable
 		SDL_Rect m_sourceRectangle; // the first rectangle
 		SDL_Rect m_destinationRectangle; // another rectangle
+		Character pCharacter;
 
 	public:
 		MKGame() {}
