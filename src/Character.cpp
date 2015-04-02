@@ -12,10 +12,11 @@ Character::Character() {
 
 }
 
-Character::Character(int width, int height, int zindex) {
+Character::Character(int width, int height, int zindex, std::string orientation) {
 	this->width = width;
 	this->height = height;
 	this->zindex = zindex;
+	this->orientation = orientation;
 
 }
 

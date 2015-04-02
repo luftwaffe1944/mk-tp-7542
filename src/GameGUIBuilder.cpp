@@ -67,8 +67,11 @@ GameGUI* GameGUIBuilder::create() {
 	int character_width = characterValue.get(JSON_KEY_ANCHO, 700).asInt();
 	int character_height = characterValue.get(JSON_KEY_ALTO, 700).asInt();
 	int character_zindex = characterValue.get(JSON_KEY_ZINDEX, 700).asInt();
+	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION, "right").asString();
+
+
 	vector<Character> characters;
-	Character character(character_width, character_height, character_zindex);
+	Character character(character_width, character_height, character_zindex, character_orientation);
 	characters.push_back(character);
 
 	gameGUI->setWindow(window);
@@ -91,7 +94,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 
 	vector<Character> characters;
 	Character character(DEFAULT_CHARACTER_WIDTH, DEFAULT_CHARACTER_HEIGHT,
-	DEFAULT_CHARACTER_ZINDEX);
+	DEFAULT_CHARACTER_ZINDEX, DEFAULT_CHARACTER_ORIENTATION);
 	characters.push_back(character);
 
 	vector<Layer> layers;

@@ -31,6 +31,7 @@
 #define DEFAULT_CHARACTER_WIDTH 20
 #define DEFAULT_CHARACTER_HEIGHT 35
 #define DEFAULT_CHARACTER_ZINDEX 1
+#define DEFAULT_CHARACTER_ORIENTATION "right"
 
 //Commons Strings
 #define EMPTY_STRING ""
@@ -52,5 +53,6 @@
 
 #define JSON_KEY_PERSONAJE "personaje"
 #define JSON_KEY_ZINDEX "zindex"
+#define JSON_KEY_ORIENTACION "orientacion"
 
 #endif /* CONSTANTS_H_ */

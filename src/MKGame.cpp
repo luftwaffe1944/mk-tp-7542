@@ -65,7 +65,7 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-	TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer);
+	TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 
 }

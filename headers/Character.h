@@ -7,15 +7,18 @@
 
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
+#include <string>
+
 
 class Character {
 private:
 	int width;
 	int height;
 	int zindex;
+	std::string orientation;
 public:
 	Character();
-	Character(int width, int height, int zindex);
+	Character(int width, int height, int zindex, std::string orientation);
 	virtual ~Character();
 };
 
