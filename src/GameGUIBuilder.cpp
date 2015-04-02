@@ -43,12 +43,18 @@ GameGUI* GameGUIBuilder::create() {
 	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 700).asInt();
 	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 700).asInt();
 	int win_width = windowValue.get(JSON_KEY_ANCHO, 700).asInt();
+	FILE_LOG(logDEBUG) << "JSON - Windows width: " << win_width_px << "px";
+	FILE_LOG(logDEBUG) << "JSON - Windows height: " << win_height_px << "px";
+	FILE_LOG(logDEBUG) << "JSON - Windows width: " << win_width;
 	Window window(win_width_px, win_height_px, win_width);
 
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
 	int stage_width = stageValue.get(JSON_KEY_ANCHO, 700).asInt();
 	int stage_win_height = stageValue.get(JSON_KEY_ALTO, 700).asInt();
 	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
+	FILE_LOG(logDEBUG) << "JSON - Stage width: " << stage_width;
+	FILE_LOG(logDEBUG) << "JSON - Stage height: " << stage_win_height;
+	FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << stage_win_ypiso;
 	Stage stage(stage_width, stage_win_height, stage_win_ypiso);
 
 	const Json::Value array = root[JSON_KEY_CAPAS];
@@ -59,6 +65,8 @@ GameGUI* GameGUIBuilder::create() {
 		backgroundImage =
 				array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
 		layerWidth = array[index].get(JSON_KEY_ANCHO, 50).asInt();
+		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: " << backgroundImage;
+		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: " << layerWidth;
 		Layer layer(backgroundImage, layerWidth, index);
 		layers.push_back(layer);
 	}
@@ -69,6 +77,10 @@ GameGUI* GameGUIBuilder::create() {
 	int character_zindex = characterValue.get(JSON_KEY_ZINDEX, 700).asInt();
 	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION, "right").asString();
 
+	FILE_LOG(logDEBUG) << "JSON - Character width: " << character_width;
+	FILE_LOG(logDEBUG) << "JSON - Character height: " << character_height;
+	FILE_LOG(logDEBUG) << "JSON - Character z-index: " << character_zindex;
+	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
 	vector<Character> characters;
 	Character character(character_width, character_height, character_zindex, character_orientation);

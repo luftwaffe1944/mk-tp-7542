@@ -22,9 +22,9 @@
 #define DEFAULT_STAGE_YFLOOR 20
 
 //layers
-#define DEFAULT_LAYER1_IMAGE "pic1.png"
+#define DEFAULT_LAYER1_IMAGE "images/arenas/far-background.png"
 #define DEFAULT_LAYER1_WIDTH 500
-#define DEFAULT_LAYER2_IMAGE "pic2.png"
+#define DEFAULT_LAYER2_IMAGE "images/arenas/near-background.png"
 #define DEFAULT_LAYER2_WIDTH 1000
 
 //characters

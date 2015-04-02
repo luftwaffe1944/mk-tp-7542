@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "../headers/Log.h"
 
 Layer::Layer() {
 
