@@ -58,3 +58,21 @@ void TextureManager::drawFrame(std::string id, int x, int y, int width, int heig
 	destRect.y = y;
 	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
+
+void TextureManager::setColor(std::string id, Uint8 red, Uint8 green, Uint8 blue )
+{
+	//Modulate texture rgb
+	SDL_SetTextureColorMod(m_textureMap[id], red, green, blue );
+}
+
+void TextureManager::setBlendMode(std::string id, SDL_BlendMode blending )
+{
+	//Set blending function
+	SDL_SetTextureBlendMode(m_textureMap[id], blending );
+}
+
+void TextureManager::setAlpha(std::string id, Uint8 alpha )
+{
+	//Modulate texture alpha
+	SDL_SetTextureAlphaMod(m_textureMap[id], alpha );
+}

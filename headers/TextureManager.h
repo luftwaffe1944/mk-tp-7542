@@ -31,11 +31,21 @@ public:
 			int currentRow, int currentFrame, SDL_Renderer* pRenderer,
 			SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+	// query texure
 	SDL_Rect queryTexture(std::string id) {
 		SDL_Rect tRect;
 		SDL_QueryTexture(m_textureMap[id], NULL, NULL, &tRect.w, &tRect.h);
 		return tRect;
 	}
+
+	//Set color modulation
+	void setColor(std::string id, Uint8 red, Uint8 green, Uint8 blue );
+
+	//Set blending
+	void setBlendMode(std::string id, SDL_BlendMode blending );
+
+	//Set alpha modulation
+	void setAlpha(std::string id, Uint8 alpha );
 
 private:
 	TextureManager();
