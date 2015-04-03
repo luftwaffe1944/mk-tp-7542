@@ -46,7 +46,7 @@ GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "JSON - Windows width: " << win_width_px << "px";
 	FILE_LOG(logDEBUG) << "JSON - Windows height: " << win_height_px << "px";
 	FILE_LOG(logDEBUG) << "JSON - Windows width: " << win_width;
-	Window window(win_width_px, win_height_px, win_width);
+	Window window(GAME_TITLE,100,100,win_width_px, win_height_px, win_width);
 
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
 	int stage_width = stageValue.get(JSON_KEY_ANCHO, 700).asInt();
