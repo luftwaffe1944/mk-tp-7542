@@ -10,6 +10,7 @@
 #include "SDL.h"
 #include <SDL_image.h>
 #include <iostream>
+#include "../headers/GameGUI.h"
 using namespace std;
 
 class MKGame {
@@ -27,8 +28,8 @@ class MKGame {
 		~MKGame() {}
 		// simply set the running variable to true
 		void init() { m_bRunning = true; }
-		bool init(const char* title, int xpos, int ypos, int width, int
-		height, int flags);
+		bool init(GameGUI* gameGui);
+		bool init(const char* title, int xpos, int ypos, int width, int height, int flags);
 		void render();
 		void update(){}
 		void handleEvents();

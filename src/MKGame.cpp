@@ -14,12 +14,13 @@
 using namespace std;
 
 
-bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, int flags) {
+bool MKGame::init(GameGUI* gameGui) {
 	// attempt to initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		FILE_LOG(logDEBUG) << "SDL init success";
 		// init the window
-		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+		Window gameWindow = gameGui->getWindow();
+		m_pWindow = SDL_CreateWindow(gameWindow.title, gameWindow.xpos, gameWindow.ypos, gameWindow.widthPx, gameWindow.heightPx, 0);
 		if(m_pWindow != 0) {
 			FILE_LOG(logDEBUG) << "window creation success";
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);

@@ -12,19 +12,17 @@ int main(int argc, char* argv[]){
 	//TODO tomar por parametro el nivel de log hardcodeado
 	FILELog::reportingLevel() = FILELog::fromString("DEBUG");
 
+	GameGUIBuilder gameGUIBuilder;
+	GameGUI* gameGUI = gameGUIBuilder.create();
+
 	mkGame = new MKGame();
-	mkGame->init(GAME_TITLE, 100, 100, DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, 0);
+	mkGame->init(gameGUI);
 	while(mkGame->running()) {
 		mkGame->handleEvents();
 		mkGame->update();
 		mkGame->render();
 	}
 	mkGame->clean();
-
-	GameGUIBuilder gameGUIBuilder;
-	GameGUI *gameGUI = gameGUIBuilder.create();
-
-
 
 	return 0;
 }
