@@ -33,7 +33,7 @@ void Layer::render(SDL_Renderer* render, int height) {
 	stringstream sLayerName;
 	sLayerName << "layer";
 	sLayerName << this->zIndex;
-	TextureManager::Instance()->draw(sLayerName.str(), 0, 0, this->width, height, render);
+	TextureManager::Instance()->draw(sLayerName.str(), 0, 0, this->width, height, render, SDL_FLIP_NONE);
 }
 
 

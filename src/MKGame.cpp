@@ -16,11 +16,13 @@ using namespace std;
 
 
 bool MKGame::init(GameGUI* gameGui) {
+
+	this->gameGui = gameGui;
 	// attempt to initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		FILE_LOG(logDEBUG) << "SDL init success";
 		// init the window
-		Window gameWindow = gameGui->getWindow();
+		Window gameWindow = this->gameGui->getWindow();
 		m_pWindow = SDL_CreateWindow(gameWindow.title, gameWindow.xpos, gameWindow.ypos, gameWindow.widthPx, gameWindow.heightPx, 0);
 		if(m_pWindow != 0) {
 			FILE_LOG(logDEBUG) << "window creation success";
@@ -30,8 +32,7 @@ bool MKGame::init(GameGUI* gameGui) {
 				//SDL_SetRenderDrawColor(m_pRenderer, 255,255,255,255);
 
 
-				vector<Layer> vLayers = gameGui->getLayers();
-
+				vector<Layer> vLayers = this->gameGui->getLayers();
 			    for(int i = 0; i < vLayers.size(); i++)
 			    {
 					if (vLayers[i].load(m_pRenderer)){
@@ -77,8 +78,13 @@ bool MKGame::init(GameGUI* gameGui) {
 
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-	TextureManager::Instance()->draw("layer0", 0, 0, 3000, 500, m_pRenderer, SDL_FLIP_NONE);
-	TextureManager::Instance()->draw("layer1", 0, 0, 3000, 500, m_pRenderer, SDL_FLIP_NONE);
+
+	vector<Layer> vLayers = this->gameGui->getLayers();
+    for(int i = 0; i < vLayers.size(); i++)
+    {
+		vLayers[i].render(m_pRenderer,500);
+
+    }
 	TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 
