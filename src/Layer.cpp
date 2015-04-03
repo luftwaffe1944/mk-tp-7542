@@ -20,6 +20,7 @@ Layer::Layer(string image, int width, int zIndex) {
 	this->backgroundImage = image;
 	this->width = width;
 	this->zIndex = zIndex;
+	this->setScrollingFactor(0);
 }
 
 bool Layer::load(SDL_Renderer* render) {
@@ -33,6 +34,15 @@ void Layer::render(SDL_Renderer* render, int height) {
 	sLayerName << "layer";
 	sLayerName << this->zIndex;
 	TextureManager::Instance()->draw(sLayerName.str(), 0, 0, this->width, height, render);
+}
+
+
+void Layer::setScrollingFactor(float sFactor) {
+	this->scrollingFactor = sFactor;
+}
+
+float Layer::getScrollingFactor() {
+	return this->scrollingFactor;
 }
 
 Layer::~Layer() {

@@ -17,12 +17,17 @@ private:
 	string backgroundImage;
 	int width;
 	int zIndex;
+	/*Scrolling Factor*/
+	float scrollingFactor;
+
 
 public:
 	Layer();
 	Layer(string image, int width, int zIndex);
 	bool load(SDL_Renderer* render);
 	void render(SDL_Renderer* render, int height);
+	void setScrollingFactor(float sFactor);
+	float getScrollingFactor();
 	virtual ~Layer();
 };
 
