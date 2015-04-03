@@ -22,7 +22,7 @@ public:
 	Layer();
 	Layer(string image, int width, int zIndex);
 	bool load(SDL_Renderer* render);
-	bool render(SDL_Renderer* render);
+	void render(SDL_Renderer* render, int height);
 	virtual ~Layer();
 };
 

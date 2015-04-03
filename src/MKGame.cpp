@@ -28,6 +28,12 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 				//SDL_SetRenderDrawColor(m_pRenderer, 255,255,255,255);
 
 
+				std::string path_layer_0 = "images/arenas/far-background.png";
+				TextureManager::Instance()->load(path_layer_0, "layer0", m_pRenderer);
+
+				std::string path_layer_1 = "images/arenas/near-background.png";
+				TextureManager::Instance()->load(path_layer_1, "layer1", m_pRenderer);
+
 				std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
 				if (!TextureManager::Instance()->load(path_img_sc, "scorpion", m_pRenderer)) {
 					cout << "error con el load";
@@ -46,6 +52,7 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 				m_destinationRectangle.y = m_sourceRectangle.y = 0;
 				m_destinationRectangle.w = m_sourceRectangle.w;
 				m_destinationRectangle.h = m_sourceRectangle.h;
+
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
 				return false; // renderer init fail
@@ -65,6 +72,8 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
+	TextureManager::Instance()->draw("layer0", 0, 0, 3000, 500, m_pRenderer, SDL_FLIP_NONE);
+	TextureManager::Instance()->draw("layer1", 0, 0, 3000, 500, m_pRenderer, SDL_FLIP_NONE);
 	TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 

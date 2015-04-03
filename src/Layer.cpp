@@ -10,6 +10,7 @@
 #include <sstream>
 #include <iostream>
 #include "../headers/Log.h"
+#include "../headers/Constants.h"
 
 Layer::Layer() {
 
@@ -27,8 +28,11 @@ bool Layer::load(SDL_Renderer* render) {
 	sLayerName << this->zIndex;
 	return (TextureManager::Instance()->load(this->backgroundImage, sLayerName.str(), render));
 }
-bool Layer::render(SDL_Renderer* render) {
-	return true;
+void Layer::render(SDL_Renderer* render, int height) {
+	stringstream sLayerName;
+	sLayerName << "layer";
+	sLayerName << this->zIndex;
+	TextureManager::Instance()->draw(sLayerName.str(), 0, 0, this->width, height, render);
 }
 
 Layer::~Layer() {
