@@ -35,7 +35,7 @@ bool MKGame::init(GameGUI* gameGui) {
 				vector<Layer> vLayers = this->gameGui->getLayers();
 			    for(int i = 0; i < vLayers.size(); i++)
 			    {
-					if (vLayers[i].load(m_pRenderer)){
+					if (!vLayers[i].load(m_pRenderer)){
 						FILE_LOG(logDEBUG) << "Error al cargar capa n:" << i++;
 					}
 			    }
