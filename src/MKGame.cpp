@@ -11,6 +11,7 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 
@@ -29,11 +30,14 @@ bool MKGame::init(GameGUI* gameGui) {
 				//SDL_SetRenderDrawColor(m_pRenderer, 255,255,255,255);
 
 
-				std::string path_layer_0 = "images/arenas/far-background.png";
-				TextureManager::Instance()->load(path_layer_0, "layer0", m_pRenderer);
+				vector<Layer> vLayers = gameGui->getLayers();
 
-				std::string path_layer_1 = "images/arenas/near-background.png";
-				TextureManager::Instance()->load(path_layer_1, "layer1", m_pRenderer);
+			    for(int i = 0; i < vLayers.size(); i++)
+			    {
+					if (vLayers[i].load(m_pRenderer)){
+						FILE_LOG(logDEBUG) << "Error al cargar capa n:" << i++;
+					}
+			    }
 
 				std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
 				if (!TextureManager::Instance()->load(path_img_sc, "scorpion", m_pRenderer)) {

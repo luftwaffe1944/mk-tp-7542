@@ -11,12 +11,12 @@
 	},
 	"capas": [
 		{
-			"imagen_fondo": "fondo1.png",
-			"ancho": 500
+			"imagen_fondo": "images/arenas/far-background.png",
+			"ancho": 3000
 		},
 		{
-			"imagen_fondo": "fondo2.png",
-			"ancho": 1000.5
+			"imagen_fondo": "images/arenas/near-background.png",
+			"ancho": 3000
 		}
 	],
 	"personaje": {
