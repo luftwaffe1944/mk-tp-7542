@@ -71,8 +71,8 @@ GameGUI* GameGUIBuilder::create() {
 
 
 	vector<Character> characters;
-	Character character(character_width, character_height, character_zindex, character_orientation);
-	characters.push_back(character);
+//	Character character(character_width, character_height, character_zindex, character_orientation);
+//	characters.push_back(character);
 
 	gameGUI->setWindow(window);
 	gameGUI->setStage(stage);
@@ -93,9 +93,9 @@ GameGUI* GameGUIBuilder::createDefault() {
 	DEFAULT_STAGE_YFLOOR);
 
 	vector<Character> characters;
-	Character character(DEFAULT_CHARACTER_WIDTH, DEFAULT_CHARACTER_HEIGHT,
-	DEFAULT_CHARACTER_ZINDEX, DEFAULT_CHARACTER_ORIENTATION);
-	characters.push_back(character);
+//	Character character(DEFAULT_CHARACTER_WIDTH, DEFAULT_CHARACTER_HEIGHT,
+//	DEFAULT_CHARACTER_ZINDEX, DEFAULT_CHARACTER_ORIENTATION);
+//	characters.push_back(character);
 
 	vector<Layer> layers;
 	Layer layer(DEFAULT_LAYER1_IMAGE, DEFAULT_LAYER1_WIDTH, 0);

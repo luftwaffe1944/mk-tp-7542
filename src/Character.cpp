@@ -7,20 +7,21 @@
 
 #include "../headers/Character.h"
 
-Character::Character() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Character::Character(int width, int height, int zindex, std::string orientation) {
-	this->width = width;
-	this->height = height;
-	this->zindex = zindex;
-	this->orientation = orientation;
-
+Character::Character(const LoaderParams* pParams) :
+		SDLObjectGUI(pParams) {
 }
 
 Character::~Character() {
 	// TODO Auto-generated destructor stub
+}
+
+void Character::draw() {
+	SDLObjectGUI::draw();
+}
+void Character::update() {
+//	m_x -= 1;
+	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
+}
+void Character::clean() {
 }
 
