@@ -28,8 +28,5 @@ int main(int argc, char* argv[]) {
 	MKGame::Instance()->clean();
 	return 0;
 
-	GameGUIBuilder gameGUIBuilder;
-	GameGUI *gameGUI = gameGUIBuilder.create();
-
 	return 0;
 }

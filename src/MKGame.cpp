@@ -40,6 +40,9 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height,
 				FILE_LOG(logDEBUG) << "renderer creation success";
 				//SDL_SetRenderDrawColor(m_pRenderer, 255,255,255,255);
 
+//				GameGUIBuilder gameGUIBuilder;
+//				GameGUI *gameGUI = gameGUIBuilder.create();
+
 				//TODO change harcoded path
 				std::string path_img_sc =
 						"images/scorpion_fighting_stance/sfsGIF.gif";
