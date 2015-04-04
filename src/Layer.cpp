@@ -9,6 +9,8 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "../headers/Log.h"
+#include "../headers/Constants.h"
 
 Layer::Layer(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
@@ -19,7 +21,9 @@ Layer::Layer(const LoaderParams* pParams) :
 //	this->backgroundImage = image;
 //	this->width = width;
 //	this->zIndex = zIndex;
+//this->setScrollingFactor(0);
 //}
+
 
 //TODO Deprecated..
 bool Layer::load(SDL_Renderer* render) {
@@ -29,8 +33,20 @@ bool Layer::load(SDL_Renderer* render) {
 	return (TextureManager::Instance()->load(this->backgroundImage,
 			sLayerName.str(), render));
 }
-bool Layer::render(SDL_Renderer* render) {
-	return true;
+void Layer::render(SDL_Renderer* render, int height) {
+	stringstream sLayerName;
+	sLayerName << "layer";
+	sLayerName << this->zIndex;
+	TextureManager::Instance()->draw(sLayerName.str(), 0, 0, this->width, height, render, SDL_FLIP_NONE);
+}
+
+
+void Layer::setScrollingFactor(float sFactor) {
+	this->scrollingFactor = sFactor;
+}
+
+float Layer::getScrollingFactor() {
+	return this->scrollingFactor;
 }
 
 Layer::~Layer() {

@@ -11,10 +11,12 @@
 #include "SDLObjectGUI.h"
 #include "ObjectGUI.h"
 #include "Character.h"
+#include "GameGUI.h"
 #include "TextureManager.h"
 #include <SDL_image.h>
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 class MKGame {
@@ -25,7 +27,7 @@ private:
 	static MKGame* s_pInstance;
 //	SDLObjectGUI* playerOne;
 	vector<SDLObjectGUI*> objectList;
-
+	GameGUI* gameGui;
 	bool m_bRunning;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
@@ -40,9 +42,7 @@ public:
 	~MKGame() {
 	}
 	// simply set the running variable to true
-	void init() {
-		m_bRunning = true;
-	}
+	bool init(GameGUI* gameGui);
 	bool init(const char* title, int xpos, int ypos, int width, int height,
 			int flags);
 

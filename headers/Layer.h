@@ -18,6 +18,9 @@ private:
 	string backgroundImage;
 	int width;
 	int zIndex;
+	/*Scrolling Factor*/
+	float scrollingFactor;
+
 
 public:
 	Layer(const LoaderParams* pParams);
@@ -27,6 +30,9 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
+	void setScrollingFactor(float sFactor);
+	float getScrollingFactor();
+	void render(SDL_Renderer* render, int height);
 	virtual ~Layer();
 };
 

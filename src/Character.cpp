@@ -9,6 +9,22 @@
 
 Character::Character(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
+
+}
+
+Character::Character(int width, int height, int zindex, std::string orientation) : SDLObjectGUI() {
+	this->width = width;
+	this->height = height;
+	this->zindex = zindex;
+	this->orientation = orientation;
+}
+
+Character::Character(int name, int width, int height, int zindex, std::string orientation) : SDLObjectGUI(){
+	this->name = name;
+	this->width = width;
+	this->height = height;
+	this->zindex = zindex;
+	this->orientation = orientation;
 }
 
 Character::~Character() {

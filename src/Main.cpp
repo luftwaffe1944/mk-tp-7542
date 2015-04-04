@@ -12,7 +12,10 @@ int main(int argc, char* argv[]) {
 	//TODO tomar por parametro el nivel de log hardcodeado
 	FILELog::reportingLevel() = FILELog::fromString("DEBUG");
 
-	if (MKGame::Instance()->init(GAME_TITLE, 100, 100, 640, 480, false)) {
+	GameGUIBuilder gameGUIBuilder;
+	GameGUI* gameGUI = gameGUIBuilder.create();
+
+	if (MKGame::Instance()->init(gameGUI)) {
 		std::cout << "game init success" << endl;
 		while (MKGame::Instance()->running()) {
 			MKGame::Instance()->handleEvents();
@@ -28,5 +31,4 @@ int main(int argc, char* argv[]) {
 	MKGame::Instance()->clean();
 	return 0;
 
-	return 0;
 }

@@ -13,6 +13,7 @@
 
 class SDLObjectGUI : public ObjectGUI {
 public:
+	SDLObjectGUI();
 	SDLObjectGUI(const LoaderParams* pParams);
 	virtual void draw();
 	virtual void update();

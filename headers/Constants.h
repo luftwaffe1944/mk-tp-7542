@@ -22,10 +22,10 @@
 #define DEFAULT_STAGE_YFLOOR 20
 
 //layers
-#define DEFAULT_LAYER1_IMAGE "pic1.png"
-#define DEFAULT_LAYER1_WIDTH 500
-#define DEFAULT_LAYER2_IMAGE "pic2.png"
-#define DEFAULT_LAYER2_WIDTH 1000
+#define DEFAULT_LAYER1_IMAGE "images/arenas/far-background.png"
+#define DEFAULT_LAYER1_WIDTH 3000
+#define DEFAULT_LAYER2_IMAGE "images/arenas/near-background.png"
+#define DEFAULT_LAYER2_WIDTH 3000
 
 //characters
 #define DEFAULT_CHARACTER_WIDTH 20
@@ -51,6 +51,7 @@
 #define JSON_KEY_CAPAS "capas"
 #define JSON_KEY_IMAGEN_FONDO "imagen_fondo"
 
+#define JSON_KEY_NOMBRE "nombre"
 #define JSON_KEY_PERSONAJE "personaje"
 #define JSON_KEY_ZINDEX "zindex"
 #define JSON_KEY_ORIENTACION "orientacion"

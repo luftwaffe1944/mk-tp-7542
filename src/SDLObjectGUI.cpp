@@ -18,6 +18,10 @@ SDLObjectGUI::SDLObjectGUI(const LoaderParams* pParams) : ObjectGUI(pParams) {
 	currentFrame = 1;
 }
 
+SDLObjectGUI::SDLObjectGUI() : ObjectGUI(){
+
+}
+
 void SDLObjectGUI::draw() {
 	TextureManager::Instance()->drawFrame(textureID, positionX, positionY, width,
 			height, currentRow, currentFrame,

@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 MKGame* MKGame::s_pInstance = 0;
@@ -26,49 +27,50 @@ MKGame* MKGame::Instance() {
 	return s_pInstance;
 }
 
-bool MKGame::init(const char* title, int xpos, int ypos, int width, int height,
-		int flags) {
+bool MKGame::init(GameGUI* gameGui) {
+
+	this->gameGui = gameGui;
 	// attempt to initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		FILE_LOG(logDEBUG) << "SDL init success";
 		// init the window
-		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-		if (m_pWindow != 0) {
+		Window gameWindow = this->gameGui->getWindow();
+		m_pWindow = SDL_CreateWindow(gameWindow.title, gameWindow.xpos, gameWindow.ypos, gameWindow.widthPx, gameWindow.heightPx, 0);
+		if(m_pWindow != 0) {
 			FILE_LOG(logDEBUG) << "window creation success";
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-			if (m_pRenderer != 0) {
+			if(m_pRenderer != 0) {
 				FILE_LOG(logDEBUG) << "renderer creation success";
 				//SDL_SetRenderDrawColor(m_pRenderer, 255,255,255,255);
 
-//				GameGUIBuilder gameGUIBuilder;
-//				GameGUI *gameGUI = gameGUIBuilder.create();
 
-				//TODO change harcoded path
-				std::string path_img_sc =
-						"images/scorpion_fighting_stance/sfsGIF.gif";
-				if (!TextureManager::Instance()->load(path_img_sc, "scorpion",
-						m_pRenderer)) {
+				vector<Layer> vLayers = this->gameGui->getLayers();
+			    for(int i = 0; i < vLayers.size(); i++)
+			    {
+					if (!vLayers[i].load(m_pRenderer)){
+						FILE_LOG(logDEBUG) << "Error al cargar capa n:" << i++;
+					}
+			    }
+
+				std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
+				if (!TextureManager::Instance()->load(path_img_sc, "scorpion", m_pRenderer)) {
 					cout << "error con el load";
 				}
-
-				objectList.push_back(
-						new Character(
-								new LoaderParams(0, 0, 128, 82, "scorpion")));
 
 				/* TODO calcular el alto y el ancho, estos valores vienen en el json
 				 * en teoria no se deberia calcular con el query
 				 * SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
 				 */
 
-				m_sourceRectangle.w = TextureManager::Instance()->queryTexture(
-						"scorpion").w;
-				m_sourceRectangle.h = TextureManager::Instance()->queryTexture(
-						"scorpion").h;
+				m_sourceRectangle.w = TextureManager::Instance()->queryTexture("scorpion").w;
+				m_sourceRectangle.h = TextureManager::Instance()->queryTexture("scorpion").h;
+
 
 				m_destinationRectangle.x = m_sourceRectangle.x = 0;
 				m_destinationRectangle.y = m_sourceRectangle.y = 0;
 				m_destinationRectangle.w = m_sourceRectangle.w;
 				m_destinationRectangle.h = m_sourceRectangle.h;
+
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
 				return false; // renderer init fail
@@ -86,14 +88,17 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height,
 	return true;
 }
 
-void MKGame::render() {
 
-	SDL_RenderClear(m_pRenderer); // clear to the draw colour
-	// loop through our objects and draw them
-	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
-			i++) {
-		objectList[i]->draw();
-	}
+void MKGame::render() {
+	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
+
+	vector<Layer> vLayers = this->gameGui->getLayers();
+    for(int i = 0; i < vLayers.size(); i++)
+    {
+		vLayers[i].render(m_pRenderer,500);
+
+    }
+	TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 
 }
