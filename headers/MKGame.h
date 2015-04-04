@@ -24,7 +24,6 @@ class MKGame {
 private:
 	MKGame();
 	// create the s_pInstance member variable
-	static MKGame* s_pInstance;
 //	SDLObjectGUI* playerOne;
 	vector<SDLObjectGUI*> objectList;
 	GameGUI* gameGui;
@@ -47,7 +46,7 @@ public:
 			int flags);
 
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
-	vector<SDLObjectGUI*> getObjectList();
+	vector<SDLObjectGUI*>& getObjectList();
 	void draw();
 	void render();
 	void update();

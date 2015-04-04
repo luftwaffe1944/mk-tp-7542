@@ -15,9 +15,6 @@ using namespace std;
 
 class Layer: public SDLObjectGUI {
 private:
-	string backgroundImage;
-	int width;
-	int zIndex;
 	/*Scrolling Factor*/
 	float scrollingFactor;
 
@@ -25,7 +22,7 @@ private:
 public:
 	Layer(const LoaderParams* pParams);
 	Layer(string image, int width, int zIndex);
-	bool load(SDL_Renderer* render);
+
 	bool render(SDL_Renderer* render);
 	virtual void draw();
 	virtual void update();

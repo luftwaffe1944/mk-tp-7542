@@ -9,6 +9,7 @@
 #define SDLOBJECTGUI_H_
 #include "TextureManager.h"
 #include "ObjectGUI.h"
+#include <sstream>
 #include "LoaderParams.h"
 
 class SDLObjectGUI : public ObjectGUI {
@@ -19,7 +20,10 @@ public:
 	virtual void update();
 	virtual void clean();
 	int unitToPixel(float units);
+	bool load();
+	void setImagePath(string imagePath);
 protected:
+	string imagePath;
 	int positionX;
 	int positionY;
 	int width;

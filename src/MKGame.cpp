@@ -13,18 +13,13 @@
 #include <vector>
 using namespace std;
 
-MKGame* MKGame::s_pInstance = 0;
 
 MKGame::MKGame() {
-
 }
 
 MKGame* MKGame::Instance() {
-	if (s_pInstance == 0) {
-		s_pInstance = new MKGame();
-		return s_pInstance;
-	}
-	return s_pInstance;
+	static MKGame s_pInstance;
+	return &s_pInstance;
 }
 
 bool MKGame::init(GameGUI* gameGui) {
@@ -47,6 +42,11 @@ bool MKGame::init(GameGUI* gameGui) {
 				 * en teoria no se deberia calcular con el query
 				 * SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
 				 */
+
+				vector<SDLObjectGUI*> objects = getObjectList();
+				for (int i = 0; i < objects.size(); i++) {
+					objects[i]->load();
+				}
 
 				m_sourceRectangle.w = TextureManager::Instance()->queryTexture(
 						"scorpion").w;
@@ -122,6 +122,6 @@ void MKGame::handleEvents() {
 	}
 }
 
-vector<SDLObjectGUI*> MKGame::getObjectList() {
-	return this->objectList;
+vector<SDLObjectGUI*>& MKGame::getObjectList() {
+	return objectList;
 }

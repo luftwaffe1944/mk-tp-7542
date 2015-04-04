@@ -7,7 +7,6 @@
 
 #include "../headers/Layer.h"
 #include <string>
-#include <sstream>
 #include <iostream>
 #include "../headers/Log.h"
 #include "../headers/Constants.h"
@@ -25,14 +24,7 @@ Layer::Layer(const LoaderParams* pParams) :
 //}
 
 
-//TODO Deprecated..
-bool Layer::load(SDL_Renderer* render) {
-	stringstream sLayerName;
-	sLayerName << "layer";
-	sLayerName << this->zIndex;
-	return (TextureManager::Instance()->load(this->backgroundImage,
-			sLayerName.str(), render));
-}
+
 void Layer::render(SDL_Renderer* render, int height) {
 	stringstream sLayerName;
 	sLayerName << "layer";
