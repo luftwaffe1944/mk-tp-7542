@@ -17,7 +17,14 @@ Character::Character(int width, int height, int zindex, std::string orientation)
 	this->height = height;
 	this->zindex = zindex;
 	this->orientation = orientation;
+}
 
+Character::Character(int name, int width, int height, int zindex, std::string orientation) {
+	this->name = name;
+	this->width = width;
+	this->height = height;
+	this->zindex = zindex;
+	this->orientation = orientation;
 }
 
 Character::~Character() {

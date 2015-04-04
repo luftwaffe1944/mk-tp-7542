@@ -72,18 +72,20 @@ GameGUI* GameGUIBuilder::create() {
 	}
 
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
+	int character_name = characterValue.get(JSON_KEY_NOMBRE, "nombre" ).asString();
 	int character_width = characterValue.get(JSON_KEY_ANCHO, 700).asInt();
 	int character_height = characterValue.get(JSON_KEY_ALTO, 700).asInt();
 	int character_zindex = characterValue.get(JSON_KEY_ZINDEX, 700).asInt();
 	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION, "right").asString();
 
+	FILE_LOG(logDEBUG) << "JSON - Character name: " << character_name;
 	FILE_LOG(logDEBUG) << "JSON - Character width: " << character_width;
 	FILE_LOG(logDEBUG) << "JSON - Character height: " << character_height;
 	FILE_LOG(logDEBUG) << "JSON - Character z-index: " << character_zindex;
 	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
 	vector<Character> characters;
-	Character character(character_width, character_height, character_zindex, character_orientation);
+	Character character(character_name, character_width, character_height, character_zindex, character_orientation);
 	characters.push_back(character);
 
 	gameGUI->setWindow(window);

@@ -51,6 +51,7 @@
 #define JSON_KEY_CAPAS "capas"
 #define JSON_KEY_IMAGEN_FONDO "imagen_fondo"
 
+#define JSON_KEY_NOMBRE "nombre"
 #define JSON_KEY_PERSONAJE "personaje"
 #define JSON_KEY_ZINDEX "zindex"
 #define JSON_KEY_ORIENTACION "orientacion"

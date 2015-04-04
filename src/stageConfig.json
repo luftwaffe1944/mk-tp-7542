@@ -20,6 +20,7 @@
 		}
 	],
 	"personaje": {
+		"nombre": "subzero"
 		"ancho": 20,
 		"alto": 35,
 		"zindex": 1,

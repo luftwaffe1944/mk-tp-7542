@@ -12,6 +12,7 @@
 
 class Character {
 private:
+	int name;
 	int width;
 	int height;
 	int zindex;
@@ -19,6 +20,7 @@ private:
 public:
 	Character();
 	Character(int width, int height, int zindex, std::string orientation);
+	Character(int name, int width, int height, int zindex, std::string orientation);
 	virtual ~Character();
 };
 
