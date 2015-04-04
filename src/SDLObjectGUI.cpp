@@ -13,6 +13,8 @@ SDLObjectGUI::SDLObjectGUI(const LoaderParams* pParams) : ObjectGUI(pParams) {
 	positionY = pParams->getPosY();
 	width = pParams->getWidth();
 	height = pParams->getHeight();
+	zIndex = pParams->getZIndex();
+	drawRatio = pParams->getDrawRatio();
 	textureID = pParams->getTextureID();
 	currentRow = 1;
 	currentFrame = 1;
@@ -34,4 +36,8 @@ void SDLObjectGUI::update(){
 
 void SDLObjectGUI::clean(){
 
+}
+
+int SDLObjectGUI::unitToPixel(float units) {
+	return ((int)units*this->drawRatio);
 }

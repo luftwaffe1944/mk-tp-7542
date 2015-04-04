@@ -18,11 +18,14 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
+	int unitToPixel(float units);
 protected:
 	int positionX;
 	int positionY;
 	int width;
 	int height;
+	int zIndex;
+	float drawRatio;
 	int currentRow;
 	int currentFrame;
 	std::string textureID;

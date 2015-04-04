@@ -44,6 +44,10 @@ GameGUI* GameGUIBuilder::create() {
 	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 700).asInt();
 	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 700).asInt();
 	int win_width = windowValue.get(JSON_KEY_ANCHO, 700).asInt();
+
+	float ratio = win_width_px / win_width;
+	FILE_LOG(logDEBUG) << "Windows Ratio: " << ratio;
+
 	FILE_LOG(logDEBUG) << "JSON - Windows width: " << win_width_px << "px";
 	FILE_LOG(logDEBUG) << "JSON - Windows height: " << win_height_px << "px";
 	FILE_LOG(logDEBUG) << "JSON - Windows width: " << win_width;
@@ -66,7 +70,13 @@ GameGUI* GameGUIBuilder::create() {
 		backgroundImage =
 				array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
 		layerWidth = array[index].get(JSON_KEY_ANCHO, 50).asInt();
-		Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, "layer1"));
+
+		stringstream sLayerName;
+		sLayerName.clear();
+		sLayerName << "layer";
+		sLayerName << index;
+
+		Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, index, ratio, sLayerName.str()));
 
 		//Add layers to the game loop
 		MKGame::Instance()->getObjectList().push_back(layer);
@@ -90,7 +100,7 @@ GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
 	vector<Character*> characters;
-	Character* playerOne = new Character(new LoaderParams(0, 0, 128, 82, "scorpion"));
+	Character* playerOne = new Character(new LoaderParams(0, 0, 128, 82, character_zindex, ratio,  "scorpion"));
 
 	//Add player to the game loop
 	MKGame::Instance()->getObjectList().push_back(playerOne);
@@ -116,8 +126,9 @@ GameGUI* GameGUIBuilder::createDefault() {
 	Window window(GAME_TITLE,100,100,DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
 	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
 
+	float ratio = DEFAULT_WINDOW_WIDTH_PX / DEFAULT_WINDOW_WIDTH;
 	vector<Character*> characters;
-	Character* character = new Character(new LoaderParams(0, 0, 128, 82, "scorpion"));
+	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratio, "scorpion"));
 
 	//Add layers to the game loop
 	MKGame::Instance()->getObjectList().push_back(character);
@@ -125,9 +136,9 @@ GameGUI* GameGUIBuilder::createDefault() {
 	characters.push_back(character);
 
 	vector<Layer*> layers;
-	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, "layer1"));
+	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, 1, ratio, "layer1"));
 	layers.push_back(layer);
-	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, "lyaer2"));
+	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, 2, ratio, "layer2"));
 	layers.push_back(layer2);
 
 	//Add layers to the game loop
