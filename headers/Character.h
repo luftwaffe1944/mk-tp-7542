@@ -8,11 +8,12 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 #include <string>
+#include <SDL.h>
 
 
 class Character {
 private:
-	int name;
+	std::string name;
 	int width;
 	int height;
 	int zindex;
@@ -20,7 +21,9 @@ private:
 public:
 	Character();
 	Character(int width, int height, int zindex, std::string orientation);
-	Character(int name, int width, int height, int zindex, std::string orientation);
+	Character(std::string name, int width, int height, int zindex, std::string orientation);
+	bool load(SDL_Renderer* render);
+	void render(SDL_Renderer* render);
 	virtual ~Character();
 };
 

@@ -40,10 +40,18 @@ bool MKGame::init(GameGUI* gameGui) {
 					}
 			    }
 
-				std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
-				if (!TextureManager::Instance()->load(path_img_sc, "scorpion", m_pRenderer)) {
-					cout << "error con el load";
-				}
+			    vector<Character> vCharacters = this->gameGui->getCharacters();
+			    for(int i = 0; i < vCharacters.size(); i++)
+			    {
+					if (!vCharacters[i].load(m_pRenderer)){
+						FILE_LOG(logDEBUG) << "Error al cargar peronsaje:" << i++;
+					}
+			    }
+
+				//std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
+				//if (!TextureManager::Instance()->load(path_img_sc, "scorpion", m_pRenderer)) {
+				//	cout << "error con el load";
+				//}
 
 				/* TODO calcular el alto y el ancho, estos valores vienen en el json
 				 * en teoria no se deberia calcular con el query
@@ -85,7 +93,14 @@ void MKGame::render() {
 		vLayers[i].render(m_pRenderer,500);
 
     }
-	TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
+	vector<Character> vCharacters = this->gameGui->getCharacters();
+    for(int i = 0; i < vCharacters.size(); i++)
+    {
+    	vCharacters[i].render(m_pRenderer);
+
+    }
+
+	//TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 
 }

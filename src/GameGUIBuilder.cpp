@@ -72,7 +72,7 @@ GameGUI* GameGUIBuilder::create() {
 	}
 
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
-	int character_name = characterValue.get(JSON_KEY_NOMBRE, "nombre" ).asString();
+	string character_name = characterValue.get(JSON_KEY_NOMBRE, "nombre" ).asString();
 	int character_width = characterValue.get(JSON_KEY_ANCHO, 700).asInt();
 	int character_height = characterValue.get(JSON_KEY_ALTO, 700).asInt();
 	int character_zindex = characterValue.get(JSON_KEY_ZINDEX, 700).asInt();
