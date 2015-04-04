@@ -47,7 +47,7 @@ public:
 			int flags);
 
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
-
+	vector<SDLObjectGUI*> getObjectList();
 	void draw();
 	void render();
 	void update();

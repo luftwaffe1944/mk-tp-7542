@@ -26,8 +26,8 @@ private:
 	}
 	Stage stage;
 	Window window;
-	vector<Character> characters;
-	vector<Layer> layers;
+	vector<Character*> characters;
+	vector<Layer*> layers;
 
 public:
 	static GameGUI* getInstance();
@@ -38,12 +38,12 @@ public:
 	Stage getStage();
 	void setWindow(Window window);
 	Window getWindow();
-	void setCharacters(vector<Character>);
-	vector<Character> getCharacters();
-	void setLayers(vector<Layer> layers);
-	vector<Layer> getLayers();
-	void addCharacter(Character character);
-	void addLayer(Layer layer);
+	void setCharacters(vector<Character*>);
+	vector<Character*> getCharacters();
+	void setLayers(vector<Layer*> layers);
+	vector<Layer*> getLayers();
+	void addCharacter(Character* character);
+	void addLayer(Layer* layer);
 };
 
 #endif /* GAMEGUI_H_ */

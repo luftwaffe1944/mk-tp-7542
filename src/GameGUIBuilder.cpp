@@ -59,14 +59,18 @@ GameGUI* GameGUIBuilder::create() {
 	Stage stage(stage_width, stage_win_height, stage_win_ypiso);
 
 	const Json::Value array = root[JSON_KEY_CAPAS];
-	vector<Layer> layers;
+	vector<Layer*> layers;
 	string backgroundImage;
 	int layerWidth;
 	for (unsigned int index = 0; index < array.size(); ++index) {
 		backgroundImage =
 				array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
 		layerWidth = array[index].get(JSON_KEY_ANCHO, 50).asInt();
-		Layer layer(new LoaderParams(0, 0, 128, 82, "layer1"));
+		Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, "layer1"));
+
+		//Add layers to the game loop
+		MKGame::Instance()->getObjectList().push_back(layer);
+
 		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: " << backgroundImage;
 		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: " << layerWidth;
 		layers.push_back(layer);
@@ -85,14 +89,21 @@ GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "JSON - Character z-index: " << character_zindex;
 	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
-	vector<Character> characters;
-	Character character(new LoaderParams(0, 0, 128, 82, "scorpion"));
-	characters.push_back(character);
+	vector<Character*> characters;
+	Character* playerOne = new Character(new LoaderParams(0, 0, 128, 82, "scorpion"));
+
+	//Add player to the game loop
+	MKGame::Instance()->getObjectList().push_back(playerOne);
+
+	characters.push_back(playerOne);
 
 	gameGUI->setWindow(window);
 	gameGUI->setStage(stage);
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
+
+
+
 
 	return gameGUI;
 
@@ -105,15 +116,23 @@ GameGUI* GameGUIBuilder::createDefault() {
 	Window window(GAME_TITLE,100,100,DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
 	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
 
-	vector<Character> characters;
-	Character character(new LoaderParams(0, 0, 128, 82, "scorpion"));
+	vector<Character*> characters;
+	Character* character = new Character(new LoaderParams(0, 0, 128, 82, "scorpion"));
+
+	//Add layers to the game loop
+	MKGame::Instance()->getObjectList().push_back(character);
+
 	characters.push_back(character);
 
-	vector<Layer> layers;
-	Layer layer(new LoaderParams(0, 0, 128, 82, "layer1"));
+	vector<Layer*> layers;
+	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, "layer1"));
 	layers.push_back(layer);
-	Layer layer2(new LoaderParams(0, 0, 128, 82, "lyaer2"));
+	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, "lyaer2"));
 	layers.push_back(layer2);
+
+	//Add layers to the game loop
+	MKGame::Instance()->getObjectList().push_back(layer);
+	MKGame::Instance()->getObjectList().push_back(layer2);
 
 	gameGUI->setWindow(window);
 	gameGUI->setStage(stage);

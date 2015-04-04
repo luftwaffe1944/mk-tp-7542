@@ -16,6 +16,7 @@
 #include "Constants.h"
 #include "Messages.h"
 #include "MessageError.h"
+#include "MKGame.h"
 #include "LoaderParams.h"
 #include "Log.h"
 #include <json/reader.h>
