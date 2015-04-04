@@ -9,10 +9,11 @@
 #define LAYER_H_
 #include <string>
 #include "SDL.h"
+#include "SDLObjectGUI.h"
 #include "TextureManager.h"
 using namespace std;
 
-class Layer {
+class Layer: public SDLObjectGUI {
 private:
 	string backgroundImage;
 	int width;
@@ -22,12 +23,16 @@ private:
 
 
 public:
-	Layer();
+	Layer(const LoaderParams* pParams);
 	Layer(string image, int width, int zIndex);
 	bool load(SDL_Renderer* render);
-	void render(SDL_Renderer* render, int height);
+	bool render(SDL_Renderer* render);
+	virtual void draw();
+	virtual void update();
+	virtual void clean();
 	void setScrollingFactor(float sFactor);
 	float getScrollingFactor();
+	void render(SDL_Renderer* render, int height);
 	virtual ~Layer();
 };
 

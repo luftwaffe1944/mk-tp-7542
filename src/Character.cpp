@@ -12,19 +12,19 @@
 #include <sstream>
 #include <iostream>
 
-Character::Character() {
-	// TODO Auto-generated constructor stub
+Character::Character(const LoaderParams* pParams) :
+		SDLObjectGUI(pParams) {
 
 }
 
-Character::Character(int width, int height, int zindex, std::string orientation) {
+Character::Character(int width, int height, int zindex, std::string orientation) : SDLObjectGUI() {
 	this->width = width;
 	this->height = height;
 	this->zindex = zindex;
 	this->orientation = orientation;
 }
 
-Character::Character(std::string name, int width, int height, int zindex, std::string orientation) {
+Character::Character(string name, int width, int height, int zindex, std::string orientation) : SDLObjectGUI(){
 	this->name = name;
 	this->width = width;
 	this->height = height;
@@ -44,5 +44,15 @@ void Character::render(SDL_Renderer* render) {
 
 Character::~Character() {
 	// TODO Auto-generated destructor stub
+}
+
+void Character::draw() {
+	SDLObjectGUI::draw();
+}
+void Character::update() {
+//	m_x -= 1;
+	currentFrame = int(((SDL_GetTicks() / 100) % 6));
+}
+void Character::clean() {
 }
 

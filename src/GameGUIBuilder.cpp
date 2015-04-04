@@ -17,6 +17,7 @@ GameGUIBuilder::~GameGUIBuilder() {
 	// TODO Auto-generated destructor stub
 }
 
+//TODO Fixme
 GameGUI* GameGUIBuilder::create() {
 
 	GameGUI *gameGUI = GameGUI::getInstance();
@@ -65,9 +66,9 @@ GameGUI* GameGUIBuilder::create() {
 		backgroundImage =
 				array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
 		layerWidth = array[index].get(JSON_KEY_ANCHO, 50).asInt();
+		Layer layer(new LoaderParams(0, 0, 128, 82, "layer1"));
 		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: " << backgroundImage;
 		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: " << layerWidth;
-		Layer layer(backgroundImage, layerWidth, index);
 		layers.push_back(layer);
 	}
 
@@ -85,7 +86,7 @@ GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
 	vector<Character> characters;
-	Character character(character_name, character_width, character_height, character_zindex, character_orientation);
+	Character character(new LoaderParams(0, 0, 128, 82, "scorpion"));
 	characters.push_back(character);
 
 	gameGUI->setWindow(window);
@@ -105,14 +106,13 @@ GameGUI* GameGUIBuilder::createDefault() {
 	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
 
 	vector<Character> characters;
-	Character character(DEFAULT_CHARACTER_WIDTH, DEFAULT_CHARACTER_HEIGHT,
-	DEFAULT_CHARACTER_ZINDEX, DEFAULT_CHARACTER_ORIENTATION);
+	Character character(new LoaderParams(0, 0, 128, 82, "scorpion"));
 	characters.push_back(character);
 
 	vector<Layer> layers;
-	Layer layer(DEFAULT_LAYER1_IMAGE, DEFAULT_LAYER1_WIDTH, 0);
+	Layer layer(new LoaderParams(0, 0, 128, 82, "layer1"));
 	layers.push_back(layer);
-	Layer layer2(DEFAULT_LAYER2_IMAGE, DEFAULT_LAYER2_WIDTH, 1);
+	Layer layer2(new LoaderParams(0, 0, 128, 82, "lyaer2"));
 	layers.push_back(layer2);
 
 	gameGUI->setWindow(window);

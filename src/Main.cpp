@@ -7,7 +7,7 @@
 // our Game object
 MKGame* mkGame = 0;
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 
 	//TODO tomar por parametro el nivel de log hardcodeado
 	FILELog::reportingLevel() = FILELog::fromString("DEBUG");
@@ -15,14 +15,20 @@ int main(int argc, char* argv[]){
 	GameGUIBuilder gameGUIBuilder;
 	GameGUI* gameGUI = gameGUIBuilder.create();
 
-	mkGame = new MKGame();
-	mkGame->init(gameGUI);
-	while(mkGame->running()) {
-		mkGame->handleEvents();
-		mkGame->update();
-		mkGame->render();
+	if (MKGame::Instance()->init(gameGUI)) {
+		std::cout << "game init success" << endl;
+		while (MKGame::Instance()->running()) {
+			MKGame::Instance()->handleEvents();
+			MKGame::Instance()->update();
+			MKGame::Instance()->render();
+			SDL_Delay(10);
+		}
+	} else {
+		std::cout << "game init failure - " << SDL_GetError() << endl;
+		return -1;
 	}
-	mkGame->clean();
-
+	std::cout << "game closing..." << endl;
+	MKGame::Instance()->clean();
 	return 0;
+
 }

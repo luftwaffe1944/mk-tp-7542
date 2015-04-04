@@ -8,10 +8,11 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 #include <string>
+#include "SDLObjectGUI.h"
 #include <SDL.h>
 
 
-class Character {
+class Character : public SDLObjectGUI {
 private:
 	std::string name;
 	int width;
@@ -25,6 +26,11 @@ public:
 	bool load(SDL_Renderer* render);
 	void render(SDL_Renderer* render);
 	virtual ~Character();
+	Character(const LoaderParams* pParams);
+	virtual void draw();
+	virtual void update();
+	virtual void clean();
+
 };
 
 #endif /* CHARACTER_H_ */

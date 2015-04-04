@@ -12,22 +12,26 @@
 #include "../headers/Log.h"
 #include "../headers/Constants.h"
 
-Layer::Layer() {
-
+Layer::Layer(const LoaderParams* pParams) :
+		SDLObjectGUI(pParams) {
 }
 
-Layer::Layer(string image, int width, int zIndex) {
-	this->backgroundImage = image;
-	this->width = width;
-	this->zIndex = zIndex;
-	this->setScrollingFactor(0);
-}
+//TODO Deprecated.. use constructor above
+//Layer::Layer(string image, int width, int zIndex) {
+//	this->backgroundImage = image;
+//	this->width = width;
+//	this->zIndex = zIndex;
+//this->setScrollingFactor(0);
+//}
 
+
+//TODO Deprecated..
 bool Layer::load(SDL_Renderer* render) {
 	stringstream sLayerName;
 	sLayerName << "layer";
 	sLayerName << this->zIndex;
-	return (TextureManager::Instance()->load(this->backgroundImage, sLayerName.str(), render));
+	return (TextureManager::Instance()->load(this->backgroundImage,
+			sLayerName.str(), render));
 }
 void Layer::render(SDL_Renderer* render, int height) {
 	stringstream sLayerName;
@@ -47,5 +51,16 @@ float Layer::getScrollingFactor() {
 
 Layer::~Layer() {
 	// TODO Auto-generated destructor stub
+}
+
+void Layer::draw() {
+	SDLObjectGUI::draw();
+}
+
+void Layer::update() {
+//	m_x -= 1;
+	currentFrame = int(((SDL_GetTicks() / 100) % 6));
+}
+void Layer::clean() {
 }
 

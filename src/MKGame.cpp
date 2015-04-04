@@ -7,13 +7,25 @@
 
 #include "../headers/MKGame.h"
 #include "../headers/Log.h"
-#include "../headers/TextureManager.h"
-#include <SDL.h>
+
 #include <stdio.h>
 #include <iostream>
 #include <vector>
 using namespace std;
 
+MKGame* MKGame::s_pInstance = 0;
+
+MKGame::MKGame() {
+
+}
+
+MKGame* MKGame::Instance() {
+	if (s_pInstance == 0) {
+		s_pInstance = new MKGame();
+		return s_pInstance;
+	}
+	return s_pInstance;
+}
 
 bool MKGame::init(GameGUI* gameGui) {
 
@@ -84,6 +96,7 @@ bool MKGame::init(GameGUI* gameGui) {
 	return true;
 }
 
+
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
 
@@ -112,15 +125,29 @@ void MKGame::clean() {
 	SDL_Quit();
 }
 
+void MKGame::draw() {
+	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
+			i++) {
+		objectList[i]->draw();
+	}
+}
+
+void MKGame::update() {
+	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
+			i++) {
+		objectList[i]->update();
+	}
+}
+
 void MKGame::handleEvents() {
 	SDL_Event event;
-	if(SDL_PollEvent(&event)) {
+	if (SDL_PollEvent(&event)) {
 		switch (event.type) {
-			case SDL_QUIT:
-				m_bRunning = false;
-				break;
-			default:
-				break;
+		case SDL_QUIT:
+			m_bRunning = false;
+			break;
+		default:
+			break;
 		}
 	}
 }
