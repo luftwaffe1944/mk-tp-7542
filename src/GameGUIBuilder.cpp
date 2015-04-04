@@ -28,8 +28,8 @@ GameGUI* GameGUIBuilder::create() {
 	ifstream gameConfig("src/stageConfig.json", std::ifstream::binary);
 
 	if (!gameConfig.good()) {
-		MessageError fileNotFound(ERROR_FILE_NOT_FOUND, FILE_CONFIG_NOT_FOUND, LOG_LEVEL_ERROR);
-		Log<Output2FILE>::logMsgError(fileNotFound);
+		//MessageError fileNotFound(ERROR_FILE_NOT_FOUND, FILE_CONFIG_NOT_FOUND, LOG_LEVEL_ERROR);
+		//Log<Output2FILE>::logMsgError(fileNotFound);
 		return createDefault();
 	}
 

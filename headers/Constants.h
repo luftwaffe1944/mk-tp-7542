@@ -31,6 +31,12 @@
 #define DEFAULT_CHARACTER_WIDTH 20
 #define DEFAULT_CHARACTER_HEIGHT 35
 #define DEFAULT_CHARACTER_ZINDEX 1
+#define STANCE "stance"
+#define JUMPING_MOVEMENT "jumping"
+#define WALKING_RIGHT_MOVEMENT "walkingRight"
+#define WALKING_LEFT_MOVEMENT "walkingLeft"
+#define DUCKING_MOVEMENT "ducking"
+
 
 //Commons Strings
 #define EMPTY_STRING ""
