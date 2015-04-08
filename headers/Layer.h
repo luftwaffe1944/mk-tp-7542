@@ -10,7 +10,6 @@
 #include <string>
 #include "SDL.h"
 #include "SDLObjectGUI.h"
-#include "GameGUI.h"
 #include "TextureManager.h"
 using namespace std;
 
@@ -23,7 +22,6 @@ private:
 
 public:
 	Layer(const LoaderParams* pParams);
-	Layer(string image, int width, int zIndex);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();

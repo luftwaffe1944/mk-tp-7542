@@ -115,6 +115,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 	cout << MKGame::Instance()->getObjectList().size() << endl;
 
 	characters.push_back(playerOne);
+	return characters;
 }
 
 //TODO Fixme

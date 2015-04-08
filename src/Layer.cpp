@@ -8,8 +8,6 @@
 #include "../headers/Layer.h"
 #include <string>
 #include <iostream>
-#include "../headers/Log.h"
-#include "../headers/Constants.h"
 
 Layer::Layer(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
@@ -29,7 +27,7 @@ void Layer::draw() {
 void Layer::update() {
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 
-	this->offScene = ((this->width - GameGUI::getInstance()->getWindow().getWidthPx()) / 2);
+//	this->offScene = ((this->width - GameGUI::getInstance()->getWindow().getWidthPx()) / 2);
 }
 void Layer::clean() {
 }
