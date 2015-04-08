@@ -13,32 +13,9 @@
 
 Layer::Layer(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
-}
-
-//TODO Deprecated.. use constructor above
-//Layer::Layer(string image, int width, int zIndex) {
-//	this->backgroundImage = image;
-//	this->width = width;
-//	this->zIndex = zIndex;
-//this->setScrollingFactor(0);
-//}
-
-
-
-void Layer::render(SDL_Renderer* render, int height) {
-	stringstream sLayerName;
-	sLayerName << "layer";
-	sLayerName << this->zIndex;
-	TextureManager::Instance()->draw(sLayerName.str(), 0, 0, this->width, height, render, SDL_FLIP_NONE);
-}
-
-
-void Layer::setScrollingFactor(float sFactor) {
-	this->scrollingFactor = sFactor;
-}
-
-float Layer::getScrollingFactor() {
-	return this->scrollingFactor;
+	this->bkgSpeed = 0.5;
+	this->offScene = 0;
+	this->scrollingOffset = 0;
 }
 
 Layer::~Layer() {
@@ -50,8 +27,9 @@ void Layer::draw() {
 }
 
 void Layer::update() {
-//	m_x -= 1;
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
+
+	this->offScene = ((this->width - GameGUI::getInstance()->getWindow().getWidthPx()) / 2);
 }
 void Layer::clean() {
 }

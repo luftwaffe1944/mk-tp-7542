@@ -87,3 +87,53 @@
 - 12:45:52.156 DEBUG: init success
 - 12:45:55.031 DEBUG: cleaning game
 
+- 18:13:32.566 ERROR: JSON EXCEPTION: syntactic Error * Line 24, Column 3
+  Missing ',' or '}' in object declaration
+
+- 18:13:32.566 DEBUG: Windows Ratio: 4
+- 18:13:32.566 DEBUG: JSON - Windows width: 800px
+- 18:13:32.566 DEBUG: JSON - Windows height: 600px
+- 18:13:32.566 DEBUG: JSON - Windows width: 200
+- 18:13:32.566 DEBUG: JSON - Stage width: 1000
+- 18:13:32.566 DEBUG: JSON - Stage height: 150
+- 18:13:32.566 DEBUG: JSON - Stage ypiso: 20
+- 18:13:32.566 DEBUG: JSON - Layer0 background image: images/arenas/far-background.png
+- 18:13:32.566 DEBUG: JSON - Layer0 width: 3000
+- 18:13:32.566 DEBUG: JSON - Layer1 background image: images/arenas/near-background.png
+- 18:13:32.566 DEBUG: JSON - Layer1 width: 3000
+- 18:13:32.566 DEBUG: JSON - Character name: subzero
+- 18:13:32.566 DEBUG: JSON - Character width: 700
+- 18:13:32.566 DEBUG: JSON - Character height: 700
+- 18:13:32.566 DEBUG: JSON - Character z-index: 700
+- 18:13:32.566 DEBUG: JSON - Character orientation: right
+- 18:13:32.615 DEBUG: SDL init success
+- 18:13:32.687 DEBUG: window creation success
+- 18:13:32.845 DEBUG: renderer creation success
+- 18:13:32.845 DEBUG: init success
+- 18:13:37.057 DEBUG: cleaning game
+
+- 23:24:29.278 ERROR: JSON EXCEPTION: syntactic Error * Line 24, Column 3
+  Missing ',' or '}' in object declaration
+
+- 23:24:29.278 DEBUG: Windows Ratio: 4
+- 23:24:29.278 DEBUG: JSON - Windows width: 800px
+- 23:24:29.278 DEBUG: JSON - Windows height: 600px
+- 23:24:29.278 DEBUG: JSON - Windows width: 200
+- 23:24:29.278 DEBUG: JSON - Stage width: 1000
+- 23:24:29.278 DEBUG: JSON - Stage height: 150
+- 23:24:29.278 DEBUG: JSON - Stage ypiso: 20
+- 23:24:29.278 DEBUG: JSON - Layer0 background image: images/arenas/far-background.png
+- 23:24:29.278 DEBUG: JSON - Layer0 width: 3000
+- 23:24:29.278 DEBUG: JSON - Layer1 background image: images/arenas/near-background.png
+- 23:24:29.278 DEBUG: JSON - Layer1 width: 3000
+- 23:24:29.278 DEBUG: JSON - Character name: subzero
+- 23:24:29.278 DEBUG: JSON - Character width: 700
+- 23:24:29.278 DEBUG: JSON - Character height: 700
+- 23:24:29.278 DEBUG: JSON - Character z-index: 700
+- 23:24:29.278 DEBUG: JSON - Character orientation: right
+- 23:24:29.341 DEBUG: SDL init success
+- 23:24:29.431 DEBUG: window creation success
+- 23:24:29.572 DEBUG: renderer creation success
+- 23:24:29.590 DEBUG: init success
+- 23:24:32.302 DEBUG: cleaning game
+

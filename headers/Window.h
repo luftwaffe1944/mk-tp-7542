@@ -21,6 +21,9 @@ public:
 	Window();
 	Window(int widthPx, int heightPx, int width);
 	Window(const char* title, int xpos, int ypos, int widthPx, int heightPx, int widthLg);
+	int getWidthPx();
+	int getHeightPx();
+	int getWidth();
 	virtual ~Window();
 };
 

@@ -27,6 +27,18 @@ Window::Window(const char* title, int xpos, int ypos, int widthPx, int heightPx,
 	this->ypos = ypos;
 }
 
+int Window::getHeightPx() {
+	return this->heightPx;
+}
+
+int Window::getWidthPx() {
+	return this->widthPx;
+}
+
+int Window::getWidth() {
+	return this->width;
+}
+
 Window::~Window() {
 	// TODO Auto-generated destructor stub
 }
