@@ -26,7 +26,7 @@ private:
 	void updateSpeedLayers(Layer* layer);
 	void updateOffScene(Layer* layer);
 	void setSpeedFirstLayer();
-	void setOffSceneFirstLayer()
+	void setOffSceneFirstLayer();
 };
 
 #endif /* LAYERMANAGER_H_ */

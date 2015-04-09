@@ -44,4 +44,16 @@ void LayerManager::setSpeedFirstLayer() {
 	this->speedFirstLayer = layer->getLayerSpeed();
 }
 
+void LayerManager::update() {
 
+	setOffSceneFirstLayer();
+	setSpeedFirstLayer();
+
+	Layer* layerAux;
+	int numberOfLayers = this->layers.size();
+	for(int i = 1; i < numberOfLayers; i++) {
+		layerAux = this->layers[i];
+		updateSpeedLayers(layerAux);
+		updateOffScene(layerAux);
+	}
+}
