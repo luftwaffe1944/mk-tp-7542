@@ -17,7 +17,7 @@ class LayerManager {
 public:
 	LayerManager();
 	virtual ~LayerManager();
-	void update();
+	void init();
 
 private:
 	vector<Layer*> layers;

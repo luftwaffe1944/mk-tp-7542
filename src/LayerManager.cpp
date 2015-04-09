@@ -44,7 +44,7 @@ void LayerManager::setSpeedFirstLayer() {
 	this->speedFirstLayer = layer->getLayerSpeed();
 }
 
-void LayerManager::update() {
+void LayerManager::init() {
 
 	setOffSceneFirstLayer();
 	setSpeedFirstLayer();
