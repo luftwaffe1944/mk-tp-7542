@@ -17,17 +17,15 @@ GameGUIBuilder::~GameGUIBuilder() {
 	// TODO Auto-generated destructor stub
 }
 
-float jsonGetRatio(Json::Value root) {
-	Json::Value windowValue = root[JSON_KEY_VENTANA];
-	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 700).asInt();
-	int win_width = windowValue.get(JSON_KEY_ANCHO, 700).asInt();
-	float ratio = win_width_px / win_width;
+float jsonGetRatio(Window* window) {
+	float ratio = window->widthPx / window->width;
 	FILE_LOG(logDEBUG) << "Windows Ratio (widht_px / width_lg): " << ratio;
 	return ratio;
 
 }
 
 Window jsonGetWindow(Json::Value root) {
+	FILE_LOG(logDEBUG) << "\n INICIO DE EJECUCION";
 
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
 	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 700).asInt();
@@ -158,7 +156,7 @@ GameGUI* GameGUIBuilder::create() {
 
 	Window window = jsonGetWindow(root);
 
-	float ratio = jsonGetRatio(root);
+	float ratio = jsonGetRatio(&window);
 
 	Stage stage = jsonGetStage(root);
 
@@ -179,15 +177,16 @@ GameGUI* GameGUIBuilder::createDefault() {
 
 	GameGUI *gameGUI = GameGUI::getInstance();
 
-	Window window(GAME_TITLE, 100, 100, DEFAULT_WINDOW_WIDTH_PX,
-			DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
-	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT,
-			DEFAULT_STAGE_YFLOOR);
+	//window by default
+	int windowXpos = ((MAX_WINDOW_WIDTH_PX-DEFAULT_WINDOW_WIDTH_PX)/2);
+	int windowYpos = ((MAX_WINDOW_HEIGHT_PX-DEFAULT_WINDOW_HEIGHT_PX)/2);
+	Window window(GAME_TITLE, 100, 100, DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
+
+	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
 
 	float ratio = DEFAULT_WINDOW_WIDTH_PX / DEFAULT_WINDOW_WIDTH;
 	vector<Character*> characters;
-	Character* character = new Character(
-			new LoaderParams(0, 0, 128, 82, 2, ratio, "scorpion"));
+	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratio, "scorpion"));
 
 	//Add layers to the game loop
 	MKGame::Instance()->getObjectList().push_back(character);
@@ -195,11 +194,9 @@ GameGUI* GameGUIBuilder::createDefault() {
 	characters.push_back(character);
 
 	vector<Layer*> layers;
-	Layer* layer = new Layer(
-			new LoaderParams(0, 0, 128, 82, 1, ratio, "layer1"));
+	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, 1, ratio, "layer1"));
 	layers.push_back(layer);
-	Layer* layer2 = new Layer(
-			new LoaderParams(0, 0, 128, 82, 2, ratio, "layer2"));
+	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, 2, ratio, "layer2"));
 	layers.push_back(layer2);
 
 	//Add layers to the game loop
