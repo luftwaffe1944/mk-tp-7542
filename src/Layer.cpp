@@ -11,7 +11,7 @@
 
 Layer::Layer(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
-	this->bkgSpeed = 0.5;
+	this->bkgSpeed = 0;
 	this->offScene = 0;
 	this->scrollingOffset = 0;
 }
@@ -27,8 +27,25 @@ void Layer::draw() {
 void Layer::update() {
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 
-//	this->offScene = ((this->width - GameGUI::getInstance()->getWindow().getWidthPx()) / 2);
+	//this->offScene = ((this->width - GameGUI::getInstance()->getWindow().getWidthPx()) / 2);
+	//this->bkgSpeed = ((this->offScene * this->speedFirstLayer) / )
 }
 void Layer::clean() {
+}
+
+void Layer::setLayerOffScene(int windowsWidth) {
+	this->offScene = ((this->width - windowsWidth) / 2);
+}
+
+void Layer::setLayerSpeed(float speedFirstLayer, float offSceneFirstLayer) {
+	this->bkgSpeed = ((this->offScene * speedFirstLayer) / offSceneFirstLayer);
+}
+
+float Layer::getLayerOffScene() {
+	return this->offScene;
+}
+
+float Layer::getLayerSpeed() {
+	return this->bkgSpeed;
 }
 

@@ -26,6 +26,10 @@ public:
 	virtual void update();
 	virtual void clean();
 	virtual ~Layer();
+	void setLayerSpeed(float speedFirstLayer, float offSceneFirstLayer);
+	void setLayerOffScene(int windowsWidth);
+	float getLayerOffScene();
+	float getLayerSpeed();
 };
 
 #endif /* LAYER_H_ */
