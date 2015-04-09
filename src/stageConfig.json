@@ -1,7 +1,7 @@
 {
 	"ventana": {
 		"anchopx": 800,
-		"altopx": 600,
+		"altopx": 0,
 		"ancho": 200
 	},
 	"escenario": {
@@ -20,7 +20,7 @@
 		}
 	],
 	"personaje": {
-		"nombre": "subzero"
+		"nombre": "subzero",
 		"ancho": 20,
 		"alto": 35,
 		"zindex": 1,
