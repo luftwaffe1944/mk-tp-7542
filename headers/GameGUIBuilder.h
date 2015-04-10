@@ -9,12 +9,15 @@
 #define GAMEGUIBUILDER_H_
 #include <fstream>
 #include <iostream>
+#include <vector>
 #include <json/value.h>
 #include <json/json.h>
 #include "GameGUI.h"
 #include "Constants.h"
 #include "Messages.h"
 #include "MessageError.h"
+#include "MKGame.h"
+#include "LoaderParams.h"
 #include "Log.h"
 #include <json/reader.h>
 

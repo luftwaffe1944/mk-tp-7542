@@ -22,21 +22,26 @@
 #define DEFAULT_STAGE_YFLOOR 20
 
 //layers
-#define DEFAULT_LAYER1_IMAGE "pic1.png"
-#define DEFAULT_LAYER1_WIDTH 500
-#define DEFAULT_LAYER2_IMAGE "pic2.png"
-#define DEFAULT_LAYER2_WIDTH 1000
+#define DEFAULT_LAYER1_IMAGE "images/arenas/far-background.png"
+#define DEFAULT_LAYER1_WIDTH 3000
+#define DEFAULT_LAYER2_IMAGE "images/arenas/near-background.png"
+#define DEFAULT_LAYER2_WIDTH 3000
 
 //characters
 #define DEFAULT_CHARACTER_WIDTH 20
 #define DEFAULT_CHARACTER_HEIGHT 35
 #define DEFAULT_CHARACTER_ZINDEX 1
+#define DEFAULT_CHARACTER_ORIENTATION "right"
 #define STANCE "stance"
 #define JUMPING_MOVEMENT "jumping"
 #define WALKING_RIGHT_MOVEMENT "walkingRight"
 #define WALKING_LEFT_MOVEMENT "walkingLeft"
 #define DUCKING_MOVEMENT "ducking"
 
+//Movement suffixes
+#define WALK_SUFFIX "Walk"
+#define STANCE_SUFFIX "Stance"
+#define JUMP_SUFFIX "Jump"
 
 //Commons Strings
 #define EMPTY_STRING ""
@@ -56,7 +61,9 @@
 #define JSON_KEY_CAPAS "capas"
 #define JSON_KEY_IMAGEN_FONDO "imagen_fondo"
 
+#define JSON_KEY_NOMBRE "nombre"
 #define JSON_KEY_PERSONAJE "personaje"
 #define JSON_KEY_ZINDEX "zindex"
+#define JSON_KEY_ORIENTACION "orientacion"
 
 #endif /* CONSTANTS_H_ */

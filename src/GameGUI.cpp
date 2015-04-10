@@ -27,19 +27,19 @@ void GameGUI::setStage(Stage stage) {
 	this->stage = stage;
 }
 
-void GameGUI::setCharacters(vector<Character> characters) {
+void GameGUI::setCharacters(vector<Character*> characters) {
 	this->characters = characters;
 }
 
-void GameGUI::setLayers(vector<Layer> layers) {
+void GameGUI::setLayers(vector<Layer*> layers) {
 	this->layers = layers;
 }
 
-vector<Character> GameGUI::getCharacters() {
+vector<Character*> GameGUI::getCharacters() {
 	return this->characters;
 }
 
-vector<Layer> GameGUI::getLayers() {
+vector<Layer*> GameGUI::getLayers() {
 	return this->layers;
 }
 

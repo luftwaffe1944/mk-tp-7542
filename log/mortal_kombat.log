@@ -1,3 +1,67 @@
 - 20:16:33.730 DEBUG: msg debug... 
 - 20:16:33.730 ERROR: msg error... 
 - 20:16:33.730 WARNING: msg warning... 
+- 23:02:47.503 DEBUG: SDL init success
+- 23:02:47.507 DEBUG: window creation success
+- 23:02:47.622 DEBUG: renderer creation success
+- 23:02:47.743 DEBUG: init success
+- 23:04:28.658 DEBUG: cleaning game
+
+- 23:24:14.491 DEBUG: SDL init success
+- 23:24:14.495 DEBUG: window creation success
+- 23:24:14.536 DEBUG: renderer creation success
+- 23:24:22.410 DEBUG: init success
+- 00:35:42.806 DEBUG: SDL init success
+- 00:35:42.809 DEBUG: window creation success
+- 00:35:42.925 DEBUG: renderer creation success
+- 00:35:42.978 DEBUG: init success
+- 00:22:06.367 ERROR: JSON EXCEPTION: syntactic Error * Line 24, Column 3
+  Missing ',' or '}' in object declaration
+
+- 00:22:06.367 DEBUG: Windows Ratio: 4
+- 00:22:06.367 DEBUG: JSON - Windows width: 800px
+- 00:22:06.367 DEBUG: JSON - Windows height: 600px
+- 00:22:06.367 DEBUG: JSON - Windows width: 200
+- 00:22:06.367 DEBUG: JSON - Stage width: 1000
+- 00:22:06.367 DEBUG: JSON - Stage height: 150
+- 00:22:06.367 DEBUG: JSON - Stage ypiso: 20
+- 00:22:06.367 DEBUG: JSON - Layer0 background image: images/arenas/far-background.png
+- 00:22:06.367 DEBUG: JSON - Layer0 width: 3000
+- 00:22:06.367 DEBUG: JSON - Layer1 background image: images/arenas/near-background.png
+- 00:22:06.367 DEBUG: JSON - Layer1 width: 3000
+- 00:22:06.367 DEBUG: JSON - Character name: subzero
+- 00:22:06.367 DEBUG: JSON - Character width: 700
+- 00:22:06.367 DEBUG: JSON - Character height: 700
+- 00:22:06.367 DEBUG: JSON - Character z-index: 700
+- 00:22:06.367 DEBUG: JSON - Character orientation: right
+- 00:22:07.241 DEBUG: SDL init success
+- 00:22:07.249 DEBUG: window creation success
+- 00:22:07.324 DEBUG: renderer creation success
+- 00:22:07.398 DEBUG: init success
+- 00:22:20.592 DEBUG: cleaning game
+
+- 00:22:25.502 ERROR: JSON EXCEPTION: syntactic Error * Line 24, Column 3
+  Missing ',' or '}' in object declaration
+
+- 00:22:25.502 DEBUG: Windows Ratio: 4
+- 00:22:25.502 DEBUG: JSON - Windows width: 800px
+- 00:22:25.502 DEBUG: JSON - Windows height: 600px
+- 00:22:25.502 DEBUG: JSON - Windows width: 200
+- 00:22:25.502 DEBUG: JSON - Stage width: 1000
+- 00:22:25.502 DEBUG: JSON - Stage height: 150
+- 00:22:25.502 DEBUG: JSON - Stage ypiso: 20
+- 00:22:25.502 DEBUG: JSON - Layer0 background image: images/arenas/far-background.png
+- 00:22:25.502 DEBUG: JSON - Layer0 width: 3000
+- 00:22:25.502 DEBUG: JSON - Layer1 background image: images/arenas/near-background.png
+- 00:22:25.502 DEBUG: JSON - Layer1 width: 3000
+- 00:22:25.502 DEBUG: JSON - Character name: subzero
+- 00:22:25.503 DEBUG: JSON - Character width: 700
+- 00:22:25.503 DEBUG: JSON - Character height: 700
+- 00:22:25.503 DEBUG: JSON - Character z-index: 700
+- 00:22:25.503 DEBUG: JSON - Character orientation: right
+- 00:22:26.148 DEBUG: SDL init success
+- 00:22:26.153 DEBUG: window creation success
+- 00:22:26.204 DEBUG: renderer creation success
+- 00:22:26.246 DEBUG: init success
+- 00:22:50.455 DEBUG: cleaning game
+

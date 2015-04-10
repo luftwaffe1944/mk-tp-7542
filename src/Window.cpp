@@ -16,7 +16,15 @@ Window::Window(int widthPx, int heightPx, int width) {
 	this->widthPx = widthPx;
 	this->heightPx = heightPx;
 	this->width = width;
+}
+Window::Window(const char* title, int xpos, int ypos, int widthPx, int heightPx, int widthLg) {
 
+	this->widthPx = widthPx;
+	this->heightPx = heightPx;
+	this->width = widthLg;
+	this->title = title;
+	this->xpos = xpos;
+	this->ypos = ypos;
 }
 
 Window::~Window() {

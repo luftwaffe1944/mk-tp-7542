@@ -7,34 +7,52 @@
 
 #include "../headers/MKGame.h"
 #include "../headers/Log.h"
-#include "../headers/TextureManager.h"
-#include "../headers/InputControl.h"
-#include "../headers/Constants.h"
-#include <SDL.h>
+
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 using namespace std;
 
-bool firstTimeRender=true;
-int frame = 0;
 
+MKGame::MKGame() {
+}
 
-bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, int flags) {
+MKGame* MKGame::Instance() {
+	static MKGame s_pInstance;
+	return &s_pInstance;
+}
+
+bool MKGame::init(GameGUI* gameGui) {
+
+	this->gameGui = gameGui;
+	this->keyboardControl = InputControl();
 	// attempt to initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		FILE_LOG(logDEBUG) << "SDL init success";
 		// init the window
-		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-		if(m_pWindow != 0) {
+		Window gameWindow = this->gameGui->getWindow();
+		m_pWindow = SDL_CreateWindow(gameWindow.title, gameWindow.xpos,
+				gameWindow.ypos, gameWindow.widthPx, gameWindow.heightPx, 0);
+		if (m_pWindow != 0) {
 			FILE_LOG(logDEBUG) << "window creation success";
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-			if(m_pRenderer != 0) {
+			if (m_pRenderer != 0) {
 				FILE_LOG(logDEBUG) << "renderer creation success";
-				SDL_SetRenderDrawColor(m_pRenderer, 255,0,0,255);
 
-				Character subzero = Character(0, height - 132, 66, 132, 1);
-				this->pCharacter = subzero;
-				this->pCharacter.load(m_pRenderer);
+				/* TODO calcular el alto y el ancho, estos valores vienen en el json
+				 * en teoria no se deberia calcular con el query
+				 * SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+				 */
+
+				vector<SDLObjectGUI*> objects = getObjectList();
+				for (int i = 0; i < objects.size(); i++) {
+					objects[i]->load(m_pRenderer);
+				}
+
+				/*for (int i = 0; i < objects.size(); i++) {
+					objects[i]->draw();
+				}*/
+
 
 
 			} else {
@@ -56,45 +74,16 @@ bool MKGame::init(const char* title, int xpos, int ypos, int width, int height, 
 
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
-	int row = 1;
-	if (pCharacter.getMovement() == JUMPING_MOVEMENT){
-		row = 3;
-	}
-	pCharacter.draw();
-	//TextureManager::Instance()->drawFrame(pCharacter.getActiveSprite(), pCharacter.x(), pCharacter.y(), pCharacter.w(), pCharacter.h(),row,pCharacter.getNextFrame(), m_pRenderer,SDL_FLIP_NONE);
 
+	vector<SDLObjectGUI*> objects = this->getObjectList();
+	for (int i = 0; i < objects.size(); i++) {
+		objects[i]->draw();
+	}
+
+	//TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 
 }
-
-void MKGame::update(){
-	InputControl keyboardControl = InputControl();
-	keyboardControl.refreshInputs();
-
-	InputCommand playerCommand = keyboardControl.getFirstPlayerMove();
-	//InputCommand optionCommand = keyboardControl.getControlOption();
-		switch(playerCommand){
-		case FIRST_PLAYER_MOVE_RIGHT:
-			this->pCharacter.setMovement(WALKING_RIGHT_MOVEMENT);
-			//this->pCharacter.setActiveSprite("subzerowalk");
-			break;
-		case FIRST_PLAYER_MOVE_LEFT:
-			this->pCharacter.setMovement(WALKING_LEFT_MOVEMENT);
-			//this->pCharacter.setActiveSprite("subzerowalk");
-			break;
-		case FIRST_PLAYER_MOVE_UP:
-			this->pCharacter.setMovement(JUMPING_MOVEMENT);
-			//this->pCharacter.setActiveSprite("subzerojump");
-			break;
-		case NO_INPUT:
-			//this->pCharacter.setMovement(STANCE);
-			//this->pCharacter.setActiveSprite("subzerostand");
-			break;
-		}
-		this->pCharacter.update();
-		SDL_Delay( 75 );
-}
-
 
 void MKGame::clean() {
 	FILE_LOG(logDEBUG) << "cleaning game\n";
@@ -103,15 +92,33 @@ void MKGame::clean() {
 	SDL_Quit();
 }
 
+void MKGame::draw() {
+	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
+			i++) {
+		objectList[i]->draw();
+	}
+}
+
+void MKGame::update() {
+	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
+			i++) {
+		objectList[i]->update(this->keyboardControl);
+	}
+}
+
 void MKGame::handleEvents() {
 	SDL_Event event;
-	while(SDL_PollEvent(&event)) {
+	if (SDL_PollEvent(&event)) {
 		switch (event.type) {
-			case SDL_QUIT:
-				m_bRunning = false;
-				break;
-			default:
-				break;
+		case SDL_QUIT:
+			m_bRunning = false;
+			break;
+		default:
+			break;
 		}
 	}
+}
+
+vector<SDLObjectGUI*>& MKGame::getObjectList() {
+	return objectList;
 }

@@ -1,0 +1,31 @@
+{"frames": {
+
+"other/01":
+{
+	"frame": {"x":2,"y":2,"w":56,"h":28},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":56,"h":28},
+	"sourceSize": {"w":56,"h":28},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"other/02":
+{
+	"frame": {"x":2,"y":32,"w":25,"h":63},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":63},
+	"sourceSize": {"w":25,"h":63},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"target": "paper2d", 
+	"image": "UMK3_Sub-Zero_other.png",
+	"format": "RGBA8888",
+	"size": {"w":64,"h":128},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:3804d8faccbbf5b532687a40bea16d3e:b65f1de99a72af09637ccec1a70169ce:53cdd368c7d9a0da813fa442f0ce4c55$"
+}
+}

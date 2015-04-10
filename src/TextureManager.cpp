@@ -37,12 +37,18 @@ bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pR
 void TextureManager::draw(std::string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip) {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
+
 	srcRect.x = 0;
 	srcRect.y = 0;
-	srcRect.w = destRect.w = width;
-	srcRect.h = destRect.h = height;
+	srcRect.w = this->queryTexture(id).w;
+	srcRect.h = this->queryTexture(id).h;
+
+	destRect.w = width;
+	destRect.h = height;
 	destRect.x = x;
 	destRect.y = y;
+
+	//flip = SDL_FLIP_HORIZONTAL;
 	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
 
@@ -56,4 +62,22 @@ void TextureManager::drawFrame(std::string id, int x, int y, int width, int heig
 	destRect.x = x;
 	destRect.y = y;
 	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+}
+
+void TextureManager::setColor(std::string id, Uint8 red, Uint8 green, Uint8 blue )
+{
+	//Modulate texture rgb
+	SDL_SetTextureColorMod(m_textureMap[id], red, green, blue );
+}
+
+void TextureManager::setBlendMode(std::string id, SDL_BlendMode blending )
+{
+	//Set blending function
+	SDL_SetTextureBlendMode(m_textureMap[id], blending );
+}
+
+void TextureManager::setAlpha(std::string id, Uint8 alpha )
+{
+	//Modulate texture alpha
+	SDL_SetTextureAlphaMod(m_textureMap[id], alpha );
 }

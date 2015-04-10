@@ -20,14 +20,8 @@ public:
 	Sprite();
 	virtual ~Sprite();
 	Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount);
-    void drawSprite();
-
-    void runForward(int firstFrame, int lastFrame, float fpsSpeed);
-    void runBackward(int firstFrame, int lastFrame, float fpsSpeed);
-    int getX();
-    void setX(int passedX);
-    void setY(int passedY);
-    void reset();
+    //void runForward(int firstFrame, int lastFrame, float fpsSpeed);
+    //void runBackward(int firstFrame, int lastFrame, float fpsSpeed);
     std::string getSpriteId();
     int getSpriteWidth();
     int getSpriteHeight();
@@ -38,7 +32,7 @@ private:
     int spriteWidth;
     int spriteHeight;
     int currentFrame;
-    int animationDelay;
+    //int animationDelay;
     int framesAmount;
 };
 
