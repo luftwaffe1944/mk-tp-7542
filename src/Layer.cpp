@@ -14,6 +14,8 @@ Layer::Layer(const LoaderParams* pParams) :
 	this->bkgSpeed = 0;
 	this->offScene = 0;
 	this->scrollingOffset = 0;
+	this->needRefresh = false;
+	this->orientation = 1;
 }
 
 Layer::~Layer() {
@@ -27,8 +29,9 @@ void Layer::draw() {
 void Layer::update() {
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 
-	//this->offScene = ((this->width - GameGUI::getInstance()->getWindow().getWidthPx()) / 2);
-	//this->bkgSpeed = ((this->offScene * this->speedFirstLayer) / )
+	if (this->needRefresh) {
+		this->scrollingOffset -= this->bkgSpeed * this->orientation;
+	}
 }
 void Layer::clean() {
 }

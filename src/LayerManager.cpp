@@ -11,7 +11,7 @@ LayerManager::LayerManager() {
 	this->offSceneFirstLayer = 0;
 	this->speedFirstLayer = 0;
 	this->layers = GameGUI::getInstance()->getLayers();
-
+	this->characters = GameGUI::getInstance()->getCharacters();
 }
 
 LayerManager::~LayerManager() {

@@ -18,6 +18,8 @@ private:
 	int offScene;
 	float scrollingOffset;
 	float bkgSpeed;
+	int orientation; /* 1=right -1=left */
+	bool needRefresh;
 
 
 public:

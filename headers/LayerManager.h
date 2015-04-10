@@ -11,6 +11,7 @@
 #define LAYER_SPEED 0.5
 
 #include "Layer.h"
+#include "Character.h"
 #include "GameGUI.h"
 
 class LayerManager {
@@ -21,6 +22,7 @@ public:
 
 private:
 	vector<Layer*> layers;
+	vector<Character*> characters;
 	float speedFirstLayer;
 	float offSceneFirstLayer;
 	void updateSpeedLayers(Layer* layer);
