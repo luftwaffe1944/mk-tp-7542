@@ -73,6 +73,8 @@ void InputControl::refreshInputs() {
 			&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
 
+	} else if (currentKeyStates[SDL_SCANCODE_O]) {
+		this->firstPlayerMove = FIRST_PLAYER_CHANGE_ORIENTATION;
 	}
 
 }

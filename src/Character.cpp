@@ -90,7 +90,7 @@ void Character::draw() {
 		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
 				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
 				1, currentFrame,
-				renderer,SDL_FLIP_NONE);
+				renderer,(!isRightOriented)?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
 }
 
 bool Character::shouldMoveForward() {
@@ -131,6 +131,9 @@ void Character::update() {
 		case FIRST_PLAYER_MOVE_UP_RIGHT:
 			this->setMovement(JUMPING_RIGHT_MOVEMENT);
 			jumpRight();
+			break;
+		case FIRST_PLAYER_CHANGE_ORIENTATION:
+			isRightOriented =! isRightOriented;
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
