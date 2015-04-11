@@ -99,6 +99,7 @@ void MKGame::update() {
 	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
 			i++) {
 		objectList[i]->update();
+		LayerManager::Instance()->refresh();
 	}
 }
 

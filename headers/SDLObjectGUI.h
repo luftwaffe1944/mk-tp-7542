@@ -25,6 +25,8 @@ public:
 	virtual bool load();
 	virtual bool load(SDL_Renderer* render);
 	void setImagePath(string imagePath);
+	string getImagePath();
+	string getTextureID();
 protected:
 	string imagePath;
 	float positionX;

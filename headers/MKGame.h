@@ -17,6 +17,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <vector>
+#include "LayerManager.h"
 
 using namespace std;
 

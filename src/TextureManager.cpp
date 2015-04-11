@@ -8,6 +8,7 @@
 #include "../headers/TextureManager.h"
 #include <SDL.h>
 #include <SDL_image.h>
+#include "../headers/Log.h"
 
 TextureManager::TextureManager() {
 	// TODO Auto-generated constructor stub

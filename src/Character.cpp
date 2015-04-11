@@ -18,12 +18,16 @@ Character::Character(const LoaderParams* pParams) :
 
 }
 
-Character::Character(int width, int height, int zindex, bool isRightOriented) : SDLObjectGUI() {
-	this->width = width;
-	this->height = height;
-	this->zindex = zindex;
-	this->isRightOriented = isRightOriented;
-}
+//Character::Character(int width, int height, int zindex, std::string orientation) : SDLObjectGUI() {
+//
+//}
+//
+//Character::Character(int width, int height, int zindex, bool isRightOriented) : SDLObjectGUI() {
+//	this->width = width;
+//	this->height = height;
+//	this->zindex = zindex;
+//	this->isRightOriented = isRightOriented;
+//}
 
 Character::Character(string name, int width, int height, int zindex, bool isRightOriented, float ratio, int winWidth) : SDLObjectGUI(){
 	this->name = name;
@@ -44,7 +48,6 @@ Character::Character(string name, int width, int height, int zindex, bool isRigh
 	this->textureID = name;
 	this->drawRatio = ratio;
 }
-
 bool Character::load(SDL_Renderer* render) {
 	this->renderer = render;
 	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, this->imagePath+"/UMK3_Sub-Zero_walk.png",
@@ -245,6 +248,7 @@ void Character::walkRight() {
 void Character::walkLeft() {
 	isWalkingLeft = true;
 	positionX = positionX - 7;
+
 }
 
 
@@ -259,6 +263,16 @@ std::string Character::getMovement() {
 void Character::clean() {
 }
 
+
+int Character::getWidth() {
+	return this->width;
+}
+
+int Character::getPosX() {
+	return this->positionX;
+}
+
 Character::~Character() {
 	// TODO Auto-generated destructor stub
+
 }

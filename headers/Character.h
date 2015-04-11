@@ -45,6 +45,8 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
+	int getWidth();
+	int getPosX();
 
 	//Movement & position methods
 	void jump();

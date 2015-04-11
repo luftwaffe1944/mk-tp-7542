@@ -65,3 +65,156 @@
 - 00:22:26.246 DEBUG: init success
 - 00:22:50.455 DEBUG: cleaning game
 
+- 18:13:32.566 ERROR: JSON EXCEPTION: syntactic Error * Line 24, Column 3
+  Missing ',' or '}' in object declaration
+
+- 18:13:32.566 DEBUG: Windows Ratio: 4
+- 18:13:32.566 DEBUG: JSON - Windows width: 800px
+- 18:13:32.566 DEBUG: JSON - Windows height: 600px
+- 18:13:32.566 DEBUG: JSON - Windows width: 200
+- 18:13:32.566 DEBUG: JSON - Stage width: 1000
+- 18:13:32.566 DEBUG: JSON - Stage height: 150
+- 18:13:32.566 DEBUG: JSON - Stage ypiso: 20
+- 18:13:32.566 DEBUG: JSON - Layer0 background image: images/arenas/far-background.png
+- 18:13:32.566 DEBUG: JSON - Layer0 width: 3000
+- 18:13:32.566 DEBUG: JSON - Layer1 background image: images/arenas/near-background.png
+- 18:13:32.566 DEBUG: JSON - Layer1 width: 3000
+- 18:13:32.566 DEBUG: JSON - Character name: subzero
+- 18:13:32.566 DEBUG: JSON - Character width: 700
+- 18:13:32.566 DEBUG: JSON - Character height: 700
+- 18:13:32.566 DEBUG: JSON - Character z-index: 700
+- 18:13:32.566 DEBUG: JSON - Character orientation: right
+- 18:13:32.615 DEBUG: SDL init success
+- 18:13:32.687 DEBUG: window creation success
+- 18:13:32.845 DEBUG: renderer creation success
+- 18:13:32.845 DEBUG: init success
+- 18:13:37.057 DEBUG: cleaning game
+
+- 23:24:29.278 ERROR: JSON EXCEPTION: syntactic Error * Line 24, Column 3
+  Missing ',' or '}' in object declaration
+
+- 23:24:29.278 DEBUG: Windows Ratio: 4
+- 23:24:29.278 DEBUG: JSON - Windows width: 800px
+- 23:24:29.278 DEBUG: JSON - Windows height: 600px
+- 23:24:29.278 DEBUG: JSON - Windows width: 200
+- 23:24:29.278 DEBUG: JSON - Stage width: 1000
+- 23:24:29.278 DEBUG: JSON - Stage height: 150
+- 23:24:29.278 DEBUG: JSON - Stage ypiso: 20
+- 23:24:29.278 DEBUG: JSON - Layer0 background image: images/arenas/far-background.png
+- 23:24:29.278 DEBUG: JSON - Layer0 width: 3000
+- 23:24:29.278 DEBUG: JSON - Layer1 background image: images/arenas/near-background.png
+- 23:24:29.278 DEBUG: JSON - Layer1 width: 3000
+- 23:24:29.278 DEBUG: JSON - Character name: subzero
+- 23:24:29.278 DEBUG: JSON - Character width: 700
+- 23:24:29.278 DEBUG: JSON - Character height: 700
+- 23:24:29.278 DEBUG: JSON - Character z-index: 700
+- 23:24:29.278 DEBUG: JSON - Character orientation: right
+- 23:24:29.341 DEBUG: SDL init success
+- 23:24:29.431 DEBUG: window creation success
+- 23:24:29.572 DEBUG: renderer creation success
+- 23:24:29.590 DEBUG: init success
+- 23:24:32.302 DEBUG: cleaning game
+
+- 18:19:20.682 DEBUG: Windows Ratio: 3
+- 18:19:20.682 DEBUG: JSON - Windows width: 700px
+- 18:19:20.682 DEBUG: JSON - Windows height: 480px
+- 18:19:20.682 DEBUG: JSON - Windows width: 200
+- 18:19:20.682 DEBUG: JSON - Stage width: 1000
+- 18:19:20.682 DEBUG: JSON - Stage height: 150
+- 18:19:20.682 DEBUG: JSON - Stage ypiso: 250
+- 18:19:20.682 DEBUG: JSON - Number of Layers: 3
+- 18:19:20.682 DEBUG: JSON - Layer ID: layer0
+- 18:19:20.682 DEBUG: JSON - Layer0 background image: images/arenas/p_3n.png
+- 18:19:20.682 DEBUG: JSON - Layer0 width: 721
+- 18:19:20.682 DEBUG: JSON - Layer ID: layer1
+- 18:19:20.682 DEBUG: JSON - Layer1 background image: images/arenas/p_2n.png
+- 18:19:20.682 DEBUG: JSON - Layer1 width: 831
+- 18:19:20.682 DEBUG: JSON - Layer ID: layer2
+- 18:19:20.682 DEBUG: JSON - Layer2 background image: images/arenas/p_1n.png
+- 18:19:20.682 DEBUG: JSON - Layer2 width: 1200
+- 18:19:20.682 DEBUG: JSON - Character name: subzero
+- 18:19:20.682 DEBUG: JSON - Character width: 140
+- 18:19:20.682 DEBUG: JSON - Character height: 200
+- 18:19:20.682 DEBUG: JSON - Character z-index: 1
+- 18:19:20.682 DEBUG: JSON - Character orientation: left
+- 18:19:20.682 DEBUG: layer id: layer2 images/arenas/p_1n.png
+- 18:19:20.683 DEBUG: Layer layer2 layeroffScene 250
+- 18:19:20.683 DEBUG: Layer layer2 speed: 1
+- 18:19:20.683 DEBUG: Layer layer1 layeroffScene 65
+- 18:19:20.683 DEBUG: Layer layer1 speed: 0.26
+- 18:19:20.683 DEBUG: Layer layer0 layeroffScene 10
+- 18:19:20.683 DEBUG: Layer layer0 speed: 0.04
+- 18:19:21.331 DEBUG: SDL init success
+- 18:19:21.336 DEBUG: window creation success
+- 18:19:21.397 DEBUG: renderer creation success
+- 18:19:21.452 DEBUG: init success
+- 18:20:22.385 DEBUG: cleaning game
+
+- 18:22:11.900 DEBUG: Windows Ratio: 3
+- 18:22:11.900 DEBUG: JSON - Windows width: 700px
+- 18:22:11.900 DEBUG: JSON - Windows height: 480px
+- 18:22:11.900 DEBUG: JSON - Windows width: 200
+- 18:22:11.900 DEBUG: JSON - Stage width: 1000
+- 18:22:11.900 DEBUG: JSON - Stage height: 150
+- 18:22:11.900 DEBUG: JSON - Stage ypiso: 250
+- 18:22:11.900 DEBUG: JSON - Number of Layers: 3
+- 18:22:11.900 DEBUG: JSON - Layer ID: layer0
+- 18:22:11.900 DEBUG: JSON - Layer0 background image: images/arenas/p_3n.png
+- 18:22:11.900 DEBUG: JSON - Layer0 width: 721
+- 18:22:11.900 DEBUG: JSON - Layer ID: layer1
+- 18:22:11.900 DEBUG: JSON - Layer1 background image: images/arenas/p_2n.png
+- 18:22:11.900 DEBUG: JSON - Layer1 width: 831
+- 18:22:11.900 DEBUG: JSON - Layer ID: layer2
+- 18:22:11.900 DEBUG: JSON - Layer2 background image: images/arenas/p_1n.png
+- 18:22:11.900 DEBUG: JSON - Layer2 width: 1200
+- 18:22:11.900 DEBUG: JSON - Character name: subzero
+- 18:22:11.900 DEBUG: JSON - Character width: 140
+- 18:22:11.900 DEBUG: JSON - Character height: 200
+- 18:22:11.900 DEBUG: JSON - Character z-index: 1
+- 18:22:11.900 DEBUG: JSON - Character orientation: left
+- 18:22:11.900 DEBUG: layer id: layer2 images/arenas/p_1n.png
+- 18:22:11.900 DEBUG: Layer layer2 layeroffScene 250
+- 18:22:11.900 DEBUG: Layer layer2 speed: 1
+- 18:22:11.901 DEBUG: Layer layer1 layeroffScene 65
+- 18:22:11.901 DEBUG: Layer layer1 speed: 0.26
+- 18:22:11.901 DEBUG: Layer layer0 layeroffScene 10
+- 18:22:11.901 DEBUG: Layer layer0 speed: 0.04
+- 18:22:12.642 DEBUG: SDL init success
+- 18:22:12.646 DEBUG: window creation success
+- 18:22:12.690 DEBUG: renderer creation success
+- 18:22:12.740 DEBUG: init success
+- 18:23:41.047 DEBUG: cleaning game
+
+- 18:24:16.105 DEBUG: Windows Ratio: 3
+- 18:24:16.105 DEBUG: JSON - Windows width: 700px
+- 18:24:16.105 DEBUG: JSON - Windows height: 480px
+- 18:24:16.105 DEBUG: JSON - Windows width: 200
+- 18:24:16.105 DEBUG: JSON - Stage width: 1000
+- 18:24:16.105 DEBUG: JSON - Stage height: 150
+- 18:24:16.105 DEBUG: JSON - Stage ypiso: 250
+- 18:24:16.106 DEBUG: JSON - Number of Layers: 3
+- 18:24:16.106 DEBUG: JSON - Layer ID: layer0
+- 18:24:16.106 DEBUG: JSON - Layer0 background image: images/arenas/p_3n.png
+- 18:24:16.106 DEBUG: JSON - Layer0 width: 721
+- 18:24:16.106 DEBUG: JSON - Layer ID: layer1
+- 18:24:16.106 DEBUG: JSON - Layer1 background image: images/arenas/p_2n.png
+- 18:24:16.106 DEBUG: JSON - Layer1 width: 831
+- 18:24:16.106 DEBUG: JSON - Layer ID: layer2
+- 18:24:16.106 DEBUG: JSON - Layer2 background image: images/arenas/p_1n.png
+- 18:24:16.106 DEBUG: JSON - Layer2 width: 1200
+- 18:24:16.106 DEBUG: JSON - Character name: subzero
+- 18:24:16.106 DEBUG: JSON - Character width: 140
+- 18:24:16.106 DEBUG: JSON - Character height: 200
+- 18:24:16.106 DEBUG: JSON - Character z-index: 1
+- 18:24:16.106 DEBUG: JSON - Character orientation: left
+- 18:24:16.106 DEBUG: layer id: layer2 images/arenas/p_1n.png
+- 18:24:16.106 DEBUG: Layer layer2 layeroffScene 250
+- 18:24:16.106 DEBUG: Layer layer2 speed: 3
+- 18:24:16.106 DEBUG: Layer layer1 layeroffScene 65
+- 18:24:16.106 DEBUG: Layer layer1 speed: 0.78
+- 18:24:16.106 DEBUG: Layer layer0 layeroffScene 10
+- 18:24:16.106 DEBUG: Layer layer0 speed: 0.12
+- 18:24:16.846 DEBUG: SDL init success
+- 18:24:16.850 DEBUG: window creation success
+- 18:24:16.897 DEBUG: renderer creation success
+- 18:24:16.951 DEBUG: init success
