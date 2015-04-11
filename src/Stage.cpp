@@ -22,6 +22,10 @@ int Stage::getHeight(){
 	return this->height;
 }
 
+int Stage::getWidth() {
+	return this->width;
+}
+
 Stage::~Stage() {
 	// TODO Auto-generated destructor stub
 }

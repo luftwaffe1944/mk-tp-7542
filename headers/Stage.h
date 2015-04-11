@@ -18,6 +18,7 @@ public:
 	Stage(int witdh, int height, int yfloor);
 	virtual ~Stage();
 	int getHeight();
+	int getWidth();
 };
 
 #endif /* STAGE_H_ */
