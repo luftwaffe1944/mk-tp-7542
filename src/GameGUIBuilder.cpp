@@ -114,7 +114,6 @@ GameGUI* GameGUIBuilder::create() {
 	//Add player to the game loop
 	playerOne->setImagePath("images/spritesheets_subzero/");
 	MKGame::Instance()->getObjectList().push_back(playerOne);
-	cout << MKGame::Instance()->getObjectList().size() << endl;
 
 	characters.push_back(playerOne);
 

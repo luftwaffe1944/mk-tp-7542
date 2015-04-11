@@ -37,7 +37,7 @@ public:
 	Character();
 	Character(int width, int height, int zindex, bool isRightOriented);
 	Character(std::string name, int width, int height, int zindex, bool isRightOriented, float ratio, int winWidth);
-	virtual bool load(SDL_Renderer* render);
+	virtual bool load(SDL_Renderer* );
 	void render(SDL_Renderer* render);
 	virtual ~Character();
 	Character(const LoaderParams* pParams);

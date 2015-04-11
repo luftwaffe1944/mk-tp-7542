@@ -52,10 +52,13 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, 66, 132, 6);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
 			renderer, 73, 100, 0);
+	Sprite* spriteJumpRight = new Sprite(this->name+JUMP_RIGHT_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
+				renderer, 78, 158, 9);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_SUFFIX, spriteJump));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_RIGHT_SUFFIX, spriteJumpRight));
 
 }
 
@@ -73,6 +76,8 @@ void Character::draw() {
 			currentSprite = this->characterSprites[this->name+JUMP_SUFFIX];
 		} else if (this->getMovement() == STANCE){
 			currentSprite = this->characterSprites[this->name+STANCE_SUFFIX];
+		} else if (this->getMovement() == JUMPING_RIGHT_MOVEMENT){
+			currentSprite = this->characterSprites[this->name+JUMP_RIGHT_SUFFIX];
 		} else{
 			//TODO: review
 		}
@@ -124,7 +129,7 @@ void Character::update() {
 			jump();
 			break;
 		case FIRST_PLAYER_MOVE_UP_RIGHT:
-			this->setMovement(JUMPING_MOVEMENT);
+			this->setMovement(JUMPING_RIGHT_MOVEMENT);
 			jumpRight();
 			break;
 		case NO_INPUT:
