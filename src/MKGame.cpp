@@ -8,9 +8,6 @@
 #include "../headers/MKGame.h"
 #include "../headers/Log.h"
 
-#include <stdio.h>
-#include <iostream>
-#include <vector>
 using namespace std;
 
 

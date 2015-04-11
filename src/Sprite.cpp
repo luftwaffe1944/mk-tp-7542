@@ -36,13 +36,21 @@ int Sprite::getSpriteHeight() {
 }
 
 
-int Sprite::getNextFrame() {
-	int pepe;
-	pepe = this->currentFrame;
+int Sprite::getNextForwardingFrame() {
 	if (this->currentFrame >= this->framesAmount) {
 		this->currentFrame=0;
+	} else {
+		this->currentFrame = currentFrame + 1;
 	}
-	this->currentFrame = currentFrame + 1;
+	return this->currentFrame;
+}
+
+int Sprite::getNextBackwardingFrame() {
+	if (this->currentFrame <= 0) {
+		this->currentFrame=framesAmount;
+	} else {
+		this->currentFrame = currentFrame - 1;
+	}
 	return this->currentFrame;
 }
 

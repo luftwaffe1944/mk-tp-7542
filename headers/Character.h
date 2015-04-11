@@ -23,18 +23,18 @@ class Character : public SDLObjectGUI {
 private:
 	std::string name;
 	int zindex;
-	std::string orientation;
+	bool isRightOriented;
 	std::string movement;
 	std::map<std::string,Sprite*> characterSprites;
 	SDL_Renderer* renderer; //TODO: review
-	bool isJumping = false;
-	bool isJumpingForward = false;
-	bool isJumpingBackward = false;
+	bool isJumping;
+	bool isJumpingForward;
+	bool isJumpingBackward;
 
 public:
 	Character();
-	Character(int width, int height, int zindex, std::string orientation);
-	Character(std::string name, int width, int height, int zindex, std::string orientation);
+	Character(int width, int height, int zindex, bool isRightOriented);
+	Character(std::string name, int width, int height, int zindex, bool isRightOriented, float ratio, int winWidth);
 	virtual bool load(SDL_Renderer* render);
 	void render(SDL_Renderer* render);
 	virtual ~Character();

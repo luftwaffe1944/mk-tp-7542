@@ -9,10 +9,6 @@
 #include "../headers/TextureManager.h"
 #include "../headers/MKGame.h"
 #include <SDL.h>
-#include <string>
-#include <sstream>
-#include <iostream>
-
 
 float gravity = 14.0f;
 float jumpVel = 60.0f;
@@ -22,19 +18,28 @@ Character::Character(const LoaderParams* pParams) :
 
 }
 
-Character::Character(int width, int height, int zindex, std::string orientation) : SDLObjectGUI() {
+Character::Character(int width, int height, int zindex, bool isRightOriented) : SDLObjectGUI() {
 	this->width = width;
 	this->height = height;
 	this->zindex = zindex;
-	this->orientation = orientation;
+	this->isRightOriented = isRightOriented;
 }
 
-Character::Character(string name, int width, int height, int zindex, std::string orientation) : SDLObjectGUI(){
+Character::Character(string name, int width, int height, int zindex, bool isRightOriented, float ratio, int winWidth) : SDLObjectGUI(){
 	this->name = name;
 	this->width = width;
 	this->height = height;
 	this->zindex = zindex;
-	this->orientation = orientation;
+	this->isRightOriented = isRightOriented;
+	//TODO: Review positions according to logic and pixels measures.
+	this->positionX = 0;
+	this->positionY = winWidth - height;
+	// initializing movements statements
+	this->isJumping = false;
+	this->isJumpingForward = false;
+	this->isJumpingBackward = false;
+	this->textureID = name;
+	this->drawRatio = ratio;
 }
 
 bool Character::load(SDL_Renderer* render) {
@@ -43,8 +48,8 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, 66, 132, 10);
 	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, this->imagePath+"UMK3_Sub-Zero_stance.png",
 			renderer, 66, 132, 6);
-	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_duckjump.png",
-			renderer, 66, 132, 1);
+	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
+			renderer, 73, 100, 0);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
@@ -53,31 +58,15 @@ bool Character::load(SDL_Renderer* render) {
 }
 
 void Character::render(SDL_Renderer* render) {
-	Sprite* currentSprite;
-		if (this->getMovement() == WALKING_RIGHT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
-		} else if (this->getMovement() == JUMPING_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+JUMP_SUFFIX];
-		} else if (this->getMovement() == STANCE){
-			currentSprite = this->characterSprites[this->name+STANCE_SUFFIX];
-		} else{
-			//TODO: review
-		}
-		int currentFrame = currentSprite->getNextFrame();
-		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
-				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
-				1, currentFrame,
-				this->renderer,SDL_FLIP_NONE);
 }
 
-Character::~Character() {
-	// TODO Auto-generated destructor stub
-}
 
 void Character::draw() {
 	Sprite* currentSprite;
 		if (this->getMovement() == WALKING_RIGHT_MOVEMENT){
 			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
+		} else if (this->getMovement() == WALKING_LEFT_MOVEMENT){
+			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
 		} else if (this->getMovement() == JUMPING_MOVEMENT){
 			currentSprite = this->characterSprites[this->name+JUMP_SUFFIX];
 		} else if (this->getMovement() == STANCE){
@@ -85,7 +74,7 @@ void Character::draw() {
 		} else{
 			//TODO: review
 		}
-		int currentFrame = currentSprite->getNextFrame();
+		int currentFrame = currentSprite->getNextForwardingFrame();
 		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
 				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
 				1, currentFrame,
@@ -165,4 +154,8 @@ std::string Character::getMovement(){
 }
 
 void Character::clean() {
+}
+
+Character::~Character() {
+	// TODO Auto-generated destructor stub
 }

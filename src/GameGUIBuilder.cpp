@@ -109,9 +109,7 @@ GameGUI* GameGUIBuilder::create() {
 			<< character_orientation;
 
 	vector<Character*> characters;
-	Character* playerOne = new Character(
-			new LoaderParams(0, 600-132, 128, 132, character_zindex, ratio,
-					"subzero"));
+	Character* playerOne = new Character("subzero", 80, 132, 1, true, ratio, win_height_px);
 
 	//Add player to the game loop
 	playerOne->setImagePath("images/spritesheets_subzero/");
