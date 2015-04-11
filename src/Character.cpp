@@ -96,12 +96,19 @@ void Character::update() {
 
 	InputCommand playerCommand = InputControl::Instance()->getFirstPlayerMove();
 	//InputCommand optionCommand = keyboardControl.getControlOption();
+
+	// Check if critical movements have finished
+	if (isJumping){
+		jump();
+	} else if (isJumpingForward){
+		//jumpForward();
+	} else if (isJumpingBackward) {
+		//jumpBackward();
+	} else {
 		switch(playerCommand){
 		case FIRST_PLAYER_MOVE_RIGHT:
-			if (!isJumping && !isJumpingForward) {
-				this->setMovement(WALKING_RIGHT_MOVEMENT);
-				walkRight();
-			}
+			this->setMovement(WALKING_RIGHT_MOVEMENT);
+			walkRight();
 			break;
 		case FIRST_PLAYER_MOVE_LEFT:
 			this->setMovement(WALKING_LEFT_MOVEMENT);
@@ -110,26 +117,24 @@ void Character::update() {
 		case FIRST_PLAYER_MOVE_UP:
 			this->setMovement(JUMPING_MOVEMENT);
 			jump();
-			isJumping = true;
 			break;
 		case NO_INPUT:
-			if (this->isTouchingGround(this->positionY)) {
-				this->setMovement(STANCE);
-				isJumping = false;
-			} else {
-				jump();
-			}
+			this->setMovement(STANCE);
+			isJumping = false;
 			break;
 		}
-		SDL_Delay( 55 );
-		currentFrame = int(((SDL_GetTicks() / 100) % 6));
+	}
+	SDL_Delay( 55 );
+	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 }
 
 
-void Character::jump(){
+void Character::jump() {
+	isJumping = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	if (this->isTouchingGround(positionY)){
+	if (this->isTouchingGround(positionY)) {
+		isJumping = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
 		this->positionY = (MKGame::Instance()->getGameGUI()->getWindow().heightPx - this->height);

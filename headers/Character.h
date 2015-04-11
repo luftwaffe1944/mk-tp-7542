@@ -27,7 +27,7 @@ private:
 	std::string movement;
 	std::map<std::string,Sprite*> characterSprites;
 	SDL_Renderer* renderer; //TODO: review
-	bool isJumping;
+	bool isJumping = false;
 	bool isJumpingForward = false;
 	bool isJumpingBackward = false;
 
