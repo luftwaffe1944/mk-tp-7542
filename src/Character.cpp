@@ -52,13 +52,13 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, 66, 132, 6);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
 			renderer, 73, 100, 0);
-	Sprite* spriteJumpRight = new Sprite(this->name+JUMP_RIGHT_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
+	Sprite* spriteJumpRight = new Sprite(this->name+JUMP_DIAGONAL, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
 				renderer, 78, 158, 9);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_SUFFIX, spriteJump));
-	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_RIGHT_SUFFIX, spriteJumpRight));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_DIAGONAL, spriteJumpRight));
 
 }
 
@@ -76,8 +76,9 @@ void Character::draw() {
 			currentSprite = this->characterSprites[this->name+JUMP_SUFFIX];
 		} else if (this->getMovement() == STANCE){
 			currentSprite = this->characterSprites[this->name+STANCE_SUFFIX];
-		} else if (this->getMovement() == JUMPING_RIGHT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+JUMP_RIGHT_SUFFIX];
+		} else if (this->getMovement() == JUMPING_RIGHT_MOVEMENT ||
+				this->getMovement() == JUMPING_LEFT_MOVEMENT){
+			currentSprite = this->characterSprites[this->name+JUMP_DIAGONAL];
 		} else{
 			//TODO: review
 		}
@@ -113,7 +114,7 @@ void Character::update() {
 	} else if (isJumpingRight) {
 		jumpRight();
 	} else if (isJumpingLeft) {
-		//jumpLeft();
+		jumpLeft();
 	} else {
 		switch (playerCommand) {
 		case FIRST_PLAYER_MOVE_RIGHT:
@@ -132,8 +133,12 @@ void Character::update() {
 			this->setMovement(JUMPING_RIGHT_MOVEMENT);
 			jumpRight();
 			break;
+		case FIRST_PLAYER_MOVE_UP_LEFT:
+			this->setMovement(JUMPING_LEFT_MOVEMENT);
+			jumpLeft();
+			break;
 		case FIRST_PLAYER_CHANGE_ORIENTATION:
-			isRightOriented =! isRightOriented;
+			isRightOriented = !isRightOriented;
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
@@ -174,6 +179,21 @@ void Character::jumpRight() {
 	walkRight();
 	if (this->isTouchingGround(positionY)) {
 		isJumpingRight = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY =
+				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
+						- this->height);
+	}
+}
+
+void Character::jumpLeft() {
+	isJumpingLeft = true;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	walkLeft();
+	if (this->isTouchingGround(positionY)) {
+		isJumpingLeft = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
 		this->positionY =

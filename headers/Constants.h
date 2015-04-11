@@ -35,6 +35,7 @@
 #define STANCE "stance"
 #define JUMPING_MOVEMENT "jumping"
 #define JUMPING_RIGHT_MOVEMENT "jumping_right"
+#define JUMPING_LEFT_MOVEMENT "jumping_left"
 #define WALKING_RIGHT_MOVEMENT "walkingRight"
 #define WALKING_LEFT_MOVEMENT "walkingLeft"
 #define DUCKING_MOVEMENT "ducking"
@@ -43,7 +44,7 @@
 #define WALK_SUFFIX "Walk"
 #define STANCE_SUFFIX "Stance"
 #define JUMP_SUFFIX "Jump"
-#define JUMP_RIGHT_SUFFIX "JumpRight"
+#define JUMP_DIAGONAL "JumpDiagonal"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
