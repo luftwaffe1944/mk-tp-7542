@@ -7,6 +7,7 @@
 
 #ifndef MKGAME_H_
 #define MKGAME_H_
+#include "InputControl.h"
 #include "SDL.h"
 #include "SDLObjectGUI.h"
 #include "ObjectGUI.h"
@@ -28,6 +29,7 @@ private:
 //	SDLObjectGUI* playerOne;
 	vector<SDLObjectGUI*> objectList;
 	GameGUI* gameGui;
+	InputControl keyboardControl;
 	bool m_bRunning;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
@@ -53,6 +55,8 @@ public:
 	void update();
 	void handleEvents();
 	void clean();
+	void quit();
+	GameGUI* getGameGUI();
 	// a function to access the private running variable
 	bool running() {
 		return m_bRunning;

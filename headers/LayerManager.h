@@ -8,7 +8,7 @@
 #ifndef LAYERMANAGER_H_
 #define LAYERMANAGER_H_
 
-#define LAYER_SPEED 1
+#define LAYER_SPEED 3
 
 #include "Layer.h"
 #include "Character.h"

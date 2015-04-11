@@ -10,72 +10,83 @@
  *
  */
 
-
-
-
 #include "../headers/InputControl.h"
 #include "SDL.h"
+#include "../headers/MKGame.h"
 #include <stddef.h>
 
-InputControl::InputControl() {
-	this->firstPlayerMove = NO_INPUT;
-	this->secondPlayerMove = NO_INPUT;
-	this->controlOption=NO_INPUT;
-}
-
 void InputControl::refreshInputs() {
-	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
+
+	SDL_Event event;
+	if (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			MKGame::Instance()->quit();
+		}
+	}
+
+	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
 
 	this->firstPlayerMove = NO_INPUT;
 	this->secondPlayerMove = NO_INPUT;
-	this->controlOption=NO_INPUT;
+	this->controlOption = NO_INPUT;
 
-	if (( currentKeyStates[ SDL_SCANCODE_R ] ))
-	{
+	if ((currentKeyStates[SDL_SCANCODE_R])) {
 		this->controlOption = RESET;
-	}
-	else if(( currentKeyStates[ SDL_SCANCODE_UP ] ) && !( currentKeyStates[ SDL_SCANCODE_DOWN ] ) && ( currentKeyStates[ SDL_SCANCODE_LEFT ] ) && !( currentKeyStates[ SDL_SCANCODE_RIGHT ] ))
-	{
+	} else if ((currentKeyStates[SDL_SCANCODE_UP])
+			&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+			&& (currentKeyStates[SDL_SCANCODE_LEFT])
+			&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
-	}
-	else if(( currentKeyStates[ SDL_SCANCODE_UP ] ) && !( currentKeyStates[ SDL_SCANCODE_DOWN ] ) && !( currentKeyStates[ SDL_SCANCODE_LEFT ] ) && ( currentKeyStates[ SDL_SCANCODE_RIGHT ] ))
-	{
+	} else if ((currentKeyStates[SDL_SCANCODE_UP])
+			&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+			&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+			&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
-	}
-	else if(!( currentKeyStates[ SDL_SCANCODE_UP ] ) && ( currentKeyStates[ SDL_SCANCODE_DOWN ] ) && !( currentKeyStates[ SDL_SCANCODE_LEFT ] ) && ( currentKeyStates[ SDL_SCANCODE_RIGHT ] ))
-	{
+	} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+			&& (currentKeyStates[SDL_SCANCODE_DOWN])
+			&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+			&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
-	}
-	else if(!( currentKeyStates[ SDL_SCANCODE_UP ] ) && ( currentKeyStates[ SDL_SCANCODE_DOWN ] ) && ( currentKeyStates[ SDL_SCANCODE_LEFT ] ) && !( currentKeyStates[ SDL_SCANCODE_RIGHT ] ))
-	{
+	} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+			&& (currentKeyStates[SDL_SCANCODE_DOWN])
+			&& (currentKeyStates[SDL_SCANCODE_LEFT])
+			&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
-	}
-	else if (( currentKeyStates[ SDL_SCANCODE_UP ] ) && !( currentKeyStates[ SDL_SCANCODE_DOWN ] ) && !( currentKeyStates[ SDL_SCANCODE_LEFT ] ) && !( currentKeyStates[ SDL_SCANCODE_RIGHT ] ))
-	{
+	} else if ((currentKeyStates[SDL_SCANCODE_UP])
+			&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+			&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+			&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_UP;
-	}
-	else if (!( currentKeyStates[ SDL_SCANCODE_UP ] ) && ( currentKeyStates[ SDL_SCANCODE_DOWN ] ) && !( currentKeyStates[ SDL_SCANCODE_LEFT ] ) && !( currentKeyStates[ SDL_SCANCODE_RIGHT ] ))
-	{
+	} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+			&& (currentKeyStates[SDL_SCANCODE_DOWN])
+			&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+			&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN;
-	}
-	else if (!( currentKeyStates[ SDL_SCANCODE_UP ] ) && !( currentKeyStates[ SDL_SCANCODE_DOWN ] ) && ( currentKeyStates[ SDL_SCANCODE_LEFT ] ) && !( currentKeyStates[ SDL_SCANCODE_RIGHT ] ))
-	{
+	} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+			&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+			&& (currentKeyStates[SDL_SCANCODE_LEFT])
+			&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_LEFT;
-	}
-	else if (!( currentKeyStates[ SDL_SCANCODE_UP ] ) && !( currentKeyStates[ SDL_SCANCODE_DOWN ] ) && !( currentKeyStates[ SDL_SCANCODE_LEFT ] ) && ( currentKeyStates[ SDL_SCANCODE_RIGHT ] ))
-	{
+	} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+			&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+			&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+			&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+
+	} else if (currentKeyStates[SDL_SCANCODE_O]) {
+		this->firstPlayerMove = FIRST_PLAYER_CHANGE_ORIENTATION;
 	}
+
 }
 
-InputCommand InputControl::getFirstPlayerMove(){
+InputCommand InputControl::getFirstPlayerMove() {
 	return this->firstPlayerMove;
 }
 
-InputCommand InputControl::getSecondPlayerMove(){
+InputCommand InputControl::getSecondPlayerMove() {
 	return this->secondPlayerMove;
 }
 
-InputCommand InputControl::getControlOption(){
+InputCommand InputControl::getControlOption() {
 	return this->controlOption;
 }

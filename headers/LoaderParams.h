@@ -3,14 +3,14 @@
 
 class LoaderParams {
 public:
-	LoaderParams(int x, int y, int width, int height, int zIndex, float drawRatio, std::string textureID) :
+	LoaderParams(float x, float y, int width, int height, int zIndex, float drawRatio, std::string textureID) :
 			posX(x), posY(y), width(width), height(height), zIndex(zIndex),  drawRatio(drawRatio), textureID(
 					textureID){
 	}
-	int getPosX() const {
+	float getPosX() const {
 		return posX;
 	}
-	int getPosY() const {
+	float getPosY() const {
 		return posY;
 	}
 	int getWidth() const {
@@ -29,8 +29,8 @@ public:
 		return textureID;
 	}
 private:
-	int posX;
-	int posY;
+	float posX;
+	float posY;
 	int width;
 	int height;
 	int zIndex;

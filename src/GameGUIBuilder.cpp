@@ -122,10 +122,10 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 			new LoaderParams(0, stage_win_ypiso, character_width, character_height, character_zindex, ratio,
 					character_name));
 
+
 	//Add player to the game loop
-	playerOne->setImagePath("images/scorpion_fighting_stance/sfsGIF.gif");
+	playerOne->setImagePath("images/spritesheets_subzero/");
 	MKGame::Instance()->getObjectList().push_back(playerOne);
-	cout << MKGame::Instance()->getObjectList().size() << endl;
 
 	characters.push_back(playerOne);
 	return characters;
