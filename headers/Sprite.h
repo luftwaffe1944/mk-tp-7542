@@ -27,6 +27,7 @@ public:
     int getSpriteHeight();
     int getNextForwardingFrame();
     int getNextBackwardingFrame();
+    int getNextFrameWithLimit();
     void refresh();
 
 private:

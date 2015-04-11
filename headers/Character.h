@@ -32,6 +32,7 @@ private:
 	bool isWalkingLeft;
 	bool isJumpingRight;
 	bool isJumpingLeft;
+	bool isDucking;
 
 public:
 	Character();

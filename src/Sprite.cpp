@@ -43,6 +43,14 @@ int Sprite::getNextForwardingFrame() {
 	return this->currentFrame++;
 }
 
+int Sprite::getNextFrameWithLimit(){
+	if (currentFrame < framesAmount-1) {
+		return currentFrame++;
+	} else {
+		return currentFrame;
+	}
+}
+
 int Sprite::getNextBackwardingFrame() {
 	return (framesAmount - getNextForwardingFrame()-1);
 }

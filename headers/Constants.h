@@ -44,7 +44,8 @@
 #define WALK_SUFFIX "Walk"
 #define STANCE_SUFFIX "Stance"
 #define JUMP_SUFFIX "Jump"
-#define JUMP_DIAGONAL "JumpDiagonal"
+#define JUMP_DIAGONAL_SUFFIX "JumpDiagonal"
+#define DUCK_SUFFIX "Duck"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "

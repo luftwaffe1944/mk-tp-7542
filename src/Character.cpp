@@ -40,6 +40,7 @@ Character::Character(string name, int width, int height, int zindex, bool isRigh
 	this->isJumpingLeft = false;
 	this->isWalkingRight = false;
 	this->isWalkingLeft = false;
+	this->isDucking = false;
 	this->textureID = name;
 	this->drawRatio = ratio;
 }
@@ -52,13 +53,16 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, 66, 132, 6);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
 			renderer, 73, 100, 1);
-	Sprite* spriteJumpRight = new Sprite(this->name+JUMP_DIAGONAL, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
+	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
 				renderer, 100, 170, 9);
+	Sprite* spriteDuck = new Sprite(this->name+DUCK_SUFFIX, this->imagePath+"UMK3_Sub-Zero_duck.png",
+					renderer, 100, 140, 3);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_SUFFIX, spriteJump));
-	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_DIAGONAL, spriteJumpRight));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_DIAGONAL_SUFFIX, spriteJumpDiagonal));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_SUFFIX, spriteDuck));
 
 }
 
@@ -78,15 +82,22 @@ void Character::draw() {
 			currentSprite = this->characterSprites[this->name+STANCE_SUFFIX];
 		} else if (this->getMovement() == JUMPING_RIGHT_MOVEMENT ||
 				this->getMovement() == JUMPING_LEFT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+JUMP_DIAGONAL];
+			currentSprite = this->characterSprites[this->name+JUMP_DIAGONAL_SUFFIX];
+		} else if (this->getMovement() == DUCKING_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+DUCK_SUFFIX];
 		} else{
 			//TODO: review
 		}
 		int currentFrame;
-		if (shouldMoveForward()) {
-			currentFrame = currentSprite->getNextForwardingFrame();
+
+		if(this->isDucking) {
+			currentFrame = currentSprite->getNextFrameWithLimit();
 		} else {
-			currentFrame = currentSprite->getNextBackwardingFrame();
+			if (shouldMoveForward()) {
+				currentFrame = currentSprite->getNextForwardingFrame();
+			} else {
+				currentFrame = currentSprite->getNextBackwardingFrame();
+			}
 		}
 		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
 				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
@@ -107,7 +118,7 @@ void Character::update() {
 
 	InputCommand playerCommand = InputControl::Instance()->getFirstPlayerMove();
 	//InputCommand optionCommand = keyboardControl.getControlOption();
-
+	isDucking = false;
 	// Check if critical movements have finished
 	if (isJumping) {
 		jump();
@@ -129,6 +140,10 @@ void Character::update() {
 			this->setMovement(JUMPING_MOVEMENT);
 			jump();
 			break;
+		case FIRST_PLAYER_MOVE_DOWN:
+			this->setMovement(DUCKING_MOVEMENT);
+			this->isDucking = true;
+			break;
 		case FIRST_PLAYER_MOVE_UP_RIGHT:
 			this->setMovement(JUMPING_RIGHT_MOVEMENT);
 			jumpRight();
@@ -146,7 +161,7 @@ void Character::update() {
 			break;
 		}
 	}
-	SDL_Delay(55);
+	SDL_Delay(40);
 }
 
 void Character::clearMovementsFlags(){
