@@ -36,6 +36,13 @@ public:
 	void setImagePath(std::string path);
 	void setNeedRefresh(bool needRefresh);
 	void setPositionX(int position);
+	int getPositionX();
+	float getScrollingOffset();
+	int getWidth();
+
+	int getOrientation() const;
+
+	void setOrientation(int orientation);
 };
 
 #endif /* LAYER_H_ */

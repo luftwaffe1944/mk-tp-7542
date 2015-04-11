@@ -74,6 +74,16 @@ void LayerManager::init() {
 	}
 }
 
+bool LayerManager::layerReachedStageLimit(int windowWidth) {
+	Layer* frontalLayer = this->layers[this->layers.size() - 1 ];
+	float frontalLayerOffset = frontalLayer->getScrollingOffset();
+	if (( frontalLayerOffset < ( - frontalLayer->getWidth() / 2 + windowWidth / 2 )) ||
+			( frontalLayerOffset > (  frontalLayer->getWidth() / 2 - windowWidth / 2 ))  ){
+		return true;
+	}
+	return false;
+}
+
 void LayerManager::refresh() {
 	Stage stage = GameGUI::getInstance()->getStage();
 	Window window = GameGUI::getInstance()->getWindow();
@@ -86,7 +96,7 @@ void LayerManager::refresh() {
 	int characterWidth = characters[0]->getWidth();
 	int margin = 200;
 	bool refresh = false;
-	if(((windowWidth + posXWindow) - (posXCharacter + characterWidth)) < margin) {
+	if ( ( ( ( ( windowWidth + posXWindow) - (posXCharacter + characterWidth)) < margin) || (posXCharacter + characterWidth) < margin ) && !layerReachedStageLimit( windowWidth) ) {
 		refresh = true;
 	}
 	for(unsigned int index=0; index < this->layers.size(); ++index) {

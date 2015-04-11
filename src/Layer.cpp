@@ -15,7 +15,7 @@ Layer::Layer(const LoaderParams* pParams) :
 	this->offScene = 0;
 	this->scrollingOffset = 0;
 	this->needRefresh = false;
-	this->orientation = 1;
+	this->orientation = -1;
 }
 
 Layer::~Layer() {
@@ -65,4 +65,24 @@ void Layer::setNeedRefresh(bool needRefresh) {
 
 void Layer::setPositionX(int position) {
 	this->positionX = position;
+}
+
+int Layer::getPositionX(){
+	return this->positionX;
+}
+
+float Layer::getScrollingOffset(){
+	return this->scrollingOffset;
+}
+
+int Layer::getWidth(){
+	return this->width;
+}
+
+int Layer::getOrientation() const {
+	return this->orientation;
+}
+
+void Layer::setOrientation(int orientation) {
+	this->orientation = orientation;
 }

@@ -53,7 +53,7 @@ void Character::update() {
 	//TODO leer eventos
 //	m_x -= 1;
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
-	this->positionX += 1;
+	this->positionX --;
 }
 void Character::clean() {
 }

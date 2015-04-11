@@ -8,7 +8,7 @@
 #ifndef LAYERMANAGER_H_
 #define LAYERMANAGER_H_
 
-#define LAYER_SPEED 0.5
+#define LAYER_SPEED 1
 
 #include "Layer.h"
 #include "Character.h"
@@ -38,6 +38,7 @@ private:
 	void setOffSceneFrontalLayer();
 	void centerFrontalLayer();
 	void centerLayers( Layer* layer);
+	bool layerReachedStageLimit(int windowWidth);
 };
 
 #endif /* LAYERMANAGER_H_ */
