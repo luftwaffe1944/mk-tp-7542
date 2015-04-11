@@ -52,3 +52,6 @@ float Layer::getLayerSpeed() {
 	return this->bkgSpeed;
 }
 
+void Layer::setImagePath(std::string path) {
+	this->imagePath = path;
+}

@@ -11,18 +11,22 @@
 	},
 	"capas": [
 		{
-			"imagen_fondo": "images/arenas/far-background.png",
-			"ancho": 3000
+			"imagen_fondo": "images/arenas/p_1n.png",
+			"ancho": 1200
 		},
 		{
-			"imagen_fondo": "images/arenas/near-background.png",
-			"ancho": 3000
+			"imagen_fondo": "images/arenas/p_2n.png",
+			"ancho": 831
+		},
+		{
+			"imagen_fondo": "images/arenas/p_3n.png",
+			"ancho": 721
 		}
 	],
 	"personaje": {
-		"nombre": "subzero"
-		"ancho": 20,
-		"alto": 35,
+		"nombre": "subzero",
+		"ancho": 80,
+		"alto": 120,
 		"zindex": 1,
 		"orientacion": "left"
 	}

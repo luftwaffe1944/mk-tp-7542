@@ -57,7 +57,8 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratio) {
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
 	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 700).asInt();
 
-	const Json::Value array = root[JSON_KEY_CAPAS];
+	const Json::Value array = root.get(JSON_KEY_CAPAS,0);
+	FILE_LOG(logDEBUG) << "JSON - Number of Layers: " << array.size();
 	vector<Layer*> layers;
 	string path;
 	int width;
@@ -74,18 +75,18 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratio) {
 		Layer* layer = new Layer(
 				new LoaderParams(0, 0, width, win_height_px, index, ratio,
 						sLayerName.str()));
-
+		layer->setImagePath(path);
 		//Add layers to the game loop
 		MKGame::Instance()->getObjectList().push_back(layer);
 
+		FILE_LOG(logDEBUG) << "JSON - Layer ID: " << sLayerName.str();
 		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: "
 				<< path;
 		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: "
 				<< width;
 		layers.push_back(layer);
-		return layers;
 	}
-
+	return layers;
 }
 
 vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {

@@ -32,6 +32,7 @@ public:
 	void setLayerOffScene(int windowsWidth);
 	float getLayerOffScene();
 	float getLayerSpeed();
+	void setImagePath(std::string path);
 };
 
 #endif /* LAYER_H_ */
