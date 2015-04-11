@@ -103,12 +103,7 @@ void resizeImage(int* width, int win_width_px, int* height, int win_height_px, i
 	if (*width < win_width_px) *width = win_width_px;
 }
 
-vector<Layer*> jsonGetLayers(Json::Value root, float ratio) {
-
-	Json::Value windowValue = root[JSON_KEY_VENTANA];
-	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 700).asInt();
-	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 700).asInt();
-	int stage_width = GameGUI::getInstance()->getStage().getWidth();
+vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, Window* window, Stage* stage) {
 
 	const Json::Value array = root.get(JSON_KEY_CAPAS,0);
 	FILE_LOG(logDEBUG) << "JSON - Number of Layers: " << array.size();
@@ -117,28 +112,24 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratio) {
 	int width;
 	int height;
 	for (unsigned int index = 0; index < array.size(); ++index) {
-		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
+		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
 		width = array[index].get(JSON_KEY_ANCHO, 50).asInt();
-		height = array[index].get(JSON_KEY_ALTO, 50).asInt();
-		resizeImage(&width, win_width_px, &height, win_height_px, stage_width);
+		height = stage->getHeight();
+		resizeImage(&width, window->widthPx, &height, window->heightPx, stage->getWidth());
 		stringstream sLayerName;
 		sLayerName.clear();
 		sLayerName << "layer";
 		sLayerName << index;
 
 		//TODO calcular ratio
-		Layer* layer = new Layer(
-				new LoaderParams(0, 0, width, win_height_px, index, ratio,
-						sLayerName.str()));
+		Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx, index, ratioX,	sLayerName.str()));
 		layer->setImagePath(path);
 		//Add layers to the game loop
 		MKGame::Instance()->getObjectList().push_back(layer);
 
 		FILE_LOG(logDEBUG) << "JSON - Layer ID: " << sLayerName.str();
-		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: "
-				<< path;
-		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: "
-				<< width;
+		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: "	<< path;
+		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: "	<< width;
 		layers.push_back(layer);
 	}
 	return layers;
@@ -150,13 +141,11 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
 
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
-	string character_name =
-			characterValue.get(JSON_KEY_NOMBRE, "nombre").asString();
+	string character_name = characterValue.get(JSON_KEY_NOMBRE, "nombre").asString();
 	int character_width = characterValue.get(JSON_KEY_ANCHO, 700).asInt();
 	int character_height = characterValue.get(JSON_KEY_ALTO, 700).asInt();
 	int character_zindex = characterValue.get(JSON_KEY_ZINDEX, 700).asInt();
-	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION,
-			"right").asString();
+	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION, "right").asString();
 
 	FILE_LOG(logDEBUG) << "JSON - Character name: " << character_name;
 	FILE_LOG(logDEBUG) << "JSON - Character width: " << character_width;
