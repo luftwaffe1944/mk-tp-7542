@@ -18,6 +18,10 @@ Stage::Stage(int width, int height, int yfloor) {
 	this->yfloor = yfloor;
 }
 
+int Stage::getHeight(){
+	return this->height;
+}
+
 Stage::~Stage() {
 	// TODO Auto-generated destructor stub
 }

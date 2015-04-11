@@ -17,40 +17,47 @@ GameGUIBuilder::~GameGUIBuilder() {
 	// TODO Auto-generated destructor stub
 }
 
-float jsonGetRatio(Window* window) {
-	float ratio = window->widthPx / window->width;
-	FILE_LOG(logDEBUG) << "Windows Ratio (widht_px / width_lg): " << ratio;
+float getRatio(int dimPx, int dimLg, std::string type) {
+	float ratio = dimPx / dimLg;
+	if (type == "X"){
+		FILE_LOG(logDEBUG) << "RatioX (window_width_px / window_width_lg): " << ratio;
+	}else if (type == "Y"){
+		FILE_LOG(logDEBUG) << "RatioY (window_height_px / stage_width_lg): " << ratio;
+	}
 	return ratio;
-
 }
 
 Window jsonGetWindow(Json::Value root) {
 	FILE_LOG(logDEBUG) << "\n INICIO DE EJECUCION";
 
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
-	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 700).asInt();
-	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 700).asInt();
-	int win_width = windowValue.get(JSON_KEY_ANCHO, 700).asInt();
+	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 0).asInt();
+	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 0).asInt();
+	int win_width = windowValue.get(JSON_KEY_ANCHO, 0).asInt();
 	FILE_LOG(logDEBUG) << "JSON - Window width: " << win_width_px << "px";
 	FILE_LOG(logDEBUG) << "JSON - Window height: " << win_height_px << "px";
 	FILE_LOG(logDEBUG) << "JSON - Window width: " << win_width;
-	if (!((win_width_px>0) && (win_width_px <=MAX_WINDOW_WIDTH_PX) && (win_height_px>0) && (win_height_px <=MAX_WINDOW_HEIGHT_PX) && (win_width>0))){
+
+	//validaciones de parametros para ventana
+	bool widthPxOk = ((win_width_px>0) && (win_width_px <=MAX_WINDOW_WIDTH_PX));
+	bool heightPxOk = ((win_height_px>0) && (win_height_px <=MAX_WINDOW_HEIGHT_PX));
+	bool widthOk =(win_width_px>0);
+	if (!widthOk && !widthPxOk && !heightPxOk){
 			if (!(win_width>0)){
-				FILE_LOG(logWARNING) << "Window logical width out of range. Set by default: " <<DEFAULT_WINDOW_WIDTH;
+				FILE_LOG(logWARNING) << "Window logical width out of range or inexistent. Set by default: " <<DEFAULT_WINDOW_WIDTH;
 				win_width = DEFAULT_WINDOW_WIDTH;
 			}
-			else
-			{
-				if (!((win_width_px>0) && (win_width_px <=MAX_WINDOW_WIDTH_PX))){
-					FILE_LOG(logWARNING) << "Window width px out of range (" <<"0 - "<< MAX_WINDOW_WIDTH_PX<<")";
-				}else if (!((win_height_px>0) && (win_height_px <=MAX_WINDOW_HEIGHT_PX))){
-					FILE_LOG(logWARNING) << "Window height px out of range (" <<"0 - "<< MAX_WINDOW_HEIGHT_PX<<")";
-				}
-				FILE_LOG(logWARNING) << "Window set to default values (" << DEFAULT_WINDOW_WIDTH_PX<<"-"<<DEFAULT_WINDOW_HEIGHT_PX<<")";
+			if (!widthPxOk) {
 				win_width_px=DEFAULT_WINDOW_WIDTH_PX;
-				win_height_px=DEFAULT_WINDOW_HEIGHT_PX;
+				FILE_LOG(logWARNING) << "Window width px out of range or inexistent (" <<"0 - "<< MAX_WINDOW_WIDTH_PX<<"). Set to default:"<<DEFAULT_WINDOW_WIDTH_PX<<"px";
 			}
+			if (!heightPxOk){
+				win_height_px=DEFAULT_WINDOW_HEIGHT_PX;
+				FILE_LOG(logWARNING) << "Window height px out of range or inexistent (" <<"0 - "<< MAX_WINDOW_HEIGHT_PX<<"). Set to default:"<<DEFAULT_WINDOW_HEIGHT_PX<<"px";
+			}
+			FILE_LOG(logWARNING) << "Window size set to: (" << win_width_px<<"-"<<win_height_px<<")";
 	}
+	//set de posiciones para centrado de ventana en pantalla
 	int windowXpos = ((MAX_WINDOW_WIDTH_PX-win_width_px)/2);
 	int windowYpos = ((MAX_WINDOW_HEIGHT_PX-win_height_px)/2);
 
@@ -58,15 +65,36 @@ Window jsonGetWindow(Json::Value root) {
 	return window;
 }
 
-Stage jsonGetStage(Json::Value root) {
+Stage jsonGetStage(Json::Value root, int win_width_lg) {
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
-	int stage_width = stageValue.get(JSON_KEY_ANCHO, 700).asInt();
-	int stage_win_height = stageValue.get(JSON_KEY_ALTO, 700).asInt();
-	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
+	int stage_width = stageValue.get(JSON_KEY_ANCHO, 0).asInt();
+	int stage_height = stageValue.get(JSON_KEY_ALTO, 0).asInt();
+	int stage_ypiso = stageValue.get(JSON_KEY_YPISO, 0).asInt();
 	FILE_LOG(logDEBUG) << "JSON - Stage width: " << stage_width;
-	FILE_LOG(logDEBUG) << "JSON - Stage height: " << stage_win_height;
-	FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << stage_win_ypiso;
-	Stage stage(stage_width, stage_win_height, stage_win_ypiso);
+	FILE_LOG(logDEBUG) << "JSON - Stage height: " << stage_height;
+	FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << stage_ypiso;
+
+	//validaciones de parametros para escenario
+	bool heightOk = (stage_height>0);
+	if (!heightOk){
+		stage_height = DEFAULT_STAGE_HEIGHT;
+		FILE_LOG(logWARNING) << "Stage logical height out of range or inexistent (must be positive). Set to default:"<<DEFAULT_STAGE_HEIGHT;
+	}
+
+	bool yPisoOk = (stage_ypiso>0) && (stage_ypiso<=stage_height);
+	if (!yPisoOk){
+		//por defecto altura piso es 10% de la altura logica del escenario
+		stage_ypiso = (stage_height/10);
+		FILE_LOG(logWARNING) << "Stage floor 'y' position out of range or inexistent (0 - "<<stage_height<< "). Set to default:"<<stage_ypiso;
+	}
+
+	bool widthOk = (stage_width >=win_width_lg);
+	if (!widthOk){
+		stage_width = DEFAULT_STAGE_WIDTH;
+		FILE_LOG(logWARNING) << "Stage logical width out of range or inexistent (must be higher than window logical width: "<<win_width_lg<< "). Set to default:"<<DEFAULT_STAGE_WIDTH;
+	}
+
+	Stage stage(stage_width, stage_height, stage_ypiso);
 	return stage;
 }
 
@@ -75,7 +103,8 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratio) {
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
 	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 700).asInt();
 
-	const Json::Value array = root[JSON_KEY_CAPAS];
+	const Json::Value array = root.get(JSON_KEY_CAPAS,0);
+	FILE_LOG(logDEBUG) << "JSON - Number of Layers: " << array.size();
 	vector<Layer*> layers;
 	string path;
 	int width;
@@ -90,19 +119,23 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratio) {
 
 		//TODO calcular ratio
 		Layer* layer = new Layer(new LoaderParams(0, 0, width, win_height_px, index, ratio,	sLayerName.str()));
-
+		layer->setImagePath(path);
 		//Add layers to the game loop
 		MKGame::Instance()->getObjectList().push_back(layer);
 
-		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: "	<< path;
+		FILE_LOG(logDEBUG) << "JSON - Layer ID: " << sLayerName.str();
+		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: " << path;
 		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: " << width;
 		layers.push_back(layer);
-		return layers;
 	}
-
+	return layers;
 }
 
 vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
+
+	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
+	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
+
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
 	string character_name =	characterValue.get(JSON_KEY_NOMBRE, "nombre").asString();
 	int character_width = characterValue.get(JSON_KEY_ANCHO, 700).asInt();
@@ -117,7 +150,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
 	vector<Character*> characters;
-	Character* playerOne = new Character(new LoaderParams(0, 0, character_width, character_height, character_zindex, ratio,	character_name));
+	Character* playerOne = new Character(new LoaderParams(0, stage_win_ypiso, character_width, character_height, character_zindex, ratio, character_name));
 
 	//Add player to the game loop
 	playerOne->setImagePath("images/scorpion_fighting_stance/sfsGIF.gif");
@@ -152,17 +185,15 @@ GameGUI* GameGUIBuilder::create() {
 		return createDefault();
 	}
 
-
-
 	Window window = jsonGetWindow(root);
+	Stage stage = jsonGetStage(root,window.width);
 
-	float ratio = jsonGetRatio(&window);
+	float ratioX = getRatio(window.widthPx, window.width,"X");
+	float ratioY = getRatio(window.heightPx, stage.getHeight(),"Y");
 
-	Stage stage = jsonGetStage(root);
+	vector<Layer*> layers = jsonGetLayers(root, ratioX);
 
-	vector<Layer*> layers = jsonGetLayers(root, ratio);
-
-	vector<Character*> characters = jsonGetCharacters(root, ratio);
+	vector<Character*> characters = jsonGetCharacters(root, ratioX);
 
 	gameGUI->setWindow(window);
 	gameGUI->setStage(stage);
@@ -182,22 +213,26 @@ GameGUI* GameGUIBuilder::createDefault() {
 	int windowYpos = ((MAX_WINDOW_HEIGHT_PX-DEFAULT_WINDOW_HEIGHT_PX)/2);
 	Window window(GAME_TITLE, 100, 100, DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
 
+	//stage by default
 	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
 
-	float ratio = DEFAULT_WINDOW_WIDTH_PX / DEFAULT_WINDOW_WIDTH;
+	float ratioX = getRatio(DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_WIDTH,"X");
+	float ratioY = getRatio(DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_STAGE_HEIGHT,"Y");
+
+	//characters by default
 	vector<Character*> characters;
-	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratio, "scorpion"));
+	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, "scorpion"));
+	characters.push_back(character);
+
+	//layers by default
+	vector<Layer*> layers;
+	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, 1, ratioX, "layer1"));
+	layers.push_back(layer);
+	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, 2, ratioX, "layer2"));
+	layers.push_back(layer2);
 
 	//Add layers to the game loop
 	MKGame::Instance()->getObjectList().push_back(character);
-
-	characters.push_back(character);
-
-	vector<Layer*> layers;
-	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, 1, ratio, "layer1"));
-	layers.push_back(layer);
-	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, 2, ratio, "layer2"));
-	layers.push_back(layer2);
 
 	//Add layers to the game loop
 	MKGame::Instance()->getObjectList().push_back(layer);
