@@ -94,13 +94,20 @@ void LayerManager::refresh() {
 	int posXCharacter = characters[0]->getPosX();
 	int windowWidth = window.widthPx;
 	int characterWidth = characters[0]->getWidth();
-	int margin = 200;
+	int margin = 10;
 	bool refresh = false;
-	if ( ( ( ( ( windowWidth + posXWindow) - (posXCharacter + characterWidth)) < margin) || (posXCharacter + characterWidth) < margin ) && !layerReachedStageLimit( windowWidth) ) {
+	int orientation;
+	if ( ( (windowWidth - (posXCharacter + characterWidth)) < margin) && !layerReachedStageLimit( windowWidth) ) {
 		refresh = true;
+		orientation = 1;
+	}
+	if  (( posXCharacter < margin ) && !layerReachedStageLimit( windowWidth)) {
+		refresh = true;
+		orientation = -1;
 	}
 	for(unsigned int index=0; index < this->layers.size(); ++index) {
 		this->layers[index]->setNeedRefresh(refresh);
+		this->layers[index]->setOrientation(orientation);
 	}
 
 
