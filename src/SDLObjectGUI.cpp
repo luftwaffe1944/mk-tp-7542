@@ -51,3 +51,11 @@ void SDLObjectGUI::clean() {
 int SDLObjectGUI::unitToPixel(float units) {
 	return ((int) units * this->drawRatio);
 }
+
+string SDLObjectGUI::getImagePath() {
+	return this->imagePath;
+}
+
+string SDLObjectGUI::getTextureID() {
+	return this->textureID;
+}

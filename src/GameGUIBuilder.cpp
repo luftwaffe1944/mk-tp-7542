@@ -52,20 +52,28 @@ Stage jsonGetStage(Json::Value root) {
 	return stage;
 }
 
+void resizeImage(int* width, int win_width_px, int* height, int win_height_px, int stage_width) {
+	if (*width < win_width_px) *width = win_width_px;
+}
+
 vector<Layer*> jsonGetLayers(Json::Value root, float ratio) {
 
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
 	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 700).asInt();
+	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 700).asInt();
+	int stage_width = GameGUI::getInstance()->getStage().getWidth();
 
 	const Json::Value array = root.get(JSON_KEY_CAPAS,0);
 	FILE_LOG(logDEBUG) << "JSON - Number of Layers: " << array.size();
 	vector<Layer*> layers;
 	string path;
 	int width;
+	int height;
 	for (unsigned int index = 0; index < array.size(); ++index) {
 		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "png").asString();
 		width = array[index].get(JSON_KEY_ANCHO, 50).asInt();
-
+		height = array[index].get(JSON_KEY_ALTO, 50).asInt();
+		resizeImage(&width, win_width_px, &height, win_height_px, stage_width);
 		stringstream sLayerName;
 		sLayerName.clear();
 		sLayerName << "layer";

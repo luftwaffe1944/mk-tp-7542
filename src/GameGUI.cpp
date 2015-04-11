@@ -50,3 +50,5 @@ Window GameGUI::getWindow() {
 Stage GameGUI::getStage() {
 	return this->stage;
 }
+
+

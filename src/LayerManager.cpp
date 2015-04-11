@@ -27,32 +27,33 @@ void LayerManager::updateOffScene(Layer* layer) {
 	layer->setLayerOffScene(windowSize);
 }
 
-void LayerManager::setOffSceneFirstLayer() {
+void LayerManager::setOffSceneFrontalLayer() {
 	Layer* layer;
-	layer = this->layers[0];
+	unsigned int size = this->layers.size();
+	layer = this->layers[size - 1];
+	FILE_LOG(logDEBUG) << "layer id: " << layer->getTextureID() << " " << layer->getImagePath();
 	float windowSize = GameGUI::getInstance()->getWindow().getWidthPx();
 	layer->setLayerOffScene(windowSize);
-
 	this->offSceneFirstLayer = layer->getLayerOffScene();
 }
 
-void LayerManager::setSpeedFirstLayer() {
+void LayerManager::setSpeedFrontalLayer() {
 	Layer* layer;
-	layer = this->layers[0];
+	unsigned int size = this->layers.size();
+	layer = this->layers[size - 1];
 	layer->setLayerSpeed(LAYER_SPEED, this->offSceneFirstLayer);
-
 	this->speedFirstLayer = layer->getLayerSpeed();
 }
 
 void LayerManager::init() {
 
-	setOffSceneFirstLayer();
-	setSpeedFirstLayer();
+	setOffSceneFrontalLayer();
+	setSpeedFrontalLayer();
 
 	Layer* layerAux;
 	int numberOfLayers = this->layers.size();
 	std::cout << numberOfLayers << endl;
-	for(int i = 1; i < numberOfLayers; i++) {
+	for(int i = numberOfLayers - 2 ; i >= 0  ; i--) {
 		layerAux = this->layers[i];
 		updateOffScene(layerAux);
 		updateSpeedLayers(layerAux);

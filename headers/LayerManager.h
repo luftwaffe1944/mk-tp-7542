@@ -13,6 +13,7 @@
 #include "Layer.h"
 #include "Character.h"
 #include "GameGUI.h"
+#include "Log.h"
 
 class LayerManager {
 public:
@@ -33,8 +34,8 @@ private:
 	float offSceneFirstLayer;
 	void updateSpeedLayers(Layer* layer);
 	void updateOffScene(Layer* layer);
-	void setSpeedFirstLayer();
-	void setOffSceneFirstLayer();
+	void setSpeedFrontalLayer();
+	void setOffSceneFrontalLayer();
 };
 
 #endif /* LAYERMANAGER_H_ */

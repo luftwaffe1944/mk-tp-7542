@@ -47,6 +47,7 @@ public:
 	//Set alpha modulation
 	void setAlpha(std::string id, Uint8 alpha );
 
+
 private:
 	TextureManager();
 	std::map<std::string, SDL_Texture*> m_textureMap;

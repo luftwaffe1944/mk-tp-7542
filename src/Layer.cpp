@@ -30,7 +30,7 @@ void Layer::update() {
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 
 	if (this->needRefresh) {
-		this->scrollingOffset -= this->bkgSpeed * this->orientation;
+		this->scrollingOffset -= this->bkgSpeed * this->orientation; //USAR INPUT EN VEZ DE ORIENTATION
 		this->positionX = scrollingOffset - this->offScene;
 	}
 }
@@ -39,6 +39,7 @@ void Layer::clean() {
 
 void Layer::setLayerOffScene(int windowsWidth) {
 	this->offScene = ((this->width - windowsWidth) / 2);
+	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " layeroffScene " << this->offScene;
 }
 
 void Layer::setLayerSpeed(float speedFirstLayer, float offSceneFirstLayer) {

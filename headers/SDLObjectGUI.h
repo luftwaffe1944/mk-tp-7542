@@ -22,6 +22,8 @@ public:
 	int unitToPixel(float units);
 	bool load();
 	void setImagePath(string imagePath);
+	string getImagePath();
+	string getTextureID();
 protected:
 	string imagePath;
 	int positionX;
