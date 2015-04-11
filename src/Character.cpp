@@ -32,7 +32,7 @@ Character::Character(string name, int width, int height, int zindex, bool isRigh
 	this->zindex = zindex;
 	this->isRightOriented = isRightOriented;
 	//TODO: Review positions according to logic and pixels measures.
-	this->positionX = 0;
+	this->positionX = 400;
 	this->positionY = winWidth - height;
 	// initializing movements statements
 	this->isJumping = false;
@@ -51,7 +51,7 @@ bool Character::load(SDL_Renderer* render) {
 	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, this->imagePath+"UMK3_Sub-Zero_stance.png",
 			renderer, 66, 132, 6);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
-			renderer, 73, 100, 0);
+			renderer, 73, 100, 1);
 	Sprite* spriteJumpRight = new Sprite(this->name+JUMP_DIAGONAL, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
 				renderer, 100, 170, 9);
 	//TODO: Files path must be generated depending on the character
@@ -91,7 +91,7 @@ void Character::draw() {
 		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
 				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
 				1, currentFrame,
-				renderer,(!isRightOriented)?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
+				renderer,(!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
 }
 
 bool Character::shouldMoveForward() {
@@ -168,6 +168,7 @@ void Character::jump() {
 		this->positionY =
 				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
 						- this->height);
+		refreshFrames();
 	}
 }
 
@@ -183,6 +184,7 @@ void Character::jumpRight() {
 		this->positionY =
 				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
 						- this->height);
+		refreshFrames();
 	}
 }
 
@@ -190,7 +192,7 @@ void Character::jumpLeft() {
 	isJumpingLeft = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	walkLeft();
+	positionX-=10;
 	if (this->isTouchingGround(positionY)) {
 		isJumpingLeft = false;
 		jumpVel = 60.0f;
@@ -198,6 +200,7 @@ void Character::jumpLeft() {
 		this->positionY =
 				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
 						- this->height);
+		refreshFrames();
 	}
 }
 
@@ -211,9 +214,17 @@ bool Character::isTouchingGround(float positionY) {
 	return false;
 }
 
+void Character::refreshFrames(){
+
+	 for (std::map<string,Sprite*>::iterator it=this->characterSprites.begin(); it!=this->characterSprites.end(); ++it)
+		 it->second->refresh();
+
+}
+
 void Character::walkRight() {
 	isWalkingRight = true;
 	positionX = positionX + 7;
+
 }
 
 void Character::walkLeft() {

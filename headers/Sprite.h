@@ -27,6 +27,7 @@ public:
     int getSpriteHeight();
     int getNextForwardingFrame();
     int getNextBackwardingFrame();
+    void refresh();
 
 private:
     std::string spriteId;

@@ -44,12 +44,11 @@ int Sprite::getNextForwardingFrame() {
 }
 
 int Sprite::getNextBackwardingFrame() {
-	if (this->currentFrame <= 0) {
-		this->currentFrame=framesAmount;
-	} else {
-		this->currentFrame = currentFrame - 1;
-	}
-	return this->currentFrame;
+	return (framesAmount - getNextForwardingFrame()-1);
+}
+
+void Sprite::refresh(){
+	this->currentFrame = 0;
 }
 
 Sprite::~Sprite() {

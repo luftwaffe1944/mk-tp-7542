@@ -51,6 +51,7 @@ public:
 	void jumpLeft();
 	void walkRight();
 	void walkLeft();
+	void refreshFrames();
 	std::string getMovement();
 	void setMovement(std::string movement);
 	bool isTouchingGround(float positionY);
