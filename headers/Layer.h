@@ -35,6 +35,7 @@ public:
 	float getLayerSpeed();
 	void setImagePath(std::string path);
 	void setNeedRefresh(bool needRefresh);
+	void setPositionX(int position);
 };
 
 #endif /* LAYER_H_ */

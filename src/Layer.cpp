@@ -62,3 +62,7 @@ void Layer::setImagePath(std::string path) {
 void Layer::setNeedRefresh(bool needRefresh) {
 	this->needRefresh = needRefresh;
 }
+
+void Layer::setPositionX(int position) {
+	this->positionX = position;
+}

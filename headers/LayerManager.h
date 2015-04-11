@@ -36,6 +36,8 @@ private:
 	void updateOffScene(Layer* layer);
 	void setSpeedFrontalLayer();
 	void setOffSceneFrontalLayer();
+	void centerFrontalLayer();
+	void centerLayers( Layer* layer);
 };
 
 #endif /* LAYERMANAGER_H_ */

@@ -45,10 +45,23 @@ void LayerManager::setSpeedFrontalLayer() {
 	this->speedFirstLayer = layer->getLayerSpeed();
 }
 
+void LayerManager::centerFrontalLayer() {
+	Layer* layer;
+	unsigned int size = this->layers.size();
+	layer = this->layers[size - 1];
+	layer->setPositionX( - layer->getLayerOffScene());
+
+}
+
+void LayerManager::centerLayers( Layer* layer) {
+	layer->setPositionX( - layer->getLayerOffScene());
+}
+
 void LayerManager::init() {
 
 	setOffSceneFrontalLayer();
 	setSpeedFrontalLayer();
+	centerFrontalLayer();
 
 	Layer* layerAux;
 	int numberOfLayers = this->layers.size();
@@ -57,6 +70,7 @@ void LayerManager::init() {
 		layerAux = this->layers[i];
 		updateOffScene(layerAux);
 		updateSpeedLayers(layerAux);
+		centerLayers(layerAux);
 	}
 }
 
