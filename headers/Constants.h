@@ -35,6 +35,7 @@
 #define STANCE "stance"
 #define JUMPING_MOVEMENT "jumping"
 #define WALKING_RIGHT_MOVEMENT "walkingRight"
+#define WALKING_RIGHT_UP_MOVEMENT "rightUp"
 #define WALKING_LEFT_MOVEMENT "walkingLeft"
 #define DUCKING_MOVEMENT "ducking"
 

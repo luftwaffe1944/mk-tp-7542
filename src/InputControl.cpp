@@ -72,7 +72,9 @@ void InputControl::refreshInputs() {
 			&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 			&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+
 	}
+
 }
 
 InputCommand InputControl::getFirstPlayerMove() {

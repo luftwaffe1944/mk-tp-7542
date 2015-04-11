@@ -87,14 +87,14 @@ void Character::update() {
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 
 	// Check if critical movements have finished
-	if (isJumping){
+	if (isJumping) {
 		jump();
-	} else if (isJumpingForward){
-		//jumpForward();
+	} else if (isJumpingForward) {
+		jumpForward();
 	} else if (isJumpingBackward) {
 		//jumpBackward();
 	} else {
-		switch(playerCommand){
+		switch (playerCommand) {
 		case FIRST_PLAYER_MOVE_RIGHT:
 			this->setMovement(WALKING_RIGHT_MOVEMENT);
 			walkRight();
@@ -107,16 +107,19 @@ void Character::update() {
 			this->setMovement(JUMPING_MOVEMENT);
 			jump();
 			break;
+		case FIRST_PLAYER_MOVE_UP_RIGHT:
+			this->setMovement(JUMPING_MOVEMENT);
+			jumpForward();
+			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
 			isJumping = false;
 			break;
 		}
 	}
-	SDL_Delay( 55 );
+	SDL_Delay(55);
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 }
-
 
 void Character::jump() {
 	isJumping = true;
@@ -126,12 +129,32 @@ void Character::jump() {
 		isJumping = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
-		this->positionY = (MKGame::Instance()->getGameGUI()->getWindow().heightPx - this->height);
+		this->positionY =
+				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
+						- this->height);
 	}
 }
 
+void Character::jumpForward() {
+	isJumpingForward = true;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	walkRight();
+	if (this->isTouchingGround(positionY)) {
+		isJumpingForward = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY =
+				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
+						- this->height);
+	}
+}
+
+
 bool Character::isTouchingGround(float positionY) {
-	if (positionY >= (MKGame::Instance()->getGameGUI()->getWindow().heightPx - this->height)) {
+	if (positionY
+			>= (MKGame::Instance()->getGameGUI()->getWindow().heightPx
+					- this->height)) {
 		return true;
 	}
 	return false;
@@ -145,12 +168,13 @@ void Character::walkLeft() {
 	positionX = positionX - 7;
 }
 
-void Character::setMovement(std::string movement){
-	this->movement=movement;
+
+void Character::setMovement(std::string movement) {
+	this->movement = movement;
 }
 
-std::string Character::getMovement(){
-	 return this->movement;
+std::string Character::getMovement() {
+	return this->movement;
 }
 
 void Character::clean() {
