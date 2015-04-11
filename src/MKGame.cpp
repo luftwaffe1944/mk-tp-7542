@@ -118,3 +118,7 @@ void MKGame::quit(){
 vector<SDLObjectGUI*>& MKGame::getObjectList() {
 	return objectList;
 }
+
+GameGUI* MKGame::getGameGUI(){
+	return gameGui;
+}

@@ -7,6 +7,7 @@
 
 #include "../headers/Character.h"
 #include "../headers/TextureManager.h"
+#include "../headers/MKGame.h"
 #include <SDL.h>
 #include <string>
 #include <sstream>
@@ -97,8 +98,10 @@ void Character::update() {
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 		switch(playerCommand){
 		case FIRST_PLAYER_MOVE_RIGHT:
-			this->setMovement(WALKING_RIGHT_MOVEMENT);
-			walkRight();
+			if (!isJumping && !isJumpingForward) {
+				this->setMovement(WALKING_RIGHT_MOVEMENT);
+				walkRight();
+			}
 			break;
 		case FIRST_PLAYER_MOVE_LEFT:
 			this->setMovement(WALKING_LEFT_MOVEMENT);
@@ -107,12 +110,18 @@ void Character::update() {
 		case FIRST_PLAYER_MOVE_UP:
 			this->setMovement(JUMPING_MOVEMENT);
 			jump();
+			isJumping = true;
 			break;
 		case NO_INPUT:
-			this->setMovement(STANCE);
+			if (this->isTouchingGround(this->positionY)) {
+				this->setMovement(STANCE);
+				isJumping = false;
+			} else {
+				jump();
+			}
 			break;
 		}
-		SDL_Delay( 75 );
+		SDL_Delay( 55 );
 		currentFrame = int(((SDL_GetTicks() / 100) % 6));
 }
 
@@ -120,11 +129,18 @@ void Character::update() {
 void Character::jump(){
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	if (positionY >= 480-132){
+	if (this->isTouchingGround(positionY)){
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
-		this->positionY = 480-132;
+		this->positionY = (MKGame::Instance()->getGameGUI()->getWindow().heightPx - this->height);
 	}
+}
+
+bool Character::isTouchingGround(float positionY) {
+	if (positionY >= (MKGame::Instance()->getGameGUI()->getWindow().heightPx - this->height)) {
+		return true;
+	}
+	return false;
 }
 
 void Character::walkRight() {

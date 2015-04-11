@@ -22,13 +22,14 @@ using namespace std;
 class Character : public SDLObjectGUI {
 private:
 	std::string name;
-	int width;
-	int height;
 	int zindex;
 	std::string orientation;
 	std::string movement;
 	std::map<std::string,Sprite*> characterSprites;
 	SDL_Renderer* renderer; //TODO: review
+	bool isJumping;
+	bool isJumpingForward = false;
+	bool isJumpingBackward = false;
 
 public:
 	Character();
@@ -48,6 +49,7 @@ public:
 	void walkLeft();
 	std::string getMovement();
 	void setMovement(std::string movement);
+	bool isTouchingGround(float positionY);
 
 };
 

@@ -110,7 +110,7 @@ GameGUI* GameGUIBuilder::create() {
 
 	vector<Character*> characters;
 	Character* playerOne = new Character(
-			new LoaderParams(0, 0, 128, 82, character_zindex, ratio,
+			new LoaderParams(0, 600-132, 128, 132, character_zindex, ratio,
 					"subzero"));
 
 	//Add player to the game loop

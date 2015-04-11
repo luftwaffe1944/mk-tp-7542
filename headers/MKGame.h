@@ -55,6 +55,7 @@ public:
 	void handleEvents();
 	void clean();
 	void quit();
+	GameGUI* getGameGUI();
 	// a function to access the private running variable
 	bool running() {
 		return m_bRunning;
