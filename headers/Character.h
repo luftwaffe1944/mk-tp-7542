@@ -45,6 +45,7 @@ public:
 
 	//Movement & position methods
 	void jump();
+	void jumpForward();
 	void walkRight();
 	void walkLeft();
 	std::string getMovement();
