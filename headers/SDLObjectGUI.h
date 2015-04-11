@@ -11,6 +11,7 @@
 #include "TextureManager.h"
 #include "ObjectGUI.h"
 #include <sstream>
+#include <string>
 #include "LoaderParams.h"
 
 class SDLObjectGUI : public ObjectGUI {
@@ -19,7 +20,6 @@ public:
 	SDLObjectGUI(const LoaderParams* pParams);
 	virtual void draw();
 	virtual void update();
-	virtual void update(InputControl keyboardControl);
 	virtual void clean();
 	int unitToPixel(float units);
 	virtual bool load();

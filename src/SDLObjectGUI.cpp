@@ -49,8 +49,6 @@ void SDLObjectGUI::update() {
 
 }
 
-void SDLObjectGUI::update(InputControl keyboardControl){
-}
 
 void SDLObjectGUI::clean() {
 

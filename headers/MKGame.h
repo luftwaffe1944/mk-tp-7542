@@ -54,6 +54,7 @@ public:
 	void update();
 	void handleEvents();
 	void clean();
+	void quit();
 	// a function to access the private running variable
 	bool running() {
 		return m_bRunning;

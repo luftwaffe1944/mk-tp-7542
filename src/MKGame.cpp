@@ -25,7 +25,6 @@ MKGame* MKGame::Instance() {
 bool MKGame::init(GameGUI* gameGui) {
 
 	this->gameGui = gameGui;
-	this->keyboardControl = InputControl();
 	// attempt to initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		FILE_LOG(logDEBUG) << "SDL init success";
@@ -102,21 +101,18 @@ void MKGame::draw() {
 void MKGame::update() {
 	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
 			i++) {
-		objectList[i]->update(this->keyboardControl);
+		objectList[i]->update();
 	}
 }
 
 void MKGame::handleEvents() {
-	SDL_Event event;
-	if (SDL_PollEvent(&event)) {
-		switch (event.type) {
-		case SDL_QUIT:
-			m_bRunning = false;
-			break;
-		default:
-			break;
-		}
-	}
+
+	InputControl::Instance()->refreshInputs();
+
+}
+
+void MKGame::quit(){
+	this->m_bRunning = false;
 }
 
 vector<SDLObjectGUI*>& MKGame::getObjectList() {

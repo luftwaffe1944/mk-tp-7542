@@ -91,10 +91,9 @@ void Character::draw() {
 				renderer,SDL_FLIP_NONE);
 }
 
-void Character::update(InputControl keyboardControl) {
+void Character::update() {
 
-	keyboardControl.refreshInputs();
-	InputCommand playerCommand = keyboardControl.getFirstPlayerMove();
+	InputCommand playerCommand = InputControl::Instance()->getFirstPlayerMove();
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 		switch(playerCommand){
 		case FIRST_PLAYER_MOVE_RIGHT:

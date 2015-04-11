@@ -14,6 +14,7 @@
 #include "SDLObjectGUI.h"
 #include <SDL.h>
 #include <stdio.h>
+#include <map>
 #include <iostream>
 using namespace std;
 
@@ -38,7 +39,7 @@ public:
 	virtual ~Character();
 	Character(const LoaderParams* pParams);
 	virtual void draw();
-	virtual void update(InputControl keyboardControl);
+	virtual void update();
 	virtual void clean();
 
 	//Movement & position methods

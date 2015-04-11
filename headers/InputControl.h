@@ -27,7 +27,10 @@ private:
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
 public:
-	InputControl();
+	static InputControl* Instance() {
+		static InputControl t_pInstance;
+		return &t_pInstance;
+	}
 	void refreshInputs();
 	InputCommand getFirstPlayerMove();
 	InputCommand getSecondPlayerMove();
