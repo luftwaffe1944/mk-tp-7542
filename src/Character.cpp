@@ -161,7 +161,7 @@ void Character::update() {
 			break;
 		}
 	}
-	SDL_Delay(40);
+	SDL_Delay(55);
 }
 
 void Character::clearMovementsFlags(){
