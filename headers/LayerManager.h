@@ -16,11 +16,17 @@
 
 class LayerManager {
 public:
-	LayerManager();
-	virtual ~LayerManager();
+	static LayerManager* Instance() {
+		static LayerManager lm_pInstance;
+		return &lm_pInstance;
+	}
+
 	void init();
+	void refresh();
 
 private:
+	LayerManager();
+	virtual ~LayerManager();
 	vector<Layer*> layers;
 	vector<Character*> characters;
 	float speedFirstLayer;

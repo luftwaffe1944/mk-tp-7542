@@ -90,6 +90,10 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratio) {
 }
 
 vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
+
+	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
+	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
+
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
 	string character_name =
 			characterValue.get(JSON_KEY_NOMBRE, "nombre").asString();
@@ -107,7 +111,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 
 	vector<Character*> characters;
 	Character* playerOne = new Character(
-			new LoaderParams(0, 0, character_width, character_height, character_zindex, ratio,
+			new LoaderParams(0, stage_win_ypiso, character_width, character_height, character_zindex, ratio,
 					character_name));
 
 	//Add player to the game loop
@@ -158,6 +162,8 @@ GameGUI* GameGUIBuilder::create() {
 	gameGUI->setStage(stage);
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
+
+	LayerManager::Instance()->init();
 
 	return gameGUI;
 

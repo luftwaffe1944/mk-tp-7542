@@ -51,9 +51,32 @@ void LayerManager::init() {
 
 	Layer* layerAux;
 	int numberOfLayers = this->layers.size();
+	std::cout << numberOfLayers << endl;
 	for(int i = 1; i < numberOfLayers; i++) {
 		layerAux = this->layers[i];
-		updateSpeedLayers(layerAux);
 		updateOffScene(layerAux);
+		updateSpeedLayers(layerAux);
 	}
+}
+
+void LayerManager::refresh() {
+	Stage stage = GameGUI::getInstance()->getStage();
+	Window window = GameGUI::getInstance()->getWindow();
+	vector<Character*> characters = GameGUI::getInstance()->getCharacters();
+
+	int stageWidth = stage.getWidth();
+	int posXWindow = window.xpos;
+	int posXCharacter = characters[0]->getPosX();
+	int windowWidth = window.widthPx;
+	int characterWidth = characters[0]->getWidth();
+	int margin = 200;
+	bool refresh = false;
+	if(((windowWidth + posXWindow) - (posXCharacter + characterWidth)) < margin) {
+		refresh = true;
+	}
+	for(unsigned int index=0; index < this->layers.size(); ++index) {
+		this->layers[index]->setNeedRefresh(refresh);
+	}
+
+
 }

@@ -31,6 +31,7 @@ void Layer::update() {
 
 	if (this->needRefresh) {
 		this->scrollingOffset -= this->bkgSpeed * this->orientation;
+		this->positionX = scrollingOffset - this->offScene;
 	}
 }
 void Layer::clean() {
@@ -42,6 +43,7 @@ void Layer::setLayerOffScene(int windowsWidth) {
 
 void Layer::setLayerSpeed(float speedFirstLayer, float offSceneFirstLayer) {
 	this->bkgSpeed = ((this->offScene * speedFirstLayer) / offSceneFirstLayer);
+	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " speed: " << this->bkgSpeed;
 }
 
 float Layer::getLayerOffScene() {
@@ -54,4 +56,8 @@ float Layer::getLayerSpeed() {
 
 void Layer::setImagePath(std::string path) {
 	this->imagePath = path;
+}
+
+void Layer::setNeedRefresh(bool needRefresh) {
+	this->needRefresh = needRefresh;
 }

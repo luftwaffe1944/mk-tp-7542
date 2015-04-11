@@ -11,6 +11,7 @@
 #include "SDL.h"
 #include "SDLObjectGUI.h"
 #include "TextureManager.h"
+#include "Log.h"
 using namespace std;
 
 class Layer: public SDLObjectGUI {
@@ -33,6 +34,7 @@ public:
 	float getLayerOffScene();
 	float getLayerSpeed();
 	void setImagePath(std::string path);
+	void setNeedRefresh(bool needRefresh);
 };
 
 #endif /* LAYER_H_ */

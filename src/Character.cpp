@@ -16,7 +16,7 @@ Character::Character(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
 
 }
-
+/*
 Character::Character(int width, int height, int zindex, std::string orientation) : SDLObjectGUI() {
 	this->width = width;
 	this->height = height;
@@ -31,7 +31,7 @@ Character::Character(string name, int width, int height, int zindex, std::string
 	this->zindex = zindex;
 	this->orientation = orientation;
 }
-
+*/
 bool Character::load(SDL_Renderer* render) {
 
 	std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
@@ -50,9 +50,18 @@ void Character::draw() {
 	SDLObjectGUI::draw();
 }
 void Character::update() {
+	//TODO leer eventos
 //	m_x -= 1;
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
+	this->positionX += 1;
 }
 void Character::clean() {
 }
 
+int Character::getWidth() {
+	return this->width;
+}
+
+int Character::getPosX() {
+	return this->positionX;
+}

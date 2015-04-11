@@ -1,13 +1,13 @@
 {
 	"ventana": {
 		"anchopx": 800,
-		"altopx": 600,
+		"altopx": 480,
 		"ancho": 200
 	},
 	"escenario": {
 		"ancho": 1000.5,
 		"alto": 150,
-		"ypiso": 20
+		"ypiso": 250
 	},
 	"capas": [
 		{
@@ -25,8 +25,8 @@
 	],
 	"personaje": {
 		"nombre": "subzero",
-		"ancho": 80,
-		"alto": 120,
+		"ancho": 140,
+		"alto": 200,
 		"zindex": 1,
 		"orientacion": "left"
 	}
