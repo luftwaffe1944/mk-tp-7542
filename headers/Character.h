@@ -28,8 +28,10 @@ private:
 	std::map<std::string,Sprite*> characterSprites;
 	SDL_Renderer* renderer; //TODO: review
 	bool isJumping;
-	bool isJumpingForward;
-	bool isJumpingBackward;
+	bool isWalkingRight;
+	bool isWalkingLeft;
+	bool isJumpingRight;
+	bool isJumpingLeft;
 
 public:
 	Character();
@@ -45,13 +47,14 @@ public:
 
 	//Movement & position methods
 	void jump();
-	void jumpForward();
+	void jumpRight();
 	void walkRight();
 	void walkLeft();
 	std::string getMovement();
 	void setMovement(std::string movement);
 	bool isTouchingGround(float positionY);
-
+	bool shouldMoveForward();
+	void clearMovementsFlags();
 };
 
 #endif /* CHARACTER_H_ */

@@ -36,8 +36,10 @@ Character::Character(string name, int width, int height, int zindex, bool isRigh
 	this->positionY = winWidth - height;
 	// initializing movements statements
 	this->isJumping = false;
-	this->isJumpingForward = false;
-	this->isJumpingBackward = false;
+	this->isJumpingRight = false;
+	this->isJumpingLeft = false;
+	this->isWalkingRight = false;
+	this->isWalkingLeft = false;
 	this->textureID = name;
 	this->drawRatio = ratio;
 }
@@ -74,11 +76,25 @@ void Character::draw() {
 		} else{
 			//TODO: review
 		}
-		int currentFrame = currentSprite->getNextForwardingFrame();
+		int currentFrame;
+		if (shouldMoveForward()) {
+			currentFrame = currentSprite->getNextForwardingFrame();
+		} else {
+			currentFrame = currentSprite->getNextBackwardingFrame();
+		}
 		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
 				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
 				1, currentFrame,
 				renderer,SDL_FLIP_NONE);
+}
+
+bool Character::shouldMoveForward() {
+	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) ||
+			(!this->isRightOriented && (isJumpingLeft || isWalkingLeft)) ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 void Character::update() {
@@ -89,10 +105,10 @@ void Character::update() {
 	// Check if critical movements have finished
 	if (isJumping) {
 		jump();
-	} else if (isJumpingForward) {
-		jumpForward();
-	} else if (isJumpingBackward) {
-		//jumpBackward();
+	} else if (isJumpingRight) {
+		jumpRight();
+	} else if (isJumpingLeft) {
+		//jumpLeft();
 	} else {
 		switch (playerCommand) {
 		case FIRST_PLAYER_MOVE_RIGHT:
@@ -109,16 +125,24 @@ void Character::update() {
 			break;
 		case FIRST_PLAYER_MOVE_UP_RIGHT:
 			this->setMovement(JUMPING_MOVEMENT);
-			jumpForward();
+			jumpRight();
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
-			isJumping = false;
+			this->clearMovementsFlags();
 			break;
 		}
 	}
 	SDL_Delay(55);
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
+}
+
+void Character::clearMovementsFlags(){
+	isJumping = false;
+	isJumpingRight = false;
+	isJumpingLeft = false;
+	isWalkingRight = false;
+	isWalkingLeft = false;
 }
 
 void Character::jump() {
@@ -135,13 +159,13 @@ void Character::jump() {
 	}
 }
 
-void Character::jumpForward() {
-	isJumpingForward = true;
+void Character::jumpRight() {
+	isJumpingRight = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	walkRight();
 	if (this->isTouchingGround(positionY)) {
-		isJumpingForward = false;
+		isJumpingRight = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
 		this->positionY =
@@ -161,10 +185,12 @@ bool Character::isTouchingGround(float positionY) {
 }
 
 void Character::walkRight() {
+	isWalkingRight = true;
 	positionX = positionX + 7;
 }
 
 void Character::walkLeft() {
+	isWalkingLeft = true;
 	positionX = positionX - 7;
 }
 
