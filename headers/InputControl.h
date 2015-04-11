@@ -18,7 +18,8 @@ enum InputCommand {
 	FIRST_PLAYER_MOVE_UP_LEFT,
 	FIRST_PLAYER_MOVE_DOWN_RIGHT,
 	FIRST_PLAYER_MOVE_DOWN_LEFT,
-	RESET
+	RESET,
+	FIRST_PLAYER_CHANGE_ORIENTATION
 };
 
 class InputControl {
@@ -27,7 +28,10 @@ private:
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
 public:
-	InputControl();
+	static InputControl* Instance() {
+		static InputControl t_pInstance;
+		return &t_pInstance;
+	}
 	void refreshInputs();
 	InputCommand getFirstPlayerMove();
 	InputCommand getSecondPlayerMove();

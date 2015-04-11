@@ -29,9 +29,9 @@ GameGUI* GameGUIBuilder::create() {
 	ifstream gameConfig("src/stageConfig.json", std::ifstream::binary);
 
 	if (!gameConfig.good()) {
-		MessageError fileNotFound(ERROR_FILE_NOT_FOUND, FILE_CONFIG_NOT_FOUND,
-				LOG_LEVEL_ERROR);
-		Log<Output2FILE>::logMsgError(fileNotFound);
+		//MessageError fileNotFound(ERROR_FILE_NOT_FOUND, FILE_CONFIG_NOT_FOUND,
+				//LOG_LEVEL_ERROR);
+		//Log<Output2FILE>::logMsgError(fileNotFound);
 		return createDefault();
 	}
 
@@ -109,14 +109,11 @@ GameGUI* GameGUIBuilder::create() {
 			<< character_orientation;
 
 	vector<Character*> characters;
-	Character* playerOne = new Character(
-			new LoaderParams(0, 0, 128, 82, character_zindex, ratio,
-					"scorpion"));
+	Character* playerOne = new Character("subzero", 80, 132, 1, true, ratio, win_height_px);
 
 	//Add player to the game loop
-	playerOne->setImagePath("images/scorpion_fighting_stance/sfsGIF.gif");
+	playerOne->setImagePath("images/spritesheets_subzero/");
 	MKGame::Instance()->getObjectList().push_back(playerOne);
-	cout << MKGame::Instance()->getObjectList().size() << endl;
 
 	characters.push_back(playerOne);
 

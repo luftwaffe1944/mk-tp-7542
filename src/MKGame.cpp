@@ -8,9 +8,6 @@
 #include "../headers/MKGame.h"
 #include "../headers/Log.h"
 
-#include <stdio.h>
-#include <iostream>
-#include <vector>
 using namespace std;
 
 
@@ -45,18 +42,14 @@ bool MKGame::init(GameGUI* gameGui) {
 
 				vector<SDLObjectGUI*> objects = getObjectList();
 				for (int i = 0; i < objects.size(); i++) {
-					objects[i]->load();
+					objects[i]->load(m_pRenderer);
 				}
 
-				m_sourceRectangle.w = TextureManager::Instance()->queryTexture(
-						"scorpion").w;
-				m_sourceRectangle.h = TextureManager::Instance()->queryTexture(
-						"scorpion").h;
+				/*for (int i = 0; i < objects.size(); i++) {
+					objects[i]->draw();
+				}*/
 
-				m_destinationRectangle.x = m_sourceRectangle.x = 0;
-				m_destinationRectangle.y = m_sourceRectangle.y = 0;
-				m_destinationRectangle.w = m_sourceRectangle.w;
-				m_destinationRectangle.h = m_sourceRectangle.h;
+
 
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
@@ -110,18 +103,19 @@ void MKGame::update() {
 }
 
 void MKGame::handleEvents() {
-	SDL_Event event;
-	if (SDL_PollEvent(&event)) {
-		switch (event.type) {
-		case SDL_QUIT:
-			m_bRunning = false;
-			break;
-		default:
-			break;
-		}
-	}
+
+	InputControl::Instance()->refreshInputs();
+
+}
+
+void MKGame::quit(){
+	this->m_bRunning = false;
 }
 
 vector<SDLObjectGUI*>& MKGame::getObjectList() {
 	return objectList;
+}
+
+GameGUI* MKGame::getGameGUI(){
+	return gameGui;
 }
