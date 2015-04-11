@@ -198,7 +198,7 @@ GameGUI* GameGUIBuilder::create() {
 	float ratioX = getRatio(window.widthPx, window.width,"X");
 	float ratioY = getRatio(window.heightPx, stage.getHeight(),"Y");
 
-	vector<Layer*> layers = jsonGetLayers(root, ratioX);
+	vector<Layer*> layers = jsonGetLayers(root, ratioX, &window, &stage);
 
 	vector<Character*> characters = jsonGetCharacters(root, ratioX);
 
