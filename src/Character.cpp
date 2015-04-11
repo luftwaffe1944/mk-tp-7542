@@ -52,8 +52,8 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, 66, 132, 6);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
 			renderer, 73, 100, 0);
-	Sprite* spriteJumpRight = new Sprite(this->name+JUMP_DIAGONAL, this->imagePath+"UMK3_Sub-Zero_diagonal_jump.png",
-				renderer, 100, 100, 6);
+	Sprite* spriteJumpRight = new Sprite(this->name+JUMP_DIAGONAL, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
+				renderer, 100, 170, 9);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
@@ -147,7 +147,6 @@ void Character::update() {
 		}
 	}
 	SDL_Delay(55);
-	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 }
 
 void Character::clearMovementsFlags(){
@@ -176,7 +175,7 @@ void Character::jumpRight() {
 	isJumpingRight = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	walkRight();
+	positionX+=10;
 	if (this->isTouchingGround(positionY)) {
 		isJumpingRight = false;
 		jumpVel = 60.0f;
