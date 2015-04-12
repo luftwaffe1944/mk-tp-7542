@@ -8,10 +8,13 @@
 #include "../headers/LayerManager.h"
 
 LayerManager::LayerManager() {
-	this->offSceneFirstLayer = 0;
+	this->offSceneFrontalLayer = 0;
 	this->speedFirstLayer = 0;
 	this->layers = GameGUI::getInstance()->getLayers();
 	this->characters = GameGUI::getInstance()->getCharacters();
+	this->stage = GameGUI::getInstance()->getStage();
+	this->window = GameGUI::getInstance()->getWindow();
+
 }
 
 LayerManager::~LayerManager() {
@@ -19,7 +22,7 @@ LayerManager::~LayerManager() {
 }
 
 void LayerManager::updateSpeedLayers(Layer* layer) {
-	layer->setLayerSpeed(this->speedFirstLayer, this->offSceneFirstLayer);
+	layer->setLayerSpeed(this->speedFirstLayer, this->offSceneFrontalLayer);
 }
 
 void LayerManager::updateOffScene(Layer* layer) {
@@ -28,20 +31,20 @@ void LayerManager::updateOffScene(Layer* layer) {
 }
 
 void LayerManager::setOffSceneFrontalLayer() {
+	float windowSize = this->window.getWidthPx();
 	Layer* layer;
 	unsigned int size = this->layers.size();
+
 	layer = this->layers[size - 1];
-	FILE_LOG(logDEBUG) << "layer id: " << layer->getTextureID() << " " << layer->getImagePath();
-	float windowSize = GameGUI::getInstance()->getWindow().getWidthPx();
 	layer->setLayerOffScene(windowSize);
-	this->offSceneFirstLayer = layer->getLayerOffScene();
+	this->offSceneFrontalLayer = layer->getLayerOffScene();
 }
 
 void LayerManager::setSpeedFrontalLayer() {
 	Layer* layer;
 	unsigned int size = this->layers.size();
 	layer = this->layers[size - 1];
-	layer->setLayerSpeed(LAYER_SPEED, this->offSceneFirstLayer);
+	layer->setLayerSpeed(LAYER_SPEED, this->offSceneFrontalLayer);
 	this->speedFirstLayer = layer->getLayerSpeed();
 }
 
@@ -85,18 +88,16 @@ bool LayerManager::layerReachedStageLimit(int windowWidth) {
 }
 
 void LayerManager::refresh() {
-	Stage stage = GameGUI::getInstance()->getStage();
-	Window window = GameGUI::getInstance()->getWindow();
-	vector<Character*> characters = GameGUI::getInstance()->getCharacters();
-
-	int stageWidth = stage.getWidth();
-	int posXWindow = window.xpos;
-	int posXCharacter = characters[0]->getPosX();
-	int windowWidth = window.widthPx;
-	int characterWidth = characters[0]->getWidth();
+	int stageWidth = this->stage.getWidth();
+	int posXWindow = this->window.xpos;
+	int posXCharacter = this->characters[0]->getPosX();
+	int windowWidth = this->window.widthPx;
+	int characterWidth = this->characters[0]->getWidth();
 	int margin = 10;
 	bool refresh = false;
 	int orientation;
+
+
 	if ( ( (windowWidth - (posXCharacter + characterWidth)) < margin) && !layerReachedStageLimit( windowWidth) ) {
 		refresh = true;
 		orientation = 1;
@@ -105,10 +106,9 @@ void LayerManager::refresh() {
 		refresh = true;
 		orientation = -1;
 	}
+
 	for(unsigned int index=0; index < this->layers.size(); ++index) {
 		this->layers[index]->setNeedRefresh(refresh);
 		this->layers[index]->setOrientation(orientation);
 	}
-
-
 }

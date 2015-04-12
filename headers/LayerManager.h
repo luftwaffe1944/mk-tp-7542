@@ -26,12 +26,15 @@ public:
 	void refresh();
 
 private:
-	LayerManager();
-	virtual ~LayerManager();
 	vector<Layer*> layers;
 	vector<Character*> characters;
+	Window window;
+	Stage stage;
 	float speedFirstLayer;
-	float offSceneFirstLayer;
+	float offSceneFrontalLayer;
+
+	LayerManager();
+	virtual ~LayerManager();
 	void updateSpeedLayers(Layer* layer);
 	void updateOffScene(Layer* layer);
 	void setSpeedFrontalLayer();
