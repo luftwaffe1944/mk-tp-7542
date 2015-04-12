@@ -11,7 +11,8 @@
 #include "../headers/Log.h"
 
 TextureManager::TextureManager() {
-	// TODO Auto-generated constructor stub
+	this->ratioHeight = 0;
+	this->ratioWidth = 0;
 
 }
 
