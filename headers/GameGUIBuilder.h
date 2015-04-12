@@ -21,6 +21,7 @@
 #include "LoaderParams.h"
 #include "Log.h"
 #include <json/reader.h>
+#include "LayerManager.h"
 using namespace std;
 
 class GameGUIBuilder {

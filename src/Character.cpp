@@ -7,52 +7,272 @@
 
 #include "../headers/Character.h"
 #include "../headers/TextureManager.h"
+#include "../headers/MKGame.h"
 #include <SDL.h>
-#include <string>
-#include <sstream>
-#include <iostream>
+
+float gravity = 14.0f;
+float jumpVel = 60.0f;
 
 Character::Character(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
 
 }
 
-Character::Character(int width, int height, int zindex, std::string orientation) : SDLObjectGUI() {
-	this->width = width;
-	this->height = height;
-	this->zindex = zindex;
-	this->orientation = orientation;
-}
+//Character::Character(int width, int height, int zindex, std::string orientation) : SDLObjectGUI() {
+//
+//}
+//
+//Character::Character(int width, int height, int zindex, bool isRightOriented) : SDLObjectGUI() {
+//	this->width = width;
+//	this->height = height;
+//	this->zindex = zindex;
+//	this->isRightOriented = isRightOriented;
+//}
 
-Character::Character(string name, int width, int height, int zindex, std::string orientation) : SDLObjectGUI(){
+Character::Character(string name, int width, int height, int zindex, bool isRightOriented, float ratio, int winWidth) : SDLObjectGUI(){
 	this->name = name;
 	this->width = width;
 	this->height = height;
 	this->zindex = zindex;
-	this->orientation = orientation;
+	this->isRightOriented = isRightOriented;
+	//TODO: Review positions according to logic and pixels measures.
+	this->positionX = 400;
+	this->positionY = winWidth - height;
+	// initializing movements statements
+	this->isJumping = false;
+	this->isJumpingRight = false;
+	this->isJumpingLeft = false;
+	this->isWalkingRight = false;
+	this->isWalkingLeft = false;
+	this->isDucking = false;
+	this->textureID = name;
+	this->drawRatio = ratio;
 }
-
 bool Character::load(SDL_Renderer* render) {
+	this->renderer = render;
+	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, this->imagePath+"/UMK3_Sub-Zero_walk.png",
+			renderer, 66, 132, 10);
+	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, this->imagePath+"UMK3_Sub-Zero_stance.png",
+			renderer, 66, 132, 6);
+	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
+			renderer, 73, 100, 1);
+	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
+				renderer, 100, 170, 9);
+	Sprite* spriteDuck = new Sprite(this->name+DUCK_SUFFIX, this->imagePath+"UMK3_Sub-Zero_duck.png",
+					renderer, 100, 140, 3);
+	//TODO: Files path must be generated depending on the character
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_SUFFIX, spriteJump));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_DIAGONAL_SUFFIX, spriteJumpDiagonal));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_SUFFIX, spriteDuck));
 
-	std::string path_img_sc = "images/scorpion_fighting_stance/sfsGIF.gif";
-	return (TextureManager::Instance()->load(path_img_sc, "scorpion", render));
 }
 
 void Character::render(SDL_Renderer* render) {
-	TextureManager::Instance()->draw("scorpion", 0, 0, this->width, this->height, render, SDL_FLIP_NONE);
+}
+
+
+void Character::draw() {
+	Sprite* currentSprite;
+		if (this->getMovement() == WALKING_RIGHT_MOVEMENT){
+			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
+		} else if (this->getMovement() == WALKING_LEFT_MOVEMENT){
+			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
+		} else if (this->getMovement() == JUMPING_MOVEMENT){
+			currentSprite = this->characterSprites[this->name+JUMP_SUFFIX];
+		} else if (this->getMovement() == STANCE){
+			currentSprite = this->characterSprites[this->name+STANCE_SUFFIX];
+		} else if (this->getMovement() == JUMPING_RIGHT_MOVEMENT ||
+				this->getMovement() == JUMPING_LEFT_MOVEMENT){
+			currentSprite = this->characterSprites[this->name+JUMP_DIAGONAL_SUFFIX];
+		} else if (this->getMovement() == DUCKING_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+DUCK_SUFFIX];
+		} else{
+			//TODO: review
+		}
+		int currentFrame;
+
+		if(this->isDucking) {
+			currentFrame = currentSprite->getNextFrameWithLimit();
+		} else {
+			if (shouldMoveForward()) {
+				currentFrame = currentSprite->getNextForwardingFrame();
+			} else {
+				currentFrame = currentSprite->getNextBackwardingFrame();
+			}
+		}
+		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
+				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
+				1, currentFrame,
+				renderer,(!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
+}
+
+bool Character::shouldMoveForward() {
+	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) ||
+			(!this->isRightOriented && (isJumpingLeft || isWalkingLeft)) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void Character::update() {
+
+	InputCommand playerCommand = InputControl::Instance()->getFirstPlayerMove();
+	//InputCommand optionCommand = keyboardControl.getControlOption();
+	isDucking = false;
+	// Check if critical movements have finished
+	if (isJumping) {
+		jump();
+	} else if (isJumpingRight) {
+		jumpRight();
+	} else if (isJumpingLeft) {
+		jumpLeft();
+	} else {
+		switch (playerCommand) {
+		case FIRST_PLAYER_MOVE_RIGHT:
+			this->setMovement(WALKING_RIGHT_MOVEMENT);
+			walkRight();
+			break;
+		case FIRST_PLAYER_MOVE_LEFT:
+			this->setMovement(WALKING_LEFT_MOVEMENT);
+			walkLeft();
+			break;
+		case FIRST_PLAYER_MOVE_UP:
+			this->setMovement(JUMPING_MOVEMENT);
+			jump();
+			break;
+		case FIRST_PLAYER_MOVE_DOWN:
+			this->setMovement(DUCKING_MOVEMENT);
+			this->isDucking = true;
+			break;
+		case FIRST_PLAYER_MOVE_UP_RIGHT:
+			this->setMovement(JUMPING_RIGHT_MOVEMENT);
+			jumpRight();
+			break;
+		case FIRST_PLAYER_MOVE_UP_LEFT:
+			this->setMovement(JUMPING_LEFT_MOVEMENT);
+			jumpLeft();
+			break;
+		case FIRST_PLAYER_CHANGE_ORIENTATION:
+			isRightOriented = !isRightOriented;
+			break;
+		case NO_INPUT:
+			this->setMovement(STANCE);
+			this->clearMovementsFlags();
+			break;
+		}
+	}
+	SDL_Delay(55);
+}
+
+void Character::clearMovementsFlags(){
+	isJumping = false;
+	isJumpingRight = false;
+	isJumpingLeft = false;
+	isWalkingRight = false;
+	isWalkingLeft = false;
+}
+
+void Character::jump() {
+	isJumping = true;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	if (this->isTouchingGround(positionY)) {
+		isJumping = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY =
+				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
+						- this->height);
+		refreshFrames();
+	}
+}
+
+void Character::jumpRight() {
+	isJumpingRight = true;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	positionX+=10;
+	if (this->isTouchingGround(positionY)) {
+		isJumpingRight = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY =
+				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
+						- this->height);
+		refreshFrames();
+	}
+}
+
+void Character::jumpLeft() {
+	isJumpingLeft = true;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	positionX-=10;
+	if (this->isTouchingGround(positionY)) {
+		isJumpingLeft = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY =
+				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
+						- this->height);
+		refreshFrames();
+	}
+}
+
+
+bool Character::isTouchingGround(float positionY) {
+	if (positionY
+			>= (MKGame::Instance()->getGameGUI()->getWindow().heightPx
+					- this->height)) {
+		return true;
+	}
+	return false;
+}
+
+void Character::refreshFrames(){
+
+	 for (std::map<string,Sprite*>::iterator it=this->characterSprites.begin(); it!=this->characterSprites.end(); ++it)
+		 it->second->refresh();
+
+}
+
+void Character::walkRight() {
+	isWalkingRight = true;
+	positionX = positionX + 7;
+
+}
+
+void Character::walkLeft() {
+	isWalkingLeft = true;
+	positionX = positionX - 7;
+
+}
+
+
+void Character::setMovement(std::string movement) {
+	this->movement = movement;
+}
+
+std::string Character::getMovement() {
+	return this->movement;
+}
+
+void Character::clean() {
+}
+
+
+int Character::getWidth() {
+	return this->width;
+}
+
+int Character::getPosX() {
+	return this->positionX;
 }
 
 Character::~Character() {
 	// TODO Auto-generated destructor stub
-}
 
-void Character::draw() {
-	SDLObjectGUI::draw();
 }
-void Character::update() {
-//	m_x -= 1;
-	currentFrame = int(((SDL_GetTicks() / 100) % 6));
-}
-void Character::clean() {
-}
-

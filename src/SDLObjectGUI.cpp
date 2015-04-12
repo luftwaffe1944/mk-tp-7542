@@ -35,6 +35,11 @@ bool SDLObjectGUI::load() {
 			MKGame::Instance()->getRenderer()));
 }
 
+bool SDLObjectGUI::load(SDL_Renderer* render) {
+	return (TextureManager::Instance()->load(this->imagePath, textureID,
+			MKGame::Instance()->getRenderer()));
+}
+
 void SDLObjectGUI::draw() {
 	TextureManager::Instance()->draw(textureID, positionX, positionY, width,
 			height, MKGame::Instance()->getRenderer());
@@ -44,10 +49,19 @@ void SDLObjectGUI::update() {
 
 }
 
+
 void SDLObjectGUI::clean() {
 
 }
 
 int SDLObjectGUI::unitToPixel(float units) {
 	return ((int) units * this->drawRatio);
+}
+
+string SDLObjectGUI::getImagePath() {
+	return this->imagePath;
+}
+
+string SDLObjectGUI::getTextureID() {
+	return this->textureID;
 }

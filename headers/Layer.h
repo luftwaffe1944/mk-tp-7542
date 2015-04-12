@@ -11,26 +11,38 @@
 #include "SDL.h"
 #include "SDLObjectGUI.h"
 #include "TextureManager.h"
+#include "Log.h"
 using namespace std;
 
 class Layer: public SDLObjectGUI {
 private:
-	/*Scrolling Factor*/
-	float scrollingFactor;
+	int offScene;
+	float scrollingOffset;
+	float bkgSpeed;
+	int orientation; /* 1=right -1=left */
+	bool needRefresh;
 
 
 public:
 	Layer(const LoaderParams* pParams);
-	Layer(string image, int width, int zIndex);
-
-	bool render(SDL_Renderer* render);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
-	void setScrollingFactor(float sFactor);
-	float getScrollingFactor();
-	void render(SDL_Renderer* render, int height);
 	virtual ~Layer();
+	void setLayerSpeed(float speedFirstLayer, float offSceneFirstLayer);
+	void setLayerOffScene(int windowsWidth);
+	float getLayerOffScene();
+	float getLayerSpeed();
+	void setImagePath(std::string path);
+	void setNeedRefresh(bool needRefresh);
+	void setPositionX(int position);
+	int getPositionX();
+	float getScrollingOffset();
+	int getWidth();
+
+	int getOrientation() const;
+
+	void setOrientation(int orientation);
 };
 
 #endif /* LAYER_H_ */

@@ -1,28 +1,32 @@
 {
 	"ventana": {
-		"anchopx": 800,
-		"altopx": 600,
+		"anchopx": 700,
+		"altopx": 480,
 		"ancho": 200
 	},
 	"escenario": {
 		"ancho": 1000.5,
 		"alto": 150,
-		"ypiso": 20
+		"ypiso": 250
 	},
 	"capas": [
 		{
-			"imagen_fondo": "images/arenas/far-background.png",
-			"ancho": 3000
+			"imagen_fondo": "images/arenas/p_3n.png",
+			"ancho": 721
 		},
 		{
-			"imagen_fondo": "images/arenas/near-background.png",
-			"ancho": 3000
+			"imagen_fondo": "images/arenas/p_2n.png",
+			"ancho": 831
+		},
+		{
+			"imagen_fondo": "images/arenas/p_1n.png",
+			"ancho": 1200
 		}
 	],
 	"personaje": {
 		"nombre": "subzero",
-		"ancho": 20,
-		"alto": 35,
+		"ancho": 140,
+		"alto": 200,
 		"zindex": 1,
 		"orientacion": "left"
 	}

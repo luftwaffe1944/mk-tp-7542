@@ -8,37 +8,14 @@
 #include "../headers/Layer.h"
 #include <string>
 #include <iostream>
-#include "../headers/Log.h"
-#include "../headers/Constants.h"
 
 Layer::Layer(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
-}
-
-//TODO Deprecated.. use constructor above
-//Layer::Layer(string image, int width, int zIndex) {
-//	this->backgroundImage = image;
-//	this->width = width;
-//	this->zIndex = zIndex;
-//this->setScrollingFactor(0);
-//}
-
-
-
-void Layer::render(SDL_Renderer* render, int height) {
-	stringstream sLayerName;
-	sLayerName << "layer";
-	sLayerName << this->zIndex;
-	TextureManager::Instance()->draw(sLayerName.str(), 0, 0, this->width, height, render, SDL_FLIP_NONE);
-}
-
-
-void Layer::setScrollingFactor(float sFactor) {
-	this->scrollingFactor = sFactor;
-}
-
-float Layer::getScrollingFactor() {
-	return this->scrollingFactor;
+	this->bkgSpeed = 0;
+	this->offScene = 0;
+	this->scrollingOffset = 0;
+	this->needRefresh = false;
+	this->orientation = -1;
 }
 
 Layer::~Layer() {
@@ -50,9 +27,62 @@ void Layer::draw() {
 }
 
 void Layer::update() {
-//	m_x -= 1;
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
+
+	if (this->needRefresh) {
+		this->scrollingOffset -= this->bkgSpeed * this->orientation; //USAR INPUT EN VEZ DE ORIENTATION
+		this->positionX = scrollingOffset - this->offScene;
+	}
 }
 void Layer::clean() {
 }
 
+void Layer::setLayerOffScene(int windowsWidth) {
+	this->offScene = ((this->width - windowsWidth) / 2);
+	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " layeroffScene " << this->offScene;
+}
+
+void Layer::setLayerSpeed(float speedFirstLayer, float offSceneFirstLayer) {
+	this->bkgSpeed = ((this->offScene * speedFirstLayer) / offSceneFirstLayer);
+	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " speed: " << this->bkgSpeed;
+}
+
+float Layer::getLayerOffScene() {
+	return this->offScene;
+}
+
+float Layer::getLayerSpeed() {
+	return this->bkgSpeed;
+}
+
+void Layer::setImagePath(std::string path) {
+	this->imagePath = path;
+}
+
+void Layer::setNeedRefresh(bool needRefresh) {
+	this->needRefresh = needRefresh;
+}
+
+void Layer::setPositionX(int position) {
+	this->positionX = position;
+}
+
+int Layer::getPositionX(){
+	return this->positionX;
+}
+
+float Layer::getScrollingOffset(){
+	return this->scrollingOffset;
+}
+
+int Layer::getWidth(){
+	return this->width;
+}
+
+int Layer::getOrientation() const {
+	return this->orientation;
+}
+
+void Layer::setOrientation(int orientation) {
+	this->orientation = orientation;
+}

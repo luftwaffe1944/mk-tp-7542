@@ -211,11 +211,13 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
 
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
-	string character_name = characterValue.get(JSON_KEY_NOMBRE, "nombre").asString();
+	string character_name =
+			characterValue.get(JSON_KEY_NOMBRE, "nombre").asString();
 	int character_width = characterValue.get(JSON_KEY_ANCHO, 700).asInt();
 	int character_height = characterValue.get(JSON_KEY_ALTO, 700).asInt();
 	int character_zindex = characterValue.get(JSON_KEY_ZINDEX, 700).asInt();
-	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION, "right").asString();
+	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION,
+			"right").asString();
 
 	FILE_LOG(logDEBUG) << "JSON - Character name: " << character_name;
 	FILE_LOG(logDEBUG) << "JSON - Character width: " << character_width;
@@ -224,19 +226,17 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
 	vector<Character*> characters;
-	Character* playerOne = new Character(
-			new LoaderParams(0, stage_win_ypiso, character_width, character_height, character_zindex, ratio,
-					character_name));
+	Character* playerOne = new Character(character_name, character_width, character_height,
+			character_zindex, true, ratio, 400);
+
 
 	//Add player to the game loop
-	playerOne->setImagePath("images/scorpion_fighting_stance/sfsGIF.gif");
+	playerOne->setImagePath("images/spritesheets_subzero/");
 	MKGame::Instance()->getObjectList().push_back(playerOne);
-	cout << MKGame::Instance()->getObjectList().size() << endl;
 
 	characters.push_back(playerOne);
 	return characters;
 }
-
 
 //TODO Fixme
 GameGUI* GameGUIBuilder::create() {
@@ -269,7 +269,6 @@ GameGUI* GameGUIBuilder::create() {
 	float ratioY = getRatio(window.heightPx, stage.getHeight(),"Y");
 
 	vector<Layer*> layers = jsonGetLayers(root, ratioX, &window, &stage);
-
 	vector<Character*> characters = jsonGetCharacters(root, ratioX);
 
 	gameGUI->setWindow(window);
@@ -277,8 +276,9 @@ GameGUI* GameGUIBuilder::create() {
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
 
-	return gameGUI;
+	LayerManager::Instance()->init();
 
+	return gameGUI;
 }
 
 GameGUI* GameGUIBuilder::createDefault() {

@@ -7,9 +7,11 @@
 
 #ifndef SDLOBJECTGUI_H_
 #define SDLOBJECTGUI_H_
+#include "InputControl.h"
 #include "TextureManager.h"
 #include "ObjectGUI.h"
 #include <sstream>
+#include <string>
 #include "LoaderParams.h"
 
 class SDLObjectGUI : public ObjectGUI {
@@ -20,12 +22,15 @@ public:
 	virtual void update();
 	virtual void clean();
 	int unitToPixel(float units);
-	bool load();
+	virtual bool load();
+	virtual bool load(SDL_Renderer* render);
 	void setImagePath(string imagePath);
+	string getImagePath();
+	string getTextureID();
 protected:
 	string imagePath;
-	int positionX;
-	int positionY;
+	float positionX;
+	float positionY;
 	int width;
 	int height;
 	int zIndex;
