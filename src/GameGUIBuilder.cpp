@@ -118,9 +118,8 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
 	vector<Character*> characters;
-	Character* playerOne = new Character(
-			new LoaderParams(0, stage_win_ypiso, character_width, character_height, character_zindex, ratio,
-					character_name));
+	Character* playerOne = new Character(character_name, character_width, character_height,
+			character_zindex, true, ratio, 400);
 
 
 	//Add player to the game loop
