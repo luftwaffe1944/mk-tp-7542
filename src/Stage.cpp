@@ -30,7 +30,4 @@ Stage::~Stage() {
 	// TODO Auto-generated destructor stub
 }
 
-int Stage::getWidth() {
-	return this->width;
-}
 

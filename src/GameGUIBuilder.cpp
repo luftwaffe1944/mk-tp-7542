@@ -206,7 +206,7 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, Window* window, Sta
 }
 
 vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
-
+	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
 	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
 
