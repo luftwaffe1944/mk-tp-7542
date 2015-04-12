@@ -6,6 +6,7 @@
  */
 
 #include "../headers/GameGUIBuilder.h"
+#include <cstdlib>
 using namespace std;
 
 GameGUIBuilder::GameGUIBuilder() {
@@ -31,29 +32,47 @@ Window jsonGetWindow(Json::Value root) {
 	FILE_LOG(logDEBUG) << "\n INICIO DE EJECUCION";
 
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
-	int win_width_px = windowValue.get(JSON_KEY_ANCHOPX, 0).asInt();
-	int win_height_px = windowValue.get(JSON_KEY_ALTOPX, 0).asInt();
-	int win_width = windowValue.get(JSON_KEY_ANCHO, 0).asInt();
-	FILE_LOG(logDEBUG) << "JSON - Window width: " << win_width_px << "px";
-	FILE_LOG(logDEBUG) << "JSON - Window height: " << win_height_px << "px";
-	FILE_LOG(logDEBUG) << "JSON - Window width: " << win_width;
+	int win_width_px;
+	int win_height_px;
+	int win_width;
+	try {
+		 string strValue = windowValue.get(JSON_KEY_ANCHOPX, "").asString();
+	     win_width_px = atoi(strValue.c_str());
+	     FILE_LOG(logDEBUG) << "JSON - Window width: " << strValue << " px";
+	}catch(std::exception const & e){
+		win_width_px=0;
+	}
+	try {
+		 string strValue = windowValue.get(JSON_KEY_ALTOPX, "").asString();
+		 win_height_px = atoi(strValue.c_str());
+		 FILE_LOG(logDEBUG) << "JSON - Window height: " << strValue << " px";
+	}catch(std::exception const & e){
+		win_height_px=0;
+	}
+	try {
+		 string strValue = windowValue.get(JSON_KEY_ANCHO, 0).asString();
+		 win_width = atoi(strValue.c_str());
+		 FILE_LOG(logDEBUG) << "JSON - Window width: " << strValue;
+	}catch(std::exception const & e){
+		win_width=0;
+	}
 
 	//validaciones de parametros para ventana
 	bool widthPxOk = ((win_width_px>0) && (win_width_px <=MAX_WINDOW_WIDTH_PX));
 	bool heightPxOk = ((win_height_px>0) && (win_height_px <=MAX_WINDOW_HEIGHT_PX));
 	bool widthOk =(win_width_px>0);
-	if (!widthOk && !widthPxOk && !heightPxOk){
+	if (!widthOk || !widthPxOk || !heightPxOk){
 			if (!(win_width>0)){
 				FILE_LOG(logWARNING) << "Window logical width out of range or inexistent. Set by default: " <<DEFAULT_WINDOW_WIDTH;
 				win_width = DEFAULT_WINDOW_WIDTH;
 			}
 			if (!widthPxOk) {
 				win_width_px=DEFAULT_WINDOW_WIDTH_PX;
-				FILE_LOG(logWARNING) << "Window width px out of range or inexistent (" <<"0 - "<< MAX_WINDOW_WIDTH_PX<<"). Set to default:"<<DEFAULT_WINDOW_WIDTH_PX<<"px";
+				FILE_LOG(logWARNING) << "Window width px out of range or inexistent (" <<"0 - "<< MAX_WINDOW_WIDTH_PX<<"). Set to default:"<<DEFAULT_WINDOW_WIDTH_PX<<" px";
 			}
 			if (!heightPxOk){
 				win_height_px=DEFAULT_WINDOW_HEIGHT_PX;
-				FILE_LOG(logWARNING) << "Window height px out of range or inexistent (" <<"0 - "<< MAX_WINDOW_HEIGHT_PX<<"). Set to default:"<<DEFAULT_WINDOW_HEIGHT_PX<<"px";
+				FILE_LOG(logWARNING) << "Window height px out of range or inexistent (" <<"0 - "<< MAX_WINDOW_HEIGHT_PX<<"). Set to default:"<<DEFAULT_WINDOW_HEIGHT_PX<<" px";
 			}
 			FILE_LOG(logWARNING) << "Window size set to: (" << win_width_px<<"-"<<win_height_px<<")";
 	}
@@ -67,12 +86,31 @@ Window jsonGetWindow(Json::Value root) {
 
 Stage jsonGetStage(Json::Value root, int win_width_lg) {
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
-	int stage_width = stageValue.get(JSON_KEY_ANCHO, 0).asInt();
-	int stage_height = stageValue.get(JSON_KEY_ALTO, 0).asInt();
-	int stage_ypiso = stageValue.get(JSON_KEY_YPISO, 0).asInt();
-	FILE_LOG(logDEBUG) << "JSON - Stage width: " << stage_width;
-	FILE_LOG(logDEBUG) << "JSON - Stage height: " << stage_height;
-	FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << stage_ypiso;
+	int stage_width;
+	int stage_height;
+	int stage_ypiso;
+
+	try {
+		 string strValue  = stageValue.get(JSON_KEY_ANCHO, 0).asString();
+		 stage_width = atoi(strValue.c_str());
+		 FILE_LOG(logDEBUG) << "JSON - Stage width: " << strValue;
+	}catch(std::exception const & e){
+		stage_width=0;
+	}
+	try {
+		 string strValue  = stageValue.get(JSON_KEY_ALTO, 0).asString();
+		 stage_height = atoi(strValue.c_str());
+		 FILE_LOG(logDEBUG) << "JSON - Stage height: " << stage_height;
+	}catch(std::exception const & e){
+		stage_height=0;
+	}
+	try {
+		 string strValue = stageValue.get(JSON_KEY_YPISO, 0).asString();
+		 stage_ypiso = atoi(strValue.c_str());
+		 FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << strValue;
+	}catch(std::exception const & e){
+		stage_ypiso=0;
+	}
 
 	//validaciones de parametros para escenario
 	bool heightOk = (stage_height>0);
@@ -213,6 +251,7 @@ GameGUI* GameGUIBuilder::create() {
 
 GameGUI* GameGUIBuilder::createDefault() {
 
+	FILE_LOG(logDEBUG) << "Complete configuration set by defaul";
 	GameGUI *gameGUI = GameGUI::getInstance();
 
 	//window by default
