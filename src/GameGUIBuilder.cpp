@@ -7,6 +7,7 @@
 
 #include "../headers/GameGUIBuilder.h"
 #include <cstdlib>
+
 using namespace std;
 
 GameGUIBuilder::GameGUIBuilder() {
@@ -16,6 +17,18 @@ GameGUIBuilder::GameGUIBuilder() {
 
 GameGUIBuilder::~GameGUIBuilder() {
 	// TODO Auto-generated destructor stub
+}
+
+bool fileExists(const char *s)
+{
+	ifstream archivo(s, std::ifstream::binary);
+
+	if (archivo.good()) {
+		return true;
+	}else{
+		FILE_LOG(logERROR) << "File not found: " << s;
+		return false;
+	}
 }
 
 float getRatio(int dimPx, int dimLg, std::string type) {
@@ -29,8 +42,8 @@ float getRatio(int dimPx, int dimLg, std::string type) {
 }
 
 Window jsonGetWindow(Json::Value root) {
-	FILE_LOG(logDEBUG) << "\n INICIO DE EJECUCION";
 
+	FILE_LOG(logDEBUG) << "WINDOW CONFIGURATION";
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
 	int win_width_px;
 	int win_height_px;
@@ -85,6 +98,7 @@ Window jsonGetWindow(Json::Value root) {
 }
 
 Stage jsonGetStage(Json::Value root, int win_width_lg) {
+	FILE_LOG(logDEBUG) << "STAGE CONFIGURATION";
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
 	int stage_width;
 	int stage_height;
@@ -142,34 +156,52 @@ void resizeImage(int* width, int win_width_px, int* height, int win_height_px, i
 }
 
 vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, Window* window, Stage* stage) {
-
+	FILE_LOG(logDEBUG) << "LAYERS CONFIGURATION";
 	const Json::Value array = root.get(JSON_KEY_CAPAS,0);
-	FILE_LOG(logDEBUG) << "JSON - Number of Layers: " << array.size();
+	FILE_LOG(logDEBUG) << "JSON - Number of Layers to process: " << array.size();
 	vector<Layer*> layers;
 	string path;
 	int width;
 	int height;
 	for (unsigned int index = 0; index < array.size(); ++index) {
 		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
-		width = array[index].get(JSON_KEY_ANCHO, 50).asInt();
-		height = stage->getHeight();
-		resizeImage(&width, window->widthPx, &height, window->heightPx, stage->getWidth());
-		stringstream sLayerName;
-		sLayerName.clear();
-		sLayerName << "layer";
-		sLayerName << index;
 
-		//TODO calcular ratio
-		Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx, index, ratioX,	sLayerName.str()));
-		layer->setImagePath(path);
-		//Add layers to the game loop
-		MKGame::Instance()->getObjectList().push_back(layer);
+		//validar existencia de imagen
+		if (fileExists(path.c_str())) {
+			try {
+				 string strValue = array[index].get(JSON_KEY_ANCHO, "").asString();
+				 width = atoi(strValue.c_str());
+				 FILE_LOG(logDEBUG) << "JSON - Layer width: " << strValue;
+			}catch(std::exception const & e){
+				width=0;
+			}
+			//validaciones de parametros para layer
+			bool widthOk = (width>0);
+			if (!widthOk){
+				width = stage->getWidth();
+				FILE_LOG(logWARNING) << "Layer logical width out of range or inexistent (must be positive). Set by default:"<<stage->getWidth();
+			}
 
-		FILE_LOG(logDEBUG) << "JSON - Layer ID: " << sLayerName.str();
-		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: "	<< path;
-		FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: "	<< width;
-		layers.push_back(layer);
+			height = stage->getHeight();
+			resizeImage(&width, window->widthPx, &height, window->heightPx, stage->getWidth());
+			stringstream sLayerName;
+			sLayerName.clear();
+			sLayerName << "layer";
+			sLayerName << index;
+
+			//TODO calcular ratio
+			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx, index, ratioX,	sLayerName.str()));
+			layer->setImagePath(path);
+			//Add layers to the game loop
+			MKGame::Instance()->getObjectList().push_back(layer);
+
+			FILE_LOG(logDEBUG) << "JSON - Layer ID: " << sLayerName.str();
+			FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: "	<< path;
+			FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: "	<< width;
+			layers.push_back(layer);
+		}
 	}
+	FILE_LOG(logDEBUG) << "JSON - Number of Layers successfully process: " << layers.size();
 	return layers;
 }
 
@@ -208,7 +240,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 
 //TODO Fixme
 GameGUI* GameGUIBuilder::create() {
-
+	FILE_LOG(logDEBUG) << "CONFIGURATION INITIALIZED";
 	GameGUI *gameGUI = GameGUI::getInstance();
 
 	Json::Value root;
@@ -251,16 +283,22 @@ GameGUI* GameGUIBuilder::create() {
 
 GameGUI* GameGUIBuilder::createDefault() {
 
-	FILE_LOG(logDEBUG) << "Complete configuration set by defaul";
+	FILE_LOG(logDEBUG) << "Entire configuration set by default";
 	GameGUI *gameGUI = GameGUI::getInstance();
 
 	//window by default
 	int windowXpos = ((MAX_WINDOW_WIDTH_PX-DEFAULT_WINDOW_WIDTH_PX)/2);
 	int windowYpos = ((MAX_WINDOW_HEIGHT_PX-DEFAULT_WINDOW_HEIGHT_PX)/2);
-	Window window(GAME_TITLE, 100, 100, DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
+	Window window(GAME_TITLE, windowXpos, windowYpos, DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
+    FILE_LOG(logDEBUG) << "JSON - Window width: " << DEFAULT_WINDOW_WIDTH_PX << " px";
+	FILE_LOG(logDEBUG) << "JSON - Window height: " << DEFAULT_WINDOW_HEIGHT_PX << " px";
+	FILE_LOG(logDEBUG) << "JSON - Window width: " << DEFAULT_WINDOW_WIDTH;
 
 	//stage by default
 	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
+	 FILE_LOG(logDEBUG) << "JSON - Stage width: " << DEFAULT_STAGE_WIDTH;
+	 FILE_LOG(logDEBUG) << "JSON - Stage height: " << DEFAULT_STAGE_HEIGHT;
+	 FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << DEFAULT_STAGE_YFLOOR;
 
 	float ratioX = getRatio(DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_WIDTH,"X");
 	float ratioY = getRatio(DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_STAGE_HEIGHT,"Y");
@@ -289,6 +327,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
 
+	FILE_LOG(logDEBUG) << "Configuration process finished";
 	return gameGUI;
 
 }
