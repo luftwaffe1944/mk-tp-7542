@@ -28,6 +28,6 @@
 		"ancho": 140,
 		"alto": 200,
 		"zindex": 1,
-		"orientacion": "left"
+		"orientacion": "right"
 	}
 }

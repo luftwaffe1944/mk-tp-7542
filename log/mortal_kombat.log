@@ -559,3 +559,48 @@
 - 20:48:34.242 DEBUG: init success
 - 20:48:47.196 DEBUG: cleaning game
 
+- 23:33:24.740 DEBUG: CONFIGURATION INITIALIZED
+- 23:33:24.740 DEBUG: WINDOW CONFIGURATION
+- 23:33:24.740 DEBUG: JSON - Window width: 700 px
+- 23:33:24.740 DEBUG: JSON - Window height: 480 px
+- 23:33:24.740 DEBUG: JSON - Window width: 200
+- 23:33:24.740 DEBUG: STAGE CONFIGURATION
+- 23:33:24.740 DEBUG: JSON - Stage width: 1000.5
+- 23:33:24.740 DEBUG: JSON - Stage height: 150
+- 23:33:24.740 DEBUG: JSON - Stage ypiso: 250
+- 23:33:24.740 WARNING: Stage floor 'y' position out of range or inexistent (0 - 150). Set to default:15
+- 23:33:24.740 DEBUG: RatioX (window_width_px / window_width_lg): 3
+- 23:33:24.741 DEBUG: RatioY (window_height_px / stage_height_lg): 3
+- 23:33:24.741 DEBUG: LAYERS CONFIGURATION
+- 23:33:24.741 DEBUG: JSON - Number of Layers to process: 3
+- 23:33:24.741 DEBUG: JSON - Layer width: 721
+- 23:33:24.741 DEBUG: JSON - Layer ID: layer0
+- 23:33:24.741 DEBUG: JSON - Layer0 background image: images/arenas/p_3n.png
+- 23:33:24.741 DEBUG: JSON - Layer0 width: 721
+- 23:33:24.741 DEBUG: JSON - Layer width: 831
+- 23:33:24.741 DEBUG: JSON - Layer ID: layer1
+- 23:33:24.741 DEBUG: JSON - Layer1 background image: images/arenas/p_2n.png
+- 23:33:24.741 DEBUG: JSON - Layer1 width: 831
+- 23:33:24.741 DEBUG: JSON - Layer width: 1200
+- 23:33:24.741 DEBUG: JSON - Layer ID: layer2
+- 23:33:24.741 DEBUG: JSON - Layer2 background image: images/arenas/p_1n.png
+- 23:33:24.741 DEBUG: JSON - Layer2 width: 1200
+- 23:33:24.741 DEBUG: JSON - Number of Layers successfully process: 3
+- 23:33:24.741 DEBUG: CHARACTERS CONFIGURATION
+- 23:33:24.741 DEBUG: JSON - Character name: subzero
+- 23:33:24.741 DEBUG: JSON - Character width: 140
+- 23:33:24.741 DEBUG: JSON - Character height: 200
+- 23:33:24.741 DEBUG: JSON - Character z-index: 1
+- 23:33:24.741 DEBUG: JSON - Character orientation: left
+- 23:33:24.741 DEBUG: Layer layer2 layeroffScene 250
+- 23:33:24.741 DEBUG: Layer layer2 speed: 3
+- 23:33:24.741 DEBUG: Layer layer1 layeroffScene 65
+- 23:33:24.741 DEBUG: Layer layer1 speed: 0.78
+- 23:33:24.741 DEBUG: Layer layer0 layeroffScene 10
+- 23:33:24.741 DEBUG: Layer layer0 speed: 0.12
+- 23:33:25.453 DEBUG: SDL init success
+- 23:33:25.457 DEBUG: window creation success
+- 23:33:25.527 DEBUG: renderer creation success
+- 23:33:25.571 DEBUG: init success
+- 23:33:28.887 DEBUG: cleaning game
+

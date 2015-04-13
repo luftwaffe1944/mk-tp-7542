@@ -13,42 +13,18 @@
 float gravity = 14.0f;
 float jumpVel = 60.0f;
 
-Character::Character(const LoaderParams* pParams) :
+Character::Character(const LoaderParams* pParams, int windowWidht, bool isRightOriented) :
 		SDLObjectGUI(pParams) {
-
+		this->isRightOriented = isRightOriented;
+		this->name = pParams->getTextureID();
+		//TODO: Review positions according to logic and pixels measures.
+		//override constructor
+		this->positionY = windowWidht - height;
+		// initializing movements statements
+		clearMovementsFlags();
 }
 
-//Character::Character(int width, int height, int zindex, std::string orientation) : SDLObjectGUI() {
-//
-//}
-//
-//Character::Character(int width, int height, int zindex, bool isRightOriented) : SDLObjectGUI() {
-//	this->width = width;
-//	this->height = height;
-//	this->zindex = zindex;
-//	this->isRightOriented = isRightOriented;
-//}
 
-Character::Character(string name, int width, int height, int zindex, bool isRightOriented, float ratioX, float ratioY,  int winWidth) : SDLObjectGUI(){
-	this->name = name;
-	this->width = width;
-	this->height = height;
-	this->zindex = zindex;
-	this->isRightOriented = isRightOriented;
-	//TODO: Review positions according to logic and pixels measures.
-	this->positionX = 400;
-	this->positionY = winWidth - height;
-	// initializing movements statements
-	this->isJumping = false;
-	this->isJumpingRight = false;
-	this->isJumpingLeft = false;
-	this->isWalkingRight = false;
-	this->isWalkingLeft = false;
-	this->isDucking = false;
-	this->textureID = name;
-	this->ratioX = ratioX;
-	this->ratioY =ratioY;
-}
 bool Character::load(SDL_Renderer* render) {
 	this->renderer = render;
 	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, this->imagePath+"/UMK3_Sub-Zero_walk.png",
@@ -131,6 +107,7 @@ void Character::update() {
 	} else if (isJumpingLeft) {
 		jumpLeft();
 	} else {
+		this->clearMovementsFlags();
 		switch (playerCommand) {
 		case FIRST_PLAYER_MOVE_RIGHT:
 			this->setMovement(WALKING_RIGHT_MOVEMENT);
@@ -161,7 +138,6 @@ void Character::update() {
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
-			this->clearMovementsFlags();
 			break;
 		}
 	}
