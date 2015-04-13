@@ -28,7 +28,7 @@ public:
 private:
 	vector<Layer*> layers;
 	vector<Character*> characters;
-	Window window;
+	Window* window;
 	Stage stage;
 	float speedFirstLayer;
 	float offSceneFrontalLayer;

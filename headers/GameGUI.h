@@ -25,7 +25,7 @@ private:
 		//private constructor
 	}
 	Stage stage;
-	Window window;
+	Window* window;
 	vector<Character*> characters;
 	vector<Layer*> layers;
 
@@ -37,8 +37,8 @@ public:
 	}
 	void setStage(Stage stage);
 	Stage getStage();
-	void setWindow(Window window);
-	Window getWindow();
+	void setWindow(Window* window);
+	Window* getWindow();
 	void setCharacters(vector<Character*>);
 	vector<Character*> getCharacters();
 	void setLayers(vector<Layer*> layers);

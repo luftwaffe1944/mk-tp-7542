@@ -162,8 +162,7 @@ void Character::jump() {
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
 		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
-						- this->height);
+				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx - this->height);
 		refreshFrames();
 	}
 }
@@ -178,7 +177,7 @@ void Character::jumpRight() {
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
 		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
+				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx
 						- this->height);
 		refreshFrames();
 	}
@@ -194,7 +193,7 @@ void Character::jumpLeft() {
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
 		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow().heightPx
+				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx
 						- this->height);
 		refreshFrames();
 	}
@@ -203,7 +202,7 @@ void Character::jumpLeft() {
 
 bool Character::isTouchingGround(float positionY) {
 	if (positionY
-			>= (MKGame::Instance()->getGameGUI()->getWindow().heightPx
+			>= (MKGame::Instance()->getGameGUI()->getWindow()->heightPx
 					- this->height)) {
 		return true;
 	}

@@ -41,7 +41,7 @@ float getRatio(int dimPx, int dimLg, std::string type) {
 	return ratio;
 }
 
-Window jsonGetWindow(Json::Value root) {
+Window* jsonGetWindow(Json::Value root) {
 
 	FILE_LOG(logDEBUG) << "WINDOW CONFIGURATION";
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
@@ -93,8 +93,8 @@ Window jsonGetWindow(Json::Value root) {
 	int windowXpos = ((MAX_WINDOW_WIDTH_PX-win_width_px)/2);
 	int windowYpos = ((MAX_WINDOW_HEIGHT_PX-win_height_px)/2);
 
-	Window window(GAME_TITLE, windowXpos, windowYpos, win_width_px, win_height_px, win_width);
-	return window;
+	Window* ptrWindow = new Window(GAME_TITLE, windowXpos, windowYpos, win_width_px, win_height_px, win_width);
+	return ptrWindow;
 }
 
 Stage jsonGetStage(Json::Value root, int win_width_lg) {
@@ -238,7 +238,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 	bool isRightOrientation = (character_orientation == "right") ? true : false;
 	LoaderParams* characterParams = new LoaderParams(posX, stage_win_ypiso, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
 
-	Character* playerOne = new Character(characterParams, GameGUI::getInstance()->getWindow().heightPx, isRightOrientation);
+	Character* playerOne = new Character(characterParams, GameGUI::getInstance()->getWindow()->heightPx, isRightOrientation);
 
 //	Character* playerOne = new Character(character_name, character_width, character_height,
 //					character_zindex, true, ratio, GameGUI::getInstance()->window.heightPx);
@@ -275,16 +275,16 @@ GameGUI* GameGUIBuilder::create() {
 		return createDefault();
 	}
 
-	Window window = jsonGetWindow(root);
-	Stage stage = jsonGetStage(root,window.width);
+	Window* window = jsonGetWindow(root);
+	Stage stage = jsonGetStage(root,window->width);
 
-	float ratioX = getRatio(window.widthPx, window.width,"X");
-	float ratioY = getRatio(window.heightPx, stage.getHeight(),"Y");
+	float ratioX = getRatio(window->widthPx, window->width,"X");
+	float ratioY = getRatio(window->heightPx, stage.getHeight(),"Y");
 
 	TextureManager::Instance()->ratioHeight = ratioY;
 	TextureManager::Instance()->ratioWidth = ratioX;
 
-	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, &window, &stage);
+	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, window, &stage);
 	gameGUI->setWindow(window);
 	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
 	gameGUI->setStage(stage);
@@ -305,7 +305,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 	//window by default
 	int windowXpos = ((MAX_WINDOW_WIDTH_PX-DEFAULT_WINDOW_WIDTH_PX)/2);
 	int windowYpos = ((MAX_WINDOW_HEIGHT_PX-DEFAULT_WINDOW_HEIGHT_PX)/2);
-	Window window(GAME_TITLE, windowXpos, windowYpos, DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
+	Window* ptrWindow = new Window(GAME_TITLE, windowXpos, windowYpos, DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_WINDOW_WIDTH);
     FILE_LOG(logDEBUG) << "JSON - Window width: " << DEFAULT_WINDOW_WIDTH_PX << " px";
 	FILE_LOG(logDEBUG) << "JSON - Window height: " << DEFAULT_WINDOW_HEIGHT_PX << " px";
 	FILE_LOG(logDEBUG) << "JSON - Window width: " << DEFAULT_WINDOW_WIDTH;
@@ -329,7 +329,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 			ratioX, ratioY, "defaultName");
 
 	Character* playerOne = new Character(characterParams,
-			GameGUI::getInstance()->getWindow().heightPx, isRightOrientation);
+			GameGUI::getInstance()->getWindow()->heightPx, isRightOrientation);
 
 //	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, "scorpion"));
 //	characters.push_back(character);
@@ -348,7 +348,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 	MKGame::Instance()->getObjectList().push_back(layer);
 	MKGame::Instance()->getObjectList().push_back(layer2);
 
-	gameGUI->setWindow(window);
+	gameGUI->setWindow(ptrWindow);
 	gameGUI->setStage(stage);
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);

@@ -26,12 +26,12 @@ void LayerManager::updateSpeedLayers(Layer* layer) {
 }
 
 void LayerManager::updateOffScene(Layer* layer) {
-	float windowSize = GameGUI::getInstance()->getWindow().getWidth();
+	float windowSize = GameGUI::getInstance()->getWindow()->getWidth();
 	layer->setLayerOffScene(windowSize);
 }
 
 void LayerManager::setOffSceneFrontalLayer() {
-	float windowSize = this->window.getWidth();
+	float windowSize = this->window->getWidth();
 	Layer* layer;
 	unsigned int size = this->layers.size();
 
@@ -97,7 +97,7 @@ bool LayerManager::layerReachedStageLimit(int windowWidth, bool border) {
 
 void LayerManager::refresh() {
 	int posXCharacter = this->characters[0]->getPosX();
-	int windowWidth = this->window.width;
+	int windowWidth = this->window->width;
 	int characterWidth = this->characters[0]->getWidth();
 
 	int margin = 2;

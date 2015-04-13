@@ -20,14 +20,13 @@ GameGUI* GameGUI::getInstance() {
 }
 
 void GameGUI::clean(){
-	//delete &window;
+	delete window;
 	//delete &stage;
-
 	this->characters.erase(characters.begin(), characters.end());
 	this->layers.erase(layers.begin(), layers.end());
 }
 
-void GameGUI::setWindow(Window window) {
+void GameGUI::setWindow(Window* window) {
 	this->window = window;
 }
 
@@ -51,7 +50,7 @@ vector<Layer*> GameGUI::getLayers() {
 	return this->layers;
 }
 
-Window GameGUI::getWindow() {
+Window* GameGUI::getWindow() {
 	return this->window;
 }
 

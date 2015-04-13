@@ -26,9 +26,9 @@ bool MKGame::init(GameGUI* gameGui) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		FILE_LOG(logDEBUG) << "SDL init success";
 		// init the window
-		Window gameWindow = this->gameGui->getWindow();
-		m_pWindow = SDL_CreateWindow(gameWindow.title, gameWindow.xpos,
-				gameWindow.ypos, gameWindow.widthPx, gameWindow.heightPx, 0);
+		Window* gameWindow = this->gameGui->getWindow();
+		m_pWindow = SDL_CreateWindow(gameWindow->title, gameWindow->xpos,
+				gameWindow->ypos, gameWindow->widthPx, gameWindow->heightPx, 0);
 		if (m_pWindow != 0) {
 			FILE_LOG(logDEBUG) << "window creation success";
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
