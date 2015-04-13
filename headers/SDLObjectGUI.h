@@ -21,7 +21,8 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
-	int unitToPixel(float units);
+	int unitToPixelX(float units);
+	int unitTopixelY(float units);
 	virtual bool load();
 	virtual bool load(SDL_Renderer* render);
 	void setImagePath(string imagePath);
@@ -34,7 +35,8 @@ protected:
 	int width;
 	int height;
 	int zIndex;
-	float drawRatio;
+	float ratioX;
+	float ratioY;
 	int currentRow;
 	int currentFrame;
 	std::string textureID;

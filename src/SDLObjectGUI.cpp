@@ -15,7 +15,8 @@ SDLObjectGUI::SDLObjectGUI(const LoaderParams* pParams) :
 	width = pParams->getWidth();
 	height = pParams->getHeight();
 	zIndex = pParams->getZIndex();
-	drawRatio = pParams->getDrawRatio();
+	ratioX = pParams->getDrawRatioX();
+	ratioY = pParams->getDrawRatioY();
 	textureID = pParams->getTextureID();
 	currentRow = 1;
 	currentFrame = 1;
@@ -54,8 +55,12 @@ void SDLObjectGUI::clean() {
 
 }
 
-int SDLObjectGUI::unitToPixel(float units) {
-	return ((int) units * this->drawRatio);
+int SDLObjectGUI::unitToPixelX(float units) {
+	return ((int) units * this->ratioX);
+}
+
+int SDLObjectGUI::unitTopixelY(float units) {
+	return ((int) units * this->ratioY);
 }
 
 string SDLObjectGUI::getImagePath() {

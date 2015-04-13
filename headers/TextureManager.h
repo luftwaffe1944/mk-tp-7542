@@ -47,6 +47,8 @@ public:
 	//Set alpha modulation
 	void setAlpha(std::string id, Uint8 alpha );
 
+	float ratioWidth;
+	float ratioHeight;
 
 private:
 	TextureManager();

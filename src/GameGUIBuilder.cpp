@@ -36,7 +36,7 @@ float getRatio(int dimPx, int dimLg, std::string type) {
 	if (type == "X"){
 		FILE_LOG(logDEBUG) << "RatioX (window_width_px / window_width_lg): " << ratio;
 	}else if (type == "Y"){
-		FILE_LOG(logDEBUG) << "RatioY (window_height_px / stage_width_lg): " << ratio;
+		FILE_LOG(logDEBUG) << "RatioY (window_height_px / stage_height_lg): " << ratio;
 	}
 	return ratio;
 }
@@ -155,7 +155,7 @@ void resizeImage(int* width, int win_width_px, int* height, int win_height_px, i
 	if (*width < win_width_px) *width = win_width_px;
 }
 
-vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, Window* window, Stage* stage) {
+vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Window* window, Stage* stage) {
 	FILE_LOG(logDEBUG) << "LAYERS CONFIGURATION";
 	const Json::Value array = root.get(JSON_KEY_CAPAS,0);
 	FILE_LOG(logDEBUG) << "JSON - Number of Layers to process: " << array.size();
@@ -190,7 +190,7 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, Window* window, Sta
 			sLayerName << index;
 
 			//TODO calcular ratio
-			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx, index, ratioX,	sLayerName.str()));
+			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx, index, ratioX,	ratioY, sLayerName.str()));
 			layer->setImagePath(path);
 			//Add layers to the game loop
 			MKGame::Instance()->getObjectList().push_back(layer);
@@ -205,7 +205,7 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, Window* window, Sta
 	return layers;
 }
 
-vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
+vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY) {
 	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
 	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
@@ -227,7 +227,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratio) {
 
 	vector<Character*> characters;
 	Character* playerOne = new Character(character_name, character_width, character_height,
-			character_zindex, true, ratio, 400);
+			character_zindex, true, ratioX, ratioY, 400);
 
 
 	//Add player to the game loop
@@ -268,8 +268,11 @@ GameGUI* GameGUIBuilder::create() {
 	float ratioX = getRatio(window.widthPx, window.width,"X");
 	float ratioY = getRatio(window.heightPx, stage.getHeight(),"Y");
 
-	vector<Layer*> layers = jsonGetLayers(root, ratioX, &window, &stage);
-	vector<Character*> characters = jsonGetCharacters(root, ratioX);
+	TextureManager::Instance()->ratioHeight = ratioY;
+	TextureManager::Instance()->ratioWidth = ratioX;
+
+	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, &window, &stage);
+	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
 
 	gameGUI->setWindow(window);
 	gameGUI->setStage(stage);
@@ -305,14 +308,14 @@ GameGUI* GameGUIBuilder::createDefault() {
 
 	//characters by default
 	vector<Character*> characters;
-	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, "scorpion"));
+	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, ratioY, "scorpion"));
 	characters.push_back(character);
 
 	//layers by default
 	vector<Layer*> layers;
-	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, 1, ratioX, "layer1"));
+	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, 1, ratioX, ratioY, "layer1"));
 	layers.push_back(layer);
-	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, 2, ratioX, "layer2"));
+	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, 2, ratioX, ratioY, "layer2"));
 	layers.push_back(layer2);
 
 	//Add layers to the game loop

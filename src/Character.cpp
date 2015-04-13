@@ -29,7 +29,7 @@ Character::Character(const LoaderParams* pParams) :
 //	this->isRightOriented = isRightOriented;
 //}
 
-Character::Character(string name, int width, int height, int zindex, bool isRightOriented, float ratio, int winWidth) : SDLObjectGUI(){
+Character::Character(string name, int width, int height, int zindex, bool isRightOriented, float ratioX, float ratioY,  int winWidth) : SDLObjectGUI(){
 	this->name = name;
 	this->width = width;
 	this->height = height;
@@ -46,7 +46,8 @@ Character::Character(string name, int width, int height, int zindex, bool isRigh
 	this->isWalkingLeft = false;
 	this->isDucking = false;
 	this->textureID = name;
-	this->drawRatio = ratio;
+	this->ratioX = ratioX;
+	this->ratioY =ratioY;
 }
 bool Character::load(SDL_Renderer* render) {
 	this->renderer = render;
