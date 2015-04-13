@@ -32,7 +32,7 @@ bool fileExists(const char *s)
 }
 
 float getRatio(int dimPx, int dimLg, std::string type) {
-	float ratio = dimPx / dimLg;
+	float ratio = (float)dimPx / (float)dimLg;
 	if (type == "X"){
 		FILE_LOG(logDEBUG) << "RatioX (window_width_px / window_width_lg): " << ratio;
 	}else if (type == "Y"){

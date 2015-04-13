@@ -95,7 +95,7 @@ void LayerManager::refresh() {
 	bool refresh = false;
 	int orientation;
 
-
+/*
 	if ( ( (windowWidth - (posXCharacter + characterWidth)) < margin) && !layerReachedStageLimit( windowWidth) ) {
 		refresh = true;
 		orientation = 1;
@@ -104,7 +104,7 @@ void LayerManager::refresh() {
 		refresh = true;
 		orientation = -1;
 	}
-
+*/
 	for(unsigned int index=0; index < this->layers.size(); ++index) {
 		this->layers[index]->setNeedRefresh(refresh);
 		this->layers[index]->setOrientation(orientation);
