@@ -37,7 +37,7 @@ void Layer::update() {
 void Layer::clean() {
 }
 
-void Layer::setLayerOffScene(int windowsWidth) {
+void Layer::setLayerOffScene(float windowsWidth) {
 	this->offScene = ((this->width - windowsWidth) / 2);
 	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " layeroffScene " << this->offScene;
 }

@@ -25,6 +25,7 @@ Character::Character(const LoaderParams* pParams, int windowHeight, bool isRight
 }
 
 
+
 bool Character::load(SDL_Renderer* render) {
 	this->renderer = render;
 	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, this->imagePath+"/UMK3_Sub-Zero_walk.png",

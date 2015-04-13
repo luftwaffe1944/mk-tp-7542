@@ -32,7 +32,7 @@ bool fileExists(const char *s)
 }
 
 float getRatio(int dimPx, int dimLg, std::string type) {
-	float ratio = dimPx / dimLg;
+	float ratio = (float)dimPx / (float)dimLg;
 	if (type == "X"){
 		FILE_LOG(logDEBUG) << "RatioX (window_width_px / window_width_lg): " << ratio;
 	}else if (type == "Y"){
@@ -151,8 +151,12 @@ Stage jsonGetStage(Json::Value root, int win_width_lg) {
 }
 
 
-void resizeImage(int* width, int win_width_px, int* height, int win_height_px, int stage_width) {
-	if (*width < win_width_px) *width = win_width_px;
+void resizeImage(float* width, float win_width, int stage_width, float widthPiso) {
+	if (*width < win_width) *width = win_width;
+	if (*width > stage_width) *width = stage_width;
+	if ( *width > win_width && *width < stage_width) {
+		*width = (stage_width * (*width)) / widthPiso;
+	}
 }
 
 vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Window* window, Stage* stage) {
@@ -161,8 +165,8 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 	FILE_LOG(logDEBUG) << "JSON - Number of Layers to process: " << array.size();
 	vector<Layer*> layers;
 	string path;
-	int width;
-	int height;
+	float width;
+	float widthPiso = 0;
 	for (unsigned int index = 0; index < array.size(); ++index) {
 		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
 
@@ -171,6 +175,9 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 			try {
 				 string strValue = array[index].get(JSON_KEY_ANCHO, "").asString();
 				 width = atoi(strValue.c_str());
+				 if (index == 0) {
+					 widthPiso = width;
+				 }
 				 FILE_LOG(logDEBUG) << "JSON - Layer width: " << strValue;
 			}catch(std::exception const & e){
 				width=0;
@@ -182,15 +189,14 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 				FILE_LOG(logWARNING) << "Layer logical width out of range or inexistent (must be positive). Set by default:"<<stage->getWidth();
 			}
 
-			height = stage->getHeight();
-			resizeImage(&width, window->widthPx, &height, window->heightPx, stage->getWidth());
+			resizeImage(&width, window->width, stage->getWidth(), widthPiso);
 			stringstream sLayerName;
 			sLayerName.clear();
 			sLayerName << "layer";
 			sLayerName << index;
 
 			//TODO calcular ratio
-			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx, index, ratioX,	ratioY, sLayerName.str()));
+			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, index, ratioX,	ratioY, sLayerName.str()));
 			layer->setImagePath(path);
 			//Add layers to the game loop
 			MKGame::Instance()->getObjectList().push_back(layer);

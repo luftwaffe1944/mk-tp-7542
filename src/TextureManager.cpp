@@ -58,10 +58,10 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height, S
 	srcRect.w = this->queryTexture(id).w;
 	srcRect.h = this->queryTexture(id).h;
 
-	destRect.w = width;
-	destRect.h = height;
-	destRect.x = x;
-	destRect.y = y;
+	destRect.w = width * this->ratioWidth;
+	destRect.h = height * this->ratioHeight;
+	destRect.x = x * this->ratioWidth;
+	destRect.y = y * this->ratioHeight;
 
 	//flip = SDL_FLIP_HORIZONTAL;
 	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);

@@ -5,22 +5,22 @@
 		"ancho": 200
 	},
 	"escenario": {
-		"ancho": 1000.5,
-		"alto": 150,
+		"ancho": 342.85,
+		"alto": 137.14,
 		"ypiso": 250
 	},
 	"capas": [
 		{
 			"imagen_fondo": "images/arenas/p_3n.png",
-			"ancho": 721
+			"ancho": 206
 		},
 		{
 			"imagen_fondo": "images/arenas/p_2n.png",
-			"ancho": 831
+			"ancho": 237.43
 		},
 		{
 			"imagen_fondo": "images/arenas/p_1n.png",
-			"ancho": 1200
+			"ancho": 342.85
 		}
 	],
 	"personaje": {

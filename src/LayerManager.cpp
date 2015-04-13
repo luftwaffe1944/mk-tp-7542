@@ -26,12 +26,12 @@ void LayerManager::updateSpeedLayers(Layer* layer) {
 }
 
 void LayerManager::updateOffScene(Layer* layer) {
-	float windowSize = GameGUI::getInstance()->getWindow().getWidthPx();
+	float windowSize = GameGUI::getInstance()->getWindow().getWidth();
 	layer->setLayerOffScene(windowSize);
 }
 
 void LayerManager::setOffSceneFrontalLayer() {
-	float windowSize = this->window.getWidthPx();
+	float windowSize = this->window.getWidth();
 	Layer* layer;
 	unsigned int size = this->layers.size();
 
@@ -68,6 +68,7 @@ void LayerManager::init() {
 
 	Layer* layerAux;
 	int numberOfLayers = this->layers.size();
+	std::cout << numberOfLayers << endl;
 	for(int i = numberOfLayers - 2 ; i >= 0  ; i--) {
 		layerAux = this->layers[i];
 		updateOffScene(layerAux);
@@ -80,7 +81,7 @@ void LayerManager::init() {
 //border false = izquierdo
 bool LayerManager::layerReachedStageLimit(int windowWidth, bool border) {
 	//TODO desharcodear margin
-	int margin = 10;
+	int margin = 2;
 	Layer* frontalLayer = this->layers[this->layers.size() - 1 ];
 	float frontalLayerOffset = frontalLayer->getScrollingOffset();
 	std::cout << frontalLayerOffset << "//" << frontalLayer->getWidth() << std::endl;
@@ -95,17 +96,16 @@ bool LayerManager::layerReachedStageLimit(int windowWidth, bool border) {
 }
 
 void LayerManager::refresh() {
-	int stageWidth = this->stage.getWidth();
-	int posXWindow = this->window.xpos;
 	int posXCharacter = this->characters[0]->getPosX();
-	int windowWidth = this->window.widthPx;
+	int windowWidth = this->window.width;
 	int characterWidth = this->characters[0]->getWidth();
-	int margin = 10; //TODO desharcodear margin
+
+	int margin = 2;
 	bool refresh = false;
 	int orientation;
 
 
-	if ( ( (windowWidth - (posXCharacter + characterWidth / 2)) < margin) && !layerReachedStageLimit( windowWidth, true) ) {
+if ( ( (windowWidth - (posXCharacter + characterWidth / 2)) < margin) && !layerReachedStageLimit( windowWidth, true) ) {
 		refresh = true;
 		orientation = 1;
 	}
