@@ -76,11 +76,19 @@ void LayerManager::init() {
 	}
 }
 
-bool LayerManager::layerReachedStageLimit(int windowWidth) {
+//border true = derecho
+//border false = izquierdo
+bool LayerManager::layerReachedStageLimit(int windowWidth, bool border) {
+	//TODO desharcodear margin
+	int margin = 10;
 	Layer* frontalLayer = this->layers[this->layers.size() - 1 ];
 	float frontalLayerOffset = frontalLayer->getScrollingOffset();
-	if (( frontalLayerOffset < ( - frontalLayer->getWidth() / 2 + windowWidth / 2 )) ||
-			( frontalLayerOffset > (  frontalLayer->getWidth() / 2 - windowWidth / 2 ))  ){
+	std::cout << frontalLayerOffset << "//" << frontalLayer->getWidth() << std::endl;
+	//Derecho || Izquierdo
+	if (( frontalLayerOffset < ( - frontalLayer->getWidth() / 2 + windowWidth / 2 )) &&  ( border ) )
+		return true;
+	else if (
+			( frontalLayerOffset > (  frontalLayer->getWidth() / 2 - windowWidth / 2 ))  && (!border)){
 		return true;
 	}
 	return false;
@@ -92,16 +100,16 @@ void LayerManager::refresh() {
 	int posXCharacter = this->characters[0]->getPosX();
 	int windowWidth = this->window.widthPx;
 	int characterWidth = this->characters[0]->getWidth();
-	int margin = 10;
+	int margin = 10; //TODO desharcodear margin
 	bool refresh = false;
 	int orientation;
 
 
-	if ( ( (windowWidth - (posXCharacter + characterWidth)) < margin) && !layerReachedStageLimit( windowWidth) ) {
+	if ( ( (windowWidth - (posXCharacter + characterWidth / 2)) < margin) && !layerReachedStageLimit( windowWidth, true) ) {
 		refresh = true;
 		orientation = 1;
 	}
-	if  (( posXCharacter < margin ) && !layerReachedStageLimit( windowWidth)) {
+	if  (( posXCharacter < margin ) && !layerReachedStageLimit( windowWidth, false)) {
 		refresh = true;
 		orientation = -1;
 	}
