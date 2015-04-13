@@ -16,7 +16,7 @@ using namespace std;
 
 class Layer: public SDLObjectGUI {
 private:
-	int offScene;
+	float offScene;
 	float scrollingOffset;
 	float bkgSpeed;
 	int orientation; /* 1=right -1=left */
@@ -30,7 +30,7 @@ public:
 	virtual void clean();
 	virtual ~Layer();
 	void setLayerSpeed(float speedFirstLayer, float offSceneFirstLayer);
-	void setLayerOffScene(int windowsWidth);
+	void setLayerOffScene(float windowsWidth);
 	float getLayerOffScene();
 	float getLayerSpeed();
 	void setImagePath(std::string path);

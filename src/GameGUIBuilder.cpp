@@ -151,8 +151,9 @@ Stage jsonGetStage(Json::Value root, int win_width_lg) {
 }
 
 
-void resizeImage(int* width, int win_width_px, int* height, int win_height_px, int stage_width) {
-	if (*width < win_width_px) *width = win_width_px;
+void resizeImage(int* width, int win_width, int stage_width) {
+	if (*width < win_width) *width = win_width;
+	if (*width > stage_width) *width = stage_width;
 }
 
 vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Window* window, Stage* stage) {
@@ -162,7 +163,6 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 	vector<Layer*> layers;
 	string path;
 	int width;
-	int height;
 	for (unsigned int index = 0; index < array.size(); ++index) {
 		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
 
@@ -182,15 +182,14 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 				FILE_LOG(logWARNING) << "Layer logical width out of range or inexistent (must be positive). Set by default:"<<stage->getWidth();
 			}
 
-			height = stage->getHeight();
-			resizeImage(&width, window->widthPx, &height, window->heightPx, stage->getWidth());
+			resizeImage(&width, window->width, stage->getWidth());
 			stringstream sLayerName;
 			sLayerName.clear();
 			sLayerName << "layer";
 			sLayerName << index;
 
 			//TODO calcular ratio
-			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx, index, ratioX,	ratioY, sLayerName.str()));
+			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, index, ratioX,	ratioY, sLayerName.str()));
 			layer->setImagePath(path);
 			//Add layers to the game loop
 			MKGame::Instance()->getObjectList().push_back(layer);

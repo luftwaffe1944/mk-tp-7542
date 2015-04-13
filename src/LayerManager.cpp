@@ -26,12 +26,12 @@ void LayerManager::updateSpeedLayers(Layer* layer) {
 }
 
 void LayerManager::updateOffScene(Layer* layer) {
-	float windowSize = GameGUI::getInstance()->getWindow().getWidthPx();
+	float windowSize = GameGUI::getInstance()->getWindow().getWidth();
 	layer->setLayerOffScene(windowSize);
 }
 
 void LayerManager::setOffSceneFrontalLayer() {
-	float windowSize = this->window.getWidthPx();
+	float windowSize = this->window.getWidth();
 	Layer* layer;
 	unsigned int size = this->layers.size();
 
@@ -88,17 +88,15 @@ bool LayerManager::layerReachedStageLimit(int windowWidth) {
 }
 
 void LayerManager::refresh() {
-	int stageWidth = this->stage.getWidth();
-	int posXWindow = this->window.xpos;
 	int posXCharacter = this->characters[0]->getPosX();
-	int windowWidth = this->window.widthPx;
+	int windowWidth = this->window.width;
 	int characterWidth = this->characters[0]->getWidth();
-	int margin = 10;
+	int margin = 2;
 	bool refresh = false;
 	int orientation;
 
 
-	if ( ( (windowWidth - (posXCharacter + characterWidth)) < margin) && !layerReachedStageLimit( windowWidth) ) {
+/*	if ( ( (windowWidth - (posXCharacter + characterWidth)) < margin) && !layerReachedStageLimit( windowWidth) ) {
 		refresh = true;
 		orientation = 1;
 	}
@@ -106,7 +104,7 @@ void LayerManager::refresh() {
 		refresh = true;
 		orientation = -1;
 	}
-
+*/
 	for(unsigned int index=0; index < this->layers.size(); ++index) {
 		this->layers[index]->setNeedRefresh(refresh);
 		this->layers[index]->setOrientation(orientation);
