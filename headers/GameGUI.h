@@ -24,7 +24,7 @@ private:
 	GameGUI() {
 		//private constructor
 	}
-	Stage stage;
+	Stage* stage;
 	Window* window;
 	vector<Character*> characters;
 	vector<Layer*> layers;
@@ -35,8 +35,8 @@ public:
 	~GameGUI() {
 		instanceFlag = false;
 	}
-	void setStage(Stage stage);
-	Stage getStage();
+	void setStage(Stage* stage);
+	Stage* getStage();
 	void setWindow(Window* window);
 	Window* getWindow();
 	void setCharacters(vector<Character*>);

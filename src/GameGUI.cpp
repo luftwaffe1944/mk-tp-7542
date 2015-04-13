@@ -30,7 +30,7 @@ void GameGUI::setWindow(Window* window) {
 	this->window = window;
 }
 
-void GameGUI::setStage(Stage stage) {
+void GameGUI::setStage(Stage* stage) {
 	this->stage = stage;
 }
 
@@ -54,7 +54,7 @@ Window* GameGUI::getWindow() {
 	return this->window;
 }
 
-Stage GameGUI::getStage() {
+Stage* GameGUI::getStage() {
 	return this->stage;
 }
 

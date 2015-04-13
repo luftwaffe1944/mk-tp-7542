@@ -97,7 +97,7 @@ Window* jsonGetWindow(Json::Value root) {
 	return ptrWindow;
 }
 
-Stage jsonGetStage(Json::Value root, int win_width_lg) {
+Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 	FILE_LOG(logDEBUG) << "STAGE CONFIGURATION";
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
 	int stage_width;
@@ -146,8 +146,8 @@ Stage jsonGetStage(Json::Value root, int win_width_lg) {
 		FILE_LOG(logWARNING) << "Stage logical width out of range or inexistent (must be higher than window logical width: "<<win_width_lg<< "). Set to default:"<<DEFAULT_STAGE_WIDTH;
 	}
 
-	Stage stage(stage_width, stage_height, stage_ypiso);
-	return stage;
+	Stage* ptrStage = new Stage(stage_width, stage_height, stage_ypiso);
+	return ptrStage;
 }
 
 
@@ -276,15 +276,15 @@ GameGUI* GameGUIBuilder::create() {
 	}
 
 	Window* window = jsonGetWindow(root);
-	Stage stage = jsonGetStage(root,window->width);
+	Stage* stage = jsonGetStage(root,window->width);
 
 	float ratioX = getRatio(window->widthPx, window->width,"X");
-	float ratioY = getRatio(window->heightPx, stage.getHeight(),"Y");
+	float ratioY = getRatio(window->heightPx, stage->getHeight(),"Y");
 
 	TextureManager::Instance()->ratioHeight = ratioY;
 	TextureManager::Instance()->ratioWidth = ratioX;
 
-	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, window, &stage);
+	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, window, stage);
 	gameGUI->setWindow(window);
 	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
 	gameGUI->setStage(stage);
@@ -311,7 +311,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 	FILE_LOG(logDEBUG) << "JSON - Window width: " << DEFAULT_WINDOW_WIDTH;
 
 	//stage by default
-	Stage stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
+	Stage* ptrStage = new Stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
 	 FILE_LOG(logDEBUG) << "JSON - Stage width: " << DEFAULT_STAGE_WIDTH;
 	 FILE_LOG(logDEBUG) << "JSON - Stage height: " << DEFAULT_STAGE_HEIGHT;
 	 FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << DEFAULT_STAGE_YFLOOR;
@@ -349,7 +349,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 	MKGame::Instance()->getObjectList().push_back(layer2);
 
 	gameGUI->setWindow(ptrWindow);
-	gameGUI->setStage(stage);
+	gameGUI->setStage(ptrStage);
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
 

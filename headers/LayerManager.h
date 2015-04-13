@@ -29,7 +29,7 @@ private:
 	vector<Layer*> layers;
 	vector<Character*> characters;
 	Window* window;
-	Stage stage;
+	Stage* stage;
 	float speedFirstLayer;
 	float offSceneFrontalLayer;
 
