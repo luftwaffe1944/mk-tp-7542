@@ -68,7 +68,6 @@ void LayerManager::init() {
 
 	Layer* layerAux;
 	int numberOfLayers = this->layers.size();
-	std::cout << numberOfLayers << endl;
 	for(int i = numberOfLayers - 2 ; i >= 0  ; i--) {
 		layerAux = this->layers[i];
 		updateOffScene(layerAux);
