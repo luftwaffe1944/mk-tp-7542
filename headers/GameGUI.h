@@ -31,6 +31,7 @@ private:
 
 public:
 	static GameGUI* getInstance();
+	void clean();
 	~GameGUI() {
 		instanceFlag = false;
 	}
