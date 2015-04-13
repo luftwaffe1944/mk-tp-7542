@@ -17,13 +17,6 @@
 
 void InputControl::refreshInputs() {
 
-	SDL_Event event;
-	if (SDL_PollEvent(&event)) {
-		if (event.type == SDL_QUIT) {
-			MKGame::Instance()->quit();
-		}
-	}
-
 	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
 
 	this->firstPlayerMove = NO_INPUT;

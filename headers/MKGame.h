@@ -31,6 +31,7 @@ private:
 	GameGUI* gameGui;
 	InputControl keyboardControl;
 	bool m_bRunning;
+	bool m_bReset;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 	SDL_Texture* m_pTexture; // the new SDL_Texture variable
@@ -61,6 +62,11 @@ public:
 	bool running() {
 		return m_bRunning;
 	}
+	bool reset() {
+			return m_bReset;
+	}
+	void setOnReset(){m_bReset=true;}
+	void setOffReset(){m_bReset=false;}
 };
 
 #endif /* MKGAME_H_ */

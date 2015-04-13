@@ -20,7 +20,7 @@ MKGame* MKGame::Instance() {
 }
 
 bool MKGame::init(GameGUI* gameGui) {
-
+	this->setOffReset();
 	this->gameGui = gameGui;
 	// attempt to initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -104,9 +104,17 @@ void MKGame::update() {
 }
 
 void MKGame::handleEvents() {
-
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			MKGame::Instance()->quit();
+		}
+	}
 	InputControl::Instance()->refreshInputs();
-
+	InputCommand option = InputControl::Instance()->getControlOption();
+	if (option==RESET){
+		MKGame::Instance()->setOnReset();
+	}
 }
 
 void MKGame::quit(){
