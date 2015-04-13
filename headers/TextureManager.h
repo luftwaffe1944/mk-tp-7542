@@ -20,6 +20,8 @@ public:
 		return &t_pInstance;
 	}
 
+	void resetInstance();
+
 	bool load(std::string fileName, std::string id, SDL_Renderer* pRenderer);
 
 	// draw

@@ -19,6 +19,14 @@ GameGUI* GameGUI::getInstance() {
 	}
 }
 
+void GameGUI::clean(){
+	//delete &window;
+	//delete &stage;
+
+	this->characters.erase(characters.begin(), characters.end());
+	this->layers.erase(layers.begin(), layers.end());
+}
+
 void GameGUI::setWindow(Window window) {
 	this->window = window;
 }
