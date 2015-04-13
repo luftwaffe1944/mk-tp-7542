@@ -288,6 +288,7 @@ GameGUI* GameGUIBuilder::create() {
 
 	LayerManager::Instance()->init();
 
+	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 	return gameGUI;
 }
 
