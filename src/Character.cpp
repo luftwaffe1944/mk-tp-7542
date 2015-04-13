@@ -131,6 +131,7 @@ void Character::update() {
 	} else if (isJumpingLeft) {
 		jumpLeft();
 	} else {
+		this->clearMovementsFlags();
 		switch (playerCommand) {
 		case FIRST_PLAYER_MOVE_RIGHT:
 			this->setMovement(WALKING_RIGHT_MOVEMENT);
@@ -161,7 +162,6 @@ void Character::update() {
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
-			this->clearMovementsFlags();
 			break;
 		}
 	}
