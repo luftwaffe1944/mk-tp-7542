@@ -36,7 +36,7 @@ Character::Character(string name, int width, int height, int zindex, bool isRigh
 	this->zindex = zindex;
 	this->isRightOriented = isRightOriented;
 	//TODO: Review positions according to logic and pixels measures.
-	this->positionX = 400;
+	this->positionX = 50;
 	this->positionY = winWidth - height;
 	// initializing movements statements
 	this->isJumping = false;
