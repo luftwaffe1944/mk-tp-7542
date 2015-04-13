@@ -29,9 +29,9 @@ Character::Character(const LoaderParams* pParams, int windowHeight, bool isRight
 bool Character::load(SDL_Renderer* render) {
 	this->renderer = render;
 	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, this->imagePath+"/UMK3_Sub-Zero_walk.png",
-			renderer, 66, 132, 10);
+			renderer, 100, 135, 11);
 	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, this->imagePath+"UMK3_Sub-Zero_stance.png",
-			renderer, 66, 132, 6);
+			renderer, 100, 135, 6);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
 			renderer, 73, 100, 1);
 	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
