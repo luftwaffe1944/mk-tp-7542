@@ -39,7 +39,7 @@ public:
 	virtual bool load(SDL_Renderer* );
 	void render(SDL_Renderer* render);
 	virtual ~Character();
-	Character(const LoaderParams* pParams, int winWidth, bool isRightOriented);
+	Character(const LoaderParams* pParams, int windowHeight, bool isRightOriented);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();

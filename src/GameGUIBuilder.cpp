@@ -279,9 +279,8 @@ GameGUI* GameGUIBuilder::create() {
 	TextureManager::Instance()->ratioWidth = ratioX;
 
 	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, &window, &stage);
-	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
-
 	gameGUI->setWindow(window);
+	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
 	gameGUI->setStage(stage);
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);

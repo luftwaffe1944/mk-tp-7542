@@ -13,13 +13,13 @@
 float gravity = 14.0f;
 float jumpVel = 60.0f;
 
-Character::Character(const LoaderParams* pParams, int windowWidht, bool isRightOriented) :
+Character::Character(const LoaderParams* pParams, int windowHeight, bool isRightOriented) :
 		SDLObjectGUI(pParams) {
 		this->isRightOriented = isRightOriented;
 		this->name = pParams->getTextureID();
 		//TODO: Review positions according to logic and pixels measures.
 		//override constructor
-		this->positionY = windowWidht - height;
+		this->positionY = windowHeight - height;
 		// initializing movements statements
 		clearMovementsFlags();
 }
