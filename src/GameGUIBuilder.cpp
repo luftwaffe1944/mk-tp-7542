@@ -232,9 +232,16 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
 
 	vector<Character*> characters;
-	Character* playerOne = new Character(character_name, character_width, character_height,
-			character_zindex, true, ratioX, ratioY, 400);
 
+	//TODO put in constant
+	int posX = 100;
+	bool isRightOrientation = (character_orientation == "right") ? true : false;
+	LoaderParams* characterParams = new LoaderParams(posX, stage_win_ypiso, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
+
+	Character* playerOne = new Character(characterParams, GameGUI::getInstance()->getWindow().heightPx, isRightOrientation);
+
+//	Character* playerOne = new Character(character_name, character_width, character_height,
+//					character_zindex, true, ratio, GameGUI::getInstance()->window.heightPx);
 
 	//Add player to the game loop
 	playerOne->setImagePath("images/spritesheets_subzero/");
@@ -278,15 +285,15 @@ GameGUI* GameGUIBuilder::create() {
 	TextureManager::Instance()->ratioWidth = ratioX;
 
 	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, &window, &stage);
-	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
-
 	gameGUI->setWindow(window);
+	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
 	gameGUI->setStage(stage);
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
 
 	LayerManager::Instance()->init();
 
+	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 	return gameGUI;
 }
 
@@ -314,8 +321,18 @@ GameGUI* GameGUIBuilder::createDefault() {
 
 	//characters by default
 	vector<Character*> characters;
-	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, ratioY, "scorpion"));
-	characters.push_back(character);
+
+	//TODO put in constant
+	int posX = 400;
+	bool isRightOrientation = true;
+	LoaderParams* characterParams = new LoaderParams(posX, 0, 128, 82, 1,
+			ratioX, ratioY, "defaultName");
+
+	Character* playerOne = new Character(characterParams,
+			GameGUI::getInstance()->getWindow().heightPx, isRightOrientation);
+
+//	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, "scorpion"));
+//	characters.push_back(character);
 
 	//layers by default
 	vector<Layer*> layers;
@@ -325,7 +342,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 	layers.push_back(layer2);
 
 	//Add layers to the game loop
-	MKGame::Instance()->getObjectList().push_back(character);
+	MKGame::Instance()->getObjectList().push_back(playerOne);
 
 	//Add layers to the game loop
 	MKGame::Instance()->getObjectList().push_back(layer);

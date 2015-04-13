@@ -83,6 +83,8 @@ void MKGame::render() {
 
 void MKGame::clean() {
 	FILE_LOG(logDEBUG) << "cleaning game\n";
+	TextureManager::Instance()->resetInstance();
+	GameGUI::getInstance()->clean();
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();

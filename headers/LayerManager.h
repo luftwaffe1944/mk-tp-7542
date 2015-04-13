@@ -41,7 +41,7 @@ private:
 	void setOffSceneFrontalLayer();
 	void centerFrontalLayer();
 	void centerLayers( Layer* layer);
-	bool layerReachedStageLimit(int windowWidth);
+	bool layerReachedStageLimit(int windowWidth, bool border);
 };
 
 #endif /* LAYERMANAGER_H_ */
