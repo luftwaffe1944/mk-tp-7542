@@ -68,7 +68,7 @@ void LayerManager::init() {
 
 	Layer* layerAux;
 	int numberOfLayers = this->layers.size();
-	std::cout << numberOfLayers << endl;
+	//std::cout << numberOfLayers << endl;
 	for(int i = numberOfLayers - 2 ; i >= 0  ; i--) {
 		layerAux = this->layers[i];
 		updateOffScene(layerAux);
@@ -84,7 +84,7 @@ bool LayerManager::layerReachedStageLimit(int windowWidth, bool border) {
 	int margin = 2;
 	Layer* frontalLayer = this->layers[this->layers.size() - 1 ];
 	float frontalLayerOffset = frontalLayer->getScrollingOffset();
-	std::cout << frontalLayerOffset << "//" << frontalLayer->getWidth() << std::endl;
+
 	//Derecho || Izquierdo
 	if (( frontalLayerOffset < ( - frontalLayer->getWidth() / 2 + windowWidth / 2 )) &&  ( border ) )
 		return true;
