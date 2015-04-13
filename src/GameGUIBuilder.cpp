@@ -152,11 +152,11 @@ Stage jsonGetStage(Json::Value root, int win_width_lg) {
 
 
 void resizeImage(float* width, float win_width, int stage_width, float widthPiso) {
-	if (*width < win_width) *width = win_width;
-	if (*width > stage_width) *width = stage_width;
-	if ( *width > win_width && *width < stage_width) {
+//	if (*width < win_width) *width = win_width;
+//	if (*width > stage_width) *width = stage_width;
+//	if ( *width > win_width && *width < stage_width) {
 		*width = (stage_width * (*width)) / widthPiso;
-	}
+//	}
 }
 
 vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Window* window, Stage* stage) {

@@ -5,22 +5,30 @@
 		"ancho": 200
 	},
 	"escenario": {
-		"ancho": 600,
+		"ancho": 300,
 		"alto": 137.14,
-		"ypiso": 250
+		"ypiso": 25
 	},
 	"capas": [
 		{
-			"imagen_fondo": "images/arenas/p_3n.png",
-			"ancho": 206
+			"imagen_fondo": "images/arenas/jadesdesert/p_5n.png",
+			"ancho": 113.71
 		},
 		{
-			"imagen_fondo": "images/arenas/p_2n.png",
-			"ancho": 237.43
+			"imagen_fondo": "images/arenas/jadesdesert/p_4n.png",
+			"ancho": 171.43
 		},
 		{
-			"imagen_fondo": "images/arenas/p_1n.png",
-			"ancho": 342.85
+			"imagen_fondo": "images/arenas/jadesdesert/p_3n.png",
+			"ancho": 228.28
+		},
+		{
+			"imagen_fondo": "images/arenas/jadesdesert/p_2n.png",
+			"ancho": 286.57
+		},
+		{
+			"imagen_fondo": "images/arenas/jadesdesert/p_1n.png",
+			"ancho": 338.85
 		}
 	],
 	"personaje": {
