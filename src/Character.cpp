@@ -16,11 +16,12 @@ float jumpVel = 60.0f;
 Character::Character(const LoaderParams* pParams, int windowWidht, bool isRightOriented) :
 		SDLObjectGUI(pParams) {
 		this->isRightOriented = isRightOriented;
+		this->name = pParams->getTextureID();
 		//TODO: Review positions according to logic and pixels measures.
 		//override constructor
 		this->positionY = windowWidht - height;
 		// initializing movements statements
-
+		clearMovementsFlags();
 }
 
 
