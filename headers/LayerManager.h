@@ -23,7 +23,7 @@ public:
 	void refresh();
 	virtual ~LayerManager() {
 		delete(lm_pInstance);
-		instanceFlag = NULL;
+		instanceFlag = false;
 	}
 
 private:

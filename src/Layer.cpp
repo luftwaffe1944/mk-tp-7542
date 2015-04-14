@@ -39,12 +39,12 @@ void Layer::clean() {
 
 void Layer::setLayerOffScene(float windowsWidth) {
 	this->offScene = ((this->width - windowsWidth) / 2);
-	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " layeroffScene " << this->offScene;
+//	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " layeroffScene " << this->offScene;
 }
 
 void Layer::setLayerSpeed(float speedFirstLayer, float offSceneFirstLayer) {
 	this->bkgSpeed = ((this->offScene * speedFirstLayer) / offSceneFirstLayer);
-	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " speed: " << this->bkgSpeed;
+//	FILE_LOG(logDEBUG) << "Layer " << this->textureID << " speed: " << this->bkgSpeed;
 }
 
 float Layer::getLayerOffScene() {
