@@ -62,6 +62,8 @@ public:
 	bool isTouchingGround(float positionY);
 	bool shouldMoveForward();
 	void clearMovementsFlags();
+	bool isMovingRight();
+	bool isMovingLeft();
 };
 
 #endif /* CHARACTER_H_ */

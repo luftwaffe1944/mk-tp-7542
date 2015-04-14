@@ -105,6 +105,8 @@ bool LayerManager::layerReachedStageLimit(int windowWidth, bool border) {
 }
 
 void LayerManager::refresh() {
+	bool isCharMovingRight = this->characters[0]->isMovingRight();
+	bool isCharMovingLeft = this->characters[0]->isMovingLeft();
 	int posXCharacter = this->characters[0]->getPosXUL();
 	int windowWidth = this->window->width;
 	int characterWidth = this->characters[0]->getWidth();
@@ -114,11 +116,11 @@ void LayerManager::refresh() {
 	int orientation;
 
 
-if ( ( (windowWidth - (posXCharacter + characterWidth )) < margin) && !layerReachedStageLimit( windowWidth, true) ) {
+if ( ( (windowWidth - (posXCharacter + characterWidth )) < margin) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight) {
 		refresh = true;
 		orientation = 1;
 	}
-	if  (( posXCharacter < margin ) && !layerReachedStageLimit( windowWidth, false)) {
+	if  (( posXCharacter < margin ) && !layerReachedStageLimit( windowWidth, false) && isCharMovingLeft)  {
 		refresh = true;
 		orientation = -1;
 	}

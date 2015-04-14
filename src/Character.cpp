@@ -272,6 +272,16 @@ float Character::getYGround() {
 	return this->yGround;
 }
 
+bool Character::isMovingRight(){
+	if (this->isJumpingRight || this->isWalkingRight) return true;
+	return false;
+}
+
+bool Character::isMovingLeft(){
+	if (this->isJumpingLeft || this->isWalkingLeft) return true;
+	return false;
+}
+
 Character::~Character() {
 	// TODO Auto-generated destructor stub
 
