@@ -20,12 +20,12 @@ TextureManager::~TextureManager() {
 	// TODO Auto-generated destructor stub
 }
 
-
-void TextureManager::resetInstance(){
+void TextureManager::resetInstance() {
 	//limpiar texturas
 	map<std::string, SDL_Texture*>::const_iterator itr;
 
-	for(itr = this->m_textureMap.begin(); itr != this->m_textureMap.end(); ++itr){
+	for (itr = this->m_textureMap.begin(); itr != this->m_textureMap.end();
+			++itr) {
 		SDL_DestroyTexture((*itr).second);
 		//this->m_textureMap.erase((*itr).first);
 		this->m_textureMap.erase((*itr).first);
@@ -34,12 +34,14 @@ void TextureManager::resetInstance(){
 	TextureManager::Instance() == NULL;
 }
 
-bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pRenderer) {
+bool TextureManager::load(std::string fileName, std::string id,
+		SDL_Renderer* pRenderer) {
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 	if (pTempSurface == 0) {
 		return false;
 	}
-	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
+	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer,
+			pTempSurface);
 	SDL_FreeSurface(pTempSurface);
 // everything went ok, add the texture to our list
 	if (pTexture != 0) {
@@ -50,7 +52,8 @@ bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pR
 	return false;
 }
 
-void TextureManager::draw(std::string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip) {
+void TextureManager::draw(std::string id, int x, int y, int width, int height,
+		SDL_Renderer* pRenderer, SDL_RendererFlip flip) {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
 
@@ -65,35 +68,58 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height, S
 	destRect.y = y * this->ratioHeight;
 
 	//flip = SDL_FLIP_HORIZONTAL;
-	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0,
+			flip);
 }
 
-void TextureManager::drawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer *pRenderer, SDL_RendererFlip flip) {
+void TextureManager::drawFrame(std::string id, int x, int y, int width,
+		int height, int currentRow, int currentFrame, SDL_Renderer *pRenderer,
+		SDL_RendererFlip flip) {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
 	srcRect.x = width * currentFrame;
 	srcRect.y = height * (currentRow - 1);
-	srcRect.w = destRect.w = width;
-	srcRect.h = destRect.h = height;
+	srcRect.w = 100;
+	destRect.w = width;
+	srcRect.h = 135;
+	destRect.h = height;
 	destRect.x = x;
 	destRect.y = y;
-	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0,
+			flip);
 }
 
-void TextureManager::setColor(std::string id, Uint8 red, Uint8 green, Uint8 blue )
-{
+void TextureManager::drawFrame(std::string id, int x, int y, int width,
+		int height, int currentRow, int currentFrame, SDL_Renderer *pRenderer, float spriteWidth, float spriteHeight,
+		SDL_RendererFlip flip) {
+
+	SDL_Rect srcRect;
+	SDL_Rect destRect;
+	srcRect.x = spriteWidth * currentFrame;
+	srcRect.y = spriteHeight * (currentRow - 1);
+	srcRect.w = spriteWidth;
+	destRect.w = width;
+	srcRect.h = spriteHeight;
+	destRect.h = height;
+	destRect.x = x;
+	destRect.y = y;
+	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0,
+			flip);
+
+}
+
+void TextureManager::setColor(std::string id, Uint8 red, Uint8 green,
+		Uint8 blue) {
 	//Modulate texture rgb
-	SDL_SetTextureColorMod(m_textureMap[id], red, green, blue );
+	SDL_SetTextureColorMod(m_textureMap[id], red, green, blue);
 }
 
-void TextureManager::setBlendMode(std::string id, SDL_BlendMode blending )
-{
+void TextureManager::setBlendMode(std::string id, SDL_BlendMode blending) {
 	//Set blending function
-	SDL_SetTextureBlendMode(m_textureMap[id], blending );
+	SDL_SetTextureBlendMode(m_textureMap[id], blending);
 }
 
-void TextureManager::setAlpha(std::string id, Uint8 alpha )
-{
+void TextureManager::setAlpha(std::string id, Uint8 alpha) {
 	//Modulate texture alpha
-	SDL_SetTextureAlphaMod(m_textureMap[id], alpha );
+	SDL_SetTextureAlphaMod(m_textureMap[id], alpha);
 }

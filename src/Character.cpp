@@ -18,7 +18,6 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		this->isRightOriented = isRightOriented;
 		this->name = pParams->getTextureID();
 		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height);
-cout << yGround << " " << height << " " << GameGUI::getInstance()->getStage()->getYGround() << endl;
 		//TODO: Review positions according to logic and pixels measures.
 		//override constructor
 		// initializing movements statements
@@ -82,9 +81,9 @@ void Character::draw() {
 			}
 		}
 		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
-				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
+				(int) positionX, (int) positionY, width * ratioX, height * ratioY,
 				1, currentFrame,
-				renderer,(!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
+				renderer, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(), (!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
 }
 
 bool Character::shouldMoveForward() {
@@ -171,7 +170,7 @@ void Character::jumpRight() {
 	isJumpingRight = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	positionX+=10;
+	positionX = positionX + (2 * ratioX);
 	if (this->isTouchingGround(positionY)) {
 		isJumpingRight = false;
 		jumpVel = 60.0f;
@@ -185,7 +184,7 @@ void Character::jumpLeft() {
 	isJumpingLeft = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	positionX-=10;
+	positionX = positionX - (2 * ratioX);
 	if (this->isTouchingGround(positionY)) {
 		isJumpingLeft = false;
 		jumpVel = 60.0f;
@@ -212,13 +211,13 @@ void Character::refreshFrames(){
 
 void Character::walkRight() {
 	isWalkingRight = true;
-	positionX = positionX + 7;
+	positionX = positionX + 2 * ratioX;
 
 }
 
 void Character::walkLeft() {
 	isWalkingLeft = true;
-	positionX = positionX - 7;
+	positionX = positionX - 2 * ratioX;
 
 }
 
