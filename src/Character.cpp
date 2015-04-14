@@ -17,7 +17,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		SDLObjectGUI(pParams) {
 		this->isRightOriented = isRightOriented;
 		this->name = pParams->getTextureID();
-		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height);
+		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height) * ratioY;
 		//TODO: Review positions according to logic and pixels measures.
 		//override constructor
 		// initializing movements statements

@@ -233,7 +233,8 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 	vector<Character*> characters;
 
 	float characterPosX = GameGUI::getInstance()->getWindow()->widthPx / 2;
-	float characterPosY = stage_win_ypiso - character_height;
+	std::cout << stage_win_ypiso << std::endl;
+	float characterPosY = ( stage_win_ypiso - character_height ) * ratioY;
 	bool isRightOrientation = (character_orientation == "right") ? true : false;
 	LoaderParams* characterParams = new LoaderParams(characterPosX, characterPosY, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
 
