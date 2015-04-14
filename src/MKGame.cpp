@@ -93,13 +93,8 @@ void MKGame::clean() {
 	FILE_LOG(logDEBUG) << "cleaning game\n";
 	TextureManager::Instance()->resetInstance();
 	GameGUI::getInstance()->clean();
-
-
-
 	std::for_each(objectList.begin(),objectList.end(),delete_pointer_to<SDLObjectGUI>);
-
-
-
+	objectList.clear();
 
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
