@@ -45,6 +45,7 @@ Window* jsonGetWindow(Json::Value root) {
 
 	FILE_LOG(logDEBUG) << "WINDOW CONFIGURATION";
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
+
 	int win_width_px;
 	int win_height_px;
 	int win_width;
@@ -106,21 +107,21 @@ Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 
 	try {
 		 string strValue  = stageValue.get(JSON_KEY_ANCHO, 0).asString();
-		 stage_width = atoi(strValue.c_str());
+		 stage_width = atof(strValue.c_str());
 		 FILE_LOG(logDEBUG) << "JSON - Stage width: " << strValue;
 	}catch(std::exception const & e){
 		stage_width=0;
 	}
 	try {
 		 string strValue  = stageValue.get(JSON_KEY_ALTO, 0).asString();
-		 stage_height = atoi(strValue.c_str());
+		 stage_height = atof(strValue.c_str());
 		 FILE_LOG(logDEBUG) << "JSON - Stage height: " << stage_height;
 	}catch(std::exception const & e){
 		stage_height=0;
 	}
 	try {
 		 string strValue = stageValue.get(JSON_KEY_YPISO, 0).asString();
-		 stage_ypiso = atoi(strValue.c_str());
+		 stage_ypiso = atof(strValue.c_str());
 		 FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << strValue;
 	}catch(std::exception const & e){
 		stage_ypiso=0;
@@ -136,7 +137,7 @@ Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 	bool yPisoOk = (stage_ypiso>0) && (stage_ypiso<=stage_height);
 	if (!yPisoOk){
 		//por defecto altura piso es 10% de la altura logica del escenario
-		stage_ypiso = (stage_height/10);
+		stage_ypiso = (stage_height * 0.91);
 		FILE_LOG(logWARNING) << "Stage floor 'y' position out of range or inexistent (0 - "<<stage_height<< "). Set to default:"<<stage_ypiso;
 	}
 
@@ -149,7 +150,6 @@ Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 	Stage* ptrStage = new Stage(stage_width, stage_height, stage_ypiso);
 	return ptrStage;
 }
-
 
 void resizeImage(float* width, float win_width, int stage_width, float widthPiso) {
 	*width = (stage_width * (*width)) / widthPiso;
@@ -167,7 +167,24 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 
 	/* PROPORCION USADA PARA AJUSTAR SIZE DE LAS IMAGENES
 	 * SIN VALIDAR */
-	float widthPiso = ::atof(array[array.size()-1].get(JSON_KEY_ANCHO, "").asString().c_str());
+	//float widthPiso = ::atof(array[array.size()-1].get(JSON_KEY_ANCHO, "").asString().c_str());
+	///VALIDACION DE PISO
+	int indexPiso=-1;
+	float widthPiso;
+	for (unsigned int index = 0; index < array.size(); ++index) {
+		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
+		if (fileExists(path.c_str())){
+			indexPiso = index;
+		}
+	}
+	try {
+		 string strValue = array[indexPiso].get(JSON_KEY_ANCHO, "").asString();
+		 widthPiso = atof(strValue.c_str());
+	}catch(std::exception const & e){
+		widthPiso=stage->getWidth();
+	}
+	///////////////////////////////////////////////////////////////////////////////////////
+
 
 	for (unsigned int index = 0; index < array.size(); ++index) {
 		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
@@ -213,10 +230,10 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 	return layers;
 }
 
-vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY) {
+vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY, Stage* stage) {
 	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
-	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
+	int stage_win_ypiso = stage->getYGround();
 
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
 	string character_name =
@@ -293,7 +310,7 @@ GameGUI* GameGUIBuilder::create() {
 	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, window, stage);
 	if (layers.size()==0){layers = buildLayersByDefault(ratioX, ratioY,window,stage);}
 
-	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
+	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY, stage);
 
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
