@@ -14,6 +14,7 @@
 #include "Character.h"
 #include "GameGUI.h"
 #include "Log.h"
+#include "Constants.h"
 
 class LayerManager {
 public:

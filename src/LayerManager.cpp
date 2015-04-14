@@ -89,8 +89,7 @@ void LayerManager::init() {
 //border true = derecho
 //border false = izquierdo
 bool LayerManager::layerReachedStageLimit(int windowWidth, bool border) {
-	//TODO desharcodear margin
-	int margin = 2;
+
 	Layer* frontalLayer = this->layers[this->layers.size() - 1 ];
 	float frontalLayerOffset = frontalLayer->getScrollingOffset();
 
@@ -110,17 +109,15 @@ void LayerManager::refresh() {
 	int posXCharacter = this->characters[0]->getPosXUL();
 	int windowWidth = this->window->width;
 	int characterWidth = this->characters[0]->getWidth();
-
-	int margin = 4;
 	bool refresh = false;
 	int orientation;
 
 
-if ( ( (windowWidth - (posXCharacter + characterWidth )) < margin) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight) {
+if ( ( (windowWidth - (posXCharacter + characterWidth )) < WINDOW_MARGIN) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight) {
 		refresh = true;
 		orientation = 1;
 	}
-	if  (( posXCharacter < margin ) && !layerReachedStageLimit( windowWidth, false) && isCharMovingLeft)  {
+	if  (( posXCharacter < WINDOW_MARGIN ) && !layerReachedStageLimit( windowWidth, false) && isCharMovingLeft)  {
 		refresh = true;
 		orientation = -1;
 	}
