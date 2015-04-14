@@ -366,25 +366,25 @@ vector<Layer*> GameGUIBuilder::buildLayersByDefault(float ratioX, float ratioY, 
 		width=DEFAULT_LAYER1_WIDTH;
 		widthPiso = width;
 		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
-		Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 0, ratioX, ratioY, DEFAULT_LAYER1_ID));
-		layer->setImagePath(DEFAULT_LAYER1_PATH);
-		layers.push_back(layer);
+		Layer* layer1 = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 0, ratioX, ratioY, DEFAULT_LAYER1_ID));
+		layer1->setImagePath(DEFAULT_LAYER1_PATH);
+		layers.push_back(layer1);
 
 		width=DEFAULT_LAYER2_WIDTH;
 		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
 		Layer* layer2 = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 1, ratioX, ratioY, DEFAULT_LAYER2_ID));
-		layer->setImagePath(DEFAULT_LAYER2_PATH);
+		layer2->setImagePath(DEFAULT_LAYER2_PATH);
 		layers.push_back(layer2);
 
 		width=DEFAULT_LAYER3_WIDTH;
 		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
 		Layer* layer3 = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 2, ratioX, ratioY, DEFAULT_LAYER3_ID));
-		layer->setImagePath(DEFAULT_LAYER3_PATH);
+		layer3->setImagePath(DEFAULT_LAYER3_PATH);
 		layers.push_back(layer3);
 		//Add layers to the game loop
-		MKGame::Instance()->getObjectList().push_back(layer3);
+		MKGame::Instance()->getObjectList().push_back(layer1);
 		MKGame::Instance()->getObjectList().push_back(layer2);
-		MKGame::Instance()->getObjectList().push_back(layer);
+		MKGame::Instance()->getObjectList().push_back(layer3);
 
 		FILE_LOG(logDEBUG) << "Layer built by default";
 		FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER1_ID;
