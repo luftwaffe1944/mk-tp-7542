@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
 	do{
 		GameGUIBuilder gameGUIBuilder;
 		GameGUI* gameGUI = gameGUIBuilder.create();
+		LayerManager::Instance()->init();
 
 		if (MKGame::Instance()->init(gameGUI)) {
 			std::cout << "game init success" << endl;

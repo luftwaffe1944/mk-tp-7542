@@ -7,6 +7,7 @@
 
 #include "../headers/MKGame.h"
 #include "../headers/Log.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -81,10 +82,25 @@ void MKGame::render() {
 
 }
 
+template <typename T>
+void delete_pointer_to(T* const ptr)  {
+	delete ptr;
+}
+
+
+
 void MKGame::clean() {
 	FILE_LOG(logDEBUG) << "cleaning game\n";
 	TextureManager::Instance()->resetInstance();
 	GameGUI::getInstance()->clean();
+
+
+
+	std::for_each(objectList.begin(),objectList.end(),delete_pointer_to<SDLObjectGUI>);
+
+
+
+
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();

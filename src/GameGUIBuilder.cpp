@@ -291,9 +291,10 @@ GameGUI* GameGUIBuilder::create() {
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
 
-	LayerManager::Instance()->init();
+
 
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
+
 	return gameGUI;
 }
 

@@ -21,7 +21,15 @@ GameGUI* GameGUI::getInstance() {
 
 void GameGUI::clean(){
 	delete window;
-	//delete &stage;
+	delete stage;
+
+	vector<Character*>::const_iterator itr;
+
+//	for(itr = this->characters.begin(); itr != this->characters.end(); ++itr){
+//		delete (*itr);
+//	}
+
+
 	this->characters.erase(characters.begin(), characters.end());
 	this->layers.erase(layers.begin(), layers.end());
 }

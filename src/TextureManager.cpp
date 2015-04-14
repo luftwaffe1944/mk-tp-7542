@@ -25,13 +25,13 @@ void TextureManager::resetInstance(){
 	//limpiar texturas
 	map<std::string, SDL_Texture*>::const_iterator itr;
 
-	for(itr = this->m_textureMap.begin(); itr != this->m_textureMap.end(); ++itr){
-		SDL_DestroyTexture((*itr).second);
-		//this->m_textureMap.erase((*itr).first);
-		this->m_textureMap.erase((*itr).first);
-	}
+//	for(itr = this->m_textureMap.begin(); itr != this->m_textureMap.end(); ++itr){
+//		SDL_DestroyTexture((*itr).second);
+//		//this->m_textureMap.erase((*itr).first);
+//		this->m_textureMap.erase((*itr).first);
+//	}
 	//reasignar puntero
-	TextureManager::Instance() == NULL;
+
 }
 
 bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pRenderer) {
