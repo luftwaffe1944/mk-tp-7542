@@ -45,6 +45,7 @@ Window* jsonGetWindow(Json::Value root) {
 
 	FILE_LOG(logDEBUG) << "WINDOW CONFIGURATION";
 	Json::Value windowValue = root[JSON_KEY_VENTANA];
+
 	int win_width_px;
 	int win_height_px;
 	int win_width;
@@ -150,7 +151,6 @@ Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 	return ptrStage;
 }
 
-
 void resizeImage(float* width, float win_width, int stage_width, float widthPiso) {
 	*width = (stage_width * (*width)) / widthPiso;
 	if (*width < win_width) *width = win_width;
@@ -167,7 +167,24 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 
 	/* PROPORCION USADA PARA AJUSTAR SIZE DE LAS IMAGENES
 	 * SIN VALIDAR */
-	float widthPiso = ::atof(array[array.size()-1].get(JSON_KEY_ANCHO, "").asString().c_str());
+	//float widthPiso = ::atof(array[array.size()-1].get(JSON_KEY_ANCHO, "").asString().c_str());
+	///VALIDACION DE PISO
+	int indexPiso=-1;
+	float widthPiso;
+	for (unsigned int index = 0; index < array.size(); ++index) {
+		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
+		if (fileExists(path.c_str())){
+			indexPiso = index;
+		}
+	}
+	try {
+		 string strValue = array[indexPiso].get(JSON_KEY_ANCHO, "").asString();
+		 widthPiso = atof(strValue.c_str());
+	}catch(std::exception const & e){
+		widthPiso=stage->getWidth();
+	}
+	///////////////////////////////////////////////////////////////////////////////////////
+
 
 	for (unsigned int index = 0; index < array.size(); ++index) {
 		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
