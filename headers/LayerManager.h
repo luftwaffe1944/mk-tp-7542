@@ -17,15 +17,18 @@
 
 class LayerManager {
 public:
-	static LayerManager* Instance() {
-		static LayerManager lm_pInstance;
-		return &lm_pInstance;
-	}
+	static LayerManager* Instance();
 
 	void init();
 	void refresh();
+	virtual ~LayerManager() {
+		delete(lm_pInstance);
+		instanceFlag = NULL;
+	}
 
 private:
+	static bool instanceFlag;
+	static LayerManager* lm_pInstance;
 	vector<Layer*> layers;
 	vector<Character*> characters;
 	Window* window;
@@ -34,7 +37,6 @@ private:
 	float offSceneFrontalLayer;
 
 	LayerManager();
-	virtual ~LayerManager();
 	void updateSpeedLayers(Layer* layer);
 	void updateOffScene(Layer* layer);
 	void setSpeedFrontalLayer();

@@ -7,6 +7,19 @@
 
 #include "../headers/LayerManager.h"
 
+bool LayerManager::instanceFlag = false;
+LayerManager* LayerManager::lm_pInstance = NULL;
+
+LayerManager* LayerManager::Instance() {
+	if (!instanceFlag) {
+		lm_pInstance = new LayerManager();
+		instanceFlag = true;
+		return lm_pInstance;
+	} else {
+		return lm_pInstance;
+	}
+}
+
 LayerManager::LayerManager() {
 	this->offSceneFrontalLayer = 0;
 	this->speedFirstLayer = 0;
@@ -15,10 +28,6 @@ LayerManager::LayerManager() {
 	this->stage = GameGUI::getInstance()->getStage();
 	this->window = GameGUI::getInstance()->getWindow();
 
-}
-
-LayerManager::~LayerManager() {
-	// TODO Auto-generated destructor stub
 }
 
 void LayerManager::updateSpeedLayers(Layer* layer) {
