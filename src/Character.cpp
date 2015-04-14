@@ -110,7 +110,6 @@ void Character::update() {
 
 	InputCommand playerCommand = InputControl::Instance()->getFirstPlayerMove();
 	//InputCommand optionCommand = keyboardControl.getControlOption();
-	isDucking = false;
 	// Check if critical movements have finished
 	if (isJumping) {
 		jump();
@@ -119,6 +118,10 @@ void Character::update() {
 	} else if (isJumpingLeft) {
 		jumpLeft();
 	} else {
+		if (isDucking && playerCommand != FIRST_PLAYER_MOVE_DOWN){
+			isDucking = false;
+			this->refreshFrames();
+		}
 		this->clearMovementsFlags();
 		switch (playerCommand) {
 		case FIRST_PLAYER_MOVE_RIGHT:
