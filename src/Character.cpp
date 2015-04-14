@@ -29,15 +29,15 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 bool Character::load(SDL_Renderer* render) {
 	this->renderer = render;
 	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, this->imagePath+"/UMK3_Sub-Zero_walk.png",
-			renderer, 100, 135, 11);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 11);
 	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, this->imagePath+"UMK3_Sub-Zero_stance.png",
-			renderer, 100, 135, 6);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
-			renderer, 73, 100, 1);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
 	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
-				renderer, 100, 170, 9);
+				renderer, SPRITE_WIDTH, SPRITE_HEIGHT + 10, 9);
 	Sprite* spriteDuck = new Sprite(this->name+DUCK_SUFFIX, this->imagePath+"UMK3_Sub-Zero_duck.png",
-					renderer, 100, 140, 3);
+					renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));

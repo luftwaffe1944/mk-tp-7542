@@ -76,4 +76,7 @@
 #define JSON_KEY_ZINDEX "zindex"
 #define JSON_KEY_ORIENTACION "orientacion"
 
+#define SPRITE_WIDTH 100
+#define SPRITE_HEIGHT 135
+
 #endif /* CONSTANTS_H_ */
