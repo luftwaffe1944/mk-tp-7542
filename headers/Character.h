@@ -47,6 +47,8 @@ public:
 	int getWidth();
 	int getPosX();
 	float getYGround();
+	bool reachedWindowLeftLimit();
+	bool reachedWindowRightLimit();
 
 	//Movement & position methods
 	void jump();

@@ -88,11 +88,24 @@ void Character::draw() {
 
 bool Character::shouldMoveForward() {
 	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) ||
-			(!this->isRightOriented && (isJumpingLeft || isWalkingLeft)) ) {
+			(!this->isRightOriented && (isJumpingLeft || isWalkingLeft))  ) {
 		return true;
 	} else {
 		return false;
 	}
+}
+
+bool Character::reachedWindowLeftLimit(){
+	int margin = 2; //TODO Deshardcodear margin
+	if (this->positionX < margin) return true;
+	return false;
+}
+
+bool Character::reachedWindowRightLimit(){
+	int margin = 2; //TODO Deshardcodear margin
+	float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
+	if ( ( windowWidth - this->positionX ) < margin) return true;
+	return false;
 }
 
 void Character::update() {
@@ -170,7 +183,9 @@ void Character::jumpRight() {
 	isJumpingRight = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	positionX = positionX + (2 * ratioX);
+	if (!this->reachedWindowRightLimit()) {
+		positionX = positionX + (2 * ratioX);
+	}
 	if (this->isTouchingGround(positionY)) {
 		isJumpingRight = false;
 		jumpVel = 60.0f;
@@ -184,7 +199,9 @@ void Character::jumpLeft() {
 	isJumpingLeft = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	positionX = positionX - (2 * ratioX);
+	if (!this->reachedWindowLeftLimit()) {
+		positionX = positionX - (2 * ratioX);
+	}
 	if (this->isTouchingGround(positionY)) {
 		isJumpingLeft = false;
 		jumpVel = 60.0f;
@@ -211,13 +228,18 @@ void Character::refreshFrames(){
 
 void Character::walkRight() {
 	isWalkingRight = true;
-	positionX = positionX + 2 * ratioX;
+	if (!this->reachedWindowRightLimit()) {
+		positionX = positionX + 2 * ratioX;
+	}
+
 
 }
 
 void Character::walkLeft() {
 	isWalkingLeft = true;
-	positionX = positionX - 2 * ratioX;
+	if (!this->reachedWindowLeftLimit()){
+		positionX = positionX - 2 * ratioX;
+	}
 
 }
 
