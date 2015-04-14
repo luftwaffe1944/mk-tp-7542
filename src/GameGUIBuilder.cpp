@@ -175,10 +175,8 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 			try {
 				 string strValue = array[index].get(JSON_KEY_ANCHO, "").asString();
 				 width = atoi(strValue.c_str());
-				 if (index == 0) {
-					 widthPiso = width;
-				 }
-				 FILE_LOG(logDEBUG) << "JSON - Layer width: " << strValue;
+
+				 FILE_LOG(logDEBUG) << "JSON - Layer "<<index<<" input width: " << strValue;
 			}catch(std::exception const & e){
 				width=0;
 			}
@@ -189,21 +187,22 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 				FILE_LOG(logWARNING) << "Layer logical width out of range or inexistent (must be positive). Set by default:"<<stage->getWidth();
 			}
 
-			resizeImage(&width, window->width, stage->getWidth(), widthPiso);
 			stringstream sLayerName;
 			sLayerName.clear();
 			sLayerName << "layer";
 			sLayerName << index;
+			FILE_LOG(logDEBUG) << "JSON - Layer "<< index <<" ID: " << sLayerName.str();
+			FILE_LOG(logDEBUG) << "JSON - Layer " << index << " background image: "	<< path;
+			FILE_LOG(logDEBUG) << "JSON - Layer " << index << " width: "	<< width;
+
+			if (index == 0) {widthPiso = width;}
+			resizeImage(&width, window->width, stage->getWidth(), widthPiso);
 
 			//TODO calcular ratio
-			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, index, ratioX,	ratioY, sLayerName.str()));
+			Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, index, ratioX, ratioY, sLayerName.str()));
 			layer->setImagePath(path);
 			//Add layers to the game loop
 			MKGame::Instance()->getObjectList().push_back(layer);
-
-			FILE_LOG(logDEBUG) << "JSON - Layer ID: " << sLayerName.str();
-			FILE_LOG(logDEBUG) << "JSON - Layer" << index << " background image: "	<< path;
-			FILE_LOG(logDEBUG) << "JSON - Layer" << index << " width: "	<< width;
 			layers.push_back(layer);
 		}
 	}
@@ -288,6 +287,8 @@ GameGUI* GameGUIBuilder::create() {
 	TextureManager::Instance()->ratioWidth = ratioX;
 
 	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, window, stage);
+	if (layers.size()==0){layers = buildLayersByDefault(ratioX, ratioY,window,stage);}
+
 	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
 
 	gameGUI->setCharacters(characters);
@@ -338,28 +339,65 @@ GameGUI* GameGUIBuilder::createDefault() {
 //	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, "scorpion"));
 //	characters.push_back(character);
 
-	//layers by default
-	vector<Layer*> layers;
-	Layer* layer = new Layer(new LoaderParams(0, 0, 128, 82, 1, ratioX, ratioY, "layer1"));
-	layers.push_back(layer);
-	Layer* layer2 = new Layer(new LoaderParams(0, 0, 128, 82, 2, ratioX, ratioY, "layer2"));
-	layers.push_back(layer2);
+
 
 	//Add layers to the game loop
 	MKGame::Instance()->getObjectList().push_back(playerOne);
 
-	//Add layers to the game loop
-	MKGame::Instance()->getObjectList().push_back(layer);
-	MKGame::Instance()->getObjectList().push_back(layer2);
+
 
 	gameGUI->setWindow(ptrWindow);
 	gameGUI->setStage(ptrStage);
 	gameGUI->setCharacters(characters);
-	gameGUI->setLayers(layers);
+	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));
 
 	FILE_LOG(logDEBUG) << "Configuration process finished";
 	return gameGUI;
 
+}
+
+vector<Layer*> GameGUIBuilder::buildLayersByDefault(float ratioX, float ratioY, Window* window, Stage* stage){
+	//layers by default
+		vector<Layer*> layers;
+		float width,widthPiso;
+
+
+
+		width=DEFAULT_LAYER1_WIDTH;
+		widthPiso = width;
+		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
+		Layer* layer = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 0, ratioX, ratioY, DEFAULT_LAYER1_ID));
+		layer->setImagePath(DEFAULT_LAYER1_PATH);
+		layers.push_back(layer);
+
+		width=DEFAULT_LAYER2_WIDTH;
+		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
+		Layer* layer2 = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 1, ratioX, ratioY, DEFAULT_LAYER2_ID));
+		layer->setImagePath(DEFAULT_LAYER2_PATH);
+		layers.push_back(layer2);
+
+		width=DEFAULT_LAYER3_WIDTH;
+		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
+		Layer* layer3 = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 2, ratioX, ratioY, DEFAULT_LAYER3_ID));
+		layer->setImagePath(DEFAULT_LAYER3_PATH);
+		layers.push_back(layer3);
+		//Add layers to the game loop
+		MKGame::Instance()->getObjectList().push_back(layer3);
+		MKGame::Instance()->getObjectList().push_back(layer2);
+		MKGame::Instance()->getObjectList().push_back(layer);
+
+		FILE_LOG(logDEBUG) << "Layer built by default";
+		FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER1_ID;
+		FILE_LOG(logDEBUG) << "Layer" << 1 << " background image: "	<< DEFAULT_LAYER1_PATH;
+		FILE_LOG(logDEBUG) << "Layer" << 1 << " width: "	<< DEFAULT_LAYER1_WIDTH;
+		FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER2_ID;
+		FILE_LOG(logDEBUG) << "Layer" << 2 << " background image: "	<< DEFAULT_LAYER2_PATH;
+		FILE_LOG(logDEBUG) << "Layer" << 2 << " width: "	<< DEFAULT_LAYER2_WIDTH;
+		FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER3_ID;
+		FILE_LOG(logDEBUG) << "Layer" << 3 << " background image: "	<< DEFAULT_LAYER3_PATH;
+		FILE_LOG(logDEBUG) << "Layer" << 3 << " width: "	<< DEFAULT_LAYER3_WIDTH;
+
+	return layers;
 }
 
 void GameGUIBuilder::handleError(string msgError) {

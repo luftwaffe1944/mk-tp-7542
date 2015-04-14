@@ -30,6 +30,7 @@ public:
 	GameGUIBuilder();
 	GameGUI* create();
 	GameGUI* createDefault();
+	vector<Layer*> buildLayersByDefault(float ratioX, float ratioY, Window* window, Stage* stage);
 	void handleError(string msgError);
 	virtual ~GameGUIBuilder();
 
