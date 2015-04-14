@@ -12,13 +12,14 @@ class Stage {
 private:
 	int width;
 	int height;
-	int yfloor;
+	float yGround;
 public:
 	Stage();
-	Stage(int witdh, int height, int yfloor);
+	Stage(int witdh, int height, float yfloor);
 	virtual ~Stage();
 	int getHeight();
 	int getWidth();
+	float getYGround();
 };
 
 #endif /* STAGE_H_ */

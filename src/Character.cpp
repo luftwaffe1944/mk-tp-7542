@@ -13,13 +13,13 @@
 float gravity = 14.0f;
 float jumpVel = 60.0f;
 
-Character::Character(const LoaderParams* pParams, int windowHeight, bool isRightOriented) :
+Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		SDLObjectGUI(pParams) {
 		this->isRightOriented = isRightOriented;
 		this->name = pParams->getTextureID();
+		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height);
 		//TODO: Review positions according to logic and pixels measures.
 		//override constructor
-		this->positionY = windowHeight - height;
 		// initializing movements statements
 		clearMovementsFlags();
 }
@@ -81,9 +81,9 @@ void Character::draw() {
 			}
 		}
 		TextureManager::Instance()->drawFrame(currentSprite->getSpriteId(),
-				(int) positionX, (int) positionY, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(),
+				(int) positionX, (int) positionY, width * ratioX, height * ratioY,
 				1, currentFrame,
-				renderer,(!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
+				renderer, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(), (!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
 }
 
 bool Character::shouldMoveForward() {
@@ -161,8 +161,7 @@ void Character::jump() {
 		isJumping = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
-		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx - this->height);
+		this->positionY = yGround;
 		refreshFrames();
 	}
 }
@@ -171,14 +170,12 @@ void Character::jumpRight() {
 	isJumpingRight = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	positionX+=10;
+	positionX = positionX + (2 * ratioX);
 	if (this->isTouchingGround(positionY)) {
 		isJumpingRight = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
-		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx
-						- this->height);
+		this->positionY = yGround;
 		refreshFrames();
 	}
 }
@@ -187,23 +184,19 @@ void Character::jumpLeft() {
 	isJumpingLeft = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	positionX-=10;
+	positionX = positionX - (2 * ratioX);
 	if (this->isTouchingGround(positionY)) {
 		isJumpingLeft = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
-		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx
-						- this->height);
+		this->positionY = yGround;
 		refreshFrames();
 	}
 }
 
 
 bool Character::isTouchingGround(float positionY) {
-	if (positionY
-			>= (MKGame::Instance()->getGameGUI()->getWindow()->heightPx
-					- this->height)) {
+	if (positionY >= this->yGround) {
 		return true;
 	}
 	return false;
@@ -218,13 +211,13 @@ void Character::refreshFrames(){
 
 void Character::walkRight() {
 	isWalkingRight = true;
-	positionX = positionX + 7;
+	positionX = positionX + 2 * ratioX;
 
 }
 
 void Character::walkLeft() {
 	isWalkingLeft = true;
-	positionX = positionX - 7;
+	positionX = positionX - 2 * ratioX;
 
 }
 
@@ -247,6 +240,10 @@ int Character::getWidth() {
 
 int Character::getPosX() {
 	return this->positionX;
+}
+
+float Character::getYGround() {
+	return this->yGround;
 }
 
 Character::~Character() {

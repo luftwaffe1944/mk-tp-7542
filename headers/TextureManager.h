@@ -33,6 +33,11 @@ public:
 			int currentRow, int currentFrame, SDL_Renderer* pRenderer,
 			SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+	// drawframe
+	void drawFrame(std::string id, int x, int y, int width, int height,
+			int currentRow, int currentFrame, SDL_Renderer* pRenderer, float spriteWidth , float spriteHeight,
+			SDL_RendererFlip flip = SDL_FLIP_NONE);
+
 	// query texure
 	SDL_Rect queryTexture(std::string id) {
 		SDL_Rect tRect;

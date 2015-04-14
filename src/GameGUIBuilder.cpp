@@ -233,12 +233,12 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 
 	vector<Character*> characters;
 
-	//TODO put in constant
-	int posX = 100;
+	float characterPosX = GameGUI::getInstance()->getWindow()->widthPx / 2;
+	float characterPosY = stage_win_ypiso - character_height;
 	bool isRightOrientation = (character_orientation == "right") ? true : false;
-	LoaderParams* characterParams = new LoaderParams(posX, stage_win_ypiso, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
+	LoaderParams* characterParams = new LoaderParams(characterPosX, characterPosY, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
 
-	Character* playerOne = new Character(characterParams, GameGUI::getInstance()->getWindow()->heightPx, isRightOrientation);
+	Character* playerOne = new Character(characterParams, isRightOrientation);
 
 //	Character* playerOne = new Character(character_name, character_width, character_height,
 //					character_zindex, true, ratio, GameGUI::getInstance()->window.heightPx);
@@ -278,6 +278,9 @@ GameGUI* GameGUIBuilder::create() {
 	Window* window = jsonGetWindow(root);
 	Stage* stage = jsonGetStage(root,window->width);
 
+	gameGUI->setWindow(window);
+	gameGUI->setStage(stage);
+
 	float ratioX = getRatio(window->widthPx, window->width,"X");
 	float ratioY = getRatio(window->heightPx, stage->getHeight(),"Y");
 
@@ -285,9 +288,8 @@ GameGUI* GameGUIBuilder::create() {
 	TextureManager::Instance()->ratioWidth = ratioX;
 
 	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, window, stage);
-	gameGUI->setWindow(window);
 	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
-	gameGUI->setStage(stage);
+
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
 
@@ -324,13 +326,14 @@ GameGUI* GameGUIBuilder::createDefault() {
 	vector<Character*> characters;
 
 	//TODO put in constant
-	int posX = 400;
+	float characterPosX = GameGUI::getInstance()->getWindow()->widthPx / 2;
+	float stage_win_ypiso = 25;
+	float characterPosY = stage_win_ypiso - 82;
 	bool isRightOrientation = true;
-	LoaderParams* characterParams = new LoaderParams(posX, 0, 128, 82, 1,
+	LoaderParams* characterParams = new LoaderParams(characterPosX, 0, 128, 82, 1,
 			ratioX, ratioY, "defaultName");
 
-	Character* playerOne = new Character(characterParams,
-			GameGUI::getInstance()->getWindow()->heightPx, isRightOrientation);
+	Character* playerOne = new Character(characterParams, isRightOrientation);
 
 //	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, "scorpion"));
 //	characters.push_back(character);

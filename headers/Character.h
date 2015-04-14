@@ -24,6 +24,7 @@ private:
 	std::string name;
 	int zindex;
 	bool isRightOriented;
+	float yGround;
 	std::string movement;
 	std::map<std::string,Sprite*> characterSprites;
 	SDL_Renderer* renderer; //TODO: review
@@ -39,12 +40,13 @@ public:
 	virtual bool load(SDL_Renderer* );
 	void render(SDL_Renderer* render);
 	virtual ~Character();
-	Character(const LoaderParams* pParams, int windowHeight, bool isRightOriented);
+	Character(const LoaderParams* pParams, bool isRightOriented);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
 	int getWidth();
 	int getPosX();
+	float getYGround();
 
 	//Movement & position methods
 	void jump();
