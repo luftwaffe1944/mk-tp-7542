@@ -35,7 +35,7 @@
 		"nombre": "subzero",
 		"ancho": 20,
 		"alto": 28.57,
-		"zindex": 1,
+		"zindex": 4,
 		"orientacion": "right"
 	}
 }

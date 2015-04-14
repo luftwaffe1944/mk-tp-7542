@@ -69,12 +69,20 @@ bool MKGame::init(GameGUI* gameGui) {
 	return true;
 }
 
+
+
+bool compareSDLObjectGUI(SDLObjectGUI* a, SDLObjectGUI* b) {
+	return (a->getZIndex() < b->getZIndex());
+}
+
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
 
 	vector<SDLObjectGUI*> objects = this->getObjectList();
-	for (int i = 0; i < objects.size(); i++) {
-		objects[i]->draw();
+	std::stable_sort (objects.begin(), objects.end(), compareSDLObjectGUI);
+
+	for (std::vector<SDLObjectGUI*>::iterator it=objects.begin(); it!=objects.end(); ++it) {
+		(*it)->draw();
 	}
 
 	//TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
