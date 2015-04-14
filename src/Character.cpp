@@ -119,7 +119,9 @@ void Character::update() {
 		jumpLeft();
 	} else {
 		// Movements validation to refresh frames
-		if (isDucking && playerCommand != FIRST_PLAYER_MOVE_DOWN){
+		if (isDucking && (playerCommand != FIRST_PLAYER_MOVE_DOWN &&
+				playerCommand != FIRST_PLAYER_MOVE_DOWN_LEFT &&
+				playerCommand != FIRST_PLAYER_MOVE_DOWN_RIGHT)) {
 			this->refreshFrames();
 		}
 		if (isWalkingRight && playerCommand != FIRST_PLAYER_MOVE_RIGHT){
@@ -144,6 +146,14 @@ void Character::update() {
 			jump();
 			break;
 		case FIRST_PLAYER_MOVE_DOWN:
+			this->setMovement(DUCKING_MOVEMENT);
+			this->isDucking = true;
+			break;
+		case FIRST_PLAYER_MOVE_DOWN_LEFT:
+			this->setMovement(DUCKING_MOVEMENT);
+			this->isDucking = true;
+			break;
+		case FIRST_PLAYER_MOVE_DOWN_RIGHT:
 			this->setMovement(DUCKING_MOVEMENT);
 			this->isDucking = true;
 			break;
