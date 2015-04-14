@@ -97,14 +97,14 @@ bool Character::shouldMoveForward() {
 
 bool Character::reachedWindowLeftLimit(){
 	int margin = 2; //TODO Deshardcodear margin
-	if (this->positionX / ratioX < margin) return true;
+	if (this->getPosXUL() < margin) return true;
 	return false;
 }
 
 bool Character::reachedWindowRightLimit(){
 	int margin = 2; //TODO Deshardcodear margin
 	float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
-	if ( ( windowWidth - ( this->positionX / ratioX ) - this->width ) < margin) return true;
+	if ( ( windowWidth - this->getPosXUL() - this->width ) < margin) return true;
 	return false;
 }
 
@@ -262,6 +262,10 @@ int Character::getWidth() {
 
 int Character::getPosX() {
 	return this->positionX;
+}
+
+float Character::getPosXUL(){
+	return this->positionX / this->ratioX;
 }
 
 float Character::getYGround() {

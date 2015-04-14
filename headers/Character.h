@@ -49,7 +49,7 @@ public:
 	float getYGround();
 	bool reachedWindowLeftLimit();
 	bool reachedWindowRightLimit();
-
+	float getPosXUL();
 	//Movement & position methods
 	void jump();
 	void jumpRight();

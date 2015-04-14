@@ -105,16 +105,16 @@ bool LayerManager::layerReachedStageLimit(int windowWidth, bool border) {
 }
 
 void LayerManager::refresh() {
-	int posXCharacter = this->characters[0]->getPosX();
+	int posXCharacter = this->characters[0]->getPosXUL();
 	int windowWidth = this->window->width;
 	int characterWidth = this->characters[0]->getWidth();
 
-	int margin = 2;
+	int margin = 4;
 	bool refresh = false;
 	int orientation;
 
 
-if ( ( (windowWidth - (posXCharacter + characterWidth / 2)) < margin) && !layerReachedStageLimit( windowWidth, true) ) {
+if ( ( (windowWidth - (posXCharacter + characterWidth )) < margin) && !layerReachedStageLimit( windowWidth, true) ) {
 		refresh = true;
 		orientation = 1;
 	}
