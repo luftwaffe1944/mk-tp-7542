@@ -13,13 +13,14 @@
 float gravity = 14.0f;
 float jumpVel = 60.0f;
 
-Character::Character(const LoaderParams* pParams, int windowHeight, bool isRightOriented) :
+Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		SDLObjectGUI(pParams) {
 		this->isRightOriented = isRightOriented;
 		this->name = pParams->getTextureID();
+		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height);
+cout << yGround << " " << height << " " << GameGUI::getInstance()->getStage()->getYGround() << endl;
 		//TODO: Review positions according to logic and pixels measures.
 		//override constructor
-		this->positionY = windowHeight - height;
 		// initializing movements statements
 		clearMovementsFlags();
 }
@@ -161,8 +162,7 @@ void Character::jump() {
 		isJumping = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
-		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx - this->height);
+		this->positionY = yGround;
 		refreshFrames();
 	}
 }
@@ -176,9 +176,7 @@ void Character::jumpRight() {
 		isJumpingRight = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
-		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx
-						- this->height);
+		this->positionY = yGround;
 		refreshFrames();
 	}
 }
@@ -192,18 +190,14 @@ void Character::jumpLeft() {
 		isJumpingLeft = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
-		this->positionY =
-				(MKGame::Instance()->getGameGUI()->getWindow()->heightPx
-						- this->height);
+		this->positionY = yGround;
 		refreshFrames();
 	}
 }
 
 
 bool Character::isTouchingGround(float positionY) {
-	if (positionY
-			>= (MKGame::Instance()->getGameGUI()->getWindow()->heightPx
-					- this->height)) {
+	if (positionY >= this->yGround) {
 		return true;
 	}
 	return false;
@@ -247,6 +241,10 @@ int Character::getWidth() {
 
 int Character::getPosX() {
 	return this->positionX;
+}
+
+float Character::getYGround() {
+	return this->yGround;
 }
 
 Character::~Character() {

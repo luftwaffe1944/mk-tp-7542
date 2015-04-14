@@ -12,10 +12,10 @@ Stage::Stage() {
 
 }
 
-Stage::Stage(int width, int height, int yfloor) {
+Stage::Stage(int width, int height, float yfloor) {
 	this->width = width;
 	this->height = height;
-	this->yfloor = yfloor;
+	this->yGround = yfloor;
 }
 
 int Stage::getHeight(){
@@ -30,4 +30,7 @@ Stage::~Stage() {
 	// TODO Auto-generated destructor stub
 }
 
+float Stage::getYGround(){
+	return this->yGround;
+}
 
