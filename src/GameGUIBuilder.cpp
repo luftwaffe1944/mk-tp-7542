@@ -152,11 +152,8 @@ Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 
 
 void resizeImage(float* width, float win_width, int stage_width, float widthPiso) {
-//	if (*width < win_width) *width = win_width;
-//	if (*width > stage_width) *width = stage_width;
-//	if ( *width > win_width && *width < stage_width) {
-		*width = (stage_width * (*width)) / widthPiso;
-//	}
+	*width = (stage_width * (*width)) / widthPiso;
+	if (*width < win_width) *width = win_width;
 }
 
 vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Window* window, Stage* stage) {
@@ -166,7 +163,11 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 	vector<Layer*> layers;
 	string path;
 	float width;
-	float widthPiso = 0;
+
+	/* PROPORCION USADA PARA AJUSTAR SIZE DE LAS IMAGENES
+	 * SIN VALIDAR */
+	float widthPiso = ::atof(array[array.size()-1].get(JSON_KEY_ANCHO, "").asString().c_str());
+
 	for (unsigned int index = 0; index < array.size(); ++index) {
 		path = array[index].get(JSON_KEY_IMAGEN_FONDO, "").asString();
 
@@ -174,7 +175,7 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 		if (fileExists(path.c_str())) {
 			try {
 				 string strValue = array[index].get(JSON_KEY_ANCHO, "").asString();
-				 width = atoi(strValue.c_str());
+				 width = atof(strValue.c_str());
 
 				 FILE_LOG(logDEBUG) << "JSON - Layer "<<index<<" input width: " << strValue;
 			}catch(std::exception const & e){
@@ -195,7 +196,7 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 			FILE_LOG(logDEBUG) << "JSON - Layer " << index << " background image: "	<< path;
 			FILE_LOG(logDEBUG) << "JSON - Layer " << index << " width: "	<< width;
 
-			if (index == 0) {widthPiso = width;}
+//			if (index == 0) {widthPiso = width;}
 			resizeImage(&width, window->width, stage->getWidth(), widthPiso);
 
 			//TODO calcular ratio

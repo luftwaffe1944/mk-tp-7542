@@ -1,11 +1,11 @@
 {
 	"ventana": {
-		"anchopx": 700,
+		"anchopx": 525,
 		"altopx": 480,
-		"ancho": 200
+		"ancho": 150
 	},
 	"escenario": {
-		"ancho": 300,
+		"ancho": 400,
 		"alto": 137.14,
 		"ypiso": 125
 	},
