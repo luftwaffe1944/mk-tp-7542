@@ -107,21 +107,21 @@ Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 
 	try {
 		 string strValue  = stageValue.get(JSON_KEY_ANCHO, 0).asString();
-		 stage_width = atoi(strValue.c_str());
+		 stage_width = atof(strValue.c_str());
 		 FILE_LOG(logDEBUG) << "JSON - Stage width: " << strValue;
 	}catch(std::exception const & e){
 		stage_width=0;
 	}
 	try {
 		 string strValue  = stageValue.get(JSON_KEY_ALTO, 0).asString();
-		 stage_height = atoi(strValue.c_str());
+		 stage_height = atof(strValue.c_str());
 		 FILE_LOG(logDEBUG) << "JSON - Stage height: " << stage_height;
 	}catch(std::exception const & e){
 		stage_height=0;
 	}
 	try {
 		 string strValue = stageValue.get(JSON_KEY_YPISO, 0).asString();
-		 stage_ypiso = atoi(strValue.c_str());
+		 stage_ypiso = atof(strValue.c_str());
 		 FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << strValue;
 	}catch(std::exception const & e){
 		stage_ypiso=0;
@@ -137,7 +137,7 @@ Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 	bool yPisoOk = (stage_ypiso>0) && (stage_ypiso<=stage_height);
 	if (!yPisoOk){
 		//por defecto altura piso es 10% de la altura logica del escenario
-		stage_ypiso = (stage_height/10);
+		stage_ypiso = (stage_height * 0.91);
 		FILE_LOG(logWARNING) << "Stage floor 'y' position out of range or inexistent (0 - "<<stage_height<< "). Set to default:"<<stage_ypiso;
 	}
 
@@ -230,10 +230,10 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 	return layers;
 }
 
-vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY) {
+vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY, Stage* stage) {
 	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
-	int stage_win_ypiso = stageValue.get(JSON_KEY_YPISO, 700).asInt();
+	int stage_win_ypiso = stage->getYGround();
 
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
 	string character_name =
@@ -310,7 +310,7 @@ GameGUI* GameGUIBuilder::create() {
 	vector<Layer*> layers = jsonGetLayers(root, ratioX, ratioY, window, stage);
 	if (layers.size()==0){layers = buildLayersByDefault(ratioX, ratioY,window,stage);}
 
-	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY);
+	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY, stage);
 
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
