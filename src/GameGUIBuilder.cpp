@@ -302,7 +302,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 	std::cout << stage_win_ypiso << std::endl;
 	float characterPosY = ( stage_win_ypiso - character_height ) * ratioY;
 	bool isRightOrientation = (character_orientation == "right") ? true : false;
-	LoaderParams* characterParams = new LoaderParams(characterPosX, characterPosY, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
+	LoaderParams* characterParams = new LoaderParams(characterPosX  - character_width * ratioX/2, characterPosY, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
 
 	Character* playerOne = new Character(characterParams, isRightOrientation);
 
@@ -399,16 +399,23 @@ GameGUI* GameGUIBuilder::createDefault() {
 	float ratioX = getRatio(DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_WIDTH,"X");
 	float ratioY = getRatio(DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_STAGE_HEIGHT,"Y");
 
+	TextureManager::Instance()->ratioHeight = ratioY;
+	TextureManager::Instance()->ratioWidth = ratioX;
+
 	//characters by default
 	vector<Character*> characters;
 
 	//TODO put in constant
-	float characterPosX = GameGUI::getInstance()->getWindow()->widthPx / 2;
-	float stage_win_ypiso = 25;
-	float characterPosY = stage_win_ypiso - 82;
+	float character_width = DEFAULT_CHARACTER_WIDTH;
+	float character_height = DEFAULT_CHARACTER_HEIGHT;
+	int character_zindex = DEFAULT_CHARACTER_ZINDEX;
+	string character_name = "default";
+	float characterPosX = GameGUI::getInstance()->getWindow()->widthPx / 2 - character_width * ratioX/2;
+	float stage_win_ypiso = DEFAULT_STAGE_YFLOOR;
+	float characterPosY = (stage_win_ypiso - character_height) * ratioY;
 	bool isRightOrientation = true;
-	LoaderParams* characterParams = new LoaderParams(characterPosX, characterPosY, 128, 82, 1,
-			ratioX, ratioY, "defaultName");
+	LoaderParams* characterParams = new LoaderParams(characterPosX, characterPosY, character_width, character_height, character_zindex,
+			ratioX, ratioY, character_name);
 
 	Character* playerOne = new Character(characterParams, isRightOrientation);
 	characters.push_back(playerOne);
