@@ -1,0 +1,33 @@
+{
+	"ventana": {
+		"anchopx": 700,
+		"altopx": 480,
+		"ancho": 200
+	},
+	"escenario": {
+		"ancho": 600,
+		"alto": 137.14,
+		"ypiso": 250
+	},
+	"capas": [
+		{
+			"imagen_fondo": "images/arenas/p_3n.png",
+			"ancho": 206
+		},
+		{
+			"imagen_fondo": "images/arenas/p_2n.png",
+			"ancho": 237.43
+		},
+		{
+			"imagen_fondo": "images/arenas/p_1n.png",
+			"ancho": 342.85
+		}
+	],
+	"personaje": {
+		"nombre": "subzero",
+		"ancho": 30,
+		"alto": 50,
+		"zindex": 3,
+		"orientacion": "right"
+	}
+}
