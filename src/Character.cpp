@@ -9,9 +9,16 @@
 #include "../headers/TextureManager.h"
 #include "../headers/MKGame.h"
 #include <SDL.h>
+#include <stdlib.h>
+#include <fstream>
+#include <iostream>
+
+using namespace std;
 
 float gravity = 14.0f;
 float jumpVel = 60.0f;
+
+bool validateSpritesForSelectedCharacter(std::string characterPath);
 
 Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		SDLObjectGUI(pParams) {
@@ -28,15 +35,21 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 
 bool Character::load(SDL_Renderer* render) {
 	this->renderer = render;
-	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, this->imagePath+"/UMK3_Sub-Zero_walk.png",
+	std::string characterPath = this->imagePath+this->name;
+	bool isValid = validateSpritesForSelectedCharacter(characterPath);
+	if (!isValid) {
+		characterPath = this->imagePath + DEFAULT_PATH_SPRITE_CONTAINER;
+	}
+
+	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, characterPath+WALK_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 11);
-	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, this->imagePath+"UMK3_Sub-Zero_stance.png",
+	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, characterPath+STANCE_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6);
-	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump.png",
+	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, characterPath+JUMP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
-	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, this->imagePath+"UMK3_Sub-Zero_jump_forward.png",
+	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, characterPath+DIAGONAL_JUMP_SPRITE,
 				renderer, SPRITE_WIDTH, SPRITE_HEIGHT + 10, 9);
-	Sprite* spriteDuck = new Sprite(this->name+DUCK_SUFFIX, this->imagePath+"UMK3_Sub-Zero_duck.png",
+	Sprite* spriteDuck = new Sprite(this->name+DUCK_SUFFIX, characterPath+DUCK_SPRITE,
 					renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
@@ -304,4 +317,26 @@ bool Character::isMovingLeft(){
 Character::~Character() {
 	// TODO Auto-generated destructor stub
 
+}
+
+bool fileExists(string s)
+{
+	ifstream file(s.c_str(), std::ifstream::binary);
+
+	if (file.good()) {
+		return true;
+	}else{
+		FILE_LOG(logERROR) << "File not found: " << s;
+		return false;
+	}
+}
+
+bool validateSpritesForSelectedCharacter(string characterPath) {
+	if ( (!fileExists(characterPath+WALK_SPRITE)) || (!fileExists(characterPath+STANCE_SPRITE)) ||
+			(!fileExists(characterPath+DIAGONAL_JUMP_SPRITE)) ||
+			(!fileExists(characterPath+DUCK_SPRITE)) ||
+			(!fileExists(characterPath+JUMP_SPRITE)) ) {
+		return false;
+	}
+	return true;
 }

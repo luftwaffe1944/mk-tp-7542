@@ -8,9 +8,9 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 #define GAME_TITLE "Mortal Kombat"
-
 //Default GameGUI measures
-
+#include <string>
+using namespace std;
 //window
 #define MAX_WINDOW_WIDTH_PX 1366
 #define MAX_WINDOW_HEIGHT_PX 768
@@ -57,6 +57,15 @@
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
+
+
+//Sprites images
+const string WALK_SPRITE = "/walk.png";
+const string JUMP_SPRITE = "/jump.png";
+const string STANCE_SPRITE = "/stance.png";
+const string DIAGONAL_JUMP_SPRITE = "/diagonalJump.png";
+const string DUCK_SPRITE = "/duck.png";
+const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 
 // Json config constants
 

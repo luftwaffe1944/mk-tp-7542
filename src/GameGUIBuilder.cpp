@@ -247,7 +247,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 //					character_zindex, true, ratio, GameGUI::getInstance()->window.heightPx);
 
 	//Add player to the game loop
-	playerOne->setImagePath("images/spritesheets_subzero/");
+	playerOne->setImagePath("images/");
 	MKGame::Instance()->getObjectList().push_back(playerOne);
 
 	characters.push_back(playerOne);
