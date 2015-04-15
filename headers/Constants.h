@@ -66,6 +66,7 @@ const string STANCE_SPRITE = "/stance.png";
 const string DIAGONAL_JUMP_SPRITE = "/diagonalJump.png";
 const string DUCK_SPRITE = "/duck.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
+const string ROOT_IMAGE_PATH = "images/";
 
 // Json config constants
 

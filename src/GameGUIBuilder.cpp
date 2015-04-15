@@ -307,14 +307,13 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 //					character_zindex, true, ratio, GameGUI::getInstance()->window.heightPx);
 
 	//Add player to the game loop
-	playerOne->setImagePath("images/");
+
 	MKGame::Instance()->getObjectList().push_back(playerOne);
 
 	characters.push_back(playerOne);
 	return characters;
 }
 
-//TODO Fixme
 GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "CONFIGURATION INITIALIZED";
 	GameGUI *gameGUI = GameGUI::getInstance();
@@ -377,11 +376,15 @@ GameGUI* GameGUIBuilder::createDefault() {
 	FILE_LOG(logDEBUG) << "JSON - Window height: " << DEFAULT_WINDOW_HEIGHT_PX << " px";
 	FILE_LOG(logDEBUG) << "JSON - Window width: " << DEFAULT_WINDOW_WIDTH;
 
+	gameGUI->setWindow(ptrWindow);
+
 	//stage by default
 	Stage* ptrStage = new Stage(DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT, DEFAULT_STAGE_YFLOOR);
 	 FILE_LOG(logDEBUG) << "JSON - Stage width: " << DEFAULT_STAGE_WIDTH;
 	 FILE_LOG(logDEBUG) << "JSON - Stage height: " << DEFAULT_STAGE_HEIGHT;
 	 FILE_LOG(logDEBUG) << "JSON - Stage ypiso: " << DEFAULT_STAGE_YFLOOR;
+
+	 gameGUI->setStage(ptrStage);
 
 	float ratioX = getRatio(DEFAULT_WINDOW_WIDTH_PX, DEFAULT_WINDOW_WIDTH,"X");
 	float ratioY = getRatio(DEFAULT_WINDOW_HEIGHT_PX, DEFAULT_STAGE_HEIGHT,"Y");
@@ -394,24 +397,17 @@ GameGUI* GameGUIBuilder::createDefault() {
 	float stage_win_ypiso = 25;
 	float characterPosY = stage_win_ypiso - 82;
 	bool isRightOrientation = true;
-	LoaderParams* characterParams = new LoaderParams(characterPosX, 0, 128, 82, 1,
+	LoaderParams* characterParams = new LoaderParams(characterPosX, characterPosY, 128, 82, 1,
 			ratioX, ratioY, "defaultName");
 
 	Character* playerOne = new Character(characterParams, isRightOrientation);
-
-//	Character* character = new Character(new LoaderParams(0, 0, 128, 82, 2, ratioX, "scorpion"));
-//	characters.push_back(character);
-
-
+	characters.push_back(playerOne);
 
 	//Add layers to the game loop
 	MKGame::Instance()->getObjectList().push_back(playerOne);
 
-
-
-	gameGUI->setWindow(ptrWindow);
-	gameGUI->setStage(ptrStage);
 	gameGUI->setCharacters(characters);
+
 	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));
 
 	FILE_LOG(logDEBUG) << "Configuration process finished";
@@ -420,45 +416,53 @@ GameGUI* GameGUIBuilder::createDefault() {
 }
 
 vector<Layer*> GameGUIBuilder::buildLayersByDefault(float ratioX, float ratioY, Window* window, Stage* stage){
+
 	//layers by default
-		vector<Layer*> layers;
-		float width,widthPiso;
+	vector<Layer*> layers;
+	float width, widthPiso;
 
+	width = DEFAULT_LAYER1_WIDTH;
+	widthPiso = width;
+	resizeImage(&width, window->width, stage->getWidth(), widthPiso);
+	Layer* layer1 = new Layer(
+			new LoaderParams(0, 0, width, window->heightPx / ratioY, 0, ratioX,
+					ratioY, DEFAULT_LAYER1_ID));
+	layer1->setImagePath(DEFAULT_LAYER1_PATH);
+	layers.push_back(layer1);
 
+	width = DEFAULT_LAYER2_WIDTH;
+	resizeImage(&width, window->width, stage->getWidth(), widthPiso);
+	Layer* layer2 = new Layer(
+			new LoaderParams(0, 0, width, window->heightPx / ratioY, 1, ratioX,
+					ratioY, DEFAULT_LAYER2_ID));
+	layer2->setImagePath(DEFAULT_LAYER2_PATH);
+	layers.push_back(layer2);
 
-		width=DEFAULT_LAYER1_WIDTH;
-		widthPiso = width;
-		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
-		Layer* layer1 = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 0, ratioX, ratioY, DEFAULT_LAYER1_ID));
-		layer1->setImagePath(DEFAULT_LAYER1_PATH);
-		layers.push_back(layer1);
+	width = DEFAULT_LAYER3_WIDTH;
+	resizeImage(&width, window->width, stage->getWidth(), widthPiso);
+	Layer* layer3 = new Layer(
+			new LoaderParams(0, 0, width, window->heightPx / ratioY, 2, ratioX,
+					ratioY, DEFAULT_LAYER3_ID));
+	layer3->setImagePath(DEFAULT_LAYER3_PATH);
+	layers.push_back(layer3);
+	//Add layers to the game loop
+	MKGame::Instance()->getObjectList().push_back(layer1);
+	MKGame::Instance()->getObjectList().push_back(layer2);
+	MKGame::Instance()->getObjectList().push_back(layer3);
 
-		width=DEFAULT_LAYER2_WIDTH;
-		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
-		Layer* layer2 = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 1, ratioX, ratioY, DEFAULT_LAYER2_ID));
-		layer2->setImagePath(DEFAULT_LAYER2_PATH);
-		layers.push_back(layer2);
-
-		width=DEFAULT_LAYER3_WIDTH;
-		resizeImage(&width, window->width, stage->getWidth(), widthPiso);
-		Layer* layer3 = new Layer(new LoaderParams(0, 0, width, window->heightPx / ratioY, 2, ratioX, ratioY, DEFAULT_LAYER3_ID));
-		layer3->setImagePath(DEFAULT_LAYER3_PATH);
-		layers.push_back(layer3);
-		//Add layers to the game loop
-		MKGame::Instance()->getObjectList().push_back(layer1);
-		MKGame::Instance()->getObjectList().push_back(layer2);
-		MKGame::Instance()->getObjectList().push_back(layer3);
-
-		FILE_LOG(logDEBUG) << "Layer built by default";
-		FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER1_ID;
-		FILE_LOG(logDEBUG) << "Layer" << 1 << " background image: "	<< DEFAULT_LAYER1_PATH;
-		FILE_LOG(logDEBUG) << "Layer" << 1 << " width: "	<< DEFAULT_LAYER1_WIDTH;
-		FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER2_ID;
-		FILE_LOG(logDEBUG) << "Layer" << 2 << " background image: "	<< DEFAULT_LAYER2_PATH;
-		FILE_LOG(logDEBUG) << "Layer" << 2 << " width: "	<< DEFAULT_LAYER2_WIDTH;
-		FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER3_ID;
-		FILE_LOG(logDEBUG) << "Layer" << 3 << " background image: "	<< DEFAULT_LAYER3_PATH;
-		FILE_LOG(logDEBUG) << "Layer" << 3 << " width: "	<< DEFAULT_LAYER3_WIDTH;
+	FILE_LOG(logDEBUG) << "Layer built by default";
+	FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER1_ID;
+	FILE_LOG(logDEBUG) << "Layer" << 1 << " background image: "
+			<< DEFAULT_LAYER1_PATH;
+	FILE_LOG(logDEBUG) << "Layer" << 1 << " width: " << DEFAULT_LAYER1_WIDTH;
+	FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER2_ID;
+	FILE_LOG(logDEBUG) << "Layer" << 2 << " background image: "
+			<< DEFAULT_LAYER2_PATH;
+	FILE_LOG(logDEBUG) << "Layer" << 2 << " width: " << DEFAULT_LAYER2_WIDTH;
+	FILE_LOG(logDEBUG) << "Layer ID: " << DEFAULT_LAYER3_ID;
+	FILE_LOG(logDEBUG) << "Layer" << 3 << " background image: "
+			<< DEFAULT_LAYER3_PATH;
+	FILE_LOG(logDEBUG) << "Layer" << 3 << " width: " << DEFAULT_LAYER3_WIDTH;
 
 	return layers;
 }
