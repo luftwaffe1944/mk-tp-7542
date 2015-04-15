@@ -15,10 +15,7 @@ using namespace std;
 
 class TextureManager {
 public:
-	static TextureManager* Instance() {
-		static TextureManager t_pInstance;
-		return &t_pInstance;
-	}
+	static TextureManager* Instance();
 
 	void resetInstance();
 
@@ -56,11 +53,15 @@ public:
 
 	float ratioWidth;
 	float ratioHeight;
-
+	virtual ~TextureManager() {
+		instanceFlag = false;
+//		delete(t_pInstance);
+	}
 private:
+	static bool instanceFlag;
+	static TextureManager* t_pInstance;
 	TextureManager();
 	std::map<std::string, SDL_Texture*> m_textureMap;
-	virtual ~TextureManager();
 };
 
 #endif /* TEXTUREMANAGER_H_ */

@@ -31,7 +31,11 @@ void GameGUI::clean(){
 
 
 	this->characters.erase(characters.begin(), characters.end());
+	this->characters.clear();
 	this->layers.erase(layers.begin(), layers.end());
+	this->layers.clear();
+	delete(gameGui);
+	this->instanceFlag = false;
 }
 
 void GameGUI::setWindow(Window* window) {
