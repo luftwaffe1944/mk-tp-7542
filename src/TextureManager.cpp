@@ -35,7 +35,7 @@ void TextureManager::resetInstance() {
 	for (itr = this->m_textureMap.begin(); itr != this->m_textureMap.end();
 			++itr) {
 		SDL_DestroyTexture((*itr).second);
-		this->m_textureMap.erase((*itr).first);
+//		this->m_textureMap.erase((*itr).first);
 	}
 	this->m_textureMap.clear();
 
