@@ -15,6 +15,11 @@ GameGUIBuilder::GameGUIBuilder() {
 
 }
 
+GameGUIBuilder::GameGUIBuilder(string path) {
+	this->configFilePath = path;
+
+}
+
 GameGUIBuilder::~GameGUIBuilder() {
 	// TODO Auto-generated destructor stub
 }
@@ -317,8 +322,7 @@ GameGUI* GameGUIBuilder::create() {
 	Json::Value root;
 	Json::Reader reader;
 
-	//TODO refactor harcoded file path
-	ifstream gameConfig("src/stageConfig.json", std::ifstream::binary);
+	ifstream gameConfig(this->configFilePath.c_str(), std::ifstream::binary);
 
 	if (!gameConfig.good()) {
 		MessageError fileNotFound(ERROR_FILE_NOT_FOUND, FILE_CONFIG_NOT_FOUND, LOG_LEVEL_ERROR);
@@ -457,6 +461,10 @@ vector<Layer*> GameGUIBuilder::buildLayersByDefault(float ratioX, float ratioY, 
 		FILE_LOG(logDEBUG) << "Layer" << 3 << " width: "	<< DEFAULT_LAYER3_WIDTH;
 
 	return layers;
+}
+
+void GameGUIBuilder::setConfigFilePath(string path){
+	this->configFilePath = path;
 }
 
 void GameGUIBuilder::handleError(string msgError) {

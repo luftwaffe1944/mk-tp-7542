@@ -25,14 +25,19 @@
 using namespace std;
 
 class GameGUIBuilder {
+private:
+	string configFilePath;
+
 public:
 
+	GameGUIBuilder(string path);
 	GameGUIBuilder();
 	GameGUI* create();
 	GameGUI* createDefault();
 	vector<Layer*> buildLayersByDefault(float ratioX, float ratioY, Window* window, Stage* stage);
 	void handleError(string msgError);
 	virtual ~GameGUIBuilder();
+	void setConfigFilePath(string path);
 
 };
 

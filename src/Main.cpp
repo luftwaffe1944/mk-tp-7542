@@ -9,12 +9,19 @@ MKGame* mkGame = 0;
 
 int main(int argc, char* argv[]) {
 
-	//TODO tomar por parametro el nivel de log hardcodeado
-	FILELog::reportingLevel() = FILELog::fromString("DEBUG");
+
+	if (argc > 2){
+		FILELog::reportingLevel() = FILELog::fromString(argv[2]);
+	}else{
+		FILELog::reportingLevel() = FILELog::fromString("DEBUG");
+	}
+
+	string configFilePath = argv[1];
+
 
 	bool runApp = true;
 	do{
-		GameGUIBuilder gameGUIBuilder;
+		GameGUIBuilder gameGUIBuilder(configFilePath);
 		GameGUI* gameGUI = gameGUIBuilder.create();
 		LayerManager::Instance()->init();
 
