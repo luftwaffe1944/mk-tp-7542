@@ -345,7 +345,7 @@ GameGUI* GameGUIBuilder::create() {
 		Json::Value value3 = root[JSON_KEY_ESCENARIO];
 		Json::Value value14 = root[JSON_KEY_VENTANA];
 	}catch(std::exception const & e){
-		FILE_LOG(logDEBUG) << "Corrupt JSON File";
+		FILE_LOG(logDEBUG) << "Corrupt JSON File. Exception: "<<e.what();
 		return createDefault();
 	}
 	Window* window = jsonGetWindow(root);
