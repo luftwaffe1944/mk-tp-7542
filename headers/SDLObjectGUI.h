@@ -28,6 +28,8 @@ public:
 	void setImagePath(string imagePath);
 	string getImagePath();
 	string getTextureID();
+	int getZIndex();
+
 protected:
 	string imagePath;
 	float positionX;

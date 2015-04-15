@@ -27,6 +27,8 @@ public:
 		instanceFlag = false;
 	}
 
+	void clean();
+
 private:
 	static bool instanceFlag;
 	static LayerManager* lm_pInstance;

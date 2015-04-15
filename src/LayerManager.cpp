@@ -20,6 +20,11 @@ LayerManager* LayerManager::Instance() {
 	}
 }
 
+void LayerManager::clean() {
+	instanceFlag = false;
+//	delete(lm_pInstance);
+}
+
 LayerManager::LayerManager() {
 	this->offSceneFrontalLayer = 0;
 	this->speedFirstLayer = 0;

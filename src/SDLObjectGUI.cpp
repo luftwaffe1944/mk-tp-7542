@@ -70,3 +70,7 @@ string SDLObjectGUI::getImagePath() {
 string SDLObjectGUI::getTextureID() {
 	return this->textureID;
 }
+
+int SDLObjectGUI::getZIndex() {
+	return this->zIndex;
+}

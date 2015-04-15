@@ -37,8 +37,8 @@ using namespace std;
 
 //characters
 #define DEFAULT_CHARACTER_WIDTH 20
-#define DEFAULT_CHARACTER_HEIGHT 35
-#define DEFAULT_CHARACTER_ZINDEX 1
+#define DEFAULT_CHARACTER_HEIGHT 28.57
+#define DEFAULT_CHARACTER_ZINDEX 99
 #define DEFAULT_CHARACTER_ORIENTATION "right"
 #define STANCE "stance"
 #define JUMPING_MOVEMENT "jumping"

@@ -10,14 +10,22 @@
 #include <SDL_image.h>
 #include "../headers/Log.h"
 
+bool TextureManager::instanceFlag = false;
+TextureManager* TextureManager::t_pInstance = NULL;
+TextureManager* TextureManager::Instance() {
+	if (!instanceFlag) {
+		t_pInstance = new TextureManager();
+		instanceFlag = true;
+		return t_pInstance;
+	} else {
+		return t_pInstance;
+	}
+}
+
 TextureManager::TextureManager() {
 	this->ratioHeight = 0;
 	this->ratioWidth = 0;
 
-}
-
-TextureManager::~TextureManager() {
-	// TODO Auto-generated destructor stub
 }
 
 void TextureManager::resetInstance() {
@@ -29,6 +37,11 @@ void TextureManager::resetInstance() {
 		SDL_DestroyTexture((*itr).second);
 		this->m_textureMap.erase((*itr).first);
 	}
+	this->m_textureMap.clear();
+
+	instanceFlag = false;
+	delete(t_pInstance);
+
 }
 
 bool TextureManager::load(std::string fileName, std::string id,
