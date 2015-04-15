@@ -232,18 +232,56 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 
 vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY, Stage* stage) {
 	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
-	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
 	int stage_win_ypiso = stage->getYGround();
-
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
-	string character_name =
-			characterValue.get(JSON_KEY_NOMBRE, "nombre").asString();
-	int character_width = characterValue.get(JSON_KEY_ANCHO, 700).asInt();
-	int character_height = characterValue.get(JSON_KEY_ALTO, 700).asInt();
-	int character_zindex = characterValue.get(JSON_KEY_ZINDEX, 700).asInt();
-	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION,
-			"right").asString();
-
+	string character_name =	characterValue.get(JSON_KEY_NOMBRE, "").asString();
+	float character_width;
+	float character_height;
+	int character_zindex;
+	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION, "").asString();
+	FILE_LOG(logDEBUG) << "JSON - Input Character name: " << character_name;
+	try {
+		 string strValue = characterValue.get(JSON_KEY_ANCHO, "").asString();
+		 character_width = atof(strValue.c_str());
+		 FILE_LOG(logDEBUG) << "JSON - Input Character width: " << strValue;
+	}catch(std::exception const & e){
+		character_width=0;
+	}
+	try {
+		 string strValue = characterValue.get(JSON_KEY_ALTO, "").asString();
+		 character_height = atof(strValue.c_str());
+		 FILE_LOG(logDEBUG) << "JSON - Input Character height: " << strValue;
+	}catch(std::exception const & e){
+		character_height=0;
+	}
+	try {
+		 string strValue = characterValue.get(JSON_KEY_ZINDEX, "").asString();
+		 character_zindex = atoi(strValue.c_str());
+		 FILE_LOG(logDEBUG) << "JSON - Input Character z-index: " << strValue;
+	}catch(std::exception const & e){
+		character_zindex=0;
+	}
+	if (!(character_name == "subzero")){
+		character_name = "subzero";
+		FILE_LOG(logWARNING) << "JSON - Invalid character name. Set by default to: " << character_name;
+	}
+	if (!character_width>0){
+		character_width = DEFAULT_CHARACTER_WIDTH;
+		FILE_LOG(logDEBUG) << "JSON - Incorrect Character width (must be positive). Set by default: " << DEFAULT_CHARACTER_WIDTH;
+	}
+	if (!character_height>0){
+		character_height = DEFAULT_CHARACTER_HEIGHT;
+		FILE_LOG(logDEBUG) << "JSON - Incorrect Character height (must be positive). Set by default: " << DEFAULT_CHARACTER_HEIGHT;
+	}
+	if (!character_zindex>0){
+		character_zindex = DEFAULT_CHARACTER_ZINDEX;
+		FILE_LOG(logDEBUG) << "JSON - Incorrect Character z-index (0 - 99). Set by default: " << DEFAULT_CHARACTER_ZINDEX;
+	}
+	if (!(character_orientation == "right") && !(character_orientation == "left")){
+		character_orientation = DEFAULT_CHARACTER_ORIENTATION;
+		FILE_LOG(logDEBUG) << "JSON - Incorrect Character orientation (left - right). Set by default: " << DEFAULT_CHARACTER_ORIENTATION;
+	}
+	FILE_LOG(logDEBUG) << "Final values for character one.";
 	FILE_LOG(logDEBUG) << "JSON - Character name: " << character_name;
 	FILE_LOG(logDEBUG) << "JSON - Character width: " << character_width;
 	FILE_LOG(logDEBUG) << "JSON - Character height: " << character_height;
