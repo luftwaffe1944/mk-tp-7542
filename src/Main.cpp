@@ -10,13 +10,13 @@ MKGame* mkGame = 0;
 int main(int argc, char* argv[]) {
 
 	string configFilePath = "";
-	FILELog::reportingLevel() = FILELog::fromString("DEUG");
+	FILELog::reportingLevel() = FILELog::fromString("DEBUG");
 	if (argc > 2){
 		FILELog::reportingLevel() = FILELog::fromString(argv[2]);
 	}else if (argc > 1){
 		configFilePath = argv[1];
 	}
-
+	if (configFilePath == ""){configFilePath="src/stageConfig.json";}
 
 	bool runApp = true;
 	do{

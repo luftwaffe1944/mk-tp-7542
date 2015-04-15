@@ -1,7 +1,7 @@
 {
 	"ventana": {
 		"anchopx": 525,
-		"altopx": 480,
+		"altopx": 400,
 		"ancho": 150
 	},
 	"escenario": {
@@ -35,7 +35,7 @@
 		"nombre": "subzero",
 		"ancho": 20,
 		"alto": 28.57,
-		"zindex": 4,
+		"zindex": 99,
 		"orientacion": "right"
 	}
 }
