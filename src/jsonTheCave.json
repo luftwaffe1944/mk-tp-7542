@@ -11,23 +11,27 @@
 	},
 	"capas": [
 		{
-			"imagen_fondo": "images/arenas/p_3n.png",
+			"imagen_fondo": "images/arenas/default/p_3n.png",
 			"ancho": 206
 		},
 		{
-			"imagen_fondo": "images/arenas/p_2n.png",
+			"imagen_fondo": "images/arenas/default/p_2n.png",
 			"ancho": 237.43
 		},
 		{
-			"imagen_fondo": "images/arenas/p_1n.png",
+			"imagen_fondo": "images/arenas/default/p_1n.png",
 			"ancho": 342.85
+		},
+		{
+			"imagen_fondo": "images/arenas/default/ventanas.png",
+			"ancho": 371.42
 		}
 	],
 	"personaje": {
 		"nombre": "subzero",
 		"ancho": 30,
 		"alto": 50,
-		"zindex": 3,
+		"zindex": 2,
 		"orientacion": "right"
 	}
 }
