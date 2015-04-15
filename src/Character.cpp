@@ -316,8 +316,9 @@ bool Character::isMovingLeft(){
 }
 
 Character::~Character() {
-	// TODO Auto-generated destructor stub
-
+	 for (std::map<string,Sprite*>::iterator it=this->characterSprites.begin(); it!=this->characterSprites.end(); ++it){
+		 it->second->~Sprite();
+	 }
 }
 
 bool fileExists(string s)
