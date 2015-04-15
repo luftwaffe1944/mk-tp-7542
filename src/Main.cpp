@@ -9,14 +9,13 @@ MKGame* mkGame = 0;
 
 int main(int argc, char* argv[]) {
 
-
+	string configFilePath = "";
+	FILELog::reportingLevel() = FILELog::fromString("DEUG");
 	if (argc > 2){
 		FILELog::reportingLevel() = FILELog::fromString(argv[2]);
-	}else{
-		FILELog::reportingLevel() = FILELog::fromString("DEBUG");
+	}else if (argc > 1){
+		configFilePath = argv[1];
 	}
-
-	string configFilePath = argv[1];
 
 
 	bool runApp = true;
