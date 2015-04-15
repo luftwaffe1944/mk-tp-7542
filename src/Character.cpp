@@ -317,7 +317,7 @@ bool Character::isMovingLeft(){
 
 Character::~Character() {
 	 for (std::map<string,Sprite*>::iterator it=this->characterSprites.begin(); it!=this->characterSprites.end(); ++it){
-		 it->second->~Sprite();
+		 delete(it->second);
 	 }
 }
 

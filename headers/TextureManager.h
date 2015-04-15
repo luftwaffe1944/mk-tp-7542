@@ -56,6 +56,13 @@ public:
 	virtual ~TextureManager() {
 		instanceFlag = false;
 //		delete(t_pInstance);
+		map<std::string, SDL_Texture*>::iterator itr;
+
+		for (itr = this->m_textureMap.begin(); itr != this->m_textureMap.end();
+				++itr) {
+			SDL_DestroyTexture(itr->second);
+		}
+	this->m_textureMap.clear();
 	}
 private:
 	static bool instanceFlag;

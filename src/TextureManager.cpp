@@ -29,12 +29,13 @@ TextureManager::TextureManager() {
 }
 
 void TextureManager::resetInstance() {
+	IMG_Quit();
 	//limpiar texturas
-	map<std::string, SDL_Texture*>::const_iterator itr;
+	map<std::string, SDL_Texture*>::iterator itr;
 
 	for (itr = this->m_textureMap.begin(); itr != this->m_textureMap.end();
 			++itr) {
-		SDL_DestroyTexture((*itr).second);
+		SDL_DestroyTexture(itr->second);
 //		this->m_textureMap.erase((*itr).first);
 	}
 	this->m_textureMap.clear();
