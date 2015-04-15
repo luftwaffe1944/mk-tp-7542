@@ -43,7 +43,7 @@ bool Character::load(SDL_Renderer* render) {
 	}
 
 	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, characterPath+WALK_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 11);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 10);
 	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, characterPath+STANCE_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, characterPath+JUMP_SPRITE,
