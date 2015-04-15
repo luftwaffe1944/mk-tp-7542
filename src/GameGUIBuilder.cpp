@@ -106,6 +106,7 @@ Window* jsonGetWindow(Json::Value root) {
 Stage* jsonGetStage(Json::Value root, int win_width_lg) {
 	FILE_LOG(logDEBUG) << "STAGE CONFIGURATION";
 	Json::Value stageValue = root[JSON_KEY_ESCENARIO];
+
 	int stage_width;
 	int stage_height;
 	int stage_ypiso;
@@ -165,6 +166,7 @@ void resizeImage(float* width, float win_width, int stage_width, float widthPiso
 vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Window* window, Stage* stage) {
 	FILE_LOG(logDEBUG) << "LAYERS CONFIGURATION";
 	const Json::Value array = root.get(JSON_KEY_CAPAS,0);
+
 	FILE_LOG(logDEBUG) << "JSON - Number of Layers to process: " << array.size();
 	vector<Layer*> layers;
 	string path;
@@ -239,6 +241,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
 	int stage_win_ypiso = stage->getYGround();
 	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
+
 	string character_name =	characterValue.get(JSON_KEY_NOMBRE, "").asString();
 	float character_width;
 	float character_height;
@@ -328,14 +331,23 @@ GameGUI* GameGUIBuilder::create() {
 		Log<Output2FILE>::logMsgError(fileNotFound);
 		return createDefault();
 	}
-
 	bool parsingSuccessful = reader.parse(gameConfig, root, false);
+
 	if (!parsingSuccessful) {
 		MessageError parseException(ERROR_PARSER_JSON, reader.getFormattedErrorMessages(), LOG_LEVEL_ERROR);
 		Log<Output2FILE>::logMsgError(parseException);
 		return createDefault();
 	}
 
+	try{
+		Json::Value value1 = root[JSON_KEY_PERSONAJE];
+		const Json::Value value2 = root.get(JSON_KEY_CAPAS,0);
+		Json::Value value3 = root[JSON_KEY_ESCENARIO];
+		Json::Value value14 = root[JSON_KEY_VENTANA];
+	}catch(std::exception const & e){
+		FILE_LOG(logDEBUG) << "Corrupt JSON File";
+		return createDefault();
+	}
 	Window* window = jsonGetWindow(root);
 	Stage* stage = jsonGetStage(root,window->width);
 
@@ -355,8 +367,6 @@ GameGUI* GameGUIBuilder::create() {
 
 	gameGUI->setCharacters(characters);
 	gameGUI->setLayers(layers);
-
-
 
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 
