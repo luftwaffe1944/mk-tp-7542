@@ -26,13 +26,13 @@ using namespace std;
 
 //layers
 #define DEFAULT_LAYER1_ID "layer0"
-#define DEFAULT_LAYER1_PATH "images/arenas/p_3n.png"
+#define DEFAULT_LAYER1_PATH "images/arenas/default/p_3n.png"
 #define DEFAULT_LAYER1_WIDTH 206
 #define DEFAULT_LAYER2_ID "layer1"
-#define DEFAULT_LAYER2_PATH "images/arenas/p_2n.png"
+#define DEFAULT_LAYER2_PATH "images/arenas/default/p_2n.png"
 #define DEFAULT_LAYER2_WIDTH 237.43
 #define DEFAULT_LAYER3_ID "layer2"
-#define DEFAULT_LAYER3_PATH "images/arenas/p_1n.png"
+#define DEFAULT_LAYER3_PATH "images/arenas/default/p_1n.png"
 #define DEFAULT_LAYER3_WIDTH 342.85
 
 //characters
