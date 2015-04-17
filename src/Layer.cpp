@@ -19,7 +19,6 @@ Layer::Layer(const LoaderParams* pParams) :
 }
 
 Layer::~Layer() {
-	// TODO Auto-generated destructor stub
 }
 
 void Layer::draw() {

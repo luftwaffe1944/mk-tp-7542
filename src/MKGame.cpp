@@ -6,27 +6,28 @@
  */
 
 #include "../headers/MKGame.h"
-#include "../headers/Log.h"
-#include <algorithm>
 
 using namespace std;
 
 
-MKGame::MKGame() {
-}
+MKGame* MKGame::mk_pInstance = NULL;
 
 MKGame* MKGame::Instance() {
-	static MKGame s_pInstance;
-	return &s_pInstance;
+	if (!mk_pInstance) {
+		mk_pInstance = new MKGame();
+		return mk_pInstance;
+	} else {
+		return mk_pInstance;
+	}
 }
 
 bool MKGame::init(GameGUI* gameGui) {
 	this->setOffReset();
 	this->gameGui = gameGui;
-	// attempt to initialize SDL
+
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		FILE_LOG(logDEBUG) << "SDL init success";
-		// init the window
+
 		Window* gameWindow = this->gameGui->getWindow();
 		m_pWindow = SDL_CreateWindow(gameWindow->title, gameWindow->xpos,
 				gameWindow->ypos, gameWindow->widthPx, gameWindow->heightPx, 0);
@@ -36,36 +37,24 @@ bool MKGame::init(GameGUI* gameGui) {
 			if (m_pRenderer != 0) {
 				FILE_LOG(logDEBUG) << "renderer creation success";
 
-				/* TODO calcular el alto y el ancho, estos valores vienen en el json
-				 * en teoria no se deberia calcular con el query
-				 * SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
-				 */
-
 				vector<SDLObjectGUI*> objects = getObjectList();
-				for (int i = 0; i < objects.size(); i++) {
+				for (unsigned int i = 0; i < objects.size(); i++) {
 					objects[i]->load(m_pRenderer);
 				}
-
-				/*for (int i = 0; i < objects.size(); i++) {
-					objects[i]->draw();
-				}*/
-
-
-
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
-				return false; // renderer init fail
+				return false;
 			}
 		} else {
 			FILE_LOG(logERROR) << "window init fail";
-			return false; // window init fail
+			return false;
 		}
 	} else {
 		FILE_LOG(logERROR) << "SDL init fail";
-		return false; // SDL init fail
+		return false;
 	}
 	FILE_LOG(logDEBUG) << "init success";
-	m_bRunning = true; // everything inited successfully,
+	m_bRunning = true;
 	return true;
 }
 
@@ -76,7 +65,7 @@ bool compareSDLObjectGUI(SDLObjectGUI* a, SDLObjectGUI* b) {
 }
 
 void MKGame::render() {
-	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw color
+	SDL_RenderClear(m_pRenderer);
 
 	vector<SDLObjectGUI*> objects = this->getObjectList();
 	std::stable_sort (objects.begin(), objects.end(), compareSDLObjectGUI);
@@ -85,31 +74,27 @@ void MKGame::render() {
 		(*it)->draw();
 	}
 
-	//TextureManager::Instance()->draw("scorpion", 0, 0, m_destinationRectangle.w, m_destinationRectangle.h, m_pRenderer, SDL_FLIP_NONE);
-	SDL_RenderPresent(m_pRenderer); // draw to the screen
+	SDL_RenderPresent(m_pRenderer);
 
 }
-
-template <typename T>
-void delete_pointer_to(T* const ptr)  {
-	delete ptr;
-}
-
 
 
 void MKGame::clean() {
 	FILE_LOG(logDEBUG) << "cleaning game\n";
-	TextureManager::Instance()->resetInstance();
 	GameGUI::getInstance()->clean();
+
 	std::for_each(objectList.begin(),objectList.end(),delete_pointer_to<SDLObjectGUI>);
 	objectList.clear();
 
 	LayerManager::Instance()->clean();
 
-	SDL_DestroyWindow(m_pWindow);
-	SDL_DestroyRenderer(m_pRenderer);
+	TextureManager::Instance()->resetInstance();
+	SDL_DestroyRenderer(this->m_pRenderer);
+	SDL_DestroyWindow(this->m_pWindow);
+
 	IMG_Quit();
 	SDL_Quit();
+	this->m_bReset = false;
 }
 
 void MKGame::draw() {
@@ -129,14 +114,17 @@ void MKGame::update() {
 
 void MKGame::handleEvents() {
 	SDL_Event event;
+	bool reset = false;
 	while (SDL_PollEvent(&event)) {
 		if (event.type == SDL_QUIT) {
 			MKGame::Instance()->quit();
 		}
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r && event.key.repeat == 0) {
+			reset = true;
+		}
 	}
 	InputControl::Instance()->refreshInputs();
-	InputCommand option = InputControl::Instance()->getControlOption();
-	if (option==RESET){
+	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
 }

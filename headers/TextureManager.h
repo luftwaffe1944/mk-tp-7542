@@ -54,18 +54,17 @@ public:
 	float ratioWidth;
 	float ratioHeight;
 	virtual ~TextureManager() {
-		instanceFlag = false;
-//		delete(t_pInstance);
 		map<std::string, SDL_Texture*>::iterator itr;
-
 		for (itr = this->m_textureMap.begin(); itr != this->m_textureMap.end();
 				++itr) {
 			SDL_DestroyTexture(itr->second);
+			itr->second = NULL;
 		}
-	this->m_textureMap.clear();
+		this->m_textureMap.clear();
+		delete(t_pInstance);
+		t_pInstance = NULL;
 	}
 private:
-	static bool instanceFlag;
 	static TextureManager* t_pInstance;
 	TextureManager();
 	std::map<std::string, SDL_Texture*> m_textureMap;

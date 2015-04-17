@@ -10,12 +10,10 @@
 #include <SDL_image.h>
 #include "../headers/Log.h"
 
-bool TextureManager::instanceFlag = false;
 TextureManager* TextureManager::t_pInstance = NULL;
 TextureManager* TextureManager::Instance() {
-	if (!instanceFlag) {
+	if (!t_pInstance) {
 		t_pInstance = new TextureManager();
-		instanceFlag = true;
 		return t_pInstance;
 	} else {
 		return t_pInstance;
@@ -29,20 +27,14 @@ TextureManager::TextureManager() {
 }
 
 void TextureManager::resetInstance() {
-	IMG_Quit();
-	//limpiar texturas
 	map<std::string, SDL_Texture*>::iterator itr;
 
 	for (itr = this->m_textureMap.begin(); itr != this->m_textureMap.end();
 			++itr) {
 		SDL_DestroyTexture(itr->second);
-//		this->m_textureMap.erase((*itr).first);
+		itr->second = NULL;
 	}
 	this->m_textureMap.clear();
-
-	instanceFlag = false;
-	delete(t_pInstance);
-
 }
 
 bool TextureManager::load(std::string fileName, std::string id,
@@ -54,12 +46,12 @@ bool TextureManager::load(std::string fileName, std::string id,
 	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer,
 			pTempSurface);
 	SDL_FreeSurface(pTempSurface);
-// everything went ok, add the texture to our list
+
 	if (pTexture != 0) {
 		m_textureMap[id] = pTexture;
 		return true;
 	}
-// reaching here means something went wrong
+
 	return false;
 }
 

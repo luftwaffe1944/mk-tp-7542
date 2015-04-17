@@ -7,13 +7,11 @@
 
 #include "../headers/LayerManager.h"
 
-bool LayerManager::instanceFlag = false;
 LayerManager* LayerManager::lm_pInstance = NULL;
 
 LayerManager* LayerManager::Instance() {
-	if (!instanceFlag) {
+	if (!lm_pInstance) {
 		lm_pInstance = new LayerManager();
-		instanceFlag = true;
 		return lm_pInstance;
 	} else {
 		return lm_pInstance;
@@ -21,17 +19,14 @@ LayerManager* LayerManager::Instance() {
 }
 
 void LayerManager::clean() {
-	instanceFlag = false;
-//	delete(lm_pInstance);
+
 }
 
 LayerManager::LayerManager() {
 	this->offSceneFrontalLayer = 0;
 	this->speedFirstLayer = 0;
-	this->layers = GameGUI::getInstance()->getLayers();
-	this->characters = GameGUI::getInstance()->getCharacters();
-	this->stage = GameGUI::getInstance()->getStage();
-	this->window = GameGUI::getInstance()->getWindow();
+	this->stage = NULL;
+	this->window = NULL;
 
 }
 
@@ -75,6 +70,11 @@ void LayerManager::centerLayers( Layer* layer) {
 }
 
 void LayerManager::init() {
+
+	this->layers = GameGUI::getInstance()->getLayers();
+	this->characters = GameGUI::getInstance()->getCharacters();
+	this->stage = GameGUI::getInstance()->getStage();
+	this->window = GameGUI::getInstance()->getWindow();
 
 	setOffSceneFrontalLayer();
 	setSpeedFrontalLayer();

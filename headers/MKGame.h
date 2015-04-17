@@ -18,33 +18,53 @@
 #include <iostream>
 #include <vector>
 #include "LayerManager.h"
+#include <algorithm>
+#include "Log.h"
 
 using namespace std;
+
+template <typename T>
+void delete_pointer_to(T* const ptr)  {
+	delete ptr;
+}
 
 class MKGame {
 
 private:
-	MKGame();
-	// create the s_pInstance member variable
-//	SDLObjectGUI* playerOne;
+	static MKGame* mk_pInstance;
+	bool m_bRunning;
+	bool m_bReset;
 	vector<SDLObjectGUI*> objectList;
 	GameGUI* gameGui;
 	InputControl keyboardControl;
-	bool m_bRunning;
-	bool m_bReset;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
-	SDL_Texture* m_pTexture; // the new SDL_Texture variable
-	SDL_Rect m_sourceRectangle; // the first rectangle
-	SDL_Rect m_destinationRectangle; // another rectangle
+
+	MKGame() {
+		m_bRunning = false;
+		m_bReset = false;
+		m_pWindow = NULL;
+		m_pRenderer = NULL;
+		gameGui = NULL;
+	}
 
 public:
-	// create the public instance function
 	static MKGame* Instance();
-	// make the constructor private
 	~MKGame() {
+		std::for_each(objectList.begin(),objectList.end(),delete_pointer_to<SDLObjectGUI>);
+		objectList.clear();
+
+		LayerManager::Instance()->clean();
+
+		TextureManager::Instance()->resetInstance();
+		SDL_DestroyRenderer(this->m_pRenderer);
+		SDL_DestroyWindow(this->m_pWindow);
+
+		IMG_Quit();
+		SDL_Quit();
+		if (mk_pInstance != NULL) delete mk_pInstance;
+		mk_pInstance = NULL;
 	}
-	// simply set the running variable to true
 	bool init(GameGUI* gameGui);
 	bool init(const char* title, int xpos, int ypos, int width, int height,
 			int flags);
@@ -58,7 +78,7 @@ public:
 	void clean();
 	void quit();
 	GameGUI* getGameGUI();
-	// a function to access the private running variable
+
 	bool running() {
 		return m_bRunning;
 	}

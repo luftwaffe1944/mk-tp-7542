@@ -19,18 +19,16 @@
 class LayerManager {
 public:
 	static LayerManager* Instance();
-
 	void init();
 	void refresh();
 	virtual ~LayerManager() {
-		delete(lm_pInstance);
-		instanceFlag = false;
+		if (lm_pInstance != NULL) delete lm_pInstance;
+		lm_pInstance = NULL;
 	}
 
 	void clean();
 
 private:
-	static bool instanceFlag;
 	static LayerManager* lm_pInstance;
 	vector<Layer*> layers;
 	vector<Character*> characters;

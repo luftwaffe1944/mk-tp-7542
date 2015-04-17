@@ -319,6 +319,7 @@ Character::~Character() {
 	 for (std::map<string,Sprite*>::iterator it=this->characterSprites.begin(); it!=this->characterSprites.end(); ++it){
 		 delete(it->second);
 	 }
+	 this->characterSprites.clear();
 }
 
 bool fileExists(string s)

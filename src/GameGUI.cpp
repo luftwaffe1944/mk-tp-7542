@@ -7,12 +7,10 @@
 
 #include "../headers/GameGUI.h"
 
-bool GameGUI::instanceFlag = false;
 GameGUI* GameGUI::gameGui = NULL;
 GameGUI* GameGUI::getInstance() {
-	if (!instanceFlag) {
+	if (!gameGui) {
 		gameGui = new GameGUI();
-		instanceFlag = true;
 		return gameGui;
 	} else {
 		return gameGui;
@@ -20,22 +18,8 @@ GameGUI* GameGUI::getInstance() {
 }
 
 void GameGUI::clean(){
-	delete window;
-	delete stage;
-
-	vector<Character*>::const_iterator itr;
-
-//	for(itr = this->characters.begin(); itr != this->characters.end(); ++itr){
-//		delete (*itr);
-//	}
-
-
-	this->characters.erase(characters.begin(), characters.end());
-	this->characters.clear();
-	this->layers.erase(layers.begin(), layers.end());
-	this->layers.clear();
-	delete(gameGui);
-	this->instanceFlag = false;
+	delete this->stage;
+	delete this->window;
 }
 
 void GameGUI::setWindow(Window* window) {

@@ -8,8 +8,9 @@
 #include "../headers/Stage.h"
 
 Stage::Stage() {
-	// TODO Auto-generated constructor stub
-
+	this->width = 0;
+	this->height = 0;
+	this->yGround = 0;
 }
 
 Stage::Stage(int width, int height, float yfloor) {
@@ -26,11 +27,9 @@ int Stage::getWidth() {
 	return this->width;
 }
 
-Stage::~Stage() {
-	// TODO Auto-generated destructor stub
-}
-
 float Stage::getYGround(){
 	return this->yGround;
 }
 
+Stage::~Stage() {
+}

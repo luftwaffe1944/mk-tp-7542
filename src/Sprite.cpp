@@ -8,7 +8,11 @@
 #include "../headers/Sprite.h"
 
 Sprite::Sprite() {
-	// TODO Auto-generated constructor stub
+    this->spriteId = "";
+    this->spriteWidth = 0;
+    this->spriteHeight = 0;
+    this->currentFrame = 0;
+    this->framesAmount = 0;
 
 }
 
@@ -60,6 +64,5 @@ void Sprite::refresh(){
 }
 
 Sprite::~Sprite() {
-	// TODO Auto-generated destructor stub
 }
 

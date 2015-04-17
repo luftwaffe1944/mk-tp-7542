@@ -12,6 +12,8 @@
 #include "Character.h"
 #include "Layer.h"
 #include <vector>
+#include "Utilities.h"
+#include <iostream>
 using namespace std;
 
 class GameGUI {
@@ -19,22 +21,20 @@ class GameGUI {
 public:
 
 private:
-	static bool instanceFlag;
 	static GameGUI *gameGui;
-	GameGUI() {
-		//private constructor
-	}
 	Stage* stage;
 	Window* window;
 	vector<Character*> characters;
 	vector<Layer*> layers;
 
+	GameGUI() {
+		stage = NULL;
+		window = NULL;
+	}
+
 public:
 	static GameGUI* getInstance();
 	void clean();
-	~GameGUI() {
-		instanceFlag = false;
-	}
 	void setStage(Stage* stage);
 	Stage* getStage();
 	void setWindow(Window* window);
@@ -45,6 +45,10 @@ public:
 	vector<Layer*> getLayers();
 	void addCharacter(Character* character);
 	void addLayer(Layer* layer);
+	~GameGUI() {
+		if (gameGui != NULL) delete gameGui;
+		gameGui = NULL;
+	}
 };
 
 #endif /* GAMEGUI_H_ */
