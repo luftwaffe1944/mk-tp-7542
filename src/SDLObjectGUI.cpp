@@ -10,6 +10,7 @@
 
 SDLObjectGUI::SDLObjectGUI(const LoaderParams* pParams) :
 		ObjectGUI(pParams) {
+	this->pParams = pParams;
 	positionX = pParams->getPosX();
 	positionY = pParams->getPosY();
 	width = pParams->getWidth();

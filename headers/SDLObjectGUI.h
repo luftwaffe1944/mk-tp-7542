@@ -31,6 +31,7 @@ public:
 	int getZIndex();
 
 protected:
+	const LoaderParams* pParams;
 	string imagePath;
 	float positionX;
 	float positionY;

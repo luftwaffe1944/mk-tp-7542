@@ -19,6 +19,7 @@ Layer::Layer(const LoaderParams* pParams) :
 }
 
 Layer::~Layer() {
+	delete this->pParams;
 }
 
 void Layer::draw() {
@@ -34,6 +35,7 @@ void Layer::update() {
 	}
 }
 void Layer::clean() {
+	delete this->pParams;
 }
 
 void Layer::setLayerOffScene(float windowsWidth) {
