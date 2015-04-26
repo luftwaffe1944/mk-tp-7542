@@ -64,6 +64,7 @@ public:
 	void clearMovementsFlags();
 	bool isMovingRight();
 	bool isMovingLeft();
+	std::string getName();
 };
 
 #endif /* CHARACTER_H_ */

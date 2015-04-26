@@ -346,3 +346,7 @@ bool validateSpritesForSelectedCharacter(string characterPath) {
 	}
 	return true;
 }
+
+std::string Character::getName(){
+	return this->name;
+}

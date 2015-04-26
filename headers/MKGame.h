@@ -20,6 +20,8 @@
 #include "LayerManager.h"
 #include <algorithm>
 #include "Log.h"
+#include "GameInfo.h"
+#include "SDL_ttf.h"
 
 using namespace std;
 

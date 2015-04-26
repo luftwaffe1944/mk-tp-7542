@@ -53,6 +53,12 @@ bool MKGame::init(GameGUI* gameGui) {
 		FILE_LOG(logERROR) << "SDL init fail";
 		return false;
 	}
+
+    if( TTF_Init() == -1 )
+    {
+        printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+    }
+
 	FILE_LOG(logDEBUG) << "init success";
 	m_bRunning = true;
 	return true;
@@ -66,7 +72,6 @@ bool compareSDLObjectGUI(SDLObjectGUI* a, SDLObjectGUI* b) {
 
 void MKGame::render() {
 	SDL_RenderClear(m_pRenderer);
-
 	vector<SDLObjectGUI*> objects = this->getObjectList();
 	std::stable_sort (objects.begin(), objects.end(), compareSDLObjectGUI);
 
@@ -75,7 +80,6 @@ void MKGame::render() {
 	}
 
 	SDL_RenderPresent(m_pRenderer);
-
 }
 
 
