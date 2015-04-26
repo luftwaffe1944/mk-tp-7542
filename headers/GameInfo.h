@@ -32,8 +32,10 @@ private:
 	float barWidth;
 	SDL_Color frontColor;
 	SDL_Color bgColor;
-	void HealthBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor, SDL_Renderer* pRender);
-
+	float percent;
+	bool initAnimation;
+	void HealthBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor, SDL_Renderer* pRender, int player);
+	void animation();
 };
 
 #endif /* GAMEINFO_H_ */

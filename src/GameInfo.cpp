@@ -10,10 +10,12 @@
 GameInfo::GameInfo(const LoaderParams* pParams, vector<std::string> playerName) :
 		SDLObjectGUI(pParams) {
 	this->playerName = playerName;
-	frontColor = {204, 0, 0};
-	bgColor = {0, 204, 0};
+	bgColor = {204, 0, 0};
+	frontColor = {0, 204, 0};
 	barWidth = ((pParams->getWidth() * 0.8) - (WINDOW_MARGIN * 2)) / 2;
+	this->percent = 0.0f;
 	TTF_Init();
+	this->initAnimation = true;
 }
 
 bool GameInfo::load() {
@@ -45,7 +47,7 @@ bool GameInfo::load(SDL_Renderer* r) {
 }
 
 
-void GameInfo::HealthBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor, SDL_Renderer* pRender) {
+void GameInfo::HealthBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor, SDL_Renderer* pRender, int player) {
 	   Percent = Percent > 1.f ? 1.f : Percent < 0.f ? 0.f : Percent;
 	   SDL_Color old;
 	   SDL_GetRenderDrawColor(pRender, &old.r, &old.g, &old.g, &old.a);
@@ -54,7 +56,13 @@ void GameInfo::HealthBar(int x, int y, int w, int h, float Percent, SDL_Color FG
 	   SDL_RenderFillRect(pRender, &bgrect);
 	   SDL_SetRenderDrawColor(pRender, FGColor.r, FGColor.g, FGColor.b, FGColor.a);
 	   int pw = (int)((float)w * Percent);
-	   int px = x + (w - pw);
+	   int px;
+	   if (player == 0) {
+		   px = x;
+	   } else {
+		   px = x + (w - pw);
+	   }
+
 	   SDL_Rect fgrect = { px, y, pw, h };
 	   SDL_RenderFillRect(pRender, &fgrect);
        SDL_SetRenderDrawColor( pRender, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -62,8 +70,16 @@ void GameInfo::HealthBar(int x, int y, int w, int h, float Percent, SDL_Color FG
 	   SDL_SetRenderDrawColor(pRender, 0x00, 0x00, 0x00, 0xFF );
 }
 
-void GameInfo::update() {
+void GameInfo::animation() {
+	if (this->percent < 1.0f && this->initAnimation) {
+		this->percent += 0.05f;
+	} else {
+		this->initAnimation = false;
+	}
+}
 
+void GameInfo::update() {
+	animation();
 }
 
 void GameInfo::clean() {
@@ -76,11 +92,11 @@ void GameInfo::draw() {
 
 	//jugador 1
 	TextureManager::Instance()->draw("name"+this->playerName[0], WINDOW_MARGIN,0,barWidth/2, 10, render);
-	HealthBar(positionX * ratioX ,35,barWidth * ratioX ,30, 0.6, frontColor, bgColor, render);
+	HealthBar(positionX * ratioX ,35,barWidth * ratioX ,30, percent, frontColor, bgColor, render, 0);
 
 	//jugador 2
 	//TextureManager::Instance()->draw("name"+this->playerName[0], WINDOW_MARGIN,0,barWidth/2, 10, render);
-	HealthBar((this->width - WINDOW_MARGIN - barWidth) * ratioX, 35, barWidth * ratioX, 30, 0.6, frontColor, bgColor, render);
+	HealthBar((this->width - WINDOW_MARGIN - barWidth) * ratioX, 35, barWidth * ratioX, 30, percent, frontColor, bgColor, render, 1);
 }
 
 
