@@ -58,7 +58,7 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_SUFFIX, spriteJump));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_DIAGONAL_SUFFIX, spriteJumpDiagonal));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_SUFFIX, spriteDuck));
-
+	return true;
 }
 
 void Character::render(SDL_Renderer* render) {
