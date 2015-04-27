@@ -3,6 +3,8 @@
 #include "../headers/Log.h"
 #include "../headers/GameGUIBuilder.h"
 #include "../headers/GameGUI.h"
+//#include "../headers/Timer.h"
+#include "SDL.h"
 
 // our Game object
 MKGame* mkGame = 0;
@@ -22,11 +24,34 @@ int main(int argc, char* argv[]) {
 		FILELog::reportingLevel() = FILELog::fromString("DEBUG");
 	}
 
+	//The frames per second timer
+	//Timer fpsTimer;
+
+	//The frames per second cap timer
+	//Timer capTimer;
+
+	int countedFrames = 0;
+	//fpsTimer.start();
+
 	bool runApp = true;
 	do{
+		//Start cap timer
+		//capTimer.start();
+
 		GameGUIBuilder gameGUIBuilder(configFilePath);
 		GameGUI* gameGUI = gameGUIBuilder.create();
 		LayerManager::Instance()->init();
+
+		//Calculate and correct fps
+		/*float avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
+		if (avgFPS > 2000000)
+		{
+			avgFPS = 0;
+		}
+		*/
+		//Set text to be rendered
+		//timeText.str("");
+		//timeText << "Average Frames Per Second (With Cap) " << avgFPS;
 
 		if (MKGame::Instance()->init(gameGUI)) {
 			std::cout << "game init success" << endl;
