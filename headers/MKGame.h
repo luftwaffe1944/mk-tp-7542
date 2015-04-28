@@ -63,6 +63,7 @@ public:
 		SDL_DestroyWindow(this->m_pWindow);
 
 		IMG_Quit();
+		TTF_Quit();
 		SDL_Quit();
 		if (mk_pInstance != NULL) delete mk_pInstance;
 		mk_pInstance = NULL;

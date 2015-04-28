@@ -54,9 +54,8 @@ bool MKGame::init(GameGUI* gameGui) {
 		return false;
 	}
 
-    if( TTF_Init() == -1 )
-    {
-        printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+    if( TTF_Init() == -1 ) {
+    	FILE_LOG(logERROR) << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError();
     }
 
 	FILE_LOG(logDEBUG) << "init success";
@@ -97,6 +96,7 @@ void MKGame::clean() {
 	SDL_DestroyWindow(this->m_pWindow);
 
 	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 	this->m_bReset = false;
 }

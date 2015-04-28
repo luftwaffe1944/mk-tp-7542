@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 				MKGame::Instance()->handleEvents();
 				MKGame::Instance()->update();
 				MKGame::Instance()->render();
-				SDL_Delay(10);
+				SDL_Delay(5);
 			}
 			if (!(MKGame::Instance()->running())){
 				runApp = false;
