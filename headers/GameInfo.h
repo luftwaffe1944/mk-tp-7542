@@ -13,6 +13,7 @@
 #include "Constants.h"
 #include "SDLObjectGUI.h"
 #include "MKGame.h"
+#include "Timer.h"
 #include <algorithm>
 using namespace std;
 
@@ -34,8 +35,14 @@ private:
 	SDL_Color bgColor;
 	float percent;
 	bool initAnimation;
+	Timer timer;
+	float msTime;
+	std::string idTimer;
 	void HealthBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor, SDL_Renderer* pRender, int player);
 	void animation();
+	void time();
+	void loadTextTimer();
+
 };
 
 #endif /* GAMEINFO_H_ */

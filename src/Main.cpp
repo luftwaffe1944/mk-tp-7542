@@ -3,6 +3,7 @@
 #include "../headers/Log.h"
 #include "../headers/GameGUIBuilder.h"
 #include "../headers/GameGUI.h"
+#include "../headers/Timer.h"
 
 // our Game object
 MKGame* mkGame = 0;
@@ -21,6 +22,15 @@ int main(int argc, char* argv[]) {
 		configFilePath = argv[1];
 		FILELog::reportingLevel() = FILELog::fromString("DEBUG");
 	}
+
+    //The frames per second timer
+    Timer fpsTimer;
+
+	std::stringstream timeText;
+
+	//Start counting frames per second
+	int countedFrames = 0;
+	//fpsTimer.start();
 
 	bool runApp = true;
 	do{

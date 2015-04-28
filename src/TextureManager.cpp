@@ -124,7 +124,7 @@ void TextureManager::setAlpha(std::string id, Uint8 alpha) {
 	SDL_SetTextureAlphaMod(m_textureMap[id], alpha);
 }
 
-bool TextureManager::loadFromRenderedText( std::string textureText, SDL_Color textColor, TTF_Font *gFont, SDL_Renderer *gRenderer )
+bool TextureManager::loadFromRenderedText( std::string id, std::string textureText, SDL_Color textColor, TTF_Font *gFont, SDL_Renderer *gRenderer )
 {
     SDL_Texture* mTexture = NULL;
 	SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
@@ -139,10 +139,21 @@ bool TextureManager::loadFromRenderedText( std::string textureText, SDL_Color te
     }
 
 	if (mTexture != 0) {
-		m_textureMap["name"+textureText] = mTexture;
+		m_textureMap[id + textureText] = mTexture;
 		return true;
 	}
 
+	return false;
+}
+
+bool TextureManager::unload( std::string id )
+{
+	SDL_Texture* mTexture = m_textureMap[id];
+
+	if (mTexture != 0) {
+		SDL_DestroyTexture(m_textureMap[id]);
+		return true;
+	}
 	return false;
 }
 

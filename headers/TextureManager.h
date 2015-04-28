@@ -54,7 +54,9 @@ public:
 	//Set alpha modulation
 	void setAlpha(std::string id, Uint8 alpha );
 
-	bool loadFromRenderedText( std::string textureText, SDL_Color textColor, TTF_Font *gFont, SDL_Renderer *gRenderer );
+	bool loadFromRenderedText( std::string id, std::string textureText, SDL_Color textColor, TTF_Font *gFont, SDL_Renderer *gRenderer );
+
+	bool unload( std::string id );
 
 	float ratioWidth;
 	float ratioHeight;
