@@ -11,6 +11,10 @@
 //Default GameGUI measures
 #include <string>
 using namespace std;
+//screen
+const int SCREEN_FPS = 60;
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+
 //window
 #define MAX_WINDOW_WIDTH_PX 1366
 #define MAX_WINDOW_HEIGHT_PX 768
