@@ -46,6 +46,7 @@ void GameInfo::loadTextTimer() {
     timeText << (int)((msTime - timer.getTicks()) / 1000.f);
     this->idTimer = timeText.str();
 	TextureManager::Instance()->loadFromRenderedText( this->textureID, idTimer, timerColor, font, render);
+	TTF_CloseFont(font);
 }
 
 bool GameInfo::load(SDL_Renderer* r) {
@@ -58,11 +59,13 @@ bool GameInfo::load(SDL_Renderer* r) {
 	SDL_Color playerColor = {255, 255, 255};
 	//jugador 1
 	std::transform(this->playerName[0].begin(), this->playerName[0].end(), this->playerName[0].begin(), ::toupper);
-	return (TextureManager::Instance()->loadFromRenderedText( this->textureID, playerName[0], playerColor, font, render));
+	TextureManager::Instance()->loadFromRenderedText( this->textureID, playerName[0], playerColor, font, render);
 
 	//jugador 2
 	//std::transform(this->playerName[1].begin(), this->playerName[1].end(), this->playerName[1].begin(), ::toupper);
 	//return (TextureManager::Instance()->loadFromRenderedText(playerName[1], textColor, font, render));
+	TTF_CloseFont(font);
+	return true;
 }
 
 

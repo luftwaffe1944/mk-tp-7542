@@ -25,7 +25,11 @@ public:
 	virtual void clean();
 	void init();
 	void refresh();
-	virtual ~GameInfo() {}
+	virtual ~GameInfo() {
+		delete this->pParams;
+		this->timer.stop();
+		TTF_Quit();
+	}
 	virtual bool load();
 	virtual bool load(SDL_Renderer* r);
 private:

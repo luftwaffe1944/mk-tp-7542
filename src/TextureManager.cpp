@@ -152,6 +152,7 @@ bool TextureManager::unload( std::string id )
 
 	if (mTexture != 0) {
 		SDL_DestroyTexture(m_textureMap[id]);
+		this->m_textureMap.erase(id);
 		return true;
 	}
 	return false;
