@@ -39193,3 +39193,1490 @@
 - 19:35:26.229 DEBUG: init success
 - 19:35:28.437 DEBUG: cleaning game
 
+- 19:36:13.627 DEBUG: CONFIGURATION INITIALIZED
+- 19:36:13.627 DEBUG: WINDOW CONFIGURATION
+- 19:36:13.627 DEBUG: JSON - Window width: 525 px
+- 19:36:13.627 DEBUG: JSON - Window height: 400 px
+- 19:36:13.627 DEBUG: JSON - Window width: 150
+- 19:36:13.627 DEBUG: STAGE CONFIGURATION
+- 19:36:13.627 DEBUG: JSON - Stage width: 400
+- 19:36:13.627 DEBUG: JSON - Stage height: 137
+- 19:36:13.627 DEBUG: JSON - Stage ypiso: 125
+- 19:36:13.627 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 19:36:13.627 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 19:36:13.627 DEBUG: LAYERS CONFIGURATION
+- 19:36:13.627 DEBUG: JSON - Number of Layers to process: 5
+- 19:36:13.627 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 19:36:13.627 DEBUG: JSON - Layer 0 ID: layer0
+- 19:36:13.627 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 19:36:13.627 DEBUG: JSON - Layer 0 width: 113.71
+- 19:36:13.627 DEBUG: JSON - Layer 0 width recalculado: 150
+- 19:36:13.627 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 19:36:13.627 DEBUG: JSON - Layer 1 ID: layer1
+- 19:36:13.627 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 19:36:13.627 DEBUG: JSON - Layer 1 width: 171.43
+- 19:36:13.627 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 19:36:13.627 DEBUG: JSON - Layer 2 input width: 228.28
+- 19:36:13.627 DEBUG: JSON - Layer 2 ID: layer2
+- 19:36:13.627 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 19:36:13.627 DEBUG: JSON - Layer 2 width: 228.28
+- 19:36:13.627 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 19:36:13.627 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 19:36:13.627 DEBUG: JSON - Layer 3 ID: layer3
+- 19:36:13.627 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 19:36:13.627 DEBUG: JSON - Layer 3 width: 286.57
+- 19:36:13.627 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 19:36:13.627 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 19:36:13.627 DEBUG: JSON - Layer 4 ID: layer4
+- 19:36:13.627 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 19:36:13.627 DEBUG: JSON - Layer 4 width: 338.85
+- 19:36:13.627 DEBUG: JSON - Layer 4 width recalculado: 400
+- 19:36:13.627 DEBUG: JSON - Number of Layers successfully process: 5
+- 19:36:13.627 DEBUG: CHARACTERS CONFIGURATION
+- 19:36:13.627 DEBUG: JSON - Input Character name: subzero
+- 19:36:13.627 DEBUG: JSON - Input Character width: 20
+- 19:36:13.627 DEBUG: JSON - Input Character height: 28.57
+- 19:36:13.628 DEBUG: JSON - Input Character z-index: 99
+- 19:36:13.628 DEBUG: Final values for character one.
+- 19:36:13.628 DEBUG: JSON - Character name: subzero
+- 19:36:13.628 DEBUG: JSON - Character width: 20
+- 19:36:13.628 DEBUG: JSON - Character height: 28.57
+- 19:36:13.628 DEBUG: JSON - Character z-index: 99
+- 19:36:13.628 DEBUG: JSON - Character orientation: right
+- 19:36:13.628 DEBUG: CONFIGURATION FINISHED
+- 19:36:13.628 DEBUG: Layer layer4 layeroffScene 125
+- 19:36:13.628 DEBUG: Layer layer4 speed: 3
+- 19:36:13.628 DEBUG: Layer layer3 layeroffScene 94
+- 19:36:13.628 DEBUG: Layer layer3 speed: 2.256
+- 19:36:13.628 DEBUG: Layer layer2 layeroffScene 59.5
+- 19:36:13.628 DEBUG: Layer layer2 speed: 1.428
+- 19:36:13.628 DEBUG: Layer layer1 layeroffScene 26
+- 19:36:13.628 DEBUG: Layer layer1 speed: 0.624
+- 19:36:13.628 DEBUG: Layer layer0 layeroffScene 0
+- 19:36:13.628 DEBUG: Layer layer0 speed: 0
+- 19:36:13.783 DEBUG: SDL init success
+- 19:36:13.808 DEBUG: window creation success
+- 19:36:13.881 DEBUG: renderer creation success
+- 19:36:13.938 DEBUG: init success
+- 19:36:18.305 DEBUG: cleaning game
+
+- 19:56:27.830 DEBUG: CONFIGURATION INITIALIZED
+- 19:56:27.908 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 19:56:27.912 DEBUG: Entire configuration set by default
+- 19:56:27.915 DEBUG: JSON - Window width: 640 px
+- 19:56:27.920 DEBUG: JSON - Window height: 480 px
+- 19:56:27.922 DEBUG: JSON - Window width: 150
+- 19:56:27.924 DEBUG: JSON - Stage width: 400
+- 19:56:27.926 DEBUG: JSON - Stage height: 137
+- 19:56:27.928 DEBUG: JSON - Stage ypiso: 125
+- 19:56:27.930 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 19:56:27.952 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 19:56:28.021 DEBUG: Layer built by default
+- 19:56:28.024 DEBUG: Layer ID: layer0
+- 19:56:28.025 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 19:56:28.027 DEBUG: Layer1 width: 206
+- 19:56:28.029 DEBUG: Layer ID: layer1
+- 19:56:28.031 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 19:56:28.032 DEBUG: Layer2 width: 237.43
+- 19:56:28.042 DEBUG: Layer ID: layer2
+- 19:56:28.044 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 19:56:28.046 DEBUG: Layer3 width: 342.85
+- 19:56:28.107 DEBUG: Configuration process finished
+- 19:56:28.125 DEBUG: Layer layer2 layeroffScene 257.5
+- 19:56:28.129 DEBUG: Layer layer2 speed: 3
+- 19:56:28.133 DEBUG: Layer layer1 layeroffScene 155.5
+- 19:56:28.134 DEBUG: Layer layer1 speed: 1.81165
+- 19:56:28.135 DEBUG: Layer layer0 layeroffScene 125
+- 19:56:28.137 DEBUG: Layer layer0 speed: 1.45631
+- 19:56:31.122 DEBUG: SDL init success
+- 19:56:31.174 DEBUG: window creation success
+- 19:56:33.658 DEBUG: renderer creation success
+- 19:56:34.706 DEBUG: init success
+- 19:56:37.369 DEBUG: cleaning game
+
+- 19:59:22.572 DEBUG: CONFIGURATION INITIALIZED
+- 19:59:22.652 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 19:59:22.656 DEBUG: Entire configuration set by default
+- 19:59:22.658 DEBUG: JSON - Window width: 640 px
+- 19:59:22.664 DEBUG: JSON - Window height: 480 px
+- 19:59:22.665 DEBUG: JSON - Window width: 150
+- 19:59:22.667 DEBUG: JSON - Stage width: 400
+- 19:59:22.669 DEBUG: JSON - Stage height: 137
+- 19:59:22.671 DEBUG: JSON - Stage ypiso: 125
+- 19:59:22.673 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 19:59:22.693 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 19:59:22.763 DEBUG: Layer built by default
+- 19:59:22.764 DEBUG: Layer ID: layer0
+- 19:59:22.766 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 19:59:22.768 DEBUG: Layer1 width: 206
+- 19:59:22.770 DEBUG: Layer ID: layer1
+- 19:59:22.771 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 19:59:22.773 DEBUG: Layer2 width: 237.43
+- 19:59:22.783 DEBUG: Layer ID: layer2
+- 19:59:22.784 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 19:59:22.786 DEBUG: Layer3 width: 342.85
+- 19:59:22.848 DEBUG: Configuration process finished
+- 19:59:22.866 DEBUG: Layer layer2 layeroffScene 257.5
+- 19:59:22.870 DEBUG: Layer layer2 speed: 3
+- 19:59:22.874 DEBUG: Layer layer1 layeroffScene 155.5
+- 19:59:22.875 DEBUG: Layer layer1 speed: 1.81165
+- 19:59:22.876 DEBUG: Layer layer0 layeroffScene 125
+- 19:59:22.878 DEBUG: Layer layer0 speed: 1.45631
+- 19:59:25.426 DEBUG: SDL init success
+- 19:59:25.488 DEBUG: window creation success
+- 19:59:27.961 DEBUG: renderer creation success
+- 19:59:28.989 DEBUG: init success
+- 19:59:30.760 DEBUG: cleaning game
+
+- 20:00:49.856 DEBUG: CONFIGURATION INITIALIZED
+- 20:00:49.940 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 20:00:49.944 DEBUG: Entire configuration set by default
+- 20:00:49.947 DEBUG: JSON - Window width: 640 px
+- 20:00:49.952 DEBUG: JSON - Window height: 480 px
+- 20:00:49.954 DEBUG: JSON - Window width: 150
+- 20:00:49.957 DEBUG: JSON - Stage width: 400
+- 20:00:49.958 DEBUG: JSON - Stage height: 137
+- 20:00:49.960 DEBUG: JSON - Stage ypiso: 125
+- 20:00:49.962 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 20:00:49.984 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 20:00:50.056 DEBUG: Layer built by default
+- 20:00:50.058 DEBUG: Layer ID: layer0
+- 20:00:50.060 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 20:00:50.061 DEBUG: Layer1 width: 206
+- 20:00:50.063 DEBUG: Layer ID: layer1
+- 20:00:50.065 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 20:00:50.067 DEBUG: Layer2 width: 237.43
+- 20:00:50.077 DEBUG: Layer ID: layer2
+- 20:00:50.078 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 20:00:50.080 DEBUG: Layer3 width: 342.85
+- 20:00:50.142 DEBUG: Configuration process finished
+- 20:00:50.160 DEBUG: Layer layer2 layeroffScene 257.5
+- 20:00:50.164 DEBUG: Layer layer2 speed: 3
+- 20:00:50.169 DEBUG: Layer layer1 layeroffScene 155.5
+- 20:00:50.169 DEBUG: Layer layer1 speed: 1.81165
+- 20:00:50.171 DEBUG: Layer layer0 layeroffScene 125
+- 20:00:50.173 DEBUG: Layer layer0 speed: 1.45631
+- 20:00:52.761 DEBUG: SDL init success
+- 20:00:52.817 DEBUG: window creation success
+- 20:00:55.296 DEBUG: renderer creation success
+- 20:00:56.317 DEBUG: init success
+- 20:00:58.658 DEBUG: cleaning game
+
+- 20:02:24.869 DEBUG: CONFIGURATION INITIALIZED
+- 20:02:24.950 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 20:02:24.954 DEBUG: Entire configuration set by default
+- 20:02:24.957 DEBUG: JSON - Window width: 640 px
+- 20:02:24.962 DEBUG: JSON - Window height: 480 px
+- 20:02:24.964 DEBUG: JSON - Window width: 150
+- 20:02:24.966 DEBUG: JSON - Stage width: 400
+- 20:02:24.968 DEBUG: JSON - Stage height: 137
+- 20:02:24.969 DEBUG: JSON - Stage ypiso: 125
+- 20:02:24.972 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 20:02:24.993 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 20:02:25.063 DEBUG: Layer built by default
+- 20:02:25.066 DEBUG: Layer ID: layer0
+- 20:02:25.067 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 20:02:25.069 DEBUG: Layer1 width: 206
+- 20:02:25.071 DEBUG: Layer ID: layer1
+- 20:02:25.073 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 20:02:25.075 DEBUG: Layer2 width: 237.43
+- 20:02:25.085 DEBUG: Layer ID: layer2
+- 20:02:25.086 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 20:02:25.088 DEBUG: Layer3 width: 342.85
+- 20:02:25.149 DEBUG: Configuration process finished
+- 20:02:25.167 DEBUG: Layer layer2 layeroffScene 257.5
+- 20:02:25.171 DEBUG: Layer layer2 speed: 3
+- 20:02:25.176 DEBUG: Layer layer1 layeroffScene 155.5
+- 20:02:25.176 DEBUG: Layer layer1 speed: 1.81165
+- 20:02:25.178 DEBUG: Layer layer0 layeroffScene 125
+- 20:02:25.179 DEBUG: Layer layer0 speed: 1.45631
+- 20:02:27.690 DEBUG: SDL init success
+- 20:02:27.745 DEBUG: window creation success
+- 20:02:30.226 DEBUG: renderer creation success
+- 20:02:31.242 DEBUG: init success
+- 20:02:35.142 DEBUG: cleaning game
+
+- 20:06:13.837 DEBUG: CONFIGURATION INITIALIZED
+- 20:06:13.837 DEBUG: WINDOW CONFIGURATION
+- 20:06:13.837 DEBUG: JSON - Window width: 525 px
+- 20:06:13.837 DEBUG: JSON - Window height: 400 px
+- 20:06:13.837 DEBUG: JSON - Window width: 150
+- 20:06:13.837 DEBUG: STAGE CONFIGURATION
+- 20:06:13.837 DEBUG: JSON - Stage width: 400
+- 20:06:13.837 DEBUG: JSON - Stage height: 137
+- 20:06:13.837 DEBUG: JSON - Stage ypiso: 125
+- 20:06:13.837 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 20:06:13.837 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 20:06:13.837 DEBUG: LAYERS CONFIGURATION
+- 20:06:13.837 DEBUG: JSON - Number of Layers to process: 5
+- 20:06:13.837 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 20:06:13.837 DEBUG: JSON - Layer 0 ID: layer0
+- 20:06:13.837 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 20:06:13.837 DEBUG: JSON - Layer 0 width: 113.71
+- 20:06:13.837 DEBUG: JSON - Layer 0 width recalculado: 150
+- 20:06:13.837 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 20:06:13.837 DEBUG: JSON - Layer 1 ID: layer1
+- 20:06:13.837 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 20:06:13.837 DEBUG: JSON - Layer 1 width: 171.43
+- 20:06:13.837 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 20:06:13.838 DEBUG: JSON - Layer 2 input width: 228.28
+- 20:06:13.838 DEBUG: JSON - Layer 2 ID: layer2
+- 20:06:13.838 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 20:06:13.838 DEBUG: JSON - Layer 2 width: 228.28
+- 20:06:13.838 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 20:06:13.838 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 20:06:13.838 DEBUG: JSON - Layer 3 ID: layer3
+- 20:06:13.838 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 20:06:13.838 DEBUG: JSON - Layer 3 width: 286.57
+- 20:06:13.838 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 20:06:13.838 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 20:06:13.838 DEBUG: JSON - Layer 4 ID: layer4
+- 20:06:13.838 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 20:06:13.838 DEBUG: JSON - Layer 4 width: 338.85
+- 20:06:13.838 DEBUG: JSON - Layer 4 width recalculado: 400
+- 20:06:13.838 DEBUG: JSON - Number of Layers successfully process: 5
+- 20:06:13.838 DEBUG: CHARACTERS CONFIGURATION
+- 20:06:13.838 DEBUG: JSON - Input Character name: subzero
+- 20:06:13.838 DEBUG: JSON - Input Character width: 20
+- 20:06:13.838 DEBUG: JSON - Input Character height: 28.57
+- 20:06:13.838 DEBUG: JSON - Input Character z-index: 99
+- 20:06:13.838 DEBUG: Final values for character one.
+- 20:06:13.838 DEBUG: JSON - Character name: subzero
+- 20:06:13.838 DEBUG: JSON - Character width: 20
+- 20:06:13.838 DEBUG: JSON - Character height: 28.57
+- 20:06:13.838 DEBUG: JSON - Character z-index: 99
+- 20:06:13.838 DEBUG: JSON - Character orientation: right
+- 20:06:13.838 DEBUG: CONFIGURATION FINISHED
+- 20:06:13.838 DEBUG: Layer layer4 layeroffScene 125
+- 20:06:13.838 DEBUG: Layer layer4 speed: 3
+- 20:06:13.838 DEBUG: Layer layer3 layeroffScene 94
+- 20:06:13.838 DEBUG: Layer layer3 speed: 2.256
+- 20:06:13.838 DEBUG: Layer layer2 layeroffScene 59.5
+- 20:06:13.838 DEBUG: Layer layer2 speed: 1.428
+- 20:06:13.838 DEBUG: Layer layer1 layeroffScene 26
+- 20:06:13.838 DEBUG: Layer layer1 speed: 0.624
+- 20:06:13.838 DEBUG: Layer layer0 layeroffScene 0
+- 20:06:13.838 DEBUG: Layer layer0 speed: 0
+- 20:06:13.977 DEBUG: SDL init success
+- 20:06:13.999 DEBUG: window creation success
+- 20:06:14.062 DEBUG: renderer creation success
+- 20:06:14.122 DEBUG: init success
+- 20:06:15.004 DEBUG: cleaning game
+
+- 20:06:21.718 DEBUG: CONFIGURATION INITIALIZED
+- 20:06:21.800 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 20:06:21.803 DEBUG: Entire configuration set by default
+- 20:06:21.806 DEBUG: JSON - Window width: 640 px
+- 20:06:21.811 DEBUG: JSON - Window height: 480 px
+- 20:06:21.812 DEBUG: JSON - Window width: 150
+- 20:06:21.814 DEBUG: JSON - Stage width: 400
+- 20:06:21.816 DEBUG: JSON - Stage height: 137
+- 20:06:21.818 DEBUG: JSON - Stage ypiso: 125
+- 20:06:21.821 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 20:06:21.843 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 20:06:21.914 DEBUG: Layer built by default
+- 20:06:21.916 DEBUG: Layer ID: layer0
+- 20:06:21.918 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 20:06:21.920 DEBUG: Layer1 width: 206
+- 20:06:21.921 DEBUG: Layer ID: layer1
+- 20:06:21.923 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 20:06:21.925 DEBUG: Layer2 width: 237.43
+- 20:06:21.934 DEBUG: Layer ID: layer2
+- 20:06:21.936 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 20:06:21.938 DEBUG: Layer3 width: 342.85
+- 20:06:21.000 DEBUG: Configuration process finished
+- 20:06:22.018 DEBUG: Layer layer2 layeroffScene 257.5
+- 20:06:22.022 DEBUG: Layer layer2 speed: 3
+- 20:06:22.026 DEBUG: Layer layer1 layeroffScene 155.5
+- 20:06:22.027 DEBUG: Layer layer1 speed: 1.81165
+- 20:06:22.028 DEBUG: Layer layer0 layeroffScene 125
+- 20:06:22.030 DEBUG: Layer layer0 speed: 1.45631
+- 20:06:24.597 DEBUG: SDL init success
+- 20:06:24.641 DEBUG: window creation success
+- 20:06:27.130 DEBUG: renderer creation success
+- 20:06:28.183 DEBUG: init success
+- 20:06:30.663 DEBUG: cleaning game
+
+- 20:07:01.176 DEBUG: CONFIGURATION INITIALIZED
+- 20:07:01.177 DEBUG: WINDOW CONFIGURATION
+- 20:07:01.177 DEBUG: JSON - Window width: 525 px
+- 20:07:01.177 DEBUG: JSON - Window height: 400 px
+- 20:07:01.177 DEBUG: JSON - Window width: 150
+- 20:07:01.177 DEBUG: STAGE CONFIGURATION
+- 20:07:01.177 DEBUG: JSON - Stage width: 400
+- 20:07:01.177 DEBUG: JSON - Stage height: 137
+- 20:07:01.177 DEBUG: JSON - Stage ypiso: 125
+- 20:07:01.177 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 20:07:01.177 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 20:07:01.177 DEBUG: LAYERS CONFIGURATION
+- 20:07:01.177 DEBUG: JSON - Number of Layers to process: 5
+- 20:07:01.177 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 20:07:01.177 DEBUG: JSON - Layer 0 ID: layer0
+- 20:07:01.177 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 20:07:01.177 DEBUG: JSON - Layer 0 width: 113.71
+- 20:07:01.177 DEBUG: JSON - Layer 0 width recalculado: 150
+- 20:07:01.177 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 20:07:01.177 DEBUG: JSON - Layer 1 ID: layer1
+- 20:07:01.177 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 20:07:01.177 DEBUG: JSON - Layer 1 width: 171.43
+- 20:07:01.177 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 20:07:01.177 DEBUG: JSON - Layer 2 input width: 228.28
+- 20:07:01.177 DEBUG: JSON - Layer 2 ID: layer2
+- 20:07:01.177 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 20:07:01.177 DEBUG: JSON - Layer 2 width: 228.28
+- 20:07:01.177 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 20:07:01.177 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 20:07:01.177 DEBUG: JSON - Layer 3 ID: layer3
+- 20:07:01.177 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 20:07:01.177 DEBUG: JSON - Layer 3 width: 286.57
+- 20:07:01.177 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 20:07:01.177 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 20:07:01.177 DEBUG: JSON - Layer 4 ID: layer4
+- 20:07:01.177 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 20:07:01.177 DEBUG: JSON - Layer 4 width: 338.85
+- 20:07:01.177 DEBUG: JSON - Layer 4 width recalculado: 400
+- 20:07:01.177 DEBUG: JSON - Number of Layers successfully process: 5
+- 20:07:01.178 DEBUG: CHARACTERS CONFIGURATION
+- 20:07:01.178 DEBUG: JSON - Input Character name: subzero
+- 20:07:01.178 DEBUG: JSON - Input Character width: 20
+- 20:07:01.178 DEBUG: JSON - Input Character height: 28.57
+- 20:07:01.178 DEBUG: JSON - Input Character z-index: 99
+- 20:07:01.178 DEBUG: Final values for character one.
+- 20:07:01.178 DEBUG: JSON - Character name: subzero
+- 20:07:01.178 DEBUG: JSON - Character width: 20
+- 20:07:01.178 DEBUG: JSON - Character height: 28.57
+- 20:07:01.178 DEBUG: JSON - Character z-index: 99
+- 20:07:01.178 DEBUG: JSON - Character orientation: right
+- 20:07:01.178 DEBUG: CONFIGURATION FINISHED
+- 20:07:01.178 DEBUG: Layer layer4 layeroffScene 125
+- 20:07:01.178 DEBUG: Layer layer4 speed: 3
+- 20:07:01.178 DEBUG: Layer layer3 layeroffScene 94
+- 20:07:01.178 DEBUG: Layer layer3 speed: 2.256
+- 20:07:01.178 DEBUG: Layer layer2 layeroffScene 59.5
+- 20:07:01.178 DEBUG: Layer layer2 speed: 1.428
+- 20:07:01.178 DEBUG: Layer layer1 layeroffScene 26
+- 20:07:01.178 DEBUG: Layer layer1 speed: 0.624
+- 20:07:01.178 DEBUG: Layer layer0 layeroffScene 0
+- 20:07:01.178 DEBUG: Layer layer0 speed: 0
+- 20:07:01.339 DEBUG: SDL init success
+- 20:07:01.362 DEBUG: window creation success
+- 20:07:01.432 DEBUG: renderer creation success
+- 20:07:01.493 DEBUG: init success
+- 20:07:58.058 DEBUG: cleaning game
+
+- 20:09:00.509 DEBUG: CONFIGURATION INITIALIZED
+- 20:09:00.509 DEBUG: WINDOW CONFIGURATION
+- 20:09:00.509 DEBUG: JSON - Window width: 525 px
+- 20:09:00.509 DEBUG: JSON - Window height: 400 px
+- 20:09:00.509 DEBUG: JSON - Window width: 150
+- 20:09:00.510 DEBUG: STAGE CONFIGURATION
+- 20:09:00.510 DEBUG: JSON - Stage width: 400
+- 20:09:00.510 DEBUG: JSON - Stage height: 137
+- 20:09:00.510 DEBUG: JSON - Stage ypiso: 125
+- 20:09:00.510 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 20:09:00.510 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 20:09:00.510 DEBUG: LAYERS CONFIGURATION
+- 20:09:00.510 DEBUG: JSON - Number of Layers to process: 5
+- 20:09:00.510 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 20:09:00.510 DEBUG: JSON - Layer 0 ID: layer0
+- 20:09:00.510 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 20:09:00.510 DEBUG: JSON - Layer 0 width: 113.71
+- 20:09:00.510 DEBUG: JSON - Layer 0 width recalculado: 150
+- 20:09:00.510 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 20:09:00.510 DEBUG: JSON - Layer 1 ID: layer1
+- 20:09:00.510 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 20:09:00.510 DEBUG: JSON - Layer 1 width: 171.43
+- 20:09:00.510 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 20:09:00.510 DEBUG: JSON - Layer 2 input width: 228.28
+- 20:09:00.510 DEBUG: JSON - Layer 2 ID: layer2
+- 20:09:00.510 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 20:09:00.510 DEBUG: JSON - Layer 2 width: 228.28
+- 20:09:00.510 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 20:09:00.510 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 20:09:00.510 DEBUG: JSON - Layer 3 ID: layer3
+- 20:09:00.510 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 20:09:00.510 DEBUG: JSON - Layer 3 width: 286.57
+- 20:09:00.510 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 20:09:00.510 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 20:09:00.510 DEBUG: JSON - Layer 4 ID: layer4
+- 20:09:00.510 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 20:09:00.510 DEBUG: JSON - Layer 4 width: 338.85
+- 20:09:00.510 DEBUG: JSON - Layer 4 width recalculado: 400
+- 20:09:00.510 DEBUG: JSON - Number of Layers successfully process: 5
+- 20:09:00.510 DEBUG: CHARACTERS CONFIGURATION
+- 20:09:00.510 DEBUG: JSON - Input Character name: subzero
+- 20:09:00.510 DEBUG: JSON - Input Character width: 20
+- 20:09:00.510 DEBUG: JSON - Input Character height: 28.57
+- 20:09:00.510 DEBUG: JSON - Input Character z-index: 99
+- 20:09:00.510 DEBUG: Final values for character one.
+- 20:09:00.510 DEBUG: JSON - Character name: subzero
+- 20:09:00.510 DEBUG: JSON - Character width: 20
+- 20:09:00.510 DEBUG: JSON - Character height: 28.57
+- 20:09:00.510 DEBUG: JSON - Character z-index: 99
+- 20:09:00.510 DEBUG: JSON - Character orientation: right
+- 20:09:00.510 DEBUG: CONFIGURATION FINISHED
+- 20:09:00.510 DEBUG: Layer layer4 layeroffScene 125
+- 20:09:00.510 DEBUG: Layer layer4 speed: 3
+- 20:09:00.510 DEBUG: Layer layer3 layeroffScene 94
+- 20:09:00.510 DEBUG: Layer layer3 speed: 2.256
+- 20:09:00.510 DEBUG: Layer layer2 layeroffScene 59.5
+- 20:09:00.510 DEBUG: Layer layer2 speed: 1.428
+- 20:09:00.510 DEBUG: Layer layer1 layeroffScene 26
+- 20:09:00.510 DEBUG: Layer layer1 speed: 0.624
+- 20:09:00.510 DEBUG: Layer layer0 layeroffScene 0
+- 20:09:00.510 DEBUG: Layer layer0 speed: 0
+- 20:09:00.666 DEBUG: SDL init success
+- 20:09:00.687 DEBUG: window creation success
+- 20:09:00.769 DEBUG: renderer creation success
+- 20:09:00.828 DEBUG: init success
+- 20:09:04.710 DEBUG: cleaning game
+
+- 20:10:10.478 DEBUG: CONFIGURATION INITIALIZED
+- 20:10:10.557 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 20:10:10.561 DEBUG: Entire configuration set by default
+- 20:10:10.564 DEBUG: JSON - Window width: 640 px
+- 20:10:10.569 DEBUG: JSON - Window height: 480 px
+- 20:10:10.571 DEBUG: JSON - Window width: 150
+- 20:10:10.573 DEBUG: JSON - Stage width: 400
+- 20:10:10.575 DEBUG: JSON - Stage height: 137
+- 20:10:10.576 DEBUG: JSON - Stage ypiso: 125
+- 20:10:10.579 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 20:10:10.600 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 20:10:10.671 DEBUG: Layer built by default
+- 20:10:10.673 DEBUG: Layer ID: layer0
+- 20:10:10.674 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 20:10:10.676 DEBUG: Layer1 width: 206
+- 20:10:10.678 DEBUG: Layer ID: layer1
+- 20:10:10.679 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 20:10:10.681 DEBUG: Layer2 width: 237.43
+- 20:10:10.691 DEBUG: Layer ID: layer2
+- 20:10:10.693 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 20:10:10.694 DEBUG: Layer3 width: 342.85
+- 20:10:10.754 DEBUG: Configuration process finished
+- 20:10:10.772 DEBUG: Layer layer2 layeroffScene 257.5
+- 20:10:10.776 DEBUG: Layer layer2 speed: 3
+- 20:10:10.780 DEBUG: Layer layer1 layeroffScene 155.5
+- 20:10:10.781 DEBUG: Layer layer1 speed: 1.81165
+- 20:10:10.783 DEBUG: Layer layer0 layeroffScene 125
+- 20:10:10.784 DEBUG: Layer layer0 speed: 1.45631
+- 20:10:13.443 DEBUG: SDL init success
+- 20:10:13.497 DEBUG: window creation success
+- 20:10:15.993 DEBUG: renderer creation success
+- 20:10:17.049 DEBUG: init success
+- 20:10:19.850 DEBUG: cleaning game
+
+- 20:12:52.875 DEBUG: CONFIGURATION INITIALIZED
+- 20:12:52.875 DEBUG: WINDOW CONFIGURATION
+- 20:12:52.875 DEBUG: JSON - Window width: 525 px
+- 20:12:52.875 DEBUG: JSON - Window height: 400 px
+- 20:12:52.875 DEBUG: JSON - Window width: 150
+- 20:12:52.875 DEBUG: STAGE CONFIGURATION
+- 20:12:52.875 DEBUG: JSON - Stage width: 400
+- 20:12:52.875 DEBUG: JSON - Stage height: 137
+- 20:12:52.875 DEBUG: JSON - Stage ypiso: 125
+- 20:12:52.875 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 20:12:52.875 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 20:12:52.875 DEBUG: LAYERS CONFIGURATION
+- 20:12:52.875 DEBUG: JSON - Number of Layers to process: 5
+- 20:12:52.875 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 20:12:52.875 DEBUG: JSON - Layer 0 ID: layer0
+- 20:12:52.875 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 20:12:52.875 DEBUG: JSON - Layer 0 width: 113.71
+- 20:12:52.875 DEBUG: JSON - Layer 0 width recalculado: 150
+- 20:12:52.875 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 20:12:52.875 DEBUG: JSON - Layer 1 ID: layer1
+- 20:12:52.875 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 20:12:52.875 DEBUG: JSON - Layer 1 width: 171.43
+- 20:12:52.875 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 20:12:52.875 DEBUG: JSON - Layer 2 input width: 228.28
+- 20:12:52.875 DEBUG: JSON - Layer 2 ID: layer2
+- 20:12:52.875 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 20:12:52.876 DEBUG: JSON - Layer 2 width: 228.28
+- 20:12:52.876 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 20:12:52.876 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 20:12:52.876 DEBUG: JSON - Layer 3 ID: layer3
+- 20:12:52.876 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 20:12:52.876 DEBUG: JSON - Layer 3 width: 286.57
+- 20:12:52.876 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 20:12:52.876 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 20:12:52.876 DEBUG: JSON - Layer 4 ID: layer4
+- 20:12:52.876 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 20:12:52.876 DEBUG: JSON - Layer 4 width: 338.85
+- 20:12:52.876 DEBUG: JSON - Layer 4 width recalculado: 400
+- 20:12:52.876 DEBUG: JSON - Number of Layers successfully process: 5
+- 20:12:52.876 DEBUG: CHARACTERS CONFIGURATION
+- 20:12:52.876 DEBUG: JSON - Input Character name: subzero
+- 20:12:52.876 DEBUG: JSON - Input Character width: 20
+- 20:12:52.876 DEBUG: JSON - Input Character height: 28.57
+- 20:12:52.876 DEBUG: JSON - Input Character z-index: 99
+- 20:12:52.876 DEBUG: Final values for character one.
+- 20:12:52.876 DEBUG: JSON - Character name: subzero
+- 20:12:52.876 DEBUG: JSON - Character width: 20
+- 20:12:52.876 DEBUG: JSON - Character height: 28.57
+- 20:12:52.876 DEBUG: JSON - Character z-index: 99
+- 20:12:52.876 DEBUG: JSON - Character orientation: right
+- 20:12:52.876 DEBUG: CONFIGURATION FINISHED
+- 20:12:52.876 DEBUG: Layer layer4 layeroffScene 125
+- 20:12:52.876 DEBUG: Layer layer4 speed: 3
+- 20:12:52.876 DEBUG: Layer layer3 layeroffScene 94
+- 20:12:52.876 DEBUG: Layer layer3 speed: 2.256
+- 20:12:52.876 DEBUG: Layer layer2 layeroffScene 59.5
+- 20:12:52.876 DEBUG: Layer layer2 speed: 1.428
+- 20:12:52.876 DEBUG: Layer layer1 layeroffScene 26
+- 20:12:52.876 DEBUG: Layer layer1 speed: 0.624
+- 20:12:52.876 DEBUG: Layer layer0 layeroffScene 0
+- 20:12:52.876 DEBUG: Layer layer0 speed: 0
+- 20:12:53.031 DEBUG: SDL init success
+- 20:12:53.055 DEBUG: window creation success
+- 20:12:53.128 DEBUG: renderer creation success
+- 20:12:53.177 DEBUG: init success
+- 20:12:55.782 DEBUG: cleaning game
+
+- 20:13:06.139 DEBUG: CONFIGURATION INITIALIZED
+- 20:13:06.224 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 20:13:06.229 DEBUG: Entire configuration set by default
+- 20:13:06.232 DEBUG: JSON - Window width: 640 px
+- 20:13:06.238 DEBUG: JSON - Window height: 480 px
+- 20:13:06.239 DEBUG: JSON - Window width: 150
+- 20:13:06.241 DEBUG: JSON - Stage width: 400
+- 20:13:06.243 DEBUG: JSON - Stage height: 137
+- 20:13:06.245 DEBUG: JSON - Stage ypiso: 125
+- 20:13:06.247 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 20:13:06.269 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 20:13:06.337 DEBUG: Layer built by default
+- 20:13:06.339 DEBUG: Layer ID: layer0
+- 20:13:06.340 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 20:13:06.342 DEBUG: Layer1 width: 206
+- 20:13:06.344 DEBUG: Layer ID: layer1
+- 20:13:06.345 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 20:13:06.347 DEBUG: Layer2 width: 237.43
+- 20:13:06.357 DEBUG: Layer ID: layer2
+- 20:13:06.359 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 20:13:06.360 DEBUG: Layer3 width: 342.85
+- 20:13:06.419 DEBUG: Configuration process finished
+- 20:13:06.437 DEBUG: Layer layer2 layeroffScene 257.5
+- 20:13:06.441 DEBUG: Layer layer2 speed: 3
+- 20:13:06.446 DEBUG: Layer layer1 layeroffScene 155.5
+- 20:13:06.446 DEBUG: Layer layer1 speed: 1.81165
+- 20:13:06.448 DEBUG: Layer layer0 layeroffScene 125
+- 20:13:06.449 DEBUG: Layer layer0 speed: 1.45631
+- 20:13:08.972 DEBUG: SDL init success
+- 20:13:09.024 DEBUG: window creation success
+- 20:13:11.490 DEBUG: renderer creation success
+- 20:13:12.543 DEBUG: init success
+- 20:13:45.595 DEBUG: cleaning game
+
+- 20:15:32.497 DEBUG: CONFIGURATION INITIALIZED
+- 20:15:32.497 DEBUG: WINDOW CONFIGURATION
+- 20:15:32.497 DEBUG: JSON - Window width: 525 px
+- 20:15:32.497 DEBUG: JSON - Window height: 400 px
+- 20:15:32.497 DEBUG: JSON - Window width: 150
+- 20:15:32.497 DEBUG: STAGE CONFIGURATION
+- 20:15:32.497 DEBUG: JSON - Stage width: 400
+- 20:15:32.497 DEBUG: JSON - Stage height: 137
+- 20:15:32.497 DEBUG: JSON - Stage ypiso: 125
+- 20:15:32.497 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 20:15:32.497 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 20:15:32.497 DEBUG: LAYERS CONFIGURATION
+- 20:15:32.497 DEBUG: JSON - Number of Layers to process: 5
+- 20:15:32.497 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 20:15:32.497 DEBUG: JSON - Layer 0 ID: layer0
+- 20:15:32.498 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 20:15:32.498 DEBUG: JSON - Layer 0 width: 113.71
+- 20:15:32.498 DEBUG: JSON - Layer 0 width recalculado: 150
+- 20:15:32.498 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 20:15:32.498 DEBUG: JSON - Layer 1 ID: layer1
+- 20:15:32.498 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 20:15:32.498 DEBUG: JSON - Layer 1 width: 171.43
+- 20:15:32.498 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 20:15:32.498 DEBUG: JSON - Layer 2 input width: 228.28
+- 20:15:32.498 DEBUG: JSON - Layer 2 ID: layer2
+- 20:15:32.498 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 20:15:32.498 DEBUG: JSON - Layer 2 width: 228.28
+- 20:15:32.498 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 20:15:32.498 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 20:15:32.498 DEBUG: JSON - Layer 3 ID: layer3
+- 20:15:32.498 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 20:15:32.498 DEBUG: JSON - Layer 3 width: 286.57
+- 20:15:32.498 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 20:15:32.498 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 20:15:32.498 DEBUG: JSON - Layer 4 ID: layer4
+- 20:15:32.498 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 20:15:32.498 DEBUG: JSON - Layer 4 width: 338.85
+- 20:15:32.498 DEBUG: JSON - Layer 4 width recalculado: 400
+- 20:15:32.498 DEBUG: JSON - Number of Layers successfully process: 5
+- 20:15:32.498 DEBUG: CHARACTERS CONFIGURATION
+- 20:15:32.498 DEBUG: JSON - Input Character name: subzero
+- 20:15:32.498 DEBUG: JSON - Input Character width: 20
+- 20:15:32.498 DEBUG: JSON - Input Character height: 28.57
+- 20:15:32.498 DEBUG: JSON - Input Character z-index: 99
+- 20:15:32.498 DEBUG: Final values for character one.
+- 20:15:32.498 DEBUG: JSON - Character name: subzero
+- 20:15:32.498 DEBUG: JSON - Character width: 20
+- 20:15:32.498 DEBUG: JSON - Character height: 28.57
+- 20:15:32.498 DEBUG: JSON - Character z-index: 99
+- 20:15:32.498 DEBUG: JSON - Character orientation: right
+- 20:15:32.498 DEBUG: CONFIGURATION FINISHED
+- 20:15:32.498 DEBUG: Layer layer4 layeroffScene 125
+- 20:15:32.498 DEBUG: Layer layer4 speed: 3
+- 20:15:32.498 DEBUG: Layer layer3 layeroffScene 94
+- 20:15:32.498 DEBUG: Layer layer3 speed: 2.256
+- 20:15:32.498 DEBUG: Layer layer2 layeroffScene 59.5
+- 20:15:32.498 DEBUG: Layer layer2 speed: 1.428
+- 20:15:32.498 DEBUG: Layer layer1 layeroffScene 26
+- 20:15:32.498 DEBUG: Layer layer1 speed: 0.624
+- 20:15:32.498 DEBUG: Layer layer0 layeroffScene 0
+- 20:15:32.498 DEBUG: Layer layer0 speed: 0
+- 20:15:32.648 DEBUG: SDL init success
+- 20:15:32.663 DEBUG: window creation success
+- 20:15:32.737 DEBUG: renderer creation success
+- 20:15:32.792 DEBUG: init success
+- 20:15:43.329 DEBUG: cleaning game
+
+- 20:15:53.627 DEBUG: CONFIGURATION INITIALIZED
+- 20:15:53.708 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 20:15:53.712 DEBUG: Entire configuration set by default
+- 20:15:53.714 DEBUG: JSON - Window width: 640 px
+- 20:15:53.720 DEBUG: JSON - Window height: 480 px
+- 20:15:53.722 DEBUG: JSON - Window width: 150
+- 20:15:53.724 DEBUG: JSON - Stage width: 400
+- 20:15:53.725 DEBUG: JSON - Stage height: 137
+- 20:15:53.727 DEBUG: JSON - Stage ypiso: 125
+- 20:15:53.730 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 20:15:53.752 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 20:15:53.821 DEBUG: Layer built by default
+- 20:15:53.839 DEBUG: Layer ID: layer0
+- 20:15:53.840 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 20:15:53.842 DEBUG: Layer1 width: 206
+- 20:15:53.844 DEBUG: Layer ID: layer1
+- 20:15:53.846 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 20:15:53.848 DEBUG: Layer2 width: 237.43
+- 20:15:53.858 DEBUG: Layer ID: layer2
+- 20:15:53.859 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 20:15:53.861 DEBUG: Layer3 width: 342.85
+- 20:15:53.922 DEBUG: Configuration process finished
+- 20:15:53.940 DEBUG: Layer layer2 layeroffScene 257.5
+- 20:15:53.943 DEBUG: Layer layer2 speed: 3
+- 20:15:53.948 DEBUG: Layer layer1 layeroffScene 155.5
+- 20:15:53.948 DEBUG: Layer layer1 speed: 1.81165
+- 20:15:53.950 DEBUG: Layer layer0 layeroffScene 125
+- 20:15:53.951 DEBUG: Layer layer0 speed: 1.45631
+- 20:15:56.674 DEBUG: SDL init success
+- 20:15:56.734 DEBUG: window creation success
+- 20:15:59.228 DEBUG: renderer creation success
+- 20:16:00.273 DEBUG: init success
+- 20:16:21.227 DEBUG: cleaning game
+
+- 20:19:47.791 DEBUG: CONFIGURATION INITIALIZED
+- 20:19:47.792 DEBUG: WINDOW CONFIGURATION
+- 20:19:47.792 DEBUG: JSON - Window width: 525 px
+- 20:19:47.792 DEBUG: JSON - Window height: 400 px
+- 20:19:47.792 DEBUG: JSON - Window width: 150
+- 20:19:47.792 DEBUG: STAGE CONFIGURATION
+- 20:19:47.792 DEBUG: JSON - Stage width: 400
+- 20:19:47.792 DEBUG: JSON - Stage height: 137
+- 20:19:47.792 DEBUG: JSON - Stage ypiso: 125
+- 20:19:47.792 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 20:19:47.792 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 20:19:47.792 DEBUG: LAYERS CONFIGURATION
+- 20:19:47.792 DEBUG: JSON - Number of Layers to process: 5
+- 20:19:47.792 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 20:19:47.792 DEBUG: JSON - Layer 0 ID: layer0
+- 20:19:47.792 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 20:19:47.792 DEBUG: JSON - Layer 0 width: 113.71
+- 20:19:47.792 DEBUG: JSON - Layer 0 width recalculado: 150
+- 20:19:47.792 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 20:19:47.792 DEBUG: JSON - Layer 1 ID: layer1
+- 20:19:47.792 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 20:19:47.792 DEBUG: JSON - Layer 1 width: 171.43
+- 20:19:47.792 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 20:19:47.792 DEBUG: JSON - Layer 2 input width: 228.28
+- 20:19:47.792 DEBUG: JSON - Layer 2 ID: layer2
+- 20:19:47.792 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 20:19:47.792 DEBUG: JSON - Layer 2 width: 228.28
+- 20:19:47.792 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 20:19:47.792 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 20:19:47.792 DEBUG: JSON - Layer 3 ID: layer3
+- 20:19:47.792 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 20:19:47.792 DEBUG: JSON - Layer 3 width: 286.57
+- 20:19:47.792 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 20:19:47.792 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 20:19:47.792 DEBUG: JSON - Layer 4 ID: layer4
+- 20:19:47.792 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 20:19:47.792 DEBUG: JSON - Layer 4 width: 338.85
+- 20:19:47.792 DEBUG: JSON - Layer 4 width recalculado: 400
+- 20:19:47.792 DEBUG: JSON - Number of Layers successfully process: 5
+- 20:19:47.792 DEBUG: CHARACTERS CONFIGURATION
+- 20:19:47.792 DEBUG: JSON - Input Character name: subzero
+- 20:19:47.792 DEBUG: JSON - Input Character width: 20
+- 20:19:47.792 DEBUG: JSON - Input Character height: 28.57
+- 20:19:47.792 DEBUG: JSON - Input Character z-index: 99
+- 20:19:47.793 DEBUG: Final values for character one.
+- 20:19:47.793 DEBUG: JSON - Character name: subzero
+- 20:19:47.793 DEBUG: JSON - Character width: 20
+- 20:19:47.793 DEBUG: JSON - Character height: 28.57
+- 20:19:47.793 DEBUG: JSON - Character z-index: 99
+- 20:19:47.793 DEBUG: JSON - Character orientation: right
+- 20:19:47.793 DEBUG: CONFIGURATION FINISHED
+- 20:19:47.793 DEBUG: Layer layer4 layeroffScene 125
+- 20:19:47.793 DEBUG: Layer layer4 speed: 3
+- 20:19:47.793 DEBUG: Layer layer3 layeroffScene 94
+- 20:19:47.793 DEBUG: Layer layer3 speed: 2.256
+- 20:19:47.793 DEBUG: Layer layer2 layeroffScene 59.5
+- 20:19:47.793 DEBUG: Layer layer2 speed: 1.428
+- 20:19:47.793 DEBUG: Layer layer1 layeroffScene 26
+- 20:19:47.793 DEBUG: Layer layer1 speed: 0.624
+- 20:19:47.793 DEBUG: Layer layer0 layeroffScene 0
+- 20:19:47.793 DEBUG: Layer layer0 speed: 0
+- 20:19:47.945 DEBUG: SDL init success
+- 20:19:47.974 DEBUG: window creation success
+- 20:19:48.039 DEBUG: renderer creation success
+- 20:19:48.092 DEBUG: init success
+- 20:20:06.347 DEBUG: cleaning game
+
+- 20:20:14.805 DEBUG: CONFIGURATION INITIALIZED
+- 20:20:14.886 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 20:20:14.889 DEBUG: Entire configuration set by default
+- 20:20:14.892 DEBUG: JSON - Window width: 640 px
+- 20:20:14.897 DEBUG: JSON - Window height: 480 px
+- 20:20:14.899 DEBUG: JSON - Window width: 150
+- 20:20:14.901 DEBUG: JSON - Stage width: 400
+- 20:20:14.902 DEBUG: JSON - Stage height: 137
+- 20:20:14.904 DEBUG: JSON - Stage ypiso: 125
+- 20:20:14.906 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 20:20:14.927 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 20:20:14.996 DEBUG: Layer built by default
+- 20:20:14.997 DEBUG: Layer ID: layer0
+- 20:20:14.999 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 20:20:14.000 DEBUG: Layer1 width: 206
+- 20:20:14.003 DEBUG: Layer ID: layer1
+- 20:20:14.004 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 20:20:15.006 DEBUG: Layer2 width: 237.43
+- 20:20:15.015 DEBUG: Layer ID: layer2
+- 20:20:15.017 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 20:20:15.019 DEBUG: Layer3 width: 342.85
+- 20:20:15.081 DEBUG: Configuration process finished
+- 20:20:15.099 DEBUG: Layer layer2 layeroffScene 257.5
+- 20:20:15.102 DEBUG: Layer layer2 speed: 3
+- 20:20:15.107 DEBUG: Layer layer1 layeroffScene 155.5
+- 20:20:15.108 DEBUG: Layer layer1 speed: 1.81165
+- 20:20:15.109 DEBUG: Layer layer0 layeroffScene 125
+- 20:20:15.110 DEBUG: Layer layer0 speed: 1.45631
+- 20:20:17.648 DEBUG: SDL init success
+- 20:20:17.692 DEBUG: window creation success
+- 20:20:20.170 DEBUG: renderer creation success
+- 20:20:21.228 DEBUG: init success
+- 20:20:30.855 DEBUG: cleaning game
+
+- 20:20:48.504 DEBUG: CONFIGURATION INITIALIZED
+- 20:20:48.504 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 20:20:48.504 DEBUG: Entire configuration set by default
+- 20:20:48.504 DEBUG: JSON - Window width: 640 px
+- 20:20:48.504 DEBUG: JSON - Window height: 480 px
+- 20:20:48.504 DEBUG: JSON - Window width: 150
+- 20:20:48.504 DEBUG: JSON - Stage width: 400
+- 20:20:48.504 DEBUG: JSON - Stage height: 137
+- 20:20:48.504 DEBUG: JSON - Stage ypiso: 125
+- 20:20:48.504 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 20:20:48.504 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 20:20:48.504 DEBUG: Layer built by default
+- 20:20:48.504 DEBUG: Layer ID: layer0
+- 20:20:48.504 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 20:20:48.504 DEBUG: Layer1 width: 206
+- 20:20:48.504 DEBUG: Layer ID: layer1
+- 20:20:48.504 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 20:20:48.504 DEBUG: Layer2 width: 237.43
+- 20:20:48.504 DEBUG: Layer ID: layer2
+- 20:20:48.504 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 20:20:48.504 DEBUG: Layer3 width: 342.85
+- 20:20:48.505 DEBUG: Configuration process finished
+- 20:20:48.505 DEBUG: Layer layer2 layeroffScene 257.5
+- 20:20:48.505 DEBUG: Layer layer2 speed: 3
+- 20:20:48.505 DEBUG: Layer layer1 layeroffScene 155.5
+- 20:20:48.505 DEBUG: Layer layer1 speed: 1.81165
+- 20:20:48.505 DEBUG: Layer layer0 layeroffScene 125
+- 20:20:48.505 DEBUG: Layer layer0 speed: 1.45631
+- 20:20:48.652 DEBUG: SDL init success
+- 20:20:48.681 DEBUG: window creation success
+- 20:20:48.747 DEBUG: renderer creation success
+- 20:20:48.790 DEBUG: init success
+- 20:21:08.776 DEBUG: cleaning game
+
+- 23:53:08.489 DEBUG: CONFIGURATION INITIALIZED
+- 23:53:08.543 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:53:08.543 DEBUG: Entire configuration set by default
+- 23:53:08.543 DEBUG: JSON - Window width: 640 px
+- 23:53:08.543 DEBUG: JSON - Window height: 480 px
+- 23:53:08.543 DEBUG: JSON - Window width: 150
+- 23:53:08.543 DEBUG: JSON - Stage width: 400
+- 23:53:08.544 DEBUG: JSON - Stage height: 137
+- 23:53:08.544 DEBUG: JSON - Stage ypiso: 125
+- 23:53:08.544 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:53:08.544 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:53:08.544 DEBUG: Layer built by default
+- 23:53:08.544 DEBUG: Layer ID: layer0
+- 23:53:08.544 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:53:08.544 DEBUG: Layer1 width: 206
+- 23:53:08.544 DEBUG: Layer ID: layer1
+- 23:53:08.544 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:53:08.544 DEBUG: Layer2 width: 237.43
+- 23:53:08.544 DEBUG: Layer ID: layer2
+- 23:53:08.544 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:53:08.544 DEBUG: Layer3 width: 342.85
+- 23:53:08.569 DEBUG: Configuration process finished
+- 23:53:08.569 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:53:08.569 DEBUG: Layer layer2 speed: 3
+- 23:53:08.569 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:53:08.569 DEBUG: Layer layer1 speed: 1.81165
+- 23:53:08.569 DEBUG: Layer layer0 layeroffScene 125
+- 23:53:08.569 DEBUG: Layer layer0 speed: 1.45631
+- 23:53:08.913 DEBUG: SDL init success
+- 23:53:08.928 DEBUG: window creation success
+- 23:53:08.005 DEBUG: renderer creation success
+- 23:53:09.130 DEBUG: init success
+- 23:53:20.075 DEBUG: cleaning game
+
+- 23:53:46.345 DEBUG: CONFIGURATION INITIALIZED
+- 23:53:46.346 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:53:46.346 DEBUG: Entire configuration set by default
+- 23:53:46.346 DEBUG: JSON - Window width: 640 px
+- 23:53:46.346 DEBUG: JSON - Window height: 480 px
+- 23:53:46.346 DEBUG: JSON - Window width: 150
+- 23:53:46.346 DEBUG: JSON - Stage width: 400
+- 23:53:46.346 DEBUG: JSON - Stage height: 137
+- 23:53:46.346 DEBUG: JSON - Stage ypiso: 125
+- 23:53:46.346 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:53:46.346 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:53:46.346 DEBUG: Layer built by default
+- 23:53:46.346 DEBUG: Layer ID: layer0
+- 23:53:46.346 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:53:46.346 DEBUG: Layer1 width: 206
+- 23:53:46.346 DEBUG: Layer ID: layer1
+- 23:53:46.346 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:53:46.346 DEBUG: Layer2 width: 237.43
+- 23:53:46.346 DEBUG: Layer ID: layer2
+- 23:53:46.346 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:53:46.346 DEBUG: Layer3 width: 342.85
+- 23:53:46.346 DEBUG: Configuration process finished
+- 23:53:46.346 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:53:46.346 DEBUG: Layer layer2 speed: 3
+- 23:53:46.346 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:53:46.346 DEBUG: Layer layer1 speed: 1.81165
+- 23:53:46.346 DEBUG: Layer layer0 layeroffScene 125
+- 23:53:46.346 DEBUG: Layer layer0 speed: 1.45631
+- 23:53:46.503 DEBUG: SDL init success
+- 23:53:46.517 DEBUG: window creation success
+- 23:53:46.577 DEBUG: renderer creation success
+- 23:53:46.619 DEBUG: init success
+- 23:53:55.646 DEBUG: cleaning game
+
+- 23:54:02.784 DEBUG: CONFIGURATION INITIALIZED
+- 23:54:02.784 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:54:02.784 DEBUG: Entire configuration set by default
+- 23:54:02.785 DEBUG: JSON - Window width: 640 px
+- 23:54:02.785 DEBUG: JSON - Window height: 480 px
+- 23:54:02.785 DEBUG: JSON - Window width: 150
+- 23:54:02.785 DEBUG: JSON - Stage width: 400
+- 23:54:02.785 DEBUG: JSON - Stage height: 137
+- 23:54:02.785 DEBUG: JSON - Stage ypiso: 125
+- 23:54:02.785 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:54:02.785 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:54:02.785 DEBUG: Layer built by default
+- 23:54:02.785 DEBUG: Layer ID: layer0
+- 23:54:02.785 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:54:02.785 DEBUG: Layer1 width: 206
+- 23:54:02.785 DEBUG: Layer ID: layer1
+- 23:54:02.785 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:54:02.785 DEBUG: Layer2 width: 237.43
+- 23:54:02.785 DEBUG: Layer ID: layer2
+- 23:54:02.785 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:54:02.785 DEBUG: Layer3 width: 342.85
+- 23:54:02.785 DEBUG: Configuration process finished
+- 23:54:02.785 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:54:02.785 DEBUG: Layer layer2 speed: 3
+- 23:54:02.785 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:54:02.785 DEBUG: Layer layer1 speed: 1.81165
+- 23:54:02.785 DEBUG: Layer layer0 layeroffScene 125
+- 23:54:02.785 DEBUG: Layer layer0 speed: 1.45631
+- 23:54:02.936 DEBUG: SDL init success
+- 23:54:02.949 DEBUG: window creation success
+- 23:54:03.014 DEBUG: renderer creation success
+- 23:54:03.053 DEBUG: init success
+- 23:54:08.519 DEBUG: cleaning game
+
+- 23:54:15.155 DEBUG: CONFIGURATION INITIALIZED
+- 23:54:15.155 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:54:15.155 DEBUG: Entire configuration set by default
+- 23:54:15.155 DEBUG: JSON - Window width: 640 px
+- 23:54:15.155 DEBUG: JSON - Window height: 480 px
+- 23:54:15.155 DEBUG: JSON - Window width: 150
+- 23:54:15.155 DEBUG: JSON - Stage width: 400
+- 23:54:15.155 DEBUG: JSON - Stage height: 137
+- 23:54:15.155 DEBUG: JSON - Stage ypiso: 125
+- 23:54:15.155 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:54:15.155 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:54:15.155 DEBUG: Layer built by default
+- 23:54:15.155 DEBUG: Layer ID: layer0
+- 23:54:15.155 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:54:15.155 DEBUG: Layer1 width: 206
+- 23:54:15.155 DEBUG: Layer ID: layer1
+- 23:54:15.155 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:54:15.155 DEBUG: Layer2 width: 237.43
+- 23:54:15.155 DEBUG: Layer ID: layer2
+- 23:54:15.155 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:54:15.155 DEBUG: Layer3 width: 342.85
+- 23:54:15.155 DEBUG: Configuration process finished
+- 23:54:15.155 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:54:15.155 DEBUG: Layer layer2 speed: 3
+- 23:54:15.155 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:54:15.155 DEBUG: Layer layer1 speed: 1.81165
+- 23:54:15.155 DEBUG: Layer layer0 layeroffScene 125
+- 23:54:15.155 DEBUG: Layer layer0 speed: 1.45631
+- 23:54:15.309 DEBUG: SDL init success
+- 23:54:15.327 DEBUG: window creation success
+- 23:54:15.391 DEBUG: renderer creation success
+- 23:54:15.432 DEBUG: init success
+- 23:54:23.828 DEBUG: cleaning game
+
+- 23:54:29.975 DEBUG: CONFIGURATION INITIALIZED
+- 23:54:29.975 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:54:29.975 DEBUG: Entire configuration set by default
+- 23:54:29.975 DEBUG: JSON - Window width: 640 px
+- 23:54:29.975 DEBUG: JSON - Window height: 480 px
+- 23:54:29.975 DEBUG: JSON - Window width: 150
+- 23:54:29.975 DEBUG: JSON - Stage width: 400
+- 23:54:29.975 DEBUG: JSON - Stage height: 137
+- 23:54:29.975 DEBUG: JSON - Stage ypiso: 125
+- 23:54:29.975 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:54:29.975 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:54:29.975 DEBUG: Layer built by default
+- 23:54:29.975 DEBUG: Layer ID: layer0
+- 23:54:29.975 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:54:29.975 DEBUG: Layer1 width: 206
+- 23:54:29.975 DEBUG: Layer ID: layer1
+- 23:54:29.975 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:54:29.975 DEBUG: Layer2 width: 237.43
+- 23:54:29.975 DEBUG: Layer ID: layer2
+- 23:54:29.975 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:54:29.975 DEBUG: Layer3 width: 342.85
+- 23:54:29.975 DEBUG: Configuration process finished
+- 23:54:29.975 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:54:29.975 DEBUG: Layer layer2 speed: 3
+- 23:54:29.975 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:54:29.975 DEBUG: Layer layer1 speed: 1.81165
+- 23:54:29.975 DEBUG: Layer layer0 layeroffScene 125
+- 23:54:29.975 DEBUG: Layer layer0 speed: 1.45631
+- 23:54:30.125 DEBUG: SDL init success
+- 23:54:30.147 DEBUG: window creation success
+- 23:54:30.211 DEBUG: renderer creation success
+- 23:54:30.246 DEBUG: init success
+- 23:54:43.804 DEBUG: cleaning game
+
+- 23:54:49.761 DEBUG: CONFIGURATION INITIALIZED
+- 23:54:49.761 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:54:49.761 DEBUG: Entire configuration set by default
+- 23:54:49.761 DEBUG: JSON - Window width: 640 px
+- 23:54:49.761 DEBUG: JSON - Window height: 480 px
+- 23:54:49.761 DEBUG: JSON - Window width: 150
+- 23:54:49.761 DEBUG: JSON - Stage width: 400
+- 23:54:49.761 DEBUG: JSON - Stage height: 137
+- 23:54:49.761 DEBUG: JSON - Stage ypiso: 125
+- 23:54:49.761 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:54:49.761 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:54:49.761 DEBUG: Layer built by default
+- 23:54:49.761 DEBUG: Layer ID: layer0
+- 23:54:49.761 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:54:49.761 DEBUG: Layer1 width: 206
+- 23:54:49.761 DEBUG: Layer ID: layer1
+- 23:54:49.761 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:54:49.761 DEBUG: Layer2 width: 237.43
+- 23:54:49.761 DEBUG: Layer ID: layer2
+- 23:54:49.761 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:54:49.761 DEBUG: Layer3 width: 342.85
+- 23:54:49.761 DEBUG: Configuration process finished
+- 23:54:49.761 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:54:49.761 DEBUG: Layer layer2 speed: 3
+- 23:54:49.761 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:54:49.761 DEBUG: Layer layer1 speed: 1.81165
+- 23:54:49.761 DEBUG: Layer layer0 layeroffScene 125
+- 23:54:49.761 DEBUG: Layer layer0 speed: 1.45631
+- 23:54:49.915 DEBUG: SDL init success
+- 23:54:49.929 DEBUG: window creation success
+- 23:54:49.993 DEBUG: renderer creation success
+- 23:54:50.030 DEBUG: init success
+- 23:55:06.251 DEBUG: cleaning game
+
+- 23:55:15.691 DEBUG: CONFIGURATION INITIALIZED
+- 23:55:15.691 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:55:15.691 DEBUG: Entire configuration set by default
+- 23:55:15.691 DEBUG: JSON - Window width: 640 px
+- 23:55:15.691 DEBUG: JSON - Window height: 480 px
+- 23:55:15.691 DEBUG: JSON - Window width: 150
+- 23:55:15.691 DEBUG: JSON - Stage width: 400
+- 23:55:15.691 DEBUG: JSON - Stage height: 137
+- 23:55:15.691 DEBUG: JSON - Stage ypiso: 125
+- 23:55:15.691 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:55:15.691 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:55:15.691 DEBUG: Layer built by default
+- 23:55:15.691 DEBUG: Layer ID: layer0
+- 23:55:15.691 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:55:15.691 DEBUG: Layer1 width: 206
+- 23:55:15.691 DEBUG: Layer ID: layer1
+- 23:55:15.691 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:55:15.691 DEBUG: Layer2 width: 237.43
+- 23:55:15.691 DEBUG: Layer ID: layer2
+- 23:55:15.691 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:55:15.691 DEBUG: Layer3 width: 342.85
+- 23:55:15.691 DEBUG: Configuration process finished
+- 23:55:15.691 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:55:15.691 DEBUG: Layer layer2 speed: 3
+- 23:55:15.691 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:55:15.691 DEBUG: Layer layer1 speed: 1.81165
+- 23:55:15.691 DEBUG: Layer layer0 layeroffScene 125
+- 23:55:15.691 DEBUG: Layer layer0 speed: 1.45631
+- 23:55:15.851 DEBUG: SDL init success
+- 23:55:15.864 DEBUG: window creation success
+- 23:55:15.927 DEBUG: renderer creation success
+- 23:55:15.973 DEBUG: init success
+- 23:55:29.749 DEBUG: cleaning game
+
+- 23:56:18.359 DEBUG: CONFIGURATION INITIALIZED
+- 23:56:18.359 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:56:18.359 DEBUG: Entire configuration set by default
+- 23:56:18.359 DEBUG: JSON - Window width: 640 px
+- 23:56:18.359 DEBUG: JSON - Window height: 480 px
+- 23:56:18.359 DEBUG: JSON - Window width: 150
+- 23:56:18.359 DEBUG: JSON - Stage width: 400
+- 23:56:18.359 DEBUG: JSON - Stage height: 137
+- 23:56:18.359 DEBUG: JSON - Stage ypiso: 125
+- 23:56:18.359 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:56:18.359 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:56:18.359 DEBUG: Layer built by default
+- 23:56:18.359 DEBUG: Layer ID: layer0
+- 23:56:18.359 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:56:18.359 DEBUG: Layer1 width: 206
+- 23:56:18.359 DEBUG: Layer ID: layer1
+- 23:56:18.359 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:56:18.359 DEBUG: Layer2 width: 237.43
+- 23:56:18.359 DEBUG: Layer ID: layer2
+- 23:56:18.359 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:56:18.359 DEBUG: Layer3 width: 342.85
+- 23:56:18.359 DEBUG: Configuration process finished
+- 23:56:18.359 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:56:18.359 DEBUG: Layer layer2 speed: 3
+- 23:56:18.359 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:56:18.359 DEBUG: Layer layer1 speed: 1.81165
+- 23:56:18.359 DEBUG: Layer layer0 layeroffScene 125
+- 23:56:18.359 DEBUG: Layer layer0 speed: 1.45631
+- 23:56:18.513 DEBUG: SDL init success
+- 23:56:18.531 DEBUG: window creation success
+- 23:56:18.594 DEBUG: renderer creation success
+- 23:56:18.633 DEBUG: init success
+- 23:56:20.587 DEBUG: cleaning game
+
+- 23:56:40.936 DEBUG: CONFIGURATION INITIALIZED
+- 23:56:40.948 DEBUG: WINDOW CONFIGURATION
+- 23:56:40.948 DEBUG: JSON - Window width: 525 px
+- 23:56:40.948 DEBUG: JSON - Window height: 400 px
+- 23:56:40.948 DEBUG: JSON - Window width: 150
+- 23:56:40.948 DEBUG: STAGE CONFIGURATION
+- 23:56:40.948 DEBUG: JSON - Stage width: 400
+- 23:56:40.948 DEBUG: JSON - Stage height: 137
+- 23:56:40.948 DEBUG: JSON - Stage ypiso: 125
+- 23:56:40.948 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 23:56:40.948 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 23:56:40.948 DEBUG: LAYERS CONFIGURATION
+- 23:56:40.948 DEBUG: JSON - Number of Layers to process: 5
+- 23:56:40.948 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 23:56:40.948 DEBUG: JSON - Layer 0 ID: layer0
+- 23:56:40.948 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 23:56:40.948 DEBUG: JSON - Layer 0 width: 113.71
+- 23:56:40.948 DEBUG: JSON - Layer 0 width recalculado: 150
+- 23:56:40.948 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 23:56:40.948 DEBUG: JSON - Layer 1 ID: layer1
+- 23:56:40.948 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 23:56:40.949 DEBUG: JSON - Layer 1 width: 171.43
+- 23:56:40.949 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 23:56:40.949 DEBUG: JSON - Layer 2 input width: 228.28
+- 23:56:40.949 DEBUG: JSON - Layer 2 ID: layer2
+- 23:56:40.949 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 23:56:40.949 DEBUG: JSON - Layer 2 width: 228.28
+- 23:56:40.949 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 23:56:40.949 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 23:56:40.949 DEBUG: JSON - Layer 3 ID: layer3
+- 23:56:40.949 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 23:56:40.949 DEBUG: JSON - Layer 3 width: 286.57
+- 23:56:40.949 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 23:56:40.949 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 23:56:40.949 DEBUG: JSON - Layer 4 ID: layer4
+- 23:56:40.949 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 23:56:40.949 DEBUG: JSON - Layer 4 width: 338.85
+- 23:56:40.949 DEBUG: JSON - Layer 4 width recalculado: 400
+- 23:56:40.949 DEBUG: JSON - Number of Layers successfully process: 5
+- 23:56:40.949 DEBUG: CHARACTERS CONFIGURATION
+- 23:56:40.949 DEBUG: JSON - Input Character name: subzero
+- 23:56:40.949 DEBUG: JSON - Input Character width: 20
+- 23:56:40.949 DEBUG: JSON - Input Character height: 28.57
+- 23:56:40.949 DEBUG: JSON - Input Character z-index: 99
+- 23:56:40.949 DEBUG: Final values for character one.
+- 23:56:40.949 DEBUG: JSON - Character name: subzero
+- 23:56:40.949 DEBUG: JSON - Character width: 20
+- 23:56:40.949 DEBUG: JSON - Character height: 28.57
+- 23:56:40.949 DEBUG: JSON - Character z-index: 99
+- 23:56:40.949 DEBUG: JSON - Character orientation: right
+- 23:56:40.949 DEBUG: CONFIGURATION FINISHED
+- 23:56:40.949 DEBUG: Layer layer4 layeroffScene 125
+- 23:56:40.949 DEBUG: Layer layer4 speed: 3
+- 23:56:40.949 DEBUG: Layer layer3 layeroffScene 94
+- 23:56:40.949 DEBUG: Layer layer3 speed: 2.256
+- 23:56:40.949 DEBUG: Layer layer2 layeroffScene 59.5
+- 23:56:40.949 DEBUG: Layer layer2 speed: 1.428
+- 23:56:40.949 DEBUG: Layer layer1 layeroffScene 26
+- 23:56:40.949 DEBUG: Layer layer1 speed: 0.624
+- 23:56:40.949 DEBUG: Layer layer0 layeroffScene 0
+- 23:56:40.949 DEBUG: Layer layer0 speed: 0
+- 23:56:41.090 DEBUG: SDL init success
+- 23:56:41.112 DEBUG: window creation success
+- 23:56:41.172 DEBUG: renderer creation success
+- 23:56:41.300 DEBUG: init success
+- 23:57:18.680 DEBUG: cleaning game
+
+- 23:34:06.597 DEBUG: CONFIGURATION INITIALIZED
+- 23:34:06.649 DEBUG: WINDOW CONFIGURATION
+- 23:34:06.649 DEBUG: JSON - Window width: 525 px
+- 23:34:06.649 DEBUG: JSON - Window height: 400 px
+- 23:34:06.649 DEBUG: JSON - Window width: 150
+- 23:34:06.649 DEBUG: STAGE CONFIGURATION
+- 23:34:06.649 DEBUG: JSON - Stage width: 400
+- 23:34:06.649 DEBUG: JSON - Stage height: 137
+- 23:34:06.649 DEBUG: JSON - Stage ypiso: 125
+- 23:34:06.649 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 23:34:06.649 DEBUG: RatioY (window_height_px / stage_height_lg): 2.91971
+- 23:34:06.649 DEBUG: LAYERS CONFIGURATION
+- 23:34:06.650 DEBUG: JSON - Number of Layers to process: 5
+- 23:34:06.650 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 23:34:06.650 DEBUG: JSON - Layer 0 ID: layer0
+- 23:34:06.650 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 23:34:06.650 DEBUG: JSON - Layer 0 width: 113.71
+- 23:34:06.650 DEBUG: JSON - Layer 0 width recalculado: 150
+- 23:34:06.650 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 23:34:06.650 DEBUG: JSON - Layer 1 ID: layer1
+- 23:34:06.650 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 23:34:06.650 DEBUG: JSON - Layer 1 width: 171.43
+- 23:34:06.650 DEBUG: JSON - Layer 1 width recalculado: 202.367
+- 23:34:06.650 DEBUG: JSON - Layer 2 input width: 228.28
+- 23:34:06.650 DEBUG: JSON - Layer 2 ID: layer2
+- 23:34:06.650 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 23:34:06.650 DEBUG: JSON - Layer 2 width: 228.28
+- 23:34:06.650 DEBUG: JSON - Layer 2 width recalculado: 269.476
+- 23:34:06.650 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 23:34:06.650 DEBUG: JSON - Layer 3 ID: layer3
+- 23:34:06.650 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 23:34:06.650 DEBUG: JSON - Layer 3 width: 286.57
+- 23:34:06.650 DEBUG: JSON - Layer 3 width recalculado: 338.285
+- 23:34:06.650 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 23:34:06.650 DEBUG: JSON - Layer 4 ID: layer4
+- 23:34:06.650 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 23:34:06.650 DEBUG: JSON - Layer 4 width: 338.85
+- 23:34:06.650 DEBUG: JSON - Layer 4 width recalculado: 400
+- 23:34:06.650 DEBUG: JSON - Number of Layers successfully process: 5
+- 23:34:06.651 DEBUG: CHARACTERS CONFIGURATION
+- 23:34:06.651 DEBUG: JSON - Input Character name: subzero
+- 23:34:06.651 DEBUG: JSON - Input Character width: 20
+- 23:34:06.651 DEBUG: JSON - Input Character height: 28.57
+- 23:34:06.651 DEBUG: JSON - Input Character z-index: 99
+- 23:34:06.651 DEBUG: Final values for character one.
+- 23:34:06.651 DEBUG: JSON - Character name: subzero
+- 23:34:06.651 DEBUG: JSON - Character width: 20
+- 23:34:06.651 DEBUG: JSON - Character height: 28.57
+- 23:34:06.651 DEBUG: JSON - Character z-index: 99
+- 23:34:06.651 DEBUG: JSON - Character orientation: right
+- 23:34:06.681 DEBUG: CONFIGURATION FINISHED
+- 23:34:06.681 DEBUG: Layer layer4 layeroffScene 125
+- 23:34:06.681 DEBUG: Layer layer4 speed: 3
+- 23:34:06.681 DEBUG: Layer layer3 layeroffScene 94
+- 23:34:06.681 DEBUG: Layer layer3 speed: 2.256
+- 23:34:06.681 DEBUG: Layer layer2 layeroffScene 59.5
+- 23:34:06.681 DEBUG: Layer layer2 speed: 1.428
+- 23:34:06.681 DEBUG: Layer layer1 layeroffScene 26
+- 23:34:06.681 DEBUG: Layer layer1 speed: 0.624
+- 23:34:06.681 DEBUG: Layer layer0 layeroffScene 0
+- 23:34:06.682 DEBUG: Layer layer0 speed: 0
+- 23:34:06.825 DEBUG: SDL init success
+- 23:34:06.842 DEBUG: window creation success
+- 23:34:06.891 DEBUG: renderer creation success
+- 23:34:07.177 DEBUG: init success
+- 23:34:19.558 DEBUG: cleaning game
+
+- 23:34:35.423 DEBUG: CONFIGURATION INITIALIZED
+- 23:34:35.423 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:34:35.423 DEBUG: Entire configuration set by default
+- 23:34:35.423 DEBUG: JSON - Window width: 640 px
+- 23:34:35.423 DEBUG: JSON - Window height: 480 px
+- 23:34:35.423 DEBUG: JSON - Window width: 150
+- 23:34:35.423 DEBUG: JSON - Stage width: 400
+- 23:34:35.423 DEBUG: JSON - Stage height: 137
+- 23:34:35.423 DEBUG: JSON - Stage ypiso: 125
+- 23:34:35.423 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:34:35.423 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:34:35.423 DEBUG: Layer built by default
+- 23:34:35.423 DEBUG: Layer ID: layer0
+- 23:34:35.423 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:34:35.423 DEBUG: Layer1 width: 206
+- 23:34:35.423 DEBUG: Layer ID: layer1
+- 23:34:35.423 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:34:35.423 DEBUG: Layer2 width: 237.43
+- 23:34:35.423 DEBUG: Layer ID: layer2
+- 23:34:35.423 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:34:35.423 DEBUG: Layer3 width: 342.85
+- 23:34:35.424 DEBUG: Configuration process finished
+- 23:34:35.424 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:34:35.424 DEBUG: Layer layer2 speed: 3
+- 23:34:35.424 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:34:35.424 DEBUG: Layer layer1 speed: 1.81165
+- 23:34:35.424 DEBUG: Layer layer0 layeroffScene 125
+- 23:34:35.424 DEBUG: Layer layer0 speed: 1.45631
+- 23:34:35.484 DEBUG: SDL init success
+- 23:34:35.497 DEBUG: window creation success
+- 23:34:35.550 DEBUG: renderer creation success
+- 23:34:35.798 DEBUG: init success
+- 23:34:52.330 DEBUG: cleaning game
+
+- 23:34:52.337 DEBUG: CONFIGURATION INITIALIZED
+- 23:34:52.337 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:34:52.337 DEBUG: Entire configuration set by default
+- 23:34:52.337 DEBUG: JSON - Window width: 640 px
+- 23:34:52.337 DEBUG: JSON - Window height: 480 px
+- 23:34:52.337 DEBUG: JSON - Window width: 150
+- 23:34:52.337 DEBUG: JSON - Stage width: 400
+- 23:34:52.337 DEBUG: JSON - Stage height: 137
+- 23:34:52.337 DEBUG: JSON - Stage ypiso: 125
+- 23:34:52.337 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:34:52.337 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:34:52.337 DEBUG: Layer built by default
+- 23:34:52.337 DEBUG: Layer ID: layer0
+- 23:34:52.337 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:34:52.337 DEBUG: Layer1 width: 206
+- 23:34:52.337 DEBUG: Layer ID: layer1
+- 23:34:52.337 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:34:52.337 DEBUG: Layer2 width: 237.43
+- 23:34:52.337 DEBUG: Layer ID: layer2
+- 23:34:52.337 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:34:52.337 DEBUG: Layer3 width: 342.85
+- 23:34:52.338 DEBUG: Configuration process finished
+- 23:34:52.338 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:34:52.338 DEBUG: Layer layer2 speed: 3
+- 23:34:52.338 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:34:52.338 DEBUG: Layer layer1 speed: 1.81165
+- 23:34:52.338 DEBUG: Layer layer0 layeroffScene 125
+- 23:34:52.338 DEBUG: Layer layer0 speed: 1.45631
+- 23:34:52.407 DEBUG: SDL init success
+- 23:34:52.422 DEBUG: window creation success
+- 23:34:52.469 DEBUG: renderer creation success
+- 23:34:52.506 DEBUG: init success
+- 23:34:54.148 DEBUG: cleaning game
+
+- 23:34:54.159 DEBUG: CONFIGURATION INITIALIZED
+- 23:34:54.160 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:34:54.160 DEBUG: Entire configuration set by default
+- 23:34:54.160 DEBUG: JSON - Window width: 640 px
+- 23:34:54.160 DEBUG: JSON - Window height: 480 px
+- 23:34:54.160 DEBUG: JSON - Window width: 150
+- 23:34:54.160 DEBUG: JSON - Stage width: 400
+- 23:34:54.160 DEBUG: JSON - Stage height: 137
+- 23:34:54.160 DEBUG: JSON - Stage ypiso: 125
+- 23:34:54.160 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:34:54.160 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:34:54.160 DEBUG: Layer built by default
+- 23:34:54.160 DEBUG: Layer ID: layer0
+- 23:34:54.160 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:34:54.160 DEBUG: Layer1 width: 206
+- 23:34:54.160 DEBUG: Layer ID: layer1
+- 23:34:54.160 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:34:54.160 DEBUG: Layer2 width: 237.43
+- 23:34:54.160 DEBUG: Layer ID: layer2
+- 23:34:54.160 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:34:54.160 DEBUG: Layer3 width: 342.85
+- 23:34:54.160 DEBUG: Configuration process finished
+- 23:34:54.160 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:34:54.160 DEBUG: Layer layer2 speed: 3
+- 23:34:54.160 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:34:54.160 DEBUG: Layer layer1 speed: 1.81165
+- 23:34:54.160 DEBUG: Layer layer0 layeroffScene 125
+- 23:34:54.160 DEBUG: Layer layer0 speed: 1.45631
+- 23:34:54.203 DEBUG: SDL init success
+- 23:34:54.219 DEBUG: window creation success
+- 23:34:54.271 DEBUG: renderer creation success
+- 23:34:54.303 DEBUG: init success
+- 23:34:56.565 DEBUG: cleaning game
+
+- 23:34:56.579 DEBUG: CONFIGURATION INITIALIZED
+- 23:34:56.579 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 23:34:56.579 DEBUG: Entire configuration set by default
+- 23:34:56.579 DEBUG: JSON - Window width: 640 px
+- 23:34:56.579 DEBUG: JSON - Window height: 480 px
+- 23:34:56.579 DEBUG: JSON - Window width: 150
+- 23:34:56.579 DEBUG: JSON - Stage width: 400
+- 23:34:56.579 DEBUG: JSON - Stage height: 137
+- 23:34:56.579 DEBUG: JSON - Stage ypiso: 125
+- 23:34:56.579 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 23:34:56.579 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 23:34:56.579 DEBUG: Layer built by default
+- 23:34:56.579 DEBUG: Layer ID: layer0
+- 23:34:56.579 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 23:34:56.579 DEBUG: Layer1 width: 206
+- 23:34:56.579 DEBUG: Layer ID: layer1
+- 23:34:56.579 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 23:34:56.579 DEBUG: Layer2 width: 237.43
+- 23:34:56.579 DEBUG: Layer ID: layer2
+- 23:34:56.579 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 23:34:56.579 DEBUG: Layer3 width: 342.85
+- 23:34:56.579 DEBUG: Configuration process finished
+- 23:34:56.579 DEBUG: Layer layer2 layeroffScene 257.5
+- 23:34:56.579 DEBUG: Layer layer2 speed: 3
+- 23:34:56.579 DEBUG: Layer layer1 layeroffScene 155.5
+- 23:34:56.579 DEBUG: Layer layer1 speed: 1.81165
+- 23:34:56.579 DEBUG: Layer layer0 layeroffScene 125
+- 23:34:56.579 DEBUG: Layer layer0 speed: 1.45631
+- 23:34:56.616 DEBUG: SDL init success
+- 23:34:56.635 DEBUG: window creation success
+- 23:34:56.682 DEBUG: renderer creation success
+- 23:34:56.713 DEBUG: init success
+- 23:35:40.287 DEBUG: cleaning game
+
+- 19:10:20.310 DEBUG: CONFIGURATION INITIALIZED
+- 19:10:20.342 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 19:10:20.343 DEBUG: Entire configuration set by default
+- 19:10:20.343 DEBUG: JSON - Window width: 640 px
+- 19:10:20.343 DEBUG: JSON - Window height: 480 px
+- 19:10:20.343 DEBUG: JSON - Window width: 150
+- 19:10:20.343 DEBUG: JSON - Stage width: 400
+- 19:10:20.343 DEBUG: JSON - Stage height: 137
+- 19:10:20.343 DEBUG: JSON - Stage ypiso: 125
+- 19:10:20.343 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 19:10:20.343 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 19:10:20.343 DEBUG: Layer built by default
+- 19:10:20.343 DEBUG: Layer ID: layer0
+- 19:10:20.343 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 19:10:20.343 DEBUG: Layer1 width: 206
+- 19:10:20.343 DEBUG: Layer ID: layer1
+- 19:10:20.343 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 19:10:20.343 DEBUG: Layer2 width: 237.43
+- 19:10:20.343 DEBUG: Layer ID: layer2
+- 19:10:20.343 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 19:10:20.343 DEBUG: Layer3 width: 342.85
+- 19:10:20.367 DEBUG: Configuration process finished
+- 19:10:20.367 DEBUG: Layer layer2 layeroffScene 257.5
+- 19:10:20.367 DEBUG: Layer layer2 speed: 3
+- 19:10:20.367 DEBUG: Layer layer1 layeroffScene 155.5
+- 19:10:20.367 DEBUG: Layer layer1 speed: 1.81165
+- 19:10:20.367 DEBUG: Layer layer0 layeroffScene 125
+- 19:10:20.367 DEBUG: Layer layer0 speed: 1.45631
+- 19:10:20.519 DEBUG: SDL init success
+- 19:10:20.537 DEBUG: window creation success
+- 19:10:20.593 DEBUG: renderer creation success
+- 19:10:20.802 DEBUG: init success
+- 19:10:25.327 DEBUG: cleaning game
+
+- 19:10:25.340 DEBUG: CONFIGURATION INITIALIZED
+- 19:10:25.340 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 19:10:25.340 DEBUG: Entire configuration set by default
+- 19:10:25.340 DEBUG: JSON - Window width: 640 px
+- 19:10:25.340 DEBUG: JSON - Window height: 480 px
+- 19:10:25.340 DEBUG: JSON - Window width: 150
+- 19:10:25.340 DEBUG: JSON - Stage width: 400
+- 19:10:25.340 DEBUG: JSON - Stage height: 137
+- 19:10:25.340 DEBUG: JSON - Stage ypiso: 125
+- 19:10:25.340 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 19:10:25.340 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 19:10:25.340 DEBUG: Layer built by default
+- 19:10:25.340 DEBUG: Layer ID: layer0
+- 19:10:25.340 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 19:10:25.340 DEBUG: Layer1 width: 206
+- 19:10:25.340 DEBUG: Layer ID: layer1
+- 19:10:25.340 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 19:10:25.340 DEBUG: Layer2 width: 237.43
+- 19:10:25.341 DEBUG: Layer ID: layer2
+- 19:10:25.341 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 19:10:25.341 DEBUG: Layer3 width: 342.85
+- 19:10:25.341 DEBUG: Configuration process finished
+- 19:10:25.341 DEBUG: Layer layer2 layeroffScene 257.5
+- 19:10:25.341 DEBUG: Layer layer2 speed: 3
+- 19:10:25.341 DEBUG: Layer layer1 layeroffScene 155.5
+- 19:10:25.341 DEBUG: Layer layer1 speed: 1.81165
+- 19:10:25.341 DEBUG: Layer layer0 layeroffScene 125
+- 19:10:25.341 DEBUG: Layer layer0 speed: 1.45631
+- 19:10:25.403 DEBUG: SDL init success
+- 19:10:25.419 DEBUG: window creation success
+- 19:10:25.472 DEBUG: renderer creation success
+- 19:10:25.507 DEBUG: init success
+- 19:10:27.519 DEBUG: cleaning game
+
+- 19:10:27.539 DEBUG: CONFIGURATION INITIALIZED
+- 19:10:27.539 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 19:10:27.539 DEBUG: Entire configuration set by default
+- 19:10:27.539 DEBUG: JSON - Window width: 640 px
+- 19:10:27.539 DEBUG: JSON - Window height: 480 px
+- 19:10:27.539 DEBUG: JSON - Window width: 150
+- 19:10:27.539 DEBUG: JSON - Stage width: 400
+- 19:10:27.539 DEBUG: JSON - Stage height: 137
+- 19:10:27.539 DEBUG: JSON - Stage ypiso: 125
+- 19:10:27.540 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 19:10:27.540 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 19:10:27.540 DEBUG: Layer built by default
+- 19:10:27.540 DEBUG: Layer ID: layer0
+- 19:10:27.540 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 19:10:27.540 DEBUG: Layer1 width: 206
+- 19:10:27.540 DEBUG: Layer ID: layer1
+- 19:10:27.540 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 19:10:27.540 DEBUG: Layer2 width: 237.43
+- 19:10:27.541 DEBUG: Layer ID: layer2
+- 19:10:27.541 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 19:10:27.541 DEBUG: Layer3 width: 342.85
+- 19:10:27.541 DEBUG: Configuration process finished
+- 19:10:27.541 DEBUG: Layer layer2 layeroffScene 257.5
+- 19:10:27.541 DEBUG: Layer layer2 speed: 3
+- 19:10:27.541 DEBUG: Layer layer1 layeroffScene 155.5
+- 19:10:27.543 DEBUG: Layer layer1 speed: 1.81165
+- 19:10:27.543 DEBUG: Layer layer0 layeroffScene 125
+- 19:10:27.543 DEBUG: Layer layer0 speed: 1.45631
+- 19:10:27.591 DEBUG: SDL init success
+- 19:10:27.604 DEBUG: window creation success
+- 19:10:27.660 DEBUG: renderer creation success
+- 19:10:27.700 DEBUG: init success
+- 19:10:29.844 DEBUG: cleaning game
+
+- 19:10:29.858 DEBUG: CONFIGURATION INITIALIZED
+- 19:10:29.859 ERROR: FILE NOT FOUND EXCEPTION We could not find the configuration file but do not worry, the default scenario is created :)
+- 19:10:29.859 DEBUG: Entire configuration set by default
+- 19:10:29.859 DEBUG: JSON - Window width: 640 px
+- 19:10:29.859 DEBUG: JSON - Window height: 480 px
+- 19:10:29.859 DEBUG: JSON - Window width: 150
+- 19:10:29.859 DEBUG: JSON - Stage width: 400
+- 19:10:29.859 DEBUG: JSON - Stage height: 137
+- 19:10:29.859 DEBUG: JSON - Stage ypiso: 125
+- 19:10:29.859 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 19:10:29.859 DEBUG: RatioY (window_height_px / stage_height_lg): 3.50365
+- 19:10:29.859 DEBUG: Layer built by default
+- 19:10:29.859 DEBUG: Layer ID: layer0
+- 19:10:29.859 DEBUG: Layer1 background image: images/arenas/default/p_3n.png
+- 19:10:29.859 DEBUG: Layer1 width: 206
+- 19:10:29.859 DEBUG: Layer ID: layer1
+- 19:10:29.859 DEBUG: Layer2 background image: images/arenas/default/p_2n.png
+- 19:10:29.859 DEBUG: Layer2 width: 237.43
+- 19:10:29.859 DEBUG: Layer ID: layer2
+- 19:10:29.859 DEBUG: Layer3 background image: images/arenas/default/p_1n.png
+- 19:10:29.859 DEBUG: Layer3 width: 342.85
+- 19:10:29.859 DEBUG: Configuration process finished
+- 19:10:29.859 DEBUG: Layer layer2 layeroffScene 257.5
+- 19:10:29.859 DEBUG: Layer layer2 speed: 3
+- 19:10:29.859 DEBUG: Layer layer1 layeroffScene 155.5
+- 19:10:29.859 DEBUG: Layer layer1 speed: 1.81165
+- 19:10:29.859 DEBUG: Layer layer0 layeroffScene 125
+- 19:10:29.859 DEBUG: Layer layer0 speed: 1.45631
+- 19:10:29.898 DEBUG: SDL init success
+- 19:10:29.917 DEBUG: window creation success
+- 19:10:29.968 DEBUG: renderer creation success
+- 19:10:30.008 DEBUG: init success
+- 19:10:35.050 DEBUG: cleaning game
+
