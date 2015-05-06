@@ -14,50 +14,24 @@
 #include <stdio.h>
 #include <map>
 #include <iostream>
+#include <vector>
+#include "Box.h"
 using namespace std;
 
-class Box {
-private:
-	int height;
-	int width;
-	float centerX;
-	float centerY;
-	bool active;
 
-public:
-	Box();
-	virtual ~Box();
-	void setHeight(int H){this->height=H;}
-	void setWidth(int W){this->width=W;}
-	void setCenter(float X, float Y){this->centerX=X; this->centerY=Y;}
-	float getTopY(){return (this->centerY)+(this->height/2);}
-	float getBottomY(){return (this->centerY)-(this->height/2);}
-	float getLeftX(){return (this->centerX)-(this->width/2);}
-	float getRightX(){return (this->centerX)+(this->height/2);}
-	bool isActive(){return this->active;}
-};
 
-class Collitionable {
+class Collitionable : public SDLObjectGUI {
 private:
 
 	vector<Box*> Shapes;
 	bool isMoving;
-
-
-	std::map<std::string,Sprite*> characterSprites;
-	SDL_Renderer* renderer; //TODO: review
+	bool isRightOriented;
 
 public:
 	Collitionable();
-
+	void initShapes(int qty,float X, float Y, int W, int H);
 	virtual ~Collitionable();
-	Collitionable(const LoaderParams* pParams, bool isRightOriented);
-
 	virtual void update();
-
-	//Movement & position methods
-
-	bool isMoving();
 
 };
 
