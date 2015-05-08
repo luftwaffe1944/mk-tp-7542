@@ -49,6 +49,10 @@ void InputControl::refreshInputs() {
 			this->firstPlayerMove = FIRST_PLAYER_DUCK_PUNCH;
 		} else if (currentKeyStates[SDL_SCANCODE_S]) {
 			this->firstPlayerMove = FIRST_PLAYER_UPPERCUT;
+		} else if (currentKeyStates[SDL_SCANCODE_Z]) {
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_LOW_kICK;
+		} else if (currentKeyStates[SDL_SCANCODE_X]) {
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_HIGH_kICK;
 		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
@@ -65,7 +69,10 @@ void InputControl::refreshInputs() {
 		}
 		//COMBINATION WITH LEFT
 	} else if (currentKeyStates[SDL_SCANCODE_LEFT]) {
-		if (!(currentKeyStates[SDL_SCANCODE_UP])
+		if (currentKeyStates[SDL_SCANCODE_X]){
+			this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
+		}
+		else if (!(currentKeyStates[SDL_SCANCODE_UP])
 				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 			this->firstPlayerMove = FIRST_PLAYER_MOVE_LEFT;

@@ -40,6 +40,9 @@ private:
 	bool isPunchingAnUppercut;
 	bool isKickingLow;
 	bool isKickingHigh;
+	bool isKickingDuckHigh;
+	bool isKickingDuckLow;
+	bool isKickingSuper;
 
 public:
 	Character();

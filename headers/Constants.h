@@ -53,6 +53,9 @@ using namespace std;
 #define UPPERCUT_MOVEMENT "uppercut"
 #define LOW_KICK_MOVEMENT "lowKick"
 #define HIGH_KICK_MOVEMENT "highKick"
+#define DUCK_LOW_KICK_MOVEMENT "duckLowKick"
+#define DUCK_HIGH_KICK_MOVEMENT "duckHighKick"
+#define SUPER_KICK_MOVEMENT "superKick"
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
@@ -66,6 +69,9 @@ using namespace std;
 #define UPPERCUT_SUFFIX "Uppercut"
 #define LOW_KICK_SUFFIX "lowKick"
 #define HIGH_KICK_SUFFIX "highKick"
+#define DUCK_LOW_KICK_SUFFIX "duckLowKick"
+#define DUCK_HIGH_KICK_SUFFIX "duckHighKick"
+#define SUPER_KICK_SUFFIX "superKick"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -83,6 +89,9 @@ const string DUCKPUNCH_SPRITE = "/duckPunch.png";
 const string UPPERCUT_SPRITE = "/uppercut.png";
 const string LOW_KICK_SPRITE = "/lowKick.png";
 const string HIGH_KICK_SPRITE = "/highKick.png";
+const string DUCK_LOW_KICK_SPRITE = "/duckLowKick.png";
+const string DUCK_HIGH_KICK_SPRITE = "/duckHighKick.png";
+const string SUPER_KICK_SPRITE = "/superKick.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 
