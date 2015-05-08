@@ -15,15 +15,23 @@ using namespace std;
 	float Box::getLeftX(){return (this->centerX)-(this->width/2);}
 	float Box::getRightX(){return (this->centerX)+(this->height/2);}
 	bool Box::isActive(){return this->active;}
+
 	bool Box::isColliding(Box* box2){
 		bool collide = false;
 
 		bool overlapBox1Left = ((this->getRightX() > box2->getLeftX()) && (this->getLeftX() < box2->getLeftX()));
-		bool overlapBox1Top = (this->getTopY() > box2->getBottomY());
-		bool overlapBox1Bottom = (this->getBottomY() < box2->getTopY());
-		bool overlapBox1Right = (this->getLeftX() < box2->getRightX());
+		bool overlapBox1Right = ((this->getRightX() > box2->getRightX()) && (this->getLeftX() < box2->getRightX()));
+		bool overlapBox1OnBox2X = ((this->getLeftX() < box2->getLeftX()) && (this->getRightX() > box2->getRightX()));
 
-		if ((overlapBox1Left && (overlapBox1Top || overlapBox1Bottom)) || (overlapBox1Right && (overlapBox1Top || overlapBox1Bottom))){
+		bool overlapBox1Top = ((this->getTopY() > box2->getBottomY()) && (this->getBottomY() < box2->getTopY()));
+		bool overlapBox1Bottom = ((this->getTopY() > box2->getTopY()) && (this->getBottomY() < box2->getTopY()));
+		bool overlapBox1OnBox2Y = ((this->getTopY() > box2->getTopY()) && (this->getBottomY() < box2->getBottomY()));
+
+
+		bool overlapXaxis = (overlapBox1Left || overlapBox1Right || overlapBox1OnBox2X);
+		bool overlapYaxis = (overlapBox1Top || overlapBox1Bottom || overlapBox1OnBox2Y);
+
+		if (overlapXaxis && overlapYaxis){
 			collide=true;
 		}
 		return collide;
