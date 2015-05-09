@@ -34,6 +34,15 @@ private:
 	bool isJumpingRight;
 	bool isJumpingLeft;
 	bool isDucking;
+	bool isPunchingHigh;
+	bool isPunchingLow;
+	bool isPunchingDuck;
+	bool isPunchingAnUppercut;
+	bool isKickingLow;
+	bool isKickingHigh;
+	bool isKickingDuckHigh;
+	bool isKickingDuckLow;
+	bool isKickingSuper;
 
 public:
 	Character();

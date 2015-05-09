@@ -1,5 +1,5 @@
 /*
- * MKGame.h
+ * MKGame.0h
  *
  *  Created on: Mar 28, 2015
  *      Author: nicolas.m.outeda
@@ -23,6 +23,9 @@
 #include "GameInfo.h"
 #include "SDL_ttf.h"
 
+//#include "SDL_gamecontroller.h"
+//#include "SDL_joystick.h"
+
 using namespace std;
 
 template <typename T>
@@ -41,6 +44,7 @@ private:
 	InputControl keyboardControl;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
+	//SDL_Joystick* gGameController;
 
 	bool shouldBeShaking;
 	int shakeLength;
@@ -58,6 +62,7 @@ private:
 		shakeIntensity = 5;
 		shakeLength = 10;
 		offSetPosY = 0;
+		//gGameController = NULL;
 	}
 
 public:
@@ -71,6 +76,7 @@ public:
 		TextureManager::Instance()->resetInstance();
 		SDL_DestroyRenderer(this->m_pRenderer);
 		SDL_DestroyWindow(this->m_pWindow);
+		//SDL_JoystickClose( this->gGameController );
 
 		IMG_Quit();
 		TTF_Quit();
