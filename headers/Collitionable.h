@@ -32,7 +32,7 @@ public:
 	void initShapes(int qty,float X, float Y, int W, int H);
 	virtual ~Collitionable();
 	virtual void update();
-
+	void getNextPosition(float* X, float* Y);
 	bool getCMoving(){return this->isMoving;}
 	void setCMoving(bool moving){this->isMoving = moving;}
 	vector<Box*> getShapes(){return this->Shapes;}

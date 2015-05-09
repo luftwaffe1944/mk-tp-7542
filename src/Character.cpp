@@ -346,3 +346,35 @@ bool validateSpritesForSelectedCharacter(string characterPath) {
 	}
 	return true;
 }
+
+void Character::getNextPosition(float* nextPositionX, float* nextPositionY){
+
+		if ((!this->reachedWindowRightLimit()) && (this->isWalkingRight)){ //si no llego al limite de pantalla y esta caminando para derecha
+			*nextPositionX = positionX + 2 * ratioX;
+		}else if ((!this->reachedWindowLeftLimit()) && (this->isWalkingLeft)){
+			*nextPositionX = positionX - 2 * ratioX;
+		}else if (this->isJumping){
+			*nextPositionY = positionY - jumpVel;
+			if (this->isTouchingGround(*nextPositionY)) {
+				*nextPositionY = yGround;
+			}
+		}else if (this->isJumpingRight){
+			*nextPositionY = positionY - jumpVel;
+			if (!this->reachedWindowRightLimit()) {
+				*nextPositionX = positionX + (2 * ratioX);
+			}
+			if (this->isTouchingGround(*nextPositionY)) {
+				*nextPositionY = yGround;
+
+			}
+		}else if (this->isJumpingLeft){
+			*nextPositionY = positionY - jumpVel;
+			if (!this->reachedWindowLeftLimit()) {
+				*nextPositionX = positionX - (2 * ratioX);
+			}
+			if (this->isTouchingGround(*nextPositionY)) {
+				*nextPositionY = yGround;
+			}
+		}
+}
+

@@ -4,10 +4,10 @@
 
 using namespace std;
 
-	Box::Box(float X, float Y,int W,int H,bool active){this->centerX=X; this->centerY=Y; this->width=W; this->height=H; this->active=active;}
+	Box::Box(float X, float Y,float W,float H,bool active){this->centerX=X; this->centerY=Y; this->width=W; this->height=H; this->active=active;}
 	Box::~Box(){};
-	void Box::setHeight(int H){this->height=H;}
-	void Box::setWidth(int W){this->width=W;}
+	void Box::setHeight(float H){this->height=H;}
+	void Box::setWidth(float W){this->width=W;}
 	void Box::setCenter(float X, float Y){this->centerX=X; this->centerY=Y;}
 	void Box::setActive(bool active){this->active=active;}
 	float Box::getTopY(){return (this->centerY)+(this->height/2);}
@@ -42,4 +42,15 @@ using namespace std;
 			}
 		}
 		return collide;
+	}
+
+	void Box::resizeBox(float newX, float newY){
+		float actX = this->centerX;
+		this->centerX = (actX + newX)/2;
+
+		float difX = newX - actX; //nueva extension, diferencia entre centros
+		if (difX < 0){
+			difX = (-1)*difX;
+		}
+		this->width = this->width + difX;
 	}

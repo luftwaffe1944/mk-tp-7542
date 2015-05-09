@@ -64,6 +64,7 @@ public:
 	void clearMovementsFlags();
 	bool isMovingRight();
 	bool isMovingLeft();
+	void getNextPosition(float* nextPositionX, float* nextPositionY); //redefinir virtual
 };
 
 #endif /* CHARACTER_H_ */

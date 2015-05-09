@@ -50,9 +50,13 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 
 					if (actualObject->getCMoving()){
 						//expandir box
+						float newX,newY;
+						actualObject->getNextPosition(&newX, &newY);
 					}
 					if (nextObject->getCMoving()){
 						//expandir box
+						float newX,newY;
+						nextObject->getNextPosition(&newX, &newY);
 					}
 
 					//verificar superposicion

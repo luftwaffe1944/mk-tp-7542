@@ -19,10 +19,10 @@ private:
 
 public:
 	Box();
-	Box(float X, float Y,int W,int H,bool active);
+	Box(float X, float Y,float W,float H,bool active);
 	virtual ~Box();
-	void setHeight(int H);
-	void setWidth(int W);
+	void setHeight(float H);
+	void setWidth(float W);
 	void setCenter(float X, float Y);
 	void setActive(bool active);
 	float getTopY();
@@ -32,9 +32,7 @@ public:
 	bool isActive();
 	bool isColliding(Box* box);
 	Box* cloneBox();
+	void resizeBox(float newX, float newY);
 };
-
-
-
 
 #endif /* BOX_H_ */

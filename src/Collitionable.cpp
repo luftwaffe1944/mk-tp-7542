@@ -14,3 +14,7 @@ void Collitionable::initShapes(int qty,float X, float Y, int W, int H){
 		this->Shapes.push_back(auxShape);
 	}
 };
+
+void Collitionable::getNextPosition(float* X, float* Y){
+
+}
