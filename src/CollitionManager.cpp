@@ -35,29 +35,36 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 		 actualObject = objects[i-1];
 		for (int j=1;j<=(cantObjects-i); j++){ //itera uno contra todos
 			nextObject = objects[(i-1)+j];
-			//verificar
-
-			Box nextBox;  //perteneciente al next object
+			//verificar colision entre boxes
 
 			vector<Box*> actualObjectBoxes = actualObject->getShapes();
 			vector<Box*> nextObjectBoxes = nextObject->getShapes();
 
 			for (int k=1; k<=(actualObjectBoxes.size()); k++){
-
 				Box* actualBox = actualObjectBoxes[k-1];
-				Box* newActualBox = actualBox->cloneBox(); //box auxiliar
+				Box* newActualBox = actualBox->cloneBox(); //box auxiliar clonada para expandir
 
 				for (int n=1; i<=(nextObjectBoxes.size()); n++){
 					Box* nextBox = nextObjectBoxes[n-1];
-					Box* newNextBox = nextBox->cloneBox();
+ 					Box* newNextBox = nextBox->cloneBox(); //box auxiliar clonada para expandir
 
-					if (actualObject->getMoving()){
+					if (actualObject->getCMoving()){
 						//expandir box
 					}
-					if (nextObject->getMoving()){
+					if (nextObject->getCMoving()){
 						//expandir box
 					}
+
+					//verificar superposicion
+
+					if (newActualBox->isColliding(newNextBox)){
+						//resolver evento de colision
+					}
+
+					//--
+					newNextBox->~Box();
 				}
+				newActualBox->~Box();
 			}
 		}
 	}
