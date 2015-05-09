@@ -13,6 +13,7 @@
 #include "SDL.h"
 
 
+
 enum InputCommand {
 	NO_INPUT,
 	FIRST_PLAYER_MOVE_UP,

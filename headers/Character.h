@@ -24,7 +24,7 @@ private:
 	Sprite* currentSprite;
 	std::string name;
 	int zindex;
-	bool isRightOriented;
+
 	float yGround;
 	std::string movement;
 	std::map<std::string,Sprite*> characterSprites;
@@ -82,6 +82,7 @@ public:
 	void resetCounter(string moveKey);
 	void completeMovement();
 	void setMoveFlag(bool trueOrFalse);
+	bool isRightOriented;
 };
 
 #endif /* CHARACTER_H_ */
