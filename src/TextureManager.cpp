@@ -6,9 +6,6 @@
  */
 
 #include "../headers/TextureManager.h"
-#include <SDL.h>
-#include <SDL_image.h>
-#include "../headers/Log.h"
 
 TextureManager* TextureManager::t_pInstance = NULL;
 TextureManager* TextureManager::Instance() {
@@ -159,3 +156,36 @@ void TextureManager::setAlpha(std::string id, Uint8 alpha) {
 	SDL_SetTextureAlphaMod(m_textureMap[id], alpha);
 }
 
+bool TextureManager::loadFromRenderedText( std::string id, std::string textureText, SDL_Color textColor, TTF_Font *gFont, SDL_Renderer *gRenderer )
+{
+    SDL_Texture* mTexture = NULL;
+	SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
+    if( textSurface == NULL )
+    {
+        printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+    }
+    else
+    {
+        mTexture = SDL_CreateTextureFromSurface( gRenderer, textSurface );
+        SDL_FreeSurface( textSurface );
+    }
+
+	if (mTexture != 0) {
+		m_textureMap[id + textureText] = mTexture;
+		return true;
+	}
+
+	return false;
+}
+
+bool TextureManager::unload( std::string id )
+{
+	SDL_Texture* mTexture = m_textureMap[id];
+
+	if (mTexture != 0) {
+		SDL_DestroyTexture(m_textureMap[id]);
+		this->m_textureMap.erase(id);
+		return true;
+	}
+	return false;
+}

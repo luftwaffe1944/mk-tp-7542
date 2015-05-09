@@ -388,6 +388,18 @@ Fight* jsonGetFight(Json::Value root) {
 	return fight;
 }
 
+void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
+	float windowWidth = window->getWidth();
+	float windowHeight = window->getHeightPx();
+	vector<string> playerName;
+	for(unsigned int i = 0; i < characters.size(); ++i ) {
+		playerName.push_back(characters[i]->getName());
+	}
+	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
+	GameInfo* info = new GameInfo(params, playerName);
+	MKGame::Instance()->getObjectList().push_back(info);
+}
+
 GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "CONFIGURATION INITIALIZED";
 	GameGUI *gameGUI = GameGUI::getInstance();
@@ -445,6 +457,8 @@ GameGUI* GameGUIBuilder::create() {
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
 	gameGUI->setLayers(layers);
+
+	createGameInfo(window, characters, ratioX, ratioY);
 
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 
@@ -504,6 +518,8 @@ GameGUI* GameGUIBuilder::createDefault() {
 	gameGUI->setCharacters(characters);
 
 	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));
+
+	createGameInfo(ptrWindow, characters, ratioX, ratioY);
 
 	FILE_LOG(logDEBUG) << "Configuration process finished";
 	return gameGUI;

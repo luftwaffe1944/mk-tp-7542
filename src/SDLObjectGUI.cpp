@@ -81,6 +81,15 @@ int SDLObjectGUI::getZIndex() {
 float SDLObjectGUI::getPositionX() {
 	return this->positionX;
 }
+
 void SDLObjectGUI::setPositionX(float positionX) {
 	this->positionX = positionX;
+}
+
+void SDLObjectGUI::setPositionY(float posY) {
+	this->positionY = posY;
+}
+
+float SDLObjectGUI::getPositionY() {
+	return this->positionY;
 }

@@ -30,6 +30,8 @@ public:
     int getNextBackwardingFrame();
     int getNextFrameWithLimit();
     void refresh();
+    int getCurrentFrame();
+    int getFramesAmount();
 
 private:
     std::string spriteId;

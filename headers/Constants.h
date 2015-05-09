@@ -11,6 +11,17 @@
 //Default GameGUI measures
 #include <string>
 using namespace std;
+//screen
+const int SCREEN_FPS = 60;
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+
+
+//Joystick
+#define MAX_XAXIS 32000 //max 32767
+#define MAX_YAXIS 32000
+#define MIN_XAXIS -32000 //min -32768
+#define MIN_YAXIS -32000
+
 //window
 #define MAX_WINDOW_WIDTH_PX 1366
 #define MAX_WINDOW_HEIGHT_PX 768
@@ -47,6 +58,15 @@ using namespace std;
 #define WALKING_RIGHT_MOVEMENT "walkingRight"
 #define WALKING_LEFT_MOVEMENT "walkingLeft"
 #define DUCKING_MOVEMENT "ducking"
+#define PUNCHING_HIGH_MOVEMENT "punchingHigh"
+#define PUNCHING_LOW_MOVEMENT "punchingLow"
+#define PUNCHING_DUCK_MOVEMENT "punchingDuck"
+#define UPPERCUT_MOVEMENT "uppercut"
+#define LOW_KICK_MOVEMENT "lowKick"
+#define HIGH_KICK_MOVEMENT "highKick"
+#define DUCK_LOW_KICK_MOVEMENT "duckLowKick"
+#define DUCK_HIGH_KICK_MOVEMENT "duckHighKick"
+#define SUPER_KICK_MOVEMENT "superKick"
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
@@ -54,17 +74,35 @@ using namespace std;
 #define JUMP_SUFFIX "Jump"
 #define JUMP_DIAGONAL_SUFFIX "JumpDiagonal"
 #define DUCK_SUFFIX "Duck"
+#define HI_PUNCH_SUFFIX "Hi_Punch"
+#define LO_PUNCH_SUFFIX "Lo_Punch"
+#define DUCK_PUNCH_SUFFIX "Duck_Punch"
+#define UPPERCUT_SUFFIX "Uppercut"
+#define LOW_KICK_SUFFIX "lowKick"
+#define HIGH_KICK_SUFFIX "highKick"
+#define DUCK_LOW_KICK_SUFFIX "duckLowKick"
+#define DUCK_HIGH_KICK_SUFFIX "duckHighKick"
+#define SUPER_KICK_SUFFIX "superKick"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
 
 
 //Sprites images
-const string WALK_SPRITE = "/walk.png";
-const string JUMP_SPRITE = "/jump.png";
-const string STANCE_SPRITE = "/stance.png";
-const string DIAGONAL_JUMP_SPRITE = "/diagonalJump.png";
-const string DUCK_SPRITE = "/duck.png";
+const string WALK_SPRITE = "/walk2.png";
+const string JUMP_SPRITE = "/jump2.png";
+const string STANCE_SPRITE = "/stance2.png";
+const string DIAGONAL_JUMP_SPRITE = "/diagonalJump2.png";
+const string DUCK_SPRITE = "/singleDuck.png";
+const string HIPUNCH_SPRITE = "/highPunch.png";
+const string LOPUNCH_SPRITE = "/lowPunch.png";
+const string DUCKPUNCH_SPRITE = "/duckPunch.png";
+const string UPPERCUT_SPRITE = "/uppercut.png";
+const string LOW_KICK_SPRITE = "/lowKick.png";
+const string HIGH_KICK_SPRITE = "/highKick.png";
+const string DUCK_LOW_KICK_SPRITE = "/duckLowKick.png";
+const string DUCK_HIGH_KICK_SPRITE = "/duckHighKick.png";
+const string SUPER_KICK_SPRITE = "/superKick.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 
@@ -95,7 +133,7 @@ const string ROOT_IMAGE_PATH = "images/";
 #define JSON_KEY_ZINDEX "zindex"
 #define JSON_KEY_ORIENTACION "orientacion"
 
-#define SPRITE_WIDTH 100
-#define SPRITE_HEIGHT 135
+#define SPRITE_WIDTH 200
+#define SPRITE_HEIGHT 170
 
 #endif /* CONSTANTS_H_ */

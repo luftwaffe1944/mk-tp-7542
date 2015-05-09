@@ -31,6 +31,8 @@ public:
 	int getZIndex();
 	float getPositionX();
 	void setPositionX(float positionX);
+	void setPositionY(float posY);
+	float getPositionY();
 
 protected:
 	const LoaderParams* pParams;

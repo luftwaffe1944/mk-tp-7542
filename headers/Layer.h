@@ -23,6 +23,7 @@ private:
 	bool needRefresh;
 
 
+
 public:
 	Layer(const LoaderParams* pParams);
 	virtual void draw();

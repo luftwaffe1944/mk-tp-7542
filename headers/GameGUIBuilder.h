@@ -22,6 +22,7 @@
 #include <json/reader.h>
 #include "LayerManager.h"
 #include "AlternativeColor.h"
+#include "GameInfo.h"
 using namespace std;
 
 class GameGUIBuilder {

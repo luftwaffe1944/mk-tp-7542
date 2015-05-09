@@ -34,6 +34,7 @@ void Layer::update() {
 		this->positionX = scrollingOffset - this->offScene;
 	}
 }
+
 void Layer::clean() {
 	delete this->pParams;
 }
