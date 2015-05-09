@@ -34,8 +34,6 @@ enum InputCommand {
 	FIRST_PLAYER_DUCK_LOW_kICK,
 	FIRST_PLAYER_DUCK_HIGH_kICK,
 	FIRST_PLAYER_SUPER_kICK
-
-
 };
 
 class InputControl {
