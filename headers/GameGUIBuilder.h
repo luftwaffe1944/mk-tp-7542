@@ -21,6 +21,7 @@
 #include "Log.h"
 #include <json/reader.h>
 #include "LayerManager.h"
+#include "AlternativeColor.h"
 using namespace std;
 
 class GameGUIBuilder {

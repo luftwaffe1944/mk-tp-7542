@@ -65,7 +65,48 @@ void InputControl::refreshInputs() {
 			&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 			&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
-
+		/* SECOND PLAYER COMMANDS
+		} else if ((currentKeyStates[SDL_SCANCODE_W])
+				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
+		} else if ((currentKeyStates[SDL_SCANCODE_UP])
+				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& (currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& (currentKeyStates[SDL_SCANCODE_DOWN])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
+		} else if ((currentKeyStates[SDL_SCANCODE_UP])
+				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP;
+		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& (currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN;
+		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_LEFT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+*/
 	} else if (currentKeyStates[SDL_SCANCODE_O]) {
 		this->firstPlayerMove = FIRST_PLAYER_CHANGE_ORIENTATION;
 	}

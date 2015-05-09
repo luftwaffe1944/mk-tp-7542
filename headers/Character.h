@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <map>
 #include <iostream>
+#include "AlternativeColor.h"
 using namespace std;
 
 
@@ -34,6 +35,9 @@ private:
 	bool isJumpingRight;
 	bool isJumpingLeft;
 	bool isDucking;
+	std::string playerNumber;
+	AlternativeColor* altColor;
+	bool isAltPlayer;
 
 public:
 	Character();
@@ -41,6 +45,7 @@ public:
 	void render(SDL_Renderer* render);
 	virtual ~Character();
 	Character(const LoaderParams* pParams, bool isRightOriented);
+	Character(const LoaderParams* pParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
@@ -49,6 +54,8 @@ public:
 	float getYGround();
 	bool reachedWindowLeftLimit();
 	bool reachedWindowRightLimit();
+	std::string getPlayerNumber();
+	void setPlayerNumber(std::string playerNumber);
 	float getPosXUL();
 	//Movement & position methods
 	void jump();
@@ -64,6 +71,11 @@ public:
 	void clearMovementsFlags();
 	bool isMovingRight();
 	bool isMovingLeft();
+	string getName();
+	AlternativeColor* getAlternativeColor();
+	void setAlternativeColor(AlternativeColor*);
+	bool getIsAlternativePlayer();
+	void setIsAlternativePlayer(bool isAltPlayer);
 };
 
 #endif /* CHARACTER_H_ */

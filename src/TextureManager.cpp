@@ -55,6 +55,38 @@ bool TextureManager::load(std::string fileName, std::string id,
 	return false;
 }
 
+void changeToAltColor(SDL_Surface* pTempSurface, double shift) {
+	uint32_t pixel = *( ( uint32_t * )pTempSurface->pixels);
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+	SDL_GetRGB(pixel, pTempSurface->format, &r, &g, &b);
+	RGBAndHSV::setRGB(r,g,b);
+	RGBAndHSV::convertRGBUsingShift(shift);
+	SDL_MapRGB(pTempSurface->format, r, g, b);
+}
+
+bool TextureManager::load(std::string fileName, std::string id,
+		SDL_Renderer* pRenderer, bool isAltPlayer, double shift) {
+	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
+	if (pTempSurface == 0) {
+		return false;
+	}
+	if (isAltPlayer) {
+		changeToAltColor(pTempSurface, shift);
+	}
+	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer,
+			pTempSurface);
+	SDL_FreeSurface(pTempSurface);
+
+	if (pTexture != 0) {
+		m_textureMap[id] = pTexture;
+		return true;
+	}
+
+	return false;
+}
+
 void TextureManager::draw(std::string id, int x, int y, int width, int height,
 		SDL_Renderer* pRenderer, SDL_RendererFlip flip) {
 	SDL_Rect srcRect;
@@ -126,3 +158,4 @@ void TextureManager::setAlpha(std::string id, Uint8 alpha) {
 	//Modulate texture alpha
 	SDL_SetTextureAlphaMod(m_textureMap[id], alpha);
 }
+

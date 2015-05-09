@@ -84,6 +84,14 @@ const string ROOT_IMAGE_PATH = "images/";
 
 #define JSON_KEY_NOMBRE "nombre"
 #define JSON_KEY_PERSONAJE "personaje"
+#define JSON_KEY_PERSONAJES "personajes"
+#define JSON_KEY_PELEA "pelea"
+#define JSON_KEY_LUCHADOR_1 "luchador1"
+#define JSON_KEY_LUCHADOR_2 "luchador2"
+#define JSON_KEY_COLOR_ALTERNATIVO "color-alternativo"
+#define JSON_KEY_H_INICIAL "h-inicial"
+#define JSON_KEY_H_FINAL "h-final"
+#define JSON_KEY_DESPLAZAMIENTO "desplazamiento"
 #define JSON_KEY_ZINDEX "zindex"
 #define JSON_KEY_ORIENTACION "orientacion"
 

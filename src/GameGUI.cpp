@@ -38,6 +38,10 @@ void GameGUI::setLayers(vector<Layer*> layers) {
 	this->layers = layers;
 }
 
+void GameGUI::setFight(Fight* fight) {
+	this->fight = fight;
+}
+
 vector<Character*> GameGUI::getCharacters() {
 	return this->characters;
 }
@@ -52,6 +56,10 @@ Window* GameGUI::getWindow() {
 
 Stage* GameGUI::getStage() {
 	return this->stage;
+}
+
+Fight* GameGUI::getFight() {
+	return this->fight;
 }
 
 

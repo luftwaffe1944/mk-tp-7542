@@ -20,6 +20,7 @@ public:
 	Sprite();
 	virtual ~Sprite();
 	Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount);
+	Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount, bool isAltPlayer, double shift);
     //void runForward(int firstFrame, int lastFrame, float fpsSpeed);
     //void runBackward(int firstFrame, int lastFrame, float fpsSpeed);
     std::string getSpriteId();

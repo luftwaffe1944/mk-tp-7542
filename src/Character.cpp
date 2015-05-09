@@ -8,6 +8,7 @@
 #include "../headers/Character.h"
 #include "../headers/TextureManager.h"
 #include "../headers/MKGame.h"
+#include "../headers/RGBAndHSV.h"
 #include <SDL.h>
 #include <stdlib.h>
 #include <fstream>
@@ -32,6 +33,18 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		clearMovementsFlags();
 }
 
+Character::Character(const LoaderParams* pParams) :
+		SDLObjectGUI(pParams) {
+		this->name = pParams->getTextureID();
+		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height) * ratioY;
+		this->imagePath = ROOT_IMAGE_PATH;
+		this->isAltPlayer = false;
+		//TODO: Review positions according to logic and pixels measures.
+		//override constructor
+		// initializing movements statements
+		clearMovementsFlags();
+}
+
 
 
 bool Character::load(SDL_Renderer* render) {
@@ -42,22 +55,23 @@ bool Character::load(SDL_Renderer* render) {
 		characterPath = this->imagePath + DEFAULT_PATH_SPRITE_CONTAINER;
 	}
 
-	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, characterPath+WALK_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 10);
-	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, characterPath+STANCE_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6);
-	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, characterPath+JUMP_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
-	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, characterPath+DIAGONAL_JUMP_SPRITE,
-				renderer, SPRITE_WIDTH, SPRITE_HEIGHT + 10, 9);
-	Sprite* spriteDuck = new Sprite(this->name+DUCK_SUFFIX, characterPath+DUCK_SPRITE,
-					renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3);
+	Sprite* spriteWalk = new Sprite(this->name+this->playerNumber+WALK_SUFFIX, characterPath+WALK_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 10, this->isAltPlayer, this->altColor->getShift());
+	Sprite* spriteStance = new Sprite(this->name+this->playerNumber+STANCE_SUFFIX, characterPath+STANCE_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor->getShift());
+	Sprite* spriteJump = new Sprite(this->name+this->playerNumber+JUMP_SUFFIX, characterPath+JUMP_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor->getShift());
+	Sprite* spriteJumpDiagonal = new Sprite(this->name+this->playerNumber+JUMP_DIAGONAL_SUFFIX, characterPath+DIAGONAL_JUMP_SPRITE,
+				renderer, SPRITE_WIDTH, SPRITE_HEIGHT + 10, 9, this->isAltPlayer, this->altColor->getShift());
+	Sprite* spriteDuck = new Sprite(this->name+this->playerNumber+DUCK_SUFFIX, characterPath+DUCK_SPRITE,
+					renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor->getShift());
+
 	//TODO: Files path must be generated depending on the character
-	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
-	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
-	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_SUFFIX, spriteJump));
-	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_DIAGONAL_SUFFIX, spriteJumpDiagonal));
-	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_SUFFIX, spriteDuck));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+STANCE_SUFFIX, spriteStance));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+JUMP_SUFFIX, spriteJump));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+JUMP_DIAGONAL_SUFFIX, spriteJumpDiagonal));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+DUCK_SUFFIX, spriteDuck));
 	return true;
 }
 
@@ -68,18 +82,18 @@ void Character::render(SDL_Renderer* render) {
 void Character::draw() {
 	Sprite* currentSprite;
 		if (this->getMovement() == WALKING_RIGHT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+WALK_SUFFIX];
 		} else if (this->getMovement() == WALKING_LEFT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+WALK_SUFFIX];
 		} else if (this->getMovement() == JUMPING_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+JUMP_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+JUMP_SUFFIX];
 		} else if (this->getMovement() == STANCE){
-			currentSprite = this->characterSprites[this->name+STANCE_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+STANCE_SUFFIX];
 		} else if (this->getMovement() == JUMPING_RIGHT_MOVEMENT ||
 				this->getMovement() == JUMPING_LEFT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+JUMP_DIAGONAL_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+JUMP_DIAGONAL_SUFFIX];
 		} else if (this->getMovement() == DUCKING_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+DUCK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+DUCK_SUFFIX];
 		} else{
 			//TODO: review
 		}
@@ -121,8 +135,12 @@ bool Character::reachedWindowRightLimit(){
 }
 
 void Character::update() {
-
-	InputCommand playerCommand = InputControl::Instance()->getFirstPlayerMove();
+	InputCommand playerCommand;
+	if (this->playerNumber == "1") {
+		playerCommand = InputControl::Instance()->getFirstPlayerMove();
+	} else {
+		playerCommand = InputControl::Instance()->getSecondPlayerMove();
+	}
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 	if (isJumping) {
@@ -187,7 +205,7 @@ void Character::update() {
 			break;
 		}
 	}
-	SDL_Delay(55);
+	SDL_Delay(25);
 }
 
 void Character::clearMovementsFlags(){
@@ -306,6 +324,19 @@ float Character::getYGround() {
 	return this->yGround;
 }
 
+string Character::getName() {
+	return this->name;
+}
+
+std::string Character::getPlayerNumber() {
+	return this->playerNumber;
+}
+
+void Character::setPlayerNumber(std::string playerNumber) {
+	this->playerNumber = playerNumber;
+}
+
+
 bool Character::isMovingRight(){
 	if (this->isJumpingRight || this->isWalkingRight) return true;
 	return false;
@@ -324,6 +355,7 @@ Character::~Character() {
 	 this->characterSprites.clear();
 
 }
+
 
 bool fileExists(string s)
 {
@@ -346,3 +378,20 @@ bool validateSpritesForSelectedCharacter(string characterPath) {
 	}
 	return true;
 }
+
+AlternativeColor* Character::getAlternativeColor(){
+	return this->altColor;
+}
+
+void Character::setAlternativeColor(AlternativeColor* altColor) {
+	this->altColor = altColor;
+}
+
+bool Character::getIsAlternativePlayer() {
+	return this->isAltPlayer;
+}
+
+void Character::setIsAlternativePlayer(bool isAltPlayer) {
+	this->isAltPlayer = isAltPlayer;
+}
+

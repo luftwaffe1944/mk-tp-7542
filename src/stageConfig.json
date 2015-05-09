@@ -1,4 +1,4 @@
-
+{
 	"ventana": {
 		"anchopx": 525,
 		"altopx": 400,
@@ -31,11 +31,32 @@
 			"ancho": 338.85
 		}
 	],
-	"personaje": {
-		"nombre": "subzero",
-		"ancho": 20,
-		"alto": 28.57,
-		"zindex": 99,
-		"orientacion": "right"
-	}
+	"personajes": [
+		{
+			"nombre": "subzero",
+			"ancho": 20,
+			"alto": 28.57,
+			"zindex": 99,
+			"color-alternativo": {
+				"h-inicial": 40,
+				"h-final": 45,
+				"desplazamiento": 30
+			}
+		},
+		{
+			"nombre": "scorpion",
+			"ancho": 20,
+			"alto": 28.57,
+			"zindex": 99,
+			"color-alternativo": {
+				"h-inicial": 40,
+				"h-final": 45,
+				"desplazamiento": 30
+			}
+		}
+	],
+	"pelea": {
+		"luchador1": "subzero",
+		"luchador2": "scorpion"
+	}	
 }
