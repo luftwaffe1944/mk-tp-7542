@@ -53,7 +53,7 @@ bool Character::load(SDL_Renderer* render) {
 	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, characterPath+DIAGONAL_JUMP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9);
 	Sprite* spriteDuck = new Sprite(this->name+DUCK_SUFFIX, characterPath+DUCK_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
 	Sprite* spriteHighPunch = new Sprite(this->name+HI_PUNCH_SUFFIX, characterPath+HIPUNCH_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7);
 	Sprite* spriteLowPunch = new Sprite(this->name+LO_PUNCH_SUFFIX, characterPath+LOPUNCH_SPRITE,
