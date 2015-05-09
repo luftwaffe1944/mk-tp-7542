@@ -65,7 +65,8 @@ public:
 	bool isAxisUp(int joystick);
 	bool isAxisDown(int joystick);
 	std::vector<SDL_Joystick*> joysticks;
-
+	bool getButtonState(int joyNum, int buttonNumber);
+	void setButtonStateFalse(int joy, int but);
 };
 
 #endif /* INPUTCONTROL_H_ */

@@ -151,10 +151,11 @@ void MKGame::handleEvents() {
 			reset = true;
 		}
 		if (event.type == SDL_JOYBUTTONDOWN ) {
-				InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
+			//std::cout << "asd";
+			InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
 		}
 		if (event.type == SDL_JOYBUTTONUP ) {
-				InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = false;
+			InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = false;
 		}
 		if (event.type == SDL_JOYAXISMOTION ){
 

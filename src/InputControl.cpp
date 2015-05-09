@@ -109,6 +109,118 @@ void InputControl::refreshInputs() {
 
 }
 
+
+bool InputControl::getButtonState(int joyNum, int buttonNumber) {
+	return this->joysticksButtonStates[joyNum][ buttonNumber];
+}
+
+
+void InputControl::refreshJoystickInputs() {
+
+	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
+
+	this->firstPlayerMove = NO_INPUT;
+	this->secondPlayerMove = NO_INPUT;
+	this->controlOption = NO_INPUT;
+
+	int joystick = 0;
+
+	if ((currentKeyStates[SDL_SCANCODE_R])) {
+		this->controlOption = RESET;
+
+		//COMBINATION WITH UP
+	} else if (this->isAxisUp( joystick )) {
+
+		if (!(this->isAxisDown( joystick ))
+				&& !(this->isAxisLeft( joystick ))
+				&& !(this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP;
+		} else if (!(this->isAxisDown( joystick ))
+				&& (this->isAxisLeft( joystick ))
+				&& !(this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
+		} else if (!(this->isAxisDown( joystick ))
+				&& !(this->isAxisLeft( joystick ))
+				&& (this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
+		}
+
+		//COMBINATION WITH DOWN
+	} else if (this->isAxisDown( joystick )) {
+		if (this->getButtonState(joystick,1)) {
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_PUNCH;
+			this->setButtonStateFalse(joystick,1);
+		} else if (this->getButtonState(joystick,0)) {
+			this->firstPlayerMove = FIRST_PLAYER_UPPERCUT;
+			this->setButtonStateFalse(joystick,0);
+		} else if (this->getButtonState(joystick,2)) {
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_LOW_kICK;
+			this->setButtonStateFalse(joystick,2);
+		} else if (this->getButtonState(joystick,3)) {
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_HIGH_kICK;
+			this->setButtonStateFalse(joystick,3);
+		} else if (!(this->isAxisUp( joystick ))
+				&& !(this->isAxisLeft( joystick ))
+				&& (this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
+		} else if (!(this->isAxisUp( joystick ))
+				&& (this->isAxisLeft( joystick ))
+				&& !(this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
+		} else if (!(this->isAxisUp( joystick ))
+				&& !(this->isAxisLeft( joystick ))
+				&& !(this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN;
+
+		}
+		//COMBINATION WITH LEFT
+	} else if (this->isAxisLeft( joystick )) {
+		if (this->getButtonState(joystick,3)){
+			this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
+			this->setButtonStateFalse(joystick,3);
+		}
+		else if (!(this->isAxisUp( joystick ))
+				&& !(this->isAxisDown( joystick ))
+				&& !(this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_LEFT;
+		}
+		//COMBINATION WITH RIGHT
+	} else if (this->isAxisRight( joystick )) {
+		if (!(this->isAxisUp( joystick ))
+				&& !(this->isAxisDown( joystick ))
+				&& !(this->isAxisLeft( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+		}
+		//COMBINATION WITH S
+	} else if (this->getButtonState(joystick,0)) {
+		if (!(this->isAxisDown( joystick ))
+				&& !(this->isAxisLeft( joystick ))
+				&& !(this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_HI_PUNCH;
+			this->setButtonStateFalse(joystick,0);
+		}
+		//COMBINATION WITH A
+	} else if (this->getButtonState(joystick,1)) {
+		if (!(this->isAxisDown( joystick ))
+				&& !(this->isAxisLeft( joystick ))
+				&& !(this->isAxisRight( joystick ))) {
+			this->firstPlayerMove = FIRST_PLAYER_LO_PUNCH;
+			this->setButtonStateFalse(joystick,1);
+		}
+
+	} else if (this->getButtonState(joystick,3)) {
+		this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
+		this->setButtonStateFalse(joystick,3);
+	}
+
+	else if (this->getButtonState(joystick,2)) {
+		this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
+		this->setButtonStateFalse(joystick,2);
+	}
+
+}
+
+/*
 void InputControl::refreshJoystickInputs(){
 
 	this->firstPlayerMove = NO_INPUT;
@@ -159,7 +271,20 @@ void InputControl::refreshJoystickInputs(){
 			&& (this->isAxisRight( joystick ))) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
 
+	} else if (this->getButtonState(joystick,3)) {
+		this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
+		this->setButtonStateFalse(0,3);
+
+	} else if (this->getButtonState(joystick,2)) {
+		this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
+		this->setButtonStateFalse(0,2);
 	}
+
+}
+*/
+
+void InputControl::setButtonStateFalse(int joy, int but) {
+	this->joysticksButtonStates[joy][but] = false;
 }
 
 bool InputControl::isAxisRight(int joystick) {
