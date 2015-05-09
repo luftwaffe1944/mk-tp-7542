@@ -35,6 +35,7 @@ private:
 	bool isJumpingRight;
 	bool isJumpingLeft;
 	bool isDucking;
+	bool isDuckingSingle;
 	bool isPunchingHigh;
 	bool isPunchingLow;
 	bool isPunchingDuck;
