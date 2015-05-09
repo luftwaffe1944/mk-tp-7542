@@ -63,6 +63,14 @@ void Sprite::refresh(){
 	this->currentFrame = 0;
 }
 
+int Sprite::getCurrentFrame(){
+	return this->currentFrame;
+}
+
+int Sprite::getFramesAmount(){
+	return this->framesAmount;
+}
+
 Sprite::~Sprite() {
 }
 

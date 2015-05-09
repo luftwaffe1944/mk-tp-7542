@@ -3,6 +3,8 @@
 #include "../headers/Log.h"
 #include "../headers/GameGUIBuilder.h"
 #include "../headers/GameGUI.h"
+#include "../headers/Timer.h"
+
 
 // our Game object
 MKGame* mkGame = 0;
@@ -10,7 +12,6 @@ MKGame* mkGame = 0;
 int main(int argc, char* argv[]) {
 
 	string configFilePath = "";
-
 
 	if (argc > 2){
 		//PARAMETROS (jsonPath , reportinLevel)
@@ -34,7 +35,7 @@ int main(int argc, char* argv[]) {
 				MKGame::Instance()->handleEvents();
 				MKGame::Instance()->update();
 				MKGame::Instance()->render();
-				SDL_Delay(10);
+				SDL_Delay(5);
 			}
 			if (!(MKGame::Instance()->running())){
 				runApp = false;

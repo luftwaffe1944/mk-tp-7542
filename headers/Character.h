@@ -21,6 +21,7 @@ using namespace std;
 
 class Character : public SDLObjectGUI {
 private:
+	Sprite* currentSprite;
 	std::string name;
 	int zindex;
 	bool isRightOriented;
@@ -34,8 +35,19 @@ private:
 	bool isJumpingRight;
 	bool isJumpingLeft;
 	bool isDucking;
+	bool isDuckingSingle;
+	bool isPunchingHigh;
+	bool isPunchingLow;
+	bool isPunchingDuck;
+	bool isPunchingAnUppercut;
+	bool isKickingLow;
+	bool isKickingHigh;
+	bool isKickingDuckHigh;
+	bool isKickingDuckLow;
+	bool isKickingSuper;
 
 public:
+	static std::map<std::string,int> movesCounter;
 	Character();
 	virtual bool load(SDL_Renderer* );
 	void render(SDL_Renderer* render);
@@ -65,6 +77,11 @@ public:
 	bool isMovingRight();
 	bool isMovingLeft();
 	void getNextPosition(float* nextPositionX, float* nextPositionY); //redefinir virtual
-};
+	std::string getName();
+	void incrementCounter(string moveKey);
+	void setCurrentSprite();
+	void resetCounter(string moveKey);
+	void completeMovement();
+	void setMoveFlag(bool trueOrFalse);
 
 #endif /* CHARACTER_H_ */

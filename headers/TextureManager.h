@@ -11,6 +11,9 @@
 #include <iostream>
 #include <map>
 #include <SDL.h>
+#include <SDL_image.h>
+#include "SDL_ttf.h"
+#include "Log.h"
 using namespace std;
 
 class TextureManager {
@@ -50,6 +53,10 @@ public:
 
 	//Set alpha modulation
 	void setAlpha(std::string id, Uint8 alpha );
+
+	bool loadFromRenderedText( std::string id, std::string textureText, SDL_Color textColor, TTF_Font *gFont, SDL_Renderer *gRenderer );
+
+	bool unload( std::string id );
 
 	float ratioWidth;
 	float ratioHeight;

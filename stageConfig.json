@@ -5,9 +5,9 @@
 		"ancho": 150
 	},
 	"escenario": {
-		"ancho": 500,
-		"alto": 167.14,
-		"ypiso": 185
+		"ancho": 400,
+		"alto": 137.14,
+		"ypiso": 125
 	},
 	"capas": [
 		{
@@ -33,8 +33,8 @@
 	],
 	"personaje": {
 		"nombre": "subzero",
-		"ancho": 55,
-		"alto": 70,
+		"ancho": 20,
+		"alto": 28.57,
 		"zindex": 99,
 		"orientacion": "right"
 	}

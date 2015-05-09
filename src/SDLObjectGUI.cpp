@@ -75,3 +75,11 @@ string SDLObjectGUI::getTextureID() {
 int SDLObjectGUI::getZIndex() {
 	return this->zIndex;
 }
+
+void SDLObjectGUI::setPositionY(float posY) {
+	this->positionY = posY;
+}
+
+float SDLObjectGUI::getPositionY() {
+	return this->positionY;
+}
