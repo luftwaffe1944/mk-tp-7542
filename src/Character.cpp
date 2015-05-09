@@ -108,24 +108,6 @@ void Character::render(SDL_Renderer* render) {
 
 
 void Character::draw() {
-	Sprite* currentSprite;
-		if (this->getMovement() == WALKING_RIGHT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+this->playerNumber+WALK_SUFFIX];
-		} else if (this->getMovement() == WALKING_LEFT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+this->playerNumber+WALK_SUFFIX];
-		} else if (this->getMovement() == JUMPING_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+this->playerNumber+JUMP_SUFFIX];
-		} else if (this->getMovement() == STANCE){
-			currentSprite = this->characterSprites[this->name+this->playerNumber+STANCE_SUFFIX];
-		} else if (this->getMovement() == JUMPING_RIGHT_MOVEMENT ||
-				this->getMovement() == JUMPING_LEFT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+this->playerNumber+JUMP_DIAGONAL_SUFFIX];
-		} else if (this->getMovement() == DUCKING_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+this->playerNumber+DUCK_SUFFIX];
-		} else{
-			//TODO: review
-		}
-
 	int currentFrame;
 
 	if(this->isDucking) {
@@ -540,50 +522,50 @@ void Character::setIsAlternativePlayer(bool isAltPlayer) {
 
 void Character::setCurrentSprite(){
 	if (this->getMovement() == WALKING_RIGHT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+WALK_SUFFIX];
 
 		} else if (this->getMovement() == WALKING_LEFT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+WALK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+WALK_SUFFIX];
 
 		} else if (this->getMovement() == JUMPING_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+JUMP_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+JUMP_SUFFIX];
 
 		} else if (this->getMovement() == STANCE){
-			currentSprite = this->characterSprites[this->name+STANCE_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+STANCE_SUFFIX];
 
 		} else if (this->getMovement() == JUMPING_RIGHT_MOVEMENT ||
 				this->getMovement() == JUMPING_LEFT_MOVEMENT){
-			currentSprite = this->characterSprites[this->name+JUMP_DIAGONAL_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+JUMP_DIAGONAL_SUFFIX];
 
 		} else if (this->getMovement() == DUCKING_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+DUCK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+DUCK_SUFFIX];
 
 		} else if (this->getMovement() == PUNCHING_HIGH_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+HI_PUNCH_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+HI_PUNCH_SUFFIX];
 
 		} else if (this->getMovement() == PUNCHING_LOW_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+LO_PUNCH_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+LO_PUNCH_SUFFIX];
 
 		} else if (this->getMovement() == PUNCHING_DUCK_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+DUCK_PUNCH_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+DUCK_PUNCH_SUFFIX];
 
 		} else if (this->getMovement() == UPPERCUT_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+UPPERCUT_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+UPPERCUT_SUFFIX];
 
 		} else if (this->getMovement() == LOW_KICK_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+LOW_KICK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+LOW_KICK_SUFFIX];
 
 		} else if (this->getMovement() == HIGH_KICK_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+HIGH_KICK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+HIGH_KICK_SUFFIX];
 
 		} else if (this->getMovement() == DUCK_HIGH_KICK_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+DUCK_HIGH_KICK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+DUCK_HIGH_KICK_SUFFIX];
 
 		} else if (this->getMovement() == DUCK_LOW_KICK_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+DUCK_LOW_KICK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+DUCK_LOW_KICK_SUFFIX];
 
 		} else if (this->getMovement() == SUPER_KICK_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name+SUPER_KICK_SUFFIX];
+			currentSprite = this->characterSprites[this->name+this->playerNumber+SUPER_KICK_SUFFIX];
 		} else{
 			//TODO: review
 		}
