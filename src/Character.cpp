@@ -288,6 +288,13 @@ void Character::clearMovementsFlags(){
 	isPunchingAnUppercut = false;
 	isKickingHigh = false;
 	isKickingLow = false;
+	isKickingDuckHigh = false;
+	isKickingDuckLow = false;
+	isKickingSuper = false;
+	isPunchingAnUppercut = false;
+	isPunchingLow = false;
+	isPunchingDuck = false;
+	isPunchingHigh = false;
 }
 
 void Character::jump() {
