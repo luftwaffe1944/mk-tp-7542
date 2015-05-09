@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <map>
+#include "Collitionable.h"
 using namespace std;
 
 class CollitionManager {
@@ -21,7 +22,7 @@ public:
 		}
 
 	void resetInstance();
-	void solveCollitions();
+	void solveCollitions(vector<Collitionable*> objects);
 
 private:
 	static CollitionManager* t_pInstance;

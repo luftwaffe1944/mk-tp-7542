@@ -31,6 +31,7 @@ public:
 	float getRightX();
 	bool isActive();
 	bool isColliding(Box* box);
+	Box* cloneBox();
 };
 
 

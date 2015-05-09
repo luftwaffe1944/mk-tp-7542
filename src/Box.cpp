@@ -16,6 +16,11 @@ using namespace std;
 	float Box::getRightX(){return (this->centerX)+(this->height/2);}
 	bool Box::isActive(){return this->active;}
 
+	Box* Box::cloneBox(){
+		Box* box = new Box(this->centerX, this->centerY, this->width, this->height, this->active);
+		return box;
+	}
+
 	bool Box::isColliding(Box* box2){
 		bool collide = false;
 

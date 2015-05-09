@@ -33,6 +33,10 @@ public:
 	virtual ~Collitionable();
 	virtual void update();
 
+	bool getMoving(){return this->isMoving;}
+	void setCMoving(bool moving){this->isMoving = moving;}
+	vector<Box*> getShapes(){return this->Shapes;}
+
 };
 
 #endif /* COLLITIONABLE_H_ */
