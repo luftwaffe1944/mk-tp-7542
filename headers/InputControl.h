@@ -43,7 +43,7 @@ private:
 	InputCommand firstPlayerMove;
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
-	std::vector<SDL_Joystick*> joysticks;
+
 
 public:
 	static InputControl* Instance() {
@@ -64,6 +64,8 @@ public:
 	bool isAxisLeft(int joystick);
 	bool isAxisUp(int joystick);
 	bool isAxisDown(int joystick);
+	std::vector<SDL_Joystick*> joysticks;
+
 };
 
 #endif /* INPUTCONTROL_H_ */

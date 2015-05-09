@@ -242,9 +242,10 @@ void InputControl::update() {
 
 void InputControl::clean() {
 
-	for (int i = 0; i < SDL_NumJoysticks(); i++){
+	for (unsigned int i = 0; i < this->joysticks.size(); i++){
 		SDL_JoystickClose(this->joysticks[i]);
 	}
+	this->joysticks.clear();
 
 
 }
