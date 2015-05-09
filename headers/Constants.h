@@ -68,6 +68,11 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define DUCK_HIGH_KICK_MOVEMENT "duckHighKick"
 #define SUPER_KICK_MOVEMENT "superKick"
 
+#define AIR_HIGH_kICK_MOVEMENT = "airHighKick"
+#define AIR_LOW_kICK_MOVEMENT = "airLowKick"
+#define BLOCK_MOVEMENT = "block"
+#define DUCK_BLOCK_MOVEMENT = "duckBlock"
+
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
 #define STANCE_SUFFIX "Stance"
@@ -83,6 +88,10 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define DUCK_LOW_KICK_SUFFIX "duckLowKick"
 #define DUCK_HIGH_KICK_SUFFIX "duckHighKick"
 #define SUPER_KICK_SUFFIX "superKick"
+#define AIR_HIGH_kICK_SUFFIX "airHighKick"
+#define AIR_LOW_kICK_SUFFIX "airLowKick"
+#define BLOCK_SUFFIX "block"
+#define DUCK_BLOCK_SUFFIX "duckBlock"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -103,6 +112,10 @@ const string HIGH_KICK_SPRITE = "/highKick.png";
 const string DUCK_LOW_KICK_SPRITE = "/duckLowKick.png";
 const string DUCK_HIGH_KICK_SPRITE = "/duckHighKick.png";
 const string SUPER_KICK_SPRITE = "/superKick.png";
+const string AIR_HIGH_KICK_SPRITE = "/airHighKick.png";
+const string AIR_LOW_KICK_SPRITE = "/airLowKick.png";
+const string DUCK_BLOCK_SPRITE = "/duckBlock.png";
+const string BLOCK_SPRITE = "/block.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 

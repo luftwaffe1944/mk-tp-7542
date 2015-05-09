@@ -72,6 +72,14 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, 200, 170, 4);
 	Sprite* spriteSuperKick = new Sprite(this->name+SUPER_KICK_SUFFIX, characterPath+SUPER_KICK_SPRITE,
 			renderer, 200, 170, 8);
+	Sprite* spriteAirHighKick = new Sprite(this->name+AIR_HIGH_kICK_SUFFIX, characterPath+AIR_HIGH_KICK_SPRITE,
+			renderer, 200, 170, 3);
+	Sprite* spriteAirLowKick = new Sprite(this->name+AIR_LOW_kICK_SUFFIX, characterPath+AIR_LOW_KICK_SPRITE,
+			renderer, 200, 170, 3);
+	Sprite* spriteBlock = new Sprite(this->name+BLOCK_SUFFIX, characterPath+BLOCK_SPRITE,
+			renderer, 200, 170, 3);
+	Sprite* spriteDuckBlock = new Sprite(this->name+DUCK_BLOCK_SUFFIX, characterPath+DUCK_BLOCK_SPRITE,
+			renderer, 200, 170, 3);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
@@ -87,6 +95,10 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_LOW_KICK_SUFFIX, spriteDuckLowKick));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_HIGH_KICK_SUFFIX, spriteDuckHighKick));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+SUPER_KICK_SUFFIX, spriteSuperKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+AIR_HIGH_kICK_SUFFIX, spriteAirHighKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+AIR_LOW_kICK_SUFFIX, spriteAirLowKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+BLOCK_SUFFIX, spriteBlock));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_BLOCK_SUFFIX, spriteDuckBlock));
 	return true;
 }
 
