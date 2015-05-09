@@ -11,6 +11,13 @@
 //Default GameGUI measures
 #include <string>
 using namespace std;
+
+//Joystick
+#define MAX_XAXIS 32000 //max 32767
+#define MAX_YAXIS 32000
+#define MIN_XAXIS -32000 //min -32768
+#define MIN_YAXIS -32000
+
 //window
 #define MAX_WINDOW_WIDTH_PX 1366
 #define MAX_WINDOW_HEIGHT_PX 768

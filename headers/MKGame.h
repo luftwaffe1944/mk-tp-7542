@@ -1,5 +1,5 @@
 /*
- * MKGame.h
+ * MKGame.0h
  *
  *  Created on: Mar 28, 2015
  *      Author: nicolas.m.outeda
@@ -20,7 +20,8 @@
 #include "LayerManager.h"
 #include <algorithm>
 #include "Log.h"
-
+//#include "SDL_gamecontroller.h"
+//#include "SDL_joystick.h"
 using namespace std;
 
 template <typename T>
@@ -39,6 +40,7 @@ private:
 	InputControl keyboardControl;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
+	//SDL_Joystick* gGameController;
 
 	MKGame() {
 		m_bRunning = false;
@@ -46,6 +48,7 @@ private:
 		m_pWindow = NULL;
 		m_pRenderer = NULL;
 		gameGui = NULL;
+		//gGameController = NULL;
 	}
 
 public:
@@ -59,6 +62,7 @@ public:
 		TextureManager::Instance()->resetInstance();
 		SDL_DestroyRenderer(this->m_pRenderer);
 		SDL_DestroyWindow(this->m_pWindow);
+		//SDL_JoystickClose( this->gGameController );
 
 		IMG_Quit();
 		SDL_Quit();

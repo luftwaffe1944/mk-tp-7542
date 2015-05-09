@@ -8,6 +8,11 @@
 #ifndef INPUTCONTROL_H_
 #define INPUTCONTROL_H_
 
+#include <vector>
+#include <string>
+#include "SDL.h"
+
+
 enum InputCommand {
 	NO_INPUT,
 	FIRST_PLAYER_MOVE_UP,
@@ -27,15 +32,27 @@ private:
 	InputCommand firstPlayerMove;
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
+	std::vector<SDL_Joystick*> joysticks;
+
 public:
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
 		return &t_pInstance;
 	}
 	void refreshInputs();
+	void update();
+	void clean();
+	void initJoysticks();
 	InputCommand getFirstPlayerMove();
 	InputCommand getSecondPlayerMove();
 	InputCommand getControlOption();
+	std::vector<std::vector <bool> > joysticksButtonStates;
+	std::vector<std::pair <int,int> > joystickAxisStates;
+	void refreshJoystickInputs();
+	bool isAxisRight(int joystick);
+	bool isAxisLeft(int joystick);
+	bool isAxisUp(int joystick);
+	bool isAxisDown(int joystick);
 };
 
 #endif /* INPUTCONTROL_H_ */

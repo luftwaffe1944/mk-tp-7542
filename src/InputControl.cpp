@@ -72,6 +72,75 @@ void InputControl::refreshInputs() {
 
 }
 
+void InputControl::refreshJoystickInputs(){
+
+	this->firstPlayerMove = NO_INPUT;
+	this->secondPlayerMove = NO_INPUT;
+	this->controlOption = NO_INPUT;
+
+	int joystick = 0;
+
+
+	if ( (this->isAxisUp( joystick ) )
+			&& !(this->isAxisDown( joystick ))
+			&& (this->isAxisLeft( joystick ))
+			&& !(this->isAxisRight( joystick ))) {
+		this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
+	} else if ((this->isAxisUp( joystick ))
+			&& !(this->isAxisDown( joystick ))
+			&& !(this->isAxisLeft( joystick ))
+			&& (this->isAxisRight( joystick ))) {
+		this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
+	} else if (!(this->isAxisUp( joystick ))
+			&& (this->isAxisDown( joystick ))
+			&& !(this->isAxisLeft( joystick ))
+			&& (this->isAxisRight( joystick ))) {
+		this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
+	} else if (!(this->isAxisUp( joystick ))
+			&& (this->isAxisDown( joystick ))
+			&& (this->isAxisLeft( joystick ))
+			&& !(this->isAxisRight( joystick ))) {
+		this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
+	} else if ((this->isAxisUp( joystick ))
+			&& !(this->isAxisDown( joystick ))
+			&& !(this->isAxisLeft( joystick ))
+			&& !(this->isAxisRight( joystick ))) {
+		this->firstPlayerMove = FIRST_PLAYER_MOVE_UP;
+	} else if (!(this->isAxisUp( joystick ))
+			&& (this->isAxisDown( joystick ))
+			&& !(this->isAxisLeft( joystick ))
+			&& !(this->isAxisRight( joystick ))) {
+		this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN;
+	} else if (!(this->isAxisUp( joystick ))
+			&& !(this->isAxisDown( joystick ))
+			&& (this->isAxisLeft( joystick ))
+			&& !(this->isAxisRight( joystick ))) {
+		this->firstPlayerMove = FIRST_PLAYER_MOVE_LEFT;
+	} else if (!(this->isAxisUp( joystick ))
+			&& !(this->isAxisDown( joystick ))
+			&& !(this->isAxisLeft( joystick ))
+			&& (this->isAxisRight( joystick ))) {
+		this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+
+	}
+}
+
+bool InputControl::isAxisRight(int joystick) {
+	return this->joystickAxisStates[joystick].first > 0;
+}
+
+bool InputControl::isAxisLeft(int joystick) {
+	return this->joystickAxisStates[joystick].first < 0;
+}
+
+bool InputControl::isAxisUp(int joystick) {
+	return this->joystickAxisStates[joystick].second < 0;
+}
+
+bool InputControl::isAxisDown(int joystick) {
+	return this->joystickAxisStates[joystick].second > 0;
+}
+
 InputCommand InputControl::getFirstPlayerMove() {
 	return this->firstPlayerMove;
 }
@@ -82,4 +151,63 @@ InputCommand InputControl::getSecondPlayerMove() {
 
 InputCommand InputControl::getControlOption() {
 	return this->controlOption;
+}
+
+void InputControl::initJoysticks() {
+
+	FILE_LOG(logDEBUG) << "Number of Joysticks connected: " << SDL_NumJoysticks();
+
+	//Check for joysticks
+	if( SDL_NumJoysticks() < 1 ) {
+
+		FILE_LOG(logERROR) << "Error: No joysticks connected!";
+
+	} else {
+
+		SDL_SetHint("SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS", "1"); //Linea magica que hace que funcione el input del joystick
+
+		//Load joysticks
+		for (int i = 0; i < SDL_NumJoysticks(); i++) {
+
+			SDL_Joystick* joystick = SDL_JoystickOpen(i);
+
+			if (joystick == NULL) {
+
+				FILE_LOG(logERROR) << "Failed to open joystick " << i << SDL_GetError();
+
+			} else {
+
+				int buttonCount = SDL_JoystickNumButtons(joystick);
+
+				FILE_LOG(logDEBUG) << "Joystick " << i << " button count " << buttonCount;
+
+				std::vector<bool> buttonStates;
+
+				for ( int j = 0; j < buttonCount; j++) {
+					buttonStates.push_back(false);
+				}
+
+				this->joysticksButtonStates.push_back(buttonStates);
+				this->joysticks.push_back(joystick);
+
+				this->joystickAxisStates.push_back({0,0});
+				FILE_LOG(logDEBUG) << "Joystick " << i << " initialized";
+			}
+		}
+	}
+}
+
+
+void InputControl::update() {
+}
+
+
+
+void InputControl::clean() {
+
+	for (int i = 0; i < SDL_NumJoysticks(); i++){
+		SDL_JoystickClose(this->joysticks[i]);
+	}
+
+
 }

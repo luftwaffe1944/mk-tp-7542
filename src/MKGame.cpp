@@ -28,6 +28,10 @@ bool MKGame::init(GameGUI* gameGui) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		FILE_LOG(logDEBUG) << "SDL init success";
 
+
+		InputControl::Instance()->initJoysticks();
+
+
 		Window* gameWindow = this->gameGui->getWindow();
 		m_pWindow = SDL_CreateWindow(gameWindow->title, gameWindow->xpos,
 				gameWindow->ypos, gameWindow->widthPx, gameWindow->heightPx, 0);
@@ -87,10 +91,14 @@ void MKGame::clean() {
 	objectList.clear();
 
 	LayerManager::Instance()->clean();
+	InputControl::Instance()->clean();
 
 	TextureManager::Instance()->resetInstance();
 	SDL_DestroyRenderer(this->m_pRenderer);
 	SDL_DestroyWindow(this->m_pWindow);
+
+	//SDL_JoystickClose( this->gGameController );
+	//gGameController = NULL;
 
 	IMG_Quit();
 	SDL_Quit();
@@ -116,14 +124,50 @@ void MKGame::handleEvents() {
 	SDL_Event event;
 	bool reset = false;
 	while (SDL_PollEvent(&event)) {
+
 		if (event.type == SDL_QUIT) {
 			MKGame::Instance()->quit();
 		}
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r && event.key.repeat == 0) {
 			reset = true;
 		}
+		if (event.type == SDL_JOYBUTTONDOWN ) {
+				InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
+		}
+		if (event.type == SDL_JOYBUTTONUP ) {
+				InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = false;
+		}
+		if (event.type == SDL_JOYAXISMOTION ){
+
+			int num_joy = event.jaxis.which;
+
+			//derecha e izquierda
+			if (event.jaxis.axis == 0) {
+
+				if (event.jaxis.value > MAX_XAXIS || event.jaxis.value < MIN_XAXIS) {
+					InputControl::Instance()->joystickAxisStates[num_joy].first = event.jaxis.value;
+				} else {
+					InputControl::Instance()->joystickAxisStates[num_joy].first = 0;
+				}
+
+			}
+
+			//arriba y abajo
+			if (event.jaxis.axis == 1) {
+
+				if (event.jaxis.value > MAX_YAXIS || event.jaxis.value < MIN_YAXIS){
+					InputControl::Instance()->joystickAxisStates[num_joy].second = event.jaxis.value;
+				} else {
+					InputControl::Instance()->joystickAxisStates[num_joy].second = 0;
+				}
+
+			}
+
+		}
 	}
 	InputControl::Instance()->refreshInputs();
+	InputControl::Instance()->refreshJoystickInputs();
+	//InputControl::Instance()->update();
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
