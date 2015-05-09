@@ -115,7 +115,7 @@ void LayerManager::refresh() {
 	int windowWidth = this->window->width;
 	int characterWidth = this->characters[0]->getWidth();
 	bool refresh = false;
-	int orientation;
+	int orientation = 1;
 
 
 if ( ( (windowWidth - (posXCharacter + characterWidth )) < WINDOW_MARGIN) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight) {

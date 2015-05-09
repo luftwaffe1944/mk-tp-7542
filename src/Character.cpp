@@ -43,22 +43,49 @@ bool Character::load(SDL_Renderer* render) {
 	}
 
 	Sprite* spriteWalk = new Sprite(this->name+WALK_SUFFIX, characterPath+WALK_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 10);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8);
 	Sprite* spriteStance = new Sprite(this->name+STANCE_SUFFIX, characterPath+STANCE_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9);
 	Sprite* spriteJump = new Sprite(this->name+JUMP_SUFFIX, characterPath+JUMP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
 	Sprite* spriteJumpDiagonal = new Sprite(this->name+JUMP_DIAGONAL_SUFFIX, characterPath+DIAGONAL_JUMP_SPRITE,
-				renderer, SPRITE_WIDTH, SPRITE_HEIGHT + 10, 9);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9);
 	Sprite* spriteDuck = new Sprite(this->name+DUCK_SUFFIX, characterPath+DUCK_SPRITE,
-					renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3);
+	Sprite* spriteHighPunch = new Sprite(this->name+HI_PUNCH_SUFFIX, characterPath+HIPUNCH_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7);
+	Sprite* spriteLowPunch = new Sprite(this->name+LO_PUNCH_SUFFIX, characterPath+LOPUNCH_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6);
+	Sprite* spriteDuckPunch = new Sprite(this->name+DUCK_PUNCH_SUFFIX, characterPath+DUCKPUNCH_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 2);
+	Sprite* spriteUpperCut = new Sprite(this->name+UPPERCUT_SUFFIX, characterPath+UPPERCUT_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT +30, 5);
+	Sprite* spriteLowKick = new Sprite(this->name+LOW_KICK_SUFFIX, characterPath+LOW_KICK_SPRITE,
+			renderer, 200, 170, 6);
+	Sprite* spriteHighKick = new Sprite(this->name+HIGH_KICK_SUFFIX, characterPath+HIGH_KICK_SPRITE,
+			renderer, 200, 170, 6);
+	Sprite* spriteDuckLowKick = new Sprite(this->name+DUCK_LOW_KICK_SUFFIX, characterPath+DUCK_LOW_KICK_SPRITE,
+			renderer, 200, 170, 3);
+	Sprite* spriteDuckHighKick = new Sprite(this->name+DUCK_HIGH_KICK_SUFFIX, characterPath+DUCK_HIGH_KICK_SPRITE,
+			renderer, 200, 170, 4);
+	Sprite* spriteSuperKick = new Sprite(this->name+SUPER_KICK_SUFFIX, characterPath+SUPER_KICK_SPRITE,
+			renderer, 200, 170, 8);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_SUFFIX, spriteJump));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+JUMP_DIAGONAL_SUFFIX, spriteJumpDiagonal));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_SUFFIX, spriteDuck));
-
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+HI_PUNCH_SUFFIX, spriteHighPunch));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+LO_PUNCH_SUFFIX, spriteLowPunch));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_PUNCH_SUFFIX, spriteDuckPunch));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+UPPERCUT_SUFFIX, spriteUpperCut));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+LOW_KICK_SUFFIX, spriteLowKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+HIGH_KICK_SUFFIX, spriteHighKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_LOW_KICK_SUFFIX, spriteDuckLowKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_HIGH_KICK_SUFFIX, spriteDuckHighKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+SUPER_KICK_SUFFIX, spriteSuperKick));
+	return true;
 }
 
 void Character::render(SDL_Renderer* render) {
@@ -80,6 +107,24 @@ void Character::draw() {
 			currentSprite = this->characterSprites[this->name+JUMP_DIAGONAL_SUFFIX];
 		} else if (this->getMovement() == DUCKING_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+DUCK_SUFFIX];
+		} else if (this->getMovement() == PUNCHING_HIGH_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+HI_PUNCH_SUFFIX];
+		} else if (this->getMovement() == PUNCHING_LOW_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+LO_PUNCH_SUFFIX];
+		} else if (this->getMovement() == PUNCHING_DUCK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+DUCK_PUNCH_SUFFIX];
+		} else if (this->getMovement() == UPPERCUT_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+UPPERCUT_SUFFIX];
+		} else if (this->getMovement() == LOW_KICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+LOW_KICK_SUFFIX];
+		} else if (this->getMovement() == HIGH_KICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+HIGH_KICK_SUFFIX];
+		} else if (this->getMovement() == DUCK_HIGH_KICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+DUCK_HIGH_KICK_SUFFIX];
+		} else if (this->getMovement() == DUCK_LOW_KICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+DUCK_LOW_KICK_SUFFIX];
+		} else if (this->getMovement() == SUPER_KICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+SUPER_KICK_SUFFIX];
 		} else{
 			//TODO: review
 		}
@@ -182,6 +227,42 @@ void Character::update() {
 		case FIRST_PLAYER_CHANGE_ORIENTATION:
 			isRightOriented = !isRightOriented;
 			break;
+		case FIRST_PLAYER_HI_PUNCH:
+			this->setMovement(PUNCHING_HIGH_MOVEMENT);
+			this->isPunchingHigh = true;
+			break;
+		case FIRST_PLAYER_LO_PUNCH:
+			this->setMovement(PUNCHING_LOW_MOVEMENT);
+			this->isPunchingLow = true;
+			break;
+		case FIRST_PLAYER_DUCK_PUNCH:
+			this->setMovement(PUNCHING_DUCK_MOVEMENT);
+			this->isPunchingDuck = true;
+			break;
+		case FIRST_PLAYER_UPPERCUT:
+			this->setMovement(UPPERCUT_MOVEMENT);
+			this->isPunchingAnUppercut = true;
+			break;
+		case FIRST_PLAYER_LOW_KICK:
+			this->setMovement(LOW_KICK_MOVEMENT);
+			this->isKickingLow = true;
+			break;
+		case FIRST_PLAYER_HIGH_KICK:
+			this->setMovement(HIGH_KICK_MOVEMENT);
+			this->isKickingHigh = true;
+			break;
+		case FIRST_PLAYER_DUCK_LOW_kICK:
+			this->setMovement(DUCK_LOW_KICK_MOVEMENT);
+			this->isKickingDuckLow = true;
+			break;
+		case FIRST_PLAYER_DUCK_HIGH_kICK:
+			this->setMovement(DUCK_HIGH_KICK_MOVEMENT);
+			this->isKickingDuckHigh = true;
+			break;
+		case FIRST_PLAYER_SUPER_kICK:
+			this->setMovement(SUPER_KICK_MOVEMENT);
+			this->isKickingSuper = true;
+			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
 			break;
@@ -197,6 +278,12 @@ void Character::clearMovementsFlags(){
 	isWalkingRight = false;
 	isWalkingLeft = false;
 	isDucking = false;
+	isPunchingDuck = false;
+	isPunchingHigh = false;
+	isPunchingLow = false;
+	isPunchingAnUppercut = false;
+	isKickingHigh = false;
+	isKickingLow = false;
 }
 
 void Character::jump() {
@@ -286,6 +373,7 @@ std::string Character::getMovement() {
 }
 
 void Character::clean() {
+	delete this->pParams;
 }
 
 
@@ -316,10 +404,12 @@ bool Character::isMovingLeft(){
 }
 
 Character::~Character() {
-	 for (std::map<string,Sprite*>::iterator it=this->characterSprites.begin(); it!=this->characterSprites.end(); ++it){
+	 delete this->pParams;
+	for (std::map<string,Sprite*>::iterator it=this->characterSprites.begin(); it!=this->characterSprites.end(); ++it){
 		 delete(it->second);
 	 }
 	 this->characterSprites.clear();
+
 }
 
 bool fileExists(string s)
