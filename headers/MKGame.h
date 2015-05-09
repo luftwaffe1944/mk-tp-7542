@@ -42,12 +42,22 @@ private:
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 
+	bool shouldBeShaking;
+	int shakeLength;
+	int shakeIntensity;
+
+	float offSetPosY;
+
 	MKGame() {
 		m_bRunning = false;
 		m_bReset = false;
 		m_pWindow = NULL;
 		m_pRenderer = NULL;
 		gameGui = NULL;
+		shouldBeShaking = false;
+		shakeIntensity = 5;
+		shakeLength = 10;
+		offSetPosY = 0;
 	}
 
 public:
@@ -80,6 +90,7 @@ public:
 	void handleEvents();
 	void clean();
 	void quit();
+	void setShaking(bool shaking);
 	GameGUI* getGameGUI();
 
 	bool running() {

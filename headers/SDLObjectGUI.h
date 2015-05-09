@@ -29,6 +29,8 @@ public:
 	string getImagePath();
 	string getTextureID();
 	int getZIndex();
+	void setPositionY(float posY);
+	float getPositionY();
 
 protected:
 	const LoaderParams* pParams;

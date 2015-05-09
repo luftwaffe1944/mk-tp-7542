@@ -76,7 +76,9 @@ void MKGame::render() {
 
 	for (std::vector<SDLObjectGUI*>::iterator it=objects.begin(); it!=objects.end(); ++it) {
 		(*it)->draw();
+		(*it)->setPositionY((*it)->getPositionY() - this->offSetPosY);
 	}
+
 
 	SDL_RenderPresent(m_pRenderer);
 }
@@ -99,20 +101,33 @@ void MKGame::clean() {
 	TTF_Quit();
 	SDL_Quit();
 	this->m_bReset = false;
+	this->shouldBeShaking = true;
+	this->offSetPosY = 0;
 }
 
 void MKGame::draw() {
-	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
+	for (std::vector<SDLObjectGUI*>::size_type i = 0; i != objectList.size();
 			i++) {
 		objectList[i]->draw();
 	}
 }
 
 void MKGame::update() {
-	for (std::vector<ObjectGUI*>::size_type i = 0; i != objectList.size();
+	if (shouldBeShaking) {
+		this->offSetPosY = (rand() % shakeIntensity) - 0.5f;
+		shakeLength--;
+		if (shakeLength <= 0) {
+			shouldBeShaking = false;
+			shakeLength = 10;
+			shakeIntensity = 5;
+			this->offSetPosY = 0;
+		}
+	}
+	for (std::vector<SDLObjectGUI*>::size_type i = 0; i != objectList.size();
 			i++) {
 		objectList[i]->update();
 		LayerManager::Instance()->refresh();
+		objectList[i]->setPositionY(objectList[i]->getPositionY() + this->offSetPosY);
 	}
 }
 
@@ -143,4 +158,8 @@ vector<SDLObjectGUI*>& MKGame::getObjectList() {
 
 GameGUI* MKGame::getGameGUI(){
 	return gameGui;
+}
+
+void MKGame::setShaking(bool shaking) {
+	this->shouldBeShaking = shaking;
 }
