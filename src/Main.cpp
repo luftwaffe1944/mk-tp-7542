@@ -13,7 +13,6 @@ int main(int argc, char* argv[]) {
 
 	string configFilePath = "";
 
-
 	if (argc > 2){
 		//PARAMETROS (jsonPath , reportinLevel)
 		FILELog::reportingLevel() = FILELog::fromString(argv[2]);

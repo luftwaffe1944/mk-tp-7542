@@ -47206,3 +47206,283 @@
 - 14:58:03.298 DEBUG: init success
 - 14:58:24.334 DEBUG: cleaning game
 
+- 15:34:21.036 DEBUG: CONFIGURATION INITIALIZED
+- 15:34:21.036 DEBUG: WINDOW CONFIGURATION
+- 15:34:21.036 DEBUG: JSON - Window width: 525 px
+- 15:34:21.036 DEBUG: JSON - Window height: 400 px
+- 15:34:21.036 DEBUG: JSON - Window width: 150
+- 15:34:21.036 DEBUG: STAGE CONFIGURATION
+- 15:34:21.036 DEBUG: JSON - Stage width: 500
+- 15:34:21.037 DEBUG: JSON - Stage height: 167
+- 15:34:21.037 DEBUG: JSON - Stage ypiso: 185
+- 15:34:21.037 WARNING: Stage floor 'y' position out of range or inexistent (0 - 167). Set to default:151
+- 15:34:21.037 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 15:34:21.037 DEBUG: RatioY (window_height_px / stage_height_lg): 2.39521
+- 15:34:21.037 DEBUG: LAYERS CONFIGURATION
+- 15:34:21.037 DEBUG: JSON - Number of Layers to process: 5
+- 15:34:21.037 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 15:34:21.037 DEBUG: JSON - Layer 0 ID: layer0
+- 15:34:21.037 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 15:34:21.037 DEBUG: JSON - Layer 0 width: 113.71
+- 15:34:21.037 DEBUG: JSON - Layer 0 width recalculado: 167.788
+- 15:34:21.037 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 15:34:21.037 DEBUG: JSON - Layer 1 ID: layer1
+- 15:34:21.037 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 15:34:21.037 DEBUG: JSON - Layer 1 width: 171.43
+- 15:34:21.037 DEBUG: JSON - Layer 1 width recalculado: 252.959
+- 15:34:21.037 DEBUG: JSON - Layer 2 input width: 228.28
+- 15:34:21.038 DEBUG: JSON - Layer 2 ID: layer2
+- 15:34:21.038 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 15:34:21.038 DEBUG: JSON - Layer 2 width: 228.28
+- 15:34:21.038 DEBUG: JSON - Layer 2 width recalculado: 336.845
+- 15:34:21.038 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 15:34:21.038 DEBUG: JSON - Layer 3 ID: layer3
+- 15:34:21.038 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 15:34:21.038 DEBUG: JSON - Layer 3 width: 286.57
+- 15:34:21.038 DEBUG: JSON - Layer 3 width recalculado: 422.857
+- 15:34:21.038 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 15:34:21.038 DEBUG: JSON - Layer 4 ID: layer4
+- 15:34:21.038 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 15:34:21.038 DEBUG: JSON - Layer 4 width: 338.85
+- 15:34:21.038 DEBUG: JSON - Layer 4 width recalculado: 500
+- 15:34:21.038 DEBUG: JSON - Number of Layers successfully process: 5
+- 15:34:21.038 DEBUG: CHARACTERS CONFIGURATION
+- 15:34:21.038 DEBUG: JSON - Input Character name: subzero
+- 15:34:21.038 DEBUG: JSON - Input Character width: 55
+- 15:34:21.038 DEBUG: JSON - Input Character height: 70
+- 15:34:21.038 DEBUG: JSON - Input Character z-index: 99
+- 15:34:21.038 DEBUG: Final values for character one.
+- 15:34:21.038 DEBUG: JSON - Character name: subzero
+- 15:34:21.038 DEBUG: JSON - Character width: 55
+- 15:34:21.038 DEBUG: JSON - Character height: 70
+- 15:34:21.039 DEBUG: JSON - Character z-index: 99
+- 15:34:21.039 DEBUG: JSON - Character orientation: right
+- 15:34:21.039 DEBUG: CONFIGURATION FINISHED
+- 15:34:21.039 DEBUG: Layer layer4 layeroffScene 175
+- 15:34:21.039 DEBUG: Layer layer4 speed: 3
+- 15:34:21.039 DEBUG: Layer layer3 layeroffScene 136
+- 15:34:21.039 DEBUG: Layer layer3 speed: 2.33143
+- 15:34:21.039 DEBUG: Layer layer2 layeroffScene 93
+- 15:34:21.039 DEBUG: Layer layer2 speed: 1.59429
+- 15:34:21.039 DEBUG: Layer layer1 layeroffScene 51
+- 15:34:21.039 DEBUG: Layer layer1 speed: 0.874286
+- 15:34:21.039 DEBUG: Layer layer0 layeroffScene 8.5
+- 15:34:21.039 DEBUG: Layer layer0 speed: 0.145714
+- 15:34:21.778 DEBUG: SDL init success
+- 15:34:21.778 DEBUG: Number of Joysticks connected: 0
+- 15:34:21.778 ERROR: Error: No joysticks connected!
+- 15:34:21.783 DEBUG: window creation success
+- 15:34:21.840 DEBUG: renderer creation success
+- 15:34:21.994 DEBUG: init success
+- 15:34:26.908 DEBUG: cleaning game
+
+- 15:35:38.351 DEBUG: CONFIGURATION INITIALIZED
+- 15:35:38.351 DEBUG: WINDOW CONFIGURATION
+- 15:35:38.351 DEBUG: JSON - Window width: 525 px
+- 15:35:38.352 DEBUG: JSON - Window height: 400 px
+- 15:35:38.353 DEBUG: JSON - Window width: 150
+- 15:35:38.353 DEBUG: STAGE CONFIGURATION
+- 15:35:38.353 DEBUG: JSON - Stage width: 500
+- 15:35:38.353 DEBUG: JSON - Stage height: 167
+- 15:35:38.353 DEBUG: JSON - Stage ypiso: 185
+- 15:35:38.353 WARNING: Stage floor 'y' position out of range or inexistent (0 - 167). Set to default:151
+- 15:35:38.353 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 15:35:38.353 DEBUG: RatioY (window_height_px / stage_height_lg): 2.39521
+- 15:35:38.353 DEBUG: LAYERS CONFIGURATION
+- 15:35:38.353 DEBUG: JSON - Number of Layers to process: 5
+- 15:35:38.354 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 15:35:38.354 DEBUG: JSON - Layer 0 ID: layer0
+- 15:35:38.354 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 15:35:38.354 DEBUG: JSON - Layer 0 width: 113.71
+- 15:35:38.354 DEBUG: JSON - Layer 0 width recalculado: 167.788
+- 15:35:38.354 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 15:35:38.354 DEBUG: JSON - Layer 1 ID: layer1
+- 15:35:38.354 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 15:35:38.354 DEBUG: JSON - Layer 1 width: 171.43
+- 15:35:38.354 DEBUG: JSON - Layer 1 width recalculado: 252.959
+- 15:35:38.354 DEBUG: JSON - Layer 2 input width: 228.28
+- 15:35:38.354 DEBUG: JSON - Layer 2 ID: layer2
+- 15:35:38.354 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 15:35:38.354 DEBUG: JSON - Layer 2 width: 228.28
+- 15:35:38.354 DEBUG: JSON - Layer 2 width recalculado: 336.845
+- 15:35:38.354 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 15:35:38.354 DEBUG: JSON - Layer 3 ID: layer3
+- 15:35:38.354 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 15:35:38.354 DEBUG: JSON - Layer 3 width: 286.57
+- 15:35:38.354 DEBUG: JSON - Layer 3 width recalculado: 422.857
+- 15:35:38.354 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 15:35:38.354 DEBUG: JSON - Layer 4 ID: layer4
+- 15:35:38.354 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 15:35:38.354 DEBUG: JSON - Layer 4 width: 338.85
+- 15:35:38.354 DEBUG: JSON - Layer 4 width recalculado: 500
+- 15:35:38.355 DEBUG: JSON - Number of Layers successfully process: 5
+- 15:35:38.355 DEBUG: CHARACTERS CONFIGURATION
+- 15:35:38.355 DEBUG: JSON - Input Character name: subzero
+- 15:35:38.355 DEBUG: JSON - Input Character width: 55
+- 15:35:38.355 DEBUG: JSON - Input Character height: 70
+- 15:35:38.355 DEBUG: JSON - Input Character z-index: 99
+- 15:35:38.355 DEBUG: Final values for character one.
+- 15:35:38.355 DEBUG: JSON - Character name: subzero
+- 15:35:38.355 DEBUG: JSON - Character width: 55
+- 15:35:38.355 DEBUG: JSON - Character height: 70
+- 15:35:38.355 DEBUG: JSON - Character z-index: 99
+- 15:35:38.355 DEBUG: JSON - Character orientation: right
+- 15:35:38.355 DEBUG: CONFIGURATION FINISHED
+- 15:35:38.355 DEBUG: Layer layer4 layeroffScene 175
+- 15:35:38.355 DEBUG: Layer layer4 speed: 3
+- 15:35:38.355 DEBUG: Layer layer3 layeroffScene 136
+- 15:35:38.355 DEBUG: Layer layer3 speed: 2.33143
+- 15:35:38.355 DEBUG: Layer layer2 layeroffScene 93
+- 15:35:38.355 DEBUG: Layer layer2 speed: 1.59429
+- 15:35:38.355 DEBUG: Layer layer1 layeroffScene 51
+- 15:35:38.355 DEBUG: Layer layer1 speed: 0.874286
+- 15:35:38.355 DEBUG: Layer layer0 layeroffScene 8.5
+- 15:35:38.355 DEBUG: Layer layer0 speed: 0.145714
+- 15:35:39.095 DEBUG: SDL init success
+- 15:35:39.095 DEBUG: Number of Joysticks connected: 0
+- 15:35:39.095 ERROR: Error: No joysticks connected!
+- 15:35:39.099 DEBUG: window creation success
+- 15:35:39.141 DEBUG: renderer creation success
+- 15:35:39.279 DEBUG: init success
+- 15:36:16.942 DEBUG: cleaning game
+
+- 15:36:16.963 DEBUG: CONFIGURATION INITIALIZED
+- 15:36:16.964 DEBUG: WINDOW CONFIGURATION
+- 15:36:16.964 DEBUG: JSON - Window width: 525 px
+- 15:36:16.964 DEBUG: JSON - Window height: 400 px
+- 15:36:16.964 DEBUG: JSON - Window width: 150
+- 15:36:16.964 DEBUG: STAGE CONFIGURATION
+- 15:36:16.964 DEBUG: JSON - Stage width: 500
+- 15:36:16.964 DEBUG: JSON - Stage height: 167
+- 15:36:16.964 DEBUG: JSON - Stage ypiso: 185
+- 15:36:16.964 WARNING: Stage floor 'y' position out of range or inexistent (0 - 167). Set to default:151
+- 15:36:16.964 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 15:36:16.964 DEBUG: RatioY (window_height_px / stage_height_lg): 2.39521
+- 15:36:16.964 DEBUG: LAYERS CONFIGURATION
+- 15:36:16.964 DEBUG: JSON - Number of Layers to process: 5
+- 15:36:16.964 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 15:36:16.964 DEBUG: JSON - Layer 0 ID: layer0
+- 15:36:16.964 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 15:36:16.964 DEBUG: JSON - Layer 0 width: 113.71
+- 15:36:16.964 DEBUG: JSON - Layer 0 width recalculado: 167.788
+- 15:36:16.964 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 15:36:16.964 DEBUG: JSON - Layer 1 ID: layer1
+- 15:36:16.964 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 15:36:16.964 DEBUG: JSON - Layer 1 width: 171.43
+- 15:36:16.964 DEBUG: JSON - Layer 1 width recalculado: 252.959
+- 15:36:16.964 DEBUG: JSON - Layer 2 input width: 228.28
+- 15:36:16.964 DEBUG: JSON - Layer 2 ID: layer2
+- 15:36:16.964 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 15:36:16.964 DEBUG: JSON - Layer 2 width: 228.28
+- 15:36:16.964 DEBUG: JSON - Layer 2 width recalculado: 336.845
+- 15:36:16.964 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 15:36:16.964 DEBUG: JSON - Layer 3 ID: layer3
+- 15:36:16.964 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 15:36:16.964 DEBUG: JSON - Layer 3 width: 286.57
+- 15:36:16.964 DEBUG: JSON - Layer 3 width recalculado: 422.857
+- 15:36:16.964 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 15:36:16.964 DEBUG: JSON - Layer 4 ID: layer4
+- 15:36:16.965 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 15:36:16.965 DEBUG: JSON - Layer 4 width: 338.85
+- 15:36:16.965 DEBUG: JSON - Layer 4 width recalculado: 500
+- 15:36:16.965 DEBUG: JSON - Number of Layers successfully process: 5
+- 15:36:16.965 DEBUG: CHARACTERS CONFIGURATION
+- 15:36:16.965 DEBUG: JSON - Input Character name: subzero
+- 15:36:16.965 DEBUG: JSON - Input Character width: 55
+- 15:36:16.965 DEBUG: JSON - Input Character height: 70
+- 15:36:16.965 DEBUG: JSON - Input Character z-index: 99
+- 15:36:16.965 DEBUG: Final values for character one.
+- 15:36:16.965 DEBUG: JSON - Character name: subzero
+- 15:36:16.965 DEBUG: JSON - Character width: 55
+- 15:36:16.965 DEBUG: JSON - Character height: 70
+- 15:36:16.965 DEBUG: JSON - Character z-index: 99
+- 15:36:16.965 DEBUG: JSON - Character orientation: right
+- 15:36:16.965 DEBUG: CONFIGURATION FINISHED
+- 15:36:16.965 DEBUG: Layer layer4 layeroffScene 175
+- 15:36:16.965 DEBUG: Layer layer4 speed: 3
+- 15:36:16.965 DEBUG: Layer layer3 layeroffScene 136
+- 15:36:16.965 DEBUG: Layer layer3 speed: 2.33143
+- 15:36:16.965 DEBUG: Layer layer2 layeroffScene 93
+- 15:36:16.965 DEBUG: Layer layer2 speed: 1.59429
+- 15:36:16.965 DEBUG: Layer layer1 layeroffScene 51
+- 15:36:16.965 DEBUG: Layer layer1 speed: 0.874286
+- 15:36:16.965 DEBUG: Layer layer0 layeroffScene 8.5
+- 15:36:16.965 DEBUG: Layer layer0 speed: 0.145714
+- 15:36:17.614 DEBUG: SDL init success
+- 15:36:17.614 DEBUG: Number of Joysticks connected: 0
+- 15:36:17.614 ERROR: Error: No joysticks connected!
+- 15:36:17.626 DEBUG: window creation success
+- 15:36:17.673 DEBUG: renderer creation success
+- 15:36:17.789 DEBUG: init success
+- 15:36:26.039 DEBUG: cleaning game
+
+- 15:36:26.050 DEBUG: CONFIGURATION INITIALIZED
+- 15:36:26.050 DEBUG: WINDOW CONFIGURATION
+- 15:36:26.050 DEBUG: JSON - Window width: 525 px
+- 15:36:26.050 DEBUG: JSON - Window height: 400 px
+- 15:36:26.050 DEBUG: JSON - Window width: 150
+- 15:36:26.050 DEBUG: STAGE CONFIGURATION
+- 15:36:26.050 DEBUG: JSON - Stage width: 500
+- 15:36:26.050 DEBUG: JSON - Stage height: 167
+- 15:36:26.050 DEBUG: JSON - Stage ypiso: 185
+- 15:36:26.050 WARNING: Stage floor 'y' position out of range or inexistent (0 - 167). Set to default:151
+- 15:36:26.050 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 15:36:26.051 DEBUG: RatioY (window_height_px / stage_height_lg): 2.39521
+- 15:36:26.051 DEBUG: LAYERS CONFIGURATION
+- 15:36:26.051 DEBUG: JSON - Number of Layers to process: 5
+- 15:36:26.051 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 15:36:26.051 DEBUG: JSON - Layer 0 ID: layer0
+- 15:36:26.051 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 15:36:26.051 DEBUG: JSON - Layer 0 width: 113.71
+- 15:36:26.051 DEBUG: JSON - Layer 0 width recalculado: 167.788
+- 15:36:26.051 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 15:36:26.051 DEBUG: JSON - Layer 1 ID: layer1
+- 15:36:26.051 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 15:36:26.051 DEBUG: JSON - Layer 1 width: 171.43
+- 15:36:26.051 DEBUG: JSON - Layer 1 width recalculado: 252.959
+- 15:36:26.051 DEBUG: JSON - Layer 2 input width: 228.28
+- 15:36:26.051 DEBUG: JSON - Layer 2 ID: layer2
+- 15:36:26.051 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 15:36:26.051 DEBUG: JSON - Layer 2 width: 228.28
+- 15:36:26.051 DEBUG: JSON - Layer 2 width recalculado: 336.845
+- 15:36:26.051 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 15:36:26.051 DEBUG: JSON - Layer 3 ID: layer3
+- 15:36:26.051 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 15:36:26.051 DEBUG: JSON - Layer 3 width: 286.57
+- 15:36:26.051 DEBUG: JSON - Layer 3 width recalculado: 422.857
+- 15:36:26.051 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 15:36:26.051 DEBUG: JSON - Layer 4 ID: layer4
+- 15:36:26.051 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 15:36:26.051 DEBUG: JSON - Layer 4 width: 338.85
+- 15:36:26.051 DEBUG: JSON - Layer 4 width recalculado: 500
+- 15:36:26.051 DEBUG: JSON - Number of Layers successfully process: 5
+- 15:36:26.051 DEBUG: CHARACTERS CONFIGURATION
+- 15:36:26.051 DEBUG: JSON - Input Character name: subzero
+- 15:36:26.051 DEBUG: JSON - Input Character width: 55
+- 15:36:26.051 DEBUG: JSON - Input Character height: 70
+- 15:36:26.051 DEBUG: JSON - Input Character z-index: 99
+- 15:36:26.051 DEBUG: Final values for character one.
+- 15:36:26.051 DEBUG: JSON - Character name: subzero
+- 15:36:26.051 DEBUG: JSON - Character width: 55
+- 15:36:26.051 DEBUG: JSON - Character height: 70
+- 15:36:26.051 DEBUG: JSON - Character z-index: 99
+- 15:36:26.051 DEBUG: JSON - Character orientation: right
+- 15:36:26.052 DEBUG: CONFIGURATION FINISHED
+- 15:36:26.052 DEBUG: Layer layer4 layeroffScene 175
+- 15:36:26.052 DEBUG: Layer layer4 speed: 3
+- 15:36:26.052 DEBUG: Layer layer3 layeroffScene 136
+- 15:36:26.052 DEBUG: Layer layer3 speed: 2.33143
+- 15:36:26.052 DEBUG: Layer layer2 layeroffScene 93
+- 15:36:26.052 DEBUG: Layer layer2 speed: 1.59429
+- 15:36:26.052 DEBUG: Layer layer1 layeroffScene 51
+- 15:36:26.052 DEBUG: Layer layer1 speed: 0.874286
+- 15:36:26.052 DEBUG: Layer layer0 layeroffScene 8.5
+- 15:36:26.052 DEBUG: Layer layer0 speed: 0.145714
+- 15:36:26.774 DEBUG: SDL init success
+- 15:36:26.774 DEBUG: Number of Joysticks connected: 0
+- 15:36:26.774 ERROR: Error: No joysticks connected!
+- 15:36:26.796 DEBUG: window creation success
+- 15:36:26.850 DEBUG: renderer creation success
+- 15:36:26.956 DEBUG: init success
+- 15:36:46.228 DEBUG: cleaning game
+
