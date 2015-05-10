@@ -504,38 +504,6 @@ bool validateSpritesForSelectedCharacter(string characterPath) {
 }
 
 
-
-void Character::getNextPosition(float* nextPositionX, float* nextPositionY){
-
-		if ((!this->reachedWindowRightLimit()) && (this->isWalkingRight)){ //si no llego al limite de pantalla y esta caminando para derecha
-			*nextPositionX = positionX + 2 * ratioX;
-		}else if ((!this->reachedWindowLeftLimit()) && (this->isWalkingLeft)){
-			*nextPositionX = positionX - 2 * ratioX;
-		}else if (this->isJumping){
-			*nextPositionY = positionY - jumpVel;
-			if (this->isTouchingGround(*nextPositionY)) {
-				*nextPositionY = yGround;
-			}
-		}else if (this->isJumpingRight){
-			*nextPositionY = positionY - jumpVel;
-			if (!this->reachedWindowRightLimit()) {
-				*nextPositionX = positionX + (2 * ratioX);
-			}
-			if (this->isTouchingGround(*nextPositionY)) {
-				*nextPositionY = yGround;
-
-			}
-		}else if (this->isJumpingLeft){
-			*nextPositionY = positionY - jumpVel;
-			if (!this->reachedWindowLeftLimit()) {
-				*nextPositionX = positionX - (2 * ratioX);
-			}
-			if (this->isTouchingGround(*nextPositionY)) {
-				*nextPositionY = yGround;
-			}
-		}
-}
-
 AlternativeColor* Character::getAlternativeColor(){
 	return this->altColor;
 
@@ -640,4 +608,42 @@ void Character::setMoveFlag(bool trueOrFalse){
 
 void Character::setIsRightOriented(bool isRightOriented) {
 	this->isRightOriented = isRightOriented;
+}
+
+void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
+
+		if ((!this->reachedWindowRightLimit()) && (this->isWalkingRight)){ //si no llego al limite de pantalla y esta caminando para derecha
+			*nextPositionX = positionX + 2 * ratioX;
+		}else if ((!this->reachedWindowLeftLimit()) && (this->isWalkingLeft)){
+			*nextPositionX = positionX - 2 * ratioX;
+		}else if (this->isJumping){
+			*nextPositionY = positionY - jumpVel;
+			if (this->isTouchingGround(*nextPositionY)) {
+				*nextPositionY = yGround;
+			}
+		}else if (this->isJumpingRight){
+			*nextPositionY = this->positionY - jumpVel;
+			if (!this->reachedWindowRightLimit()) {
+				*nextPositionX = positionX + (2 * ratioX);
+			}
+			if (this->isTouchingGround(*nextPositionY)) {
+				*nextPositionY = yGround;
+
+			}
+		}else if (this->isJumpingLeft){
+			*nextPositionY = positionY - jumpVel;
+			if (!this->reachedWindowLeftLimit()) {
+				*nextPositionX = positionX - (2 * ratioX);
+			}
+			if (this->isTouchingGround(*nextPositionY)) {
+				*nextPositionY = yGround;
+			}
+		}
+}
+
+float Character::getEnergy(){
+	return this->energy;
+}
+void Character::setEnergy(float newEnergyValue){
+	this->energy = newEnergyValue;
 }

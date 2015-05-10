@@ -20,21 +20,21 @@ using namespace std;
 
 
 
-class Collitionable : public SDLObjectGUI {
+class Collitionable {
 private:
 
 	vector<Box*> Shapes;
-	bool isMoving;
-	bool isRightOriented;
+	bool isCMoving;
+	bool isCActive;
 
 public:
 	Collitionable();
 	void initShapes(int qty,float X, float Y, int W, int H);
 	virtual ~Collitionable();
-	virtual void update();
-	void getNextPosition(float* X, float* Y);
-	bool getCMoving(){return this->isMoving;}
-	void setCMoving(bool moving){this->isMoving = moving;}
+	void getCNextPosition(float* nextPositionX, float* nextPositionY);
+	bool getCMoving(){return this->isCMoving;}
+	void setCMoving(bool moving){this->isCMoving = moving;}
+	void setCActive(bool active){this->isCActive = active;}
 	vector<Box*> getShapes(){return this->Shapes;}
 
 

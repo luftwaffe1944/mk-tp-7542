@@ -4,6 +4,17 @@
 #include <iostream>
 #include <stdlib.h>
 
+
+Collitionable::Collitionable(){
+	this->isCActive=false;
+	this->isCMoving=false;
+
+}
+
+Collitionable::~Collitionable(){
+
+}
+
 void Collitionable::initShapes(int qty,float X, float Y, int W, int H){
 
 	Box* mainShape = new Box(X,Y,W,H,true);
@@ -15,6 +26,7 @@ void Collitionable::initShapes(int qty,float X, float Y, int W, int H){
 	}
 };
 
-void Collitionable::getNextPosition(float* X, float* Y){
+
+void Collitionable::getCNextPosition(float* nextPositionX, float* nextPositionY){
 
 }
