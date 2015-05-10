@@ -282,7 +282,7 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 			 character_zindex = atoi(strValue.c_str());
 			 FILE_LOG(logDEBUG) << "JSON - Input Character z-index: " << strValue;
 		}catch(std::exception const & e){
-			character_zindex=0;
+			character_zindex=99;
 		}
 
 
