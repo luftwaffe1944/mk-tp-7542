@@ -47,7 +47,7 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 				Box* actualBox = actualObjectBoxes[k-1];
 				Box* newActualBox = actualBox->cloneBox(); //box auxiliar clonada para expandir
 
-				for (int n=1; i<=(nextObjectBoxes.size()); n++){
+				for (int n=1; n<=(nextObjectBoxes.size()); n++){
 					Box* nextBox = nextObjectBoxes[n-1];
  					Box* newNextBox = nextBox->cloneBox(); //box auxiliar clonada para expandir
 
