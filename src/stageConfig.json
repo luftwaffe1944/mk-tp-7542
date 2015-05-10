@@ -34,8 +34,8 @@
 	"personajes": [
 		{
 			"nombre": "subzero",
-			"ancho": 20,
-			"alto": 28.57,
+			"ancho": 55,
+			"alto": 70,
 			"zindex": 99,
 			"color-alternativo": {
 				"h-inicial": 40,
@@ -45,8 +45,8 @@
 		},
 		{
 			"nombre": "scorpion",
-			"ancho": 20,
-			"alto": 28.57,
+			"ancho": 55,
+			"alto": 70,
 			"zindex": 99,
 			"color-alternativo": {
 				"h-inicial": 40,

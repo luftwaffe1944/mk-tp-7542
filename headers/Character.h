@@ -93,6 +93,7 @@ public:
 	void resetCounter(string moveKey);
 	void completeMovement();
 	void setMoveFlag(bool trueOrFalse);
+	void setIsRightOriented(bool isRightOriented);
 };
 
 #endif /* CHARACTER_H_ */

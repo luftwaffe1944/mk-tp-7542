@@ -603,3 +603,7 @@ void Character::setMoveFlag(bool trueOrFalse){
 	}
 
 }
+
+void Character::setIsRightOriented(bool isRightOriented) {
+	this->isRightOriented = isRightOriented;
+}
