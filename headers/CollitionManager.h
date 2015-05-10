@@ -17,15 +17,15 @@ class CollitionManager {
 public:
 	static CollitionManager* Instance();
 	virtual ~CollitionManager() {
-			delete(t_pInstance);
-			t_pInstance = NULL;
+			delete(cm_pInstance);
+			cm_pInstance = NULL;
 		}
 
 	void resetInstance();
 	void solveCollitions(vector<Collitionable*> objects);
 
 private:
-	static CollitionManager* t_pInstance;
+	static CollitionManager* cm_pInstance;
 	CollitionManager();
 };
 

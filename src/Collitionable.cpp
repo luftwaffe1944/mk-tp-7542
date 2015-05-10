@@ -13,6 +13,10 @@ Collitionable::Collitionable(){
 Collitionable::~Collitionable(){
 }
 
+vector<Box*> Collitionable::getCShapes(){
+	return this->Shapes;
+}
+
 void Collitionable::initCShapes(int qty,float X, float Y, float W, float H){
 
 	Box* mainShape = new Box(X,Y,W,H,true);

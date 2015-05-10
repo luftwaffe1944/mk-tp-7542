@@ -137,6 +137,12 @@ void MKGame::update() {
 		LayerManager::Instance()->refresh();
 		objectList[i]->setPositionY(objectList[i]->getPositionY() + this->offSetPosY);
 	}
+
+	GameGUI* pgamegui = this->getGameGUI();
+	vector<Character*> const& characterVector = this->getGameGUI()->getCharacters();
+	vector<Collitionable*> const& collObjects = reinterpret_cast< vector<Collitionable*> const& >(characterVector);
+	CollitionManager::Instance()->solveCollitions(collObjects);
+
 }
 
 void MKGame::handleEvents() {

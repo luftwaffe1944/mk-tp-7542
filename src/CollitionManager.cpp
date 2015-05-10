@@ -10,13 +10,14 @@
 #include "../headers/CollitionManager.h"
 #include "../headers/Log.h"
 
-CollitionManager* CollitionManager::t_pInstance = NULL;
+CollitionManager* CollitionManager::cm_pInstance = NULL;
+
 CollitionManager* CollitionManager::Instance() {
-	if (!t_pInstance) {
-		t_pInstance = new CollitionManager();
-		return t_pInstance;
+	if (!cm_pInstance) {
+		cm_pInstance = new CollitionManager();
+		return cm_pInstance;
 	} else {
-		return t_pInstance;
+		return cm_pInstance;
 	}
 }
 
@@ -28,6 +29,8 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 
 	Collitionable* actualObject;
 	Collitionable* nextObject;
+	vector<Box*> actualObjectBoxes;
+	vector<Box*> nextObjectBoxes;
 
 	int cantObjects = objects.size();
 
@@ -37,8 +40,8 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 			nextObject = objects[(i-1)+j];
 			//verificar colision entre boxes
 
-			vector<Box*> actualObjectBoxes = actualObject->getShapes();
-			vector<Box*> nextObjectBoxes = nextObject->getShapes();
+			actualObjectBoxes = actualObject->getCShapes();
+			nextObjectBoxes = nextObject->getCShapes();
 
 			for (int k=1; k<=(actualObjectBoxes.size()); k++){
 				Box* actualBox = actualObjectBoxes[k-1];

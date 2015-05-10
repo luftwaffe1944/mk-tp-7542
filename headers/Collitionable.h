@@ -35,7 +35,7 @@ public:
 	bool getCMoving(){return this->isCMoving;}
 	void setCMoving(bool moving){this->isCMoving = moving;}
 	void setCActive(bool active){this->isCActive = active;}
-	vector<Box*> getShapes(){return this->Shapes;}
+	vector<Box*> getCShapes();
 	void updateCShapesPosition(float X, float Y);
 
 };
