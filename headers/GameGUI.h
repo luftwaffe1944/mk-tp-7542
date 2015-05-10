@@ -8,6 +8,7 @@
 #ifndef GAMEGUI_H_
 #define GAMEGUI_H_
 #include "Stage.h"
+#include "Fight.h"
 #include "Window.h"
 #include "Character.h"
 #include "Layer.h"
@@ -26,6 +27,7 @@ private:
 	Window* window;
 	vector<Character*> characters;
 	vector<Layer*> layers;
+	Fight* fight;
 
 	GameGUI() {
 		stage = NULL;
@@ -43,6 +45,8 @@ public:
 	vector<Character*> getCharacters();
 	void setLayers(vector<Layer*> layers);
 	vector<Layer*> getLayers();
+	Fight* getFight();
+	void setFight(Fight* fight);
 	void addCharacter(Character* character);
 	void addLayer(Layer* layer);
 	~GameGUI() {

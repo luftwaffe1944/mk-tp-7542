@@ -240,80 +240,152 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY, Stage* stage) {
 	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
 	int stage_win_ypiso = stage->getYGround();
-	Json::Value characterValue = root[JSON_KEY_PERSONAJE];
 
-	string character_name =	characterValue.get(JSON_KEY_NOMBRE, "").asString();
-	float character_width;
-	float character_height;
-	int character_zindex;
-	string character_orientation = characterValue.get(JSON_KEY_ORIENTACION, "").asString();
-	FILE_LOG(logDEBUG) << "JSON - Input Character name: " << character_name;
-	try {
-		 string strValue = characterValue.get(JSON_KEY_ANCHO, "").asString();
-		 character_width = atof(strValue.c_str());
-		 FILE_LOG(logDEBUG) << "JSON - Input Character width: " << strValue;
-	}catch(std::exception const & e){
-		character_width=0;
-	}
-	try {
-		 string strValue = characterValue.get(JSON_KEY_ALTO, "").asString();
-		 character_height = atof(strValue.c_str());
-		 FILE_LOG(logDEBUG) << "JSON - Input Character height: " << strValue;
-	}catch(std::exception const & e){
-		character_height=0;
-	}
-	try {
-		 string strValue = characterValue.get(JSON_KEY_ZINDEX, "").asString();
-		 character_zindex = atoi(strValue.c_str());
-		 FILE_LOG(logDEBUG) << "JSON - Input Character z-index: " << strValue;
-	}catch(std::exception const & e){
-		character_zindex=0;
-	}
-	if (!(character_name == "subzero")){
-		character_name = "subzero";
-		FILE_LOG(logWARNING) << "JSON - Invalid character name. Set by default to: " << character_name;
-	}
-	if (!character_width>0){
-		character_width = DEFAULT_CHARACTER_WIDTH;
-		FILE_LOG(logDEBUG) << "JSON - Incorrect Character width (must be positive). Set by default: " << DEFAULT_CHARACTER_WIDTH;
-	}
-	if (!character_height>0){
-		character_height = DEFAULT_CHARACTER_HEIGHT;
-		FILE_LOG(logDEBUG) << "JSON - Incorrect Character height (must be positive). Set by default: " << DEFAULT_CHARACTER_HEIGHT;
-	}
-	if (!character_zindex>0){
-		character_zindex = DEFAULT_CHARACTER_ZINDEX;
-		FILE_LOG(logDEBUG) << "JSON - Incorrect Character z-index (0 - 99). Set by default: " << DEFAULT_CHARACTER_ZINDEX;
-	}
-	if (!(character_orientation == "right") && !(character_orientation == "left")){
-		character_orientation = DEFAULT_CHARACTER_ORIENTATION;
-		FILE_LOG(logDEBUG) << "JSON - Incorrect Character orientation (left - right). Set by default: " << DEFAULT_CHARACTER_ORIENTATION;
-	}
-	FILE_LOG(logDEBUG) << "Final values for character one.";
-	FILE_LOG(logDEBUG) << "JSON - Character name: " << character_name;
-	FILE_LOG(logDEBUG) << "JSON - Character width: " << character_width;
-	FILE_LOG(logDEBUG) << "JSON - Character height: " << character_height;
-	FILE_LOG(logDEBUG) << "JSON - Character z-index: " << character_zindex;
-	FILE_LOG(logDEBUG) << "JSON - Character orientation: " << character_orientation;
+	const Json::Value charactersArray = root.get(JSON_KEY_PERSONAJES,0);
+	FILE_LOG(logDEBUG) << "JSON - Number of Characters to process: " << charactersArray.size();
 
 	vector<Character*> characters;
-
 	float characterPosX = GameGUI::getInstance()->getWindow()->widthPx / 2;
-	float characterPosY = ( stage_win_ypiso - character_height ) * ratioY;
-	bool isRightOrientation = (character_orientation == "right") ? true : false;
-	LoaderParams* characterParams = new LoaderParams(characterPosX  - character_width * ratioX/2, characterPosY, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
 
-	Character* playerOne = new Character(characterParams, isRightOrientation);
+	for (unsigned int index = 0; index < charactersArray.size(); ++index) {
+		Json::Value characterValue = charactersArray[index];
+		string character_name;
+		float character_width;
+		float character_height;
+		int character_zindex;
+		bool set_default_alternative_color = false;
+		double character_alt_color_h_inicial;
+		double character_alt_color_h_final;
+		double character_alt_color_shift;
+		try {
+			character_name =	characterValue.get(JSON_KEY_NOMBRE, "").asString();
+			FILE_LOG(logDEBUG) << "JSON - Input Character name: " << character_name;
+		}catch(std::exception const & e){
+			character_name = "subzero"; //TODO: review if it should be "default"
+		}
+		try {
+			 string strValue = characterValue.get(JSON_KEY_ANCHO, "").asString();
+			 character_width = atof(strValue.c_str());
+			 FILE_LOG(logDEBUG) << "JSON - Input Character width: " << strValue;
+		}catch(std::exception const & e){
+			character_width=0;
+		}
+		try {
+			 string strValue = characterValue.get(JSON_KEY_ALTO, "").asString();
+			 character_height = atof(strValue.c_str());
+			 FILE_LOG(logDEBUG) << "JSON - Input Character height: " << strValue;
+		}catch(std::exception const & e){
+			character_height=0;
+		}
+		try {
+			 string strValue = characterValue.get(JSON_KEY_ZINDEX, "").asString();
+			 character_zindex = atoi(strValue.c_str());
+			 FILE_LOG(logDEBUG) << "JSON - Input Character z-index: " << strValue;
+		}catch(std::exception const & e){
+			character_zindex=0;
+		}
 
-//	Character* playerOne = new Character(character_name, character_width, character_height,
-//					character_zindex, true, ratio, GameGUI::getInstance()->window.heightPx);
 
-	//Add player to the game loop
+		try {
+			 Json::Value altColorValue = characterValue.get(JSON_KEY_COLOR_ALTERNATIVO, "");
+			 FILE_LOG(logDEBUG) << "JSON - tag COLOR-ALTERNATIVO de personaje leido. ";
+			 character_alt_color_h_inicial = atof(altColorValue.get(JSON_KEY_H_INICIAL, "").asString().c_str());
+			 character_alt_color_h_final = atof(altColorValue.get(JSON_KEY_H_FINAL, "").asString().c_str());
+			 character_alt_color_shift = atof(altColorValue.get(JSON_KEY_DESPLAZAMIENTO, "").asString().c_str());
+			 FILE_LOG(logDEBUG) << "JSON - tag COLOR-ALTERNATIVO h_inicial leido: " << character_alt_color_h_inicial;
+			 FILE_LOG(logDEBUG) << "JSON - tag COLOR-ALTERNATIVO h_final leido: " << character_alt_color_h_final;
+			 FILE_LOG(logDEBUG) << "JSON - tag COLOR-ALTERNATIVO desplazamiento leido: " << character_alt_color_shift;
 
-	MKGame::Instance()->getObjectList().push_back(playerOne);
+			 if (character_alt_color_h_inicial > character_alt_color_h_final){
+				 FILE_LOG(logDEBUG) << "JSON - COLOR-ALTERNATIVO h_inicial mayor a h_final, "
+						 "se procede a configurar color alternativo por default";
+				 set_default_alternative_color = true;
+			 }
+		}catch(std::exception const & e) {
+			 FILE_LOG(logDEBUG) << "JSON - eeror leyendo COLOR-ALTERNATIVO,  "
+					 "se procede a configurar color alternativo por default";
+			set_default_alternative_color = true;
+		}
 
-	characters.push_back(playerOne);
+		//TODO: Validate against a list of valid characters
+		if ((character_name != "subzero") && (character_name != "scorpion")){
+			character_name = "subzero";
+			FILE_LOG(logWARNING) << "JSON - Invalid character name. Set by default to: " << character_name;
+		}
+		if (!character_width>0){
+			character_width = DEFAULT_CHARACTER_WIDTH;
+			FILE_LOG(logDEBUG) << "JSON - Incorrect Character width (must be positive). Set by default: " << DEFAULT_CHARACTER_WIDTH;
+		}
+		if (!character_height>0){
+			character_height = DEFAULT_CHARACTER_HEIGHT;
+			FILE_LOG(logDEBUG) << "JSON - Incorrect Character height (must be positive). Set by default: " << DEFAULT_CHARACTER_HEIGHT;
+		}
+		if (!character_zindex>0){
+			character_zindex = DEFAULT_CHARACTER_ZINDEX;
+			FILE_LOG(logDEBUG) << "JSON - Incorrect Character z-index (0 - 99). Set by default: " << DEFAULT_CHARACTER_ZINDEX;
+		}
+
+		if (set_default_alternative_color){
+			 character_alt_color_h_inicial = 40;
+			 character_alt_color_h_final = 45;
+			 character_alt_color_shift = 30;
+		}
+		FILE_LOG(logDEBUG) << "Final values for character.";
+		FILE_LOG(logDEBUG) << "JSON - Character name: " << character_name;
+		FILE_LOG(logDEBUG) << "JSON - Character width: " << character_width;
+		FILE_LOG(logDEBUG) << "JSON - Character height: " << character_height;
+		FILE_LOG(logDEBUG) << "JSON - Character z-index: " << character_zindex;
+		FILE_LOG(logDEBUG) << "JSON - Character alternative color h_inicial: " << character_alt_color_h_inicial;
+		FILE_LOG(logDEBUG) << "JSON - Character alternative color h_final: " << character_alt_color_h_final;
+		FILE_LOG(logDEBUG) << "JSON - Character alternative color shift: " << character_alt_color_shift;
+
+		float characterPosY = ( stage_win_ypiso - character_height ) * ratioY;
+		LoaderParams* characterParams = new LoaderParams(characterPosX  - character_width * ratioX/2, characterPosY, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
+		AlternativeColor* altColor = new AlternativeColor(character_alt_color_h_inicial, character_alt_color_h_final, character_alt_color_shift);
+		Character* player = new Character(characterParams);
+		player->setAlternativeColor(altColor);
+		//Add player to the game loop
+		//MKGame::Instance()->getObjectList().push_back(player); //TODO: Do it in Fight class
+		characters.push_back(player);
+	}
 	return characters;
+}
+
+Fight* jsonGetFight(Json::Value root) {
+	FILE_LOG(logDEBUG) << "FIGHT CONFIGURATION";
+	Json::Value fightValue = root[JSON_KEY_PELEA];
+	Fight* fight = new Fight();
+	string fighterOneName;
+	string fighterTwoName;
+
+	try {
+		 string fighterOneNameValue = fightValue.get(JSON_KEY_LUCHADOR_1, "").asString();
+		 fighterOneName = fighterOneNameValue;
+		 FILE_LOG(logDEBUG) << "JSON - Input fighter one name: " << fighterOneName;
+	}catch(std::exception const & e){
+		fighterOneName="subzero";
+	}
+	try {
+		 string fighterTwoNameValue = fightValue.get(JSON_KEY_LUCHADOR_2, "").asString();
+		 fighterTwoName = fighterTwoNameValue;
+		 FILE_LOG(logDEBUG) << "JSON - Input fighter one name: " << fighterTwoName;
+	}catch(std::exception const & e){
+		fighterTwoName="subzero";
+	}
+	vector<Character*> characters = GameGUI::getInstance()->getCharacters();
+	for (unsigned int index=0; index<characters.size(); index++) {
+		Character* character = characters[index];
+		if (character->getName() == fighterOneName) {
+			character->setPlayerNumber("1");
+			fight->setFighterOne(character);
+		}
+		if (character->getName() == fighterTwoName) {
+			character->setPlayerNumber("2");
+			character->setPositionX(character->getPositionX() + 120); //TODO: posX character2 hardcoded
+			fight->setFighterTwo(character);
+		}
+	}
+	return fight;
 }
 
 void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
@@ -351,13 +423,14 @@ GameGUI* GameGUIBuilder::create() {
 	}
 
 	try{
-		Json::Value value1 = root[JSON_KEY_PERSONAJE];
+		const Json::Value value1 = root.get(JSON_KEY_PERSONAJES, 0);
 		const Json::Value value2 = root.get(JSON_KEY_CAPAS,0);
 		Json::Value value3 = root[JSON_KEY_ESCENARIO];
 		Json::Value value14 = root[JSON_KEY_VENTANA];
+		Json::Value value5 = root[JSON_KEY_PELEA];
 	}catch(std::exception const & e){
 		FILE_LOG(logDEBUG) << "Corrupt JSON File. Exception: "<<e.what();
-		return createDefault();
+		return createDefault(); //TODO: Validate create default
 	}
 	Window* window = jsonGetWindow(root);
 	Stage* stage = jsonGetStage(root,window->width);
@@ -375,8 +448,15 @@ GameGUI* GameGUIBuilder::create() {
 	if (layers.size()==0){layers = buildLayersByDefault(ratioX, ratioY,window,stage);}
 
 	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY, stage);
-
 	gameGUI->setCharacters(characters);
+	Fight* fight = jsonGetFight(root);
+	gameGUI->setFight(fight);
+	if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
+		fight->getFighterTwo()->setIsAlternativePlayer(true);
+	}
+	fight->getFighterOne()->setIsRightOriented(true);
+	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
+	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
 	gameGUI->setLayers(layers);
 
 	createGameInfo(window, characters, ratioX, ratioY);

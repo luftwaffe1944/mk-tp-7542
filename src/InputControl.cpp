@@ -270,6 +270,8 @@ void InputControl::refreshJoystickInputs(){
 			&& !(this->isAxisLeft( joystick ))
 			&& (this->isAxisRight( joystick ))) {
 		this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+	} else if (currentKeyStates[SDL_SCANCODE_O]) {
+		this->firstPlayerMove = FIRST_PLAYER_CHANGE_ORIENTATION;
 
 	} else if (this->getButtonState(joystick,3)) {
 		this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
