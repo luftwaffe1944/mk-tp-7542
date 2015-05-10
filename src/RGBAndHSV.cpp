@@ -6,6 +6,7 @@
  */
 
 #include "../headers/RGBAndHSV.h"
+#include <stdint.h>
 
 double RGBAndHSV::r;
 double RGBAndHSV::g;

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <stdint.h>
 using namespace std;
 
 /*typedef struct {
