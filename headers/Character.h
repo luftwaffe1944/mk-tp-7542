@@ -83,5 +83,6 @@ public:
 	void resetCounter(string moveKey);
 	void completeMovement();
 	void setMoveFlag(bool trueOrFalse);
+};
 
 #endif /* CHARACTER_H_ */
