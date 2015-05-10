@@ -94,6 +94,7 @@ public:
 	void completeMovement();
 	void setMoveFlag(bool trueOrFalse);
 	void setIsRightOriented(bool isRightOriented);
+	Character* getCopyInstance();
 };
 
 #endif /* CHARACTER_H_ */

@@ -607,3 +607,12 @@ void Character::setMoveFlag(bool trueOrFalse){
 void Character::setIsRightOriented(bool isRightOriented) {
 	this->isRightOriented = isRightOriented;
 }
+
+Character* Character::getCopyInstance() {
+	LoaderParams* characterParams = new LoaderParams(positionX, positionY, width, height, zindex, ratioX, ratioY, name);
+	AlternativeColor* altColor = new AlternativeColor(altColor->getInitialH(), altColor->getFinalH(), altColor->getShift());
+	Character* copyOfCharacter = new Character(characterParams);
+	copyOfCharacter->setAlternativeColor(altColor);
+	copyOfCharacter->setPlayerNumber(playerNumber);
+	return copyOfCharacter;
+}

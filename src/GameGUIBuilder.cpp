@@ -373,17 +373,45 @@ Fight* jsonGetFight(Json::Value root) {
 		fighterTwoName="subzero";
 	}
 	vector<Character*> characters = GameGUI::getInstance()->getCharacters();
+	bool isFighterOneNameValid = false;
+	bool isFighterTwoNameValid = false;
+	Character* defaultCharacter;
+	if (characters.size() > 0) {
+		defaultCharacter = characters[0];
+	}
+
 	for (unsigned int index=0; index<characters.size(); index++) {
 		Character* character = characters[index];
 		if (character->getName() == fighterOneName) {
-			character->setPlayerNumber("1");
-			fight->setFighterOne(character);
+			Character* fighterOne = character->getCopyInstance();
+			fighterOne->setPlayerNumber("1");
+			fight->setFighterOne(fighterOne);
+			isFighterOneNameValid = true;
 		}
 		if (character->getName() == fighterTwoName) {
-			character->setPlayerNumber("2");
-			character->setPositionX(character->getPositionX() + 120); //TODO: posX character2 hardcoded
-			fight->setFighterTwo(character);
+			Character* fighterTwo = character->getCopyInstance();
+			fighterTwo->setPlayerNumber("2");
+			fighterTwo->setPositionX(fighterTwo->getPositionX() + 120); //TODO: posX character2 hardcoded
+			fight->setFighterTwo(fighterTwo);
+			isFighterTwoNameValid = true;
 		}
+	}
+
+	if (!isFighterOneNameValid) {
+		FILE_LOG(logDEBUG) << "JSON - Fighter one name is not valid, "
+				"default character was set: " << defaultCharacter->getName();
+		Character* fighterOne = defaultCharacter->getCopyInstance();
+		fighterOne->setPlayerNumber("1");
+		fight->setFighterOne(fighterOne);
+	}
+
+	if (!isFighterTwoNameValid) {
+		FILE_LOG(logDEBUG) << "JSON - Fighter two name is not valid, "
+				"default character was set: " << defaultCharacter->getName();
+		Character* fighterTwo = defaultCharacter->getCopyInstance();
+		fighterTwo->setPlayerNumber("2");
+		fighterTwo->setPositionX(fighterTwo->getPositionX() + 120); //TODO: posX character2 hardcoded
+		fight->setFighterTwo(fighterTwo);
 	}
 	return fight;
 }
@@ -451,9 +479,9 @@ GameGUI* GameGUIBuilder::create() {
 	gameGUI->setCharacters(characters);
 	Fight* fight = jsonGetFight(root);
 	gameGUI->setFight(fight);
-	if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
+	//if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
 		fight->getFighterTwo()->setIsAlternativePlayer(true);
-	}
+	//}
 	fight->getFighterOne()->setIsRightOriented(true);
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
