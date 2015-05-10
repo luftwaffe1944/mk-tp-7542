@@ -616,6 +616,7 @@ void Character::setIsRightOriented(bool isRightOriented) {
 	this->isRightOriented = isRightOriented;
 }
 
+
 void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
 
 		if ((!this->reachedWindowRightLimit()) && (this->isWalkingRight)){ //si no llego al limite de pantalla y esta caminando para derecha
@@ -652,4 +653,13 @@ float Character::getEnergy(){
 }
 void Character::setEnergy(float newEnergyValue){
 	this->energy = newEnergyValue;
+}
+Character* Character::getCopyInstance() {
+	LoaderParams* characterParams = new LoaderParams(positionX, positionY, width, height, zindex, ratioX, ratioY, name);
+	AlternativeColor* altColor = new AlternativeColor(altColor->getInitialH(), altColor->getFinalH(), altColor->getShift());
+	Character* copyOfCharacter = new Character(characterParams);
+	copyOfCharacter->setAlternativeColor(altColor);
+	copyOfCharacter->setPlayerNumber(playerNumber);
+	return copyOfCharacter;
+
 }
