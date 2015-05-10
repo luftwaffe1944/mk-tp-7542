@@ -83,3 +83,4 @@ void SDLObjectGUI::setPositionY(float posY) {
 float SDLObjectGUI::getPositionY() {
 	return this->positionY;
 }
+
