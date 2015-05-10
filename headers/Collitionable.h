@@ -29,15 +29,14 @@ private:
 
 public:
 	Collitionable();
-	void initShapes(int qty,float X, float Y, int W, int H);
+	void initCShapes(int qty,float X, float Y, float W, float H);
 	virtual ~Collitionable();
 	void getCNextPosition(float* nextPositionX, float* nextPositionY);
 	bool getCMoving(){return this->isCMoving;}
 	void setCMoving(bool moving){this->isCMoving = moving;}
 	void setCActive(bool active){this->isCActive = active;}
 	vector<Box*> getShapes(){return this->Shapes;}
-
-
+	void updateCShapesPosition(float X, float Y);
 
 };
 

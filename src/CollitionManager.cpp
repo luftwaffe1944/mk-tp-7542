@@ -59,10 +59,9 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 						nextObject->getCNextPosition(&newX, &newY);
 					}
 
-					//verificar superposicion
-
-					if (newActualBox->isColliding(newNextBox)){
+					if (newActualBox->isColliding(newNextBox)){ //verifica superposicion
 						//resolver evento de colision
+						FILE_LOG(logDEBUG) << "Collition detected" ;
 					}
 
 					//--

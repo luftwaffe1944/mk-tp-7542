@@ -6,16 +6,14 @@
 
 
 Collitionable::Collitionable(){
-	this->isCActive=false;
+	this->isCActive=true;
 	this->isCMoving=false;
-
 }
 
 Collitionable::~Collitionable(){
-
 }
 
-void Collitionable::initShapes(int qty,float X, float Y, int W, int H){
+void Collitionable::initCShapes(int qty,float X, float Y, float W, float H){
 
 	Box* mainShape = new Box(X,Y,W,H,true);
 	this->Shapes.push_back(mainShape);
@@ -25,6 +23,10 @@ void Collitionable::initShapes(int qty,float X, float Y, int W, int H){
 		this->Shapes.push_back(auxShape);
 	}
 };
+
+void Collitionable::updateCShapesPosition(float X, float Y){
+	this->Shapes[0]->setCenter(X,Y);
+}
 
 
 void Collitionable::getCNextPosition(float* nextPositionX, float* nextPositionY){

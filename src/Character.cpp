@@ -33,6 +33,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		//override constructor
 		// initializing movements statements
 		clearMovementsFlags();
+		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -45,6 +46,8 @@ Character::Character(const LoaderParams* pParams) :
 		//override constructor
 		// initializing movements statements
 		clearMovementsFlags();
+		//initializing shapes for colitions
+		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
 }
 
 
@@ -288,6 +291,9 @@ void Character::update() {
 			break;
 		}
 	}
+	//refresh Collition Shapes positions
+	this->updateCShapesPosition(this->positionX, this->positionY);
+
 	SDL_Delay(25);
 }
 
