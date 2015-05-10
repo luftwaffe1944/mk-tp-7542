@@ -33,10 +33,10 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 	vector<Box*> nextObjectBoxes;
 
 	int cantObjects = objects.size();
-
-	for (int i=1; i<=(cantObjects-1); i++){  //itera todos los objectos
+	for (std::vector<Collitionable*>::size_type i = 1; i <= cantObjects;	i++) {
+	//for (int i=1; i<=(cantObjects-1); i++){  //itera todos los objectos
 		 actualObject = objects[i-1];
-		for (int j=1;j<=(cantObjects-i); j++){ //itera uno contra todos
+		for (std::vector<Collitionable*>::size_type j=1;j<=(cantObjects-i); j++){ //itera uno contra todos
 			nextObject = objects[(i-1)+j];
 			//verificar colision entre boxes
 
