@@ -476,6 +476,7 @@ GameGUI* GameGUIBuilder::create() {
 	if (layers.size()==0){layers = buildLayersByDefault(ratioX, ratioY,window,stage);}
 
 	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY, stage);
+	gameGUI->setCharacters(characters);
 	Fight* fight = jsonGetFight(root);
 	gameGUI->setFight(fight);
 	//if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
@@ -490,7 +491,6 @@ GameGUI* GameGUIBuilder::create() {
 	fightingCharacters.push_back(fight->getFighterOne());
 	fightingCharacters.push_back(fight->getFighterTwo());
 	gameGUI->setCharacters(fightingCharacters);
-
 	createGameInfo(window, fightingCharacters, ratioX, ratioY);
 
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
