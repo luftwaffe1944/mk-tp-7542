@@ -176,7 +176,7 @@ void InputControl::refreshJoystickInputs() {
 		//COMBINATION WITH LEFT --> ATRAS
 	} else if (this->isAxisLeft( joystick )) {
 		if (this->getActionButtonState(joystick,HIGH_KICK)){
-			if ( GameGUI::getInstance()->getCharacters()[character]->isRightOriented ) {
+			if ( GameGUI::getInstance()->getCharacters()[character]->getIsRightOriented() ) {
 				this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
 			} else {
 				this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
@@ -203,7 +203,7 @@ void InputControl::refreshJoystickInputs() {
 		//COMBINATION WITH RIGHT --> ADELANTE
 	} else if (this->isAxisRight( joystick )) {
 		if (this->getActionButtonState(joystick,HIGH_KICK)){
-			if ( !GameGUI::getInstance()->getCharacters()[character]->isRightOriented ) {
+			if ( !GameGUI::getInstance()->getCharacters()[character]->getIsRightOriented() ) {
 				this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
 			} else {
 				this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;

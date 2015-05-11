@@ -93,7 +93,7 @@ public:
 	void setAlternativeColor(AlternativeColor*);
 	bool getIsAlternativePlayer();
 	void setIsAlternativePlayer(bool isAltPlayer);
-
+	bool getIsRightOriented();
 	void incrementCounter(string moveKey);
 	void setCurrentSprite();
 	void resetCounter(string moveKey);

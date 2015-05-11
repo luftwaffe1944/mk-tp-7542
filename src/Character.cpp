@@ -687,6 +687,10 @@ void Character::updateShapesOnStatus(){
 	}
 }
 
+bool Character::getIsRightOriented(){
+	return this->isRightOriented;
+}
+
 Character* Character::getCopyInstance() {
 	LoaderParams* characterParams = new LoaderParams(positionX, positionY, width, height, zIndex, ratioX, ratioY, name);
 	AlternativeColor* copyAltColor = new AlternativeColor(altColor->getInitialH(), altColor->getFinalH(), altColor->getShift());
