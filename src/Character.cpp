@@ -690,9 +690,9 @@ void Character::updateShapesOnStatus(){
 
 Character* Character::getCopyInstance() {
 	LoaderParams* characterParams = new LoaderParams(positionX, positionY, width, height, zIndex, ratioX, ratioY, name);
-	AlternativeColor* altColor = new AlternativeColor(altColor->getInitialH(), altColor->getFinalH(), altColor->getShift());
+	AlternativeColor* altColor_temp = new AlternativeColor(altColor->getInitialH(), altColor->getFinalH(), altColor->getShift());
 	Character* copyOfCharacter = new Character(characterParams);
-	copyOfCharacter->setAlternativeColor(altColor);
+	copyOfCharacter->setAlternativeColor(altColor_temp);
 	copyOfCharacter->setPlayerNumber(playerNumber);
 	return copyOfCharacter;
 
