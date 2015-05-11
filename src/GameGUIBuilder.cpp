@@ -419,12 +419,13 @@ Fight* jsonGetFight(Json::Value root) {
 void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
 	float windowWidth = window->getWidth();
 	float windowHeight = window->getHeightPx();
+	/*
 	vector<string> playerName;
 	for(unsigned int i = 0; i < characters.size(); ++i ) {
 		playerName.push_back(characters[i]->getName());
-	}
+	}*/
 	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
-	GameInfo* info = new GameInfo(params, playerName);
+	GameInfo* info = new GameInfo(params, characters);
 	MKGame::Instance()->getObjectList().push_back(info);
 }
 

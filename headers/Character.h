@@ -28,7 +28,7 @@ private:
 	int zindex;
 	bool isRightOriented;
 	float yGround;
-	float energy = 100;
+	float energy = 1.0f;
 	std::string movement;
 	std::map<std::string,Sprite*> characterSprites;
 	SDL_Renderer* renderer; //TODO: review
