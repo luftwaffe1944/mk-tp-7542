@@ -24520,3 +24520,148 @@
 - 02:14:53.920 DEBUG: init success
 - 02:14:55.707 DEBUG: cleaning game
 
+- 01:18:23.000 DEBUG: CONFIGURATION INITIALIZED
+- 01:18:23.000 DEBUG: WINDOW CONFIGURATION
+- 01:18:23.000 DEBUG: JSON - Window width: 525 px
+- 01:18:23.000 DEBUG: JSON - Window height: 400 px
+- 01:18:23.000 DEBUG: JSON - Window width: 150
+- 01:18:23.000 DEBUG: STAGE CONFIGURATION
+- 01:18:23.000 DEBUG: JSON - Stage width: 500
+- 01:18:23.000 DEBUG: JSON - Stage height: 167
+- 01:18:23.000 DEBUG: JSON - Stage ypiso: 185
+- 01:18:23.000 WARNING: Stage floor 'y' position out of range or inexistent (0 - 167). Set to default:151
+- 01:18:23.000 DEBUG: RatioX (window_width_px / window_width_lg): 3.5
+- 01:18:23.000 DEBUG: RatioY (window_height_px / stage_height_lg): 2.39521
+- 01:18:23.000 DEBUG: LAYERS CONFIGURATION
+- 01:18:23.000 DEBUG: JSON - Number of Layers to process: 5
+- 01:18:23.000 DEBUG: JSON - Layer 0 input width: 113.70999999999999
+- 01:18:23.000 DEBUG: JSON - Layer 0 ID: layer0
+- 01:18:23.000 DEBUG: JSON - Layer 0 background image: images/arenas/jadesdesert/p_5n.png
+- 01:18:23.000 DEBUG: JSON - Layer 0 width: 113.71
+- 01:18:23.000 DEBUG: JSON - Layer 0 width recalculado: 167.788
+- 01:18:23.000 DEBUG: JSON - Layer 1 input width: 171.43000000000001
+- 01:18:23.000 DEBUG: JSON - Layer 1 ID: layer1
+- 01:18:23.000 DEBUG: JSON - Layer 1 background image: images/arenas/jadesdesert/p_4n.png
+- 01:18:23.000 DEBUG: JSON - Layer 1 width: 171.43
+- 01:18:23.000 DEBUG: JSON - Layer 1 width recalculado: 252.959
+- 01:18:23.000 DEBUG: JSON - Layer 2 input width: 228.28
+- 01:18:23.000 DEBUG: JSON - Layer 2 ID: layer2
+- 01:18:23.000 DEBUG: JSON - Layer 2 background image: images/arenas/jadesdesert/p_3n.png
+- 01:18:23.000 DEBUG: JSON - Layer 2 width: 228.28
+- 01:18:23.000 DEBUG: JSON - Layer 2 width recalculado: 336.845
+- 01:18:23.000 DEBUG: JSON - Layer 3 input width: 286.56999999999999
+- 01:18:23.000 DEBUG: JSON - Layer 3 ID: layer3
+- 01:18:23.000 DEBUG: JSON - Layer 3 background image: images/arenas/jadesdesert/p_2n.png
+- 01:18:23.000 DEBUG: JSON - Layer 3 width: 286.57
+- 01:18:23.000 DEBUG: JSON - Layer 3 width recalculado: 422.857
+- 01:18:23.000 DEBUG: JSON - Layer 4 input width: 338.85000000000002
+- 01:18:23.000 DEBUG: JSON - Layer 4 ID: layer4
+- 01:18:23.000 DEBUG: JSON - Layer 4 background image: images/arenas/jadesdesert/p_1n.png
+- 01:18:23.000 DEBUG: JSON - Layer 4 width: 338.85
+- 01:18:23.000 DEBUG: JSON - Layer 4 width recalculado: 500
+- 01:18:23.000 DEBUG: JSON - Number of Layers successfully process: 5
+- 01:18:23.000 DEBUG: CHARACTERS CONFIGURATION
+- 01:18:23.000 DEBUG: JSON - Number of Characters to process: 2
+- 01:18:23.000 DEBUG: JSON - Input Character name: subzero
+- 01:18:23.000 DEBUG: JSON - Input Character width: 55
+- 01:18:23.000 DEBUG: JSON - Input Character height: 70
+- 01:18:23.000 DEBUG: JSON - Input Character z-index: 99
+- 01:18:23.000 DEBUG: JSON - tag COLOR-ALTERNATIVO de personaje leido. 
+- 01:18:23.000 DEBUG: JSON - tag COLOR-ALTERNATIVO h_inicial leido: 180
+- 01:18:23.000 DEBUG: JSON - tag COLOR-ALTERNATIVO h_final leido: 300
+- 01:18:23.000 DEBUG: JSON - tag COLOR-ALTERNATIVO desplazamiento leido: 60
+- 01:18:23.000 DEBUG: Final values for character.
+- 01:18:23.000 DEBUG: JSON - Character name: subzero
+- 01:18:23.000 DEBUG: JSON - Character width: 55
+- 01:18:23.000 DEBUG: JSON - Character height: 70
+- 01:18:23.000 DEBUG: JSON - Character z-index: 99
+- 01:18:23.000 DEBUG: JSON - Character alternative color h_inicial: 180
+- 01:18:23.000 DEBUG: JSON - Character alternative color h_final: 300
+- 01:18:23.000 DEBUG: JSON - Character alternative color shift: 60
+- 01:18:23.000 DEBUG: JSON - Input Character name: scorpion
+- 01:18:23.000 DEBUG: JSON - Input Character width: 55
+- 01:18:23.000 DEBUG: JSON - Input Character height: 70
+- 01:18:23.000 DEBUG: JSON - Input Character z-index: 99
+- 01:18:23.000 DEBUG: JSON - tag COLOR-ALTERNATIVO de personaje leido. 
+- 01:18:23.000 DEBUG: JSON - tag COLOR-ALTERNATIVO h_inicial leido: 180
+- 01:18:23.000 DEBUG: JSON - tag COLOR-ALTERNATIVO h_final leido: 300
+- 01:18:23.000 DEBUG: JSON - tag COLOR-ALTERNATIVO desplazamiento leido: 60
+- 01:18:23.000 DEBUG: Final values for character.
+- 01:18:23.000 DEBUG: JSON - Character name: scorpion
+- 01:18:23.000 DEBUG: JSON - Character width: 55
+- 01:18:23.000 DEBUG: JSON - Character height: 70
+- 01:18:23.000 DEBUG: JSON - Character z-index: 99
+- 01:18:23.000 DEBUG: JSON - Character alternative color h_inicial: 180
+- 01:18:23.000 DEBUG: JSON - Character alternative color h_final: 300
+- 01:18:23.000 DEBUG: JSON - Character alternative color shift: 60
+- 01:18:23.000 DEBUG: FIGHT CONFIGURATION
+- 01:18:23.000 DEBUG: JSON - Input fighter one name: subzero
+- 01:18:23.000 DEBUG: JSON - Input fighter one name: scorpion
+- 01:18:23.000 DEBUG: CONFIGURATION FINISHED
+- 01:18:23.000 DEBUG: Layer layer4 layeroffScene 175
+- 01:18:23.000 DEBUG: Layer layer4 speed: 3
+- 01:18:23.000 DEBUG: Layer layer3 layeroffScene 136
+- 01:18:23.000 DEBUG: Layer layer3 speed: 2.33143
+- 01:18:23.000 DEBUG: Layer layer2 layeroffScene 93
+- 01:18:23.000 DEBUG: Layer layer2 speed: 1.59429
+- 01:18:23.000 DEBUG: Layer layer1 layeroffScene 51
+- 01:18:23.000 DEBUG: Layer layer1 speed: 0.874286
+- 01:18:23.000 DEBUG: Layer layer0 layeroffScene 8.5
+- 01:18:23.000 DEBUG: Layer layer0 speed: 0.145714
+- 01:18:23.047 DEBUG: SDL init success
+- 01:18:23.047 DEBUG: Number of Joysticks connected: 0
+- 01:18:23.047 ERROR: Error: No joysticks connected!
+- 01:18:23.063 DEBUG: window creation success
+- 01:18:23.078 DEBUG: renderer creation success
+- 01:18:24.359 DEBUG: init success
+- 01:18:27.322 DEBUG: Collition detected
+- 01:18:28.384 DEBUG: Collition detected
+- 01:18:28.431 DEBUG: Collition detected
+- 01:18:28.493 DEBUG: Collition detected
+- 01:18:28.540 DEBUG: Collition detected
+- 01:18:28.602 DEBUG: Collition detected
+- 01:18:28.665 DEBUG: Collition detected
+- 01:18:28.712 DEBUG: Collition detected
+- 01:18:28.774 DEBUG: Collition detected
+- 01:18:28.821 DEBUG: Collition detected
+- 01:18:28.883 DEBUG: Collition detected
+- 01:18:28.930 DEBUG: Collition detected
+- 01:18:28.992 DEBUG: Collition detected
+- 01:18:28.055 DEBUG: Collition detected
+- 01:18:28.117 DEBUG: Collition detected
+- 01:18:28.164 DEBUG: Collition detected
+- 01:18:28.226 DEBUG: Collition detected
+- 01:18:28.273 DEBUG: Collition detected
+- 01:18:29.336 DEBUG: Collition detected
+- 01:18:29.507 DEBUG: Collition detected
+- 01:18:29.554 DEBUG: Collition detected
+- 01:18:29.616 DEBUG: Collition detected
+- 01:18:29.679 DEBUG: Collition detected
+- 01:18:29.726 DEBUG: Collition detected
+- 01:18:29.788 DEBUG: Collition detected
+- 01:18:29.944 DEBUG: Collition detected
+- 01:18:29.006 DEBUG: Collition detected
+- 01:18:29.069 DEBUG: Collition detected
+- 01:18:29.116 DEBUG: Collition detected
+- 01:18:29.178 DEBUG: Collition detected
+- 01:18:29.240 DEBUG: Collition detected
+- 01:18:30.755 DEBUG: Collition detected
+- 01:18:30.802 DEBUG: Collition detected
+- 01:18:30.864 DEBUG: Collition detected
+- 01:18:30.911 DEBUG: Collition detected
+- 01:18:30.974 DEBUG: Collition detected
+- 01:18:30.036 DEBUG: Collition detected
+- 01:18:31.644 DEBUG: Collition detected
+- 01:18:31.707 DEBUG: Collition detected
+- 01:18:31.769 DEBUG: Collition detected
+- 01:18:31.816 DEBUG: Collition detected
+- 01:18:31.878 DEBUG: Collition detected
+- 01:18:31.925 DEBUG: Collition detected
+- 01:18:32.331 DEBUG: Collition detected
+- 01:18:32.378 DEBUG: Collition detected
+- 01:18:32.440 DEBUG: Collition detected
+- 01:18:32.487 DEBUG: Collition detected
+- 01:18:32.549 DEBUG: Collition detected
+- 01:18:32.612 DEBUG: Collition detected
+- 01:18:42.767 DEBUG: cleaning game
+
