@@ -37,5 +37,20 @@
 		"alto": 70,
 		"zindex": 99,
 		"orientacion": "right"
-	}
+	},
+	"joysticks": [ 
+		{
+			"piña_alta": 0,
+			"piña_baja": 1,
+			"patada_alta": 3,
+			"patada_baja": 2
+		},
+		{
+			"piña_alta": 0,
+			"piña_baja": 1,
+			"patada_alta": 3,
+			"patada_baja": 2
+		}
+	]
+		 
 }

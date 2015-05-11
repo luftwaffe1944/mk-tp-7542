@@ -316,6 +316,34 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 	return characters;
 }
 
+void jsonGetJoysticks(Json::Value root) {
+
+	FILE_LOG(logDEBUG) << "JOYSTICKS CONFIGURATION";
+
+	const Json::Value array = root.get(JSON_KEY_JOYSTICKS,0);
+	FILE_LOG(logDEBUG) << "JSON - Number of Joysticks to process: " << array.size();
+
+	vector<map <string,int> > joystickActionButtons;
+	string low_punch;
+	string high_punch;
+	string low_kick;
+	string high_kick;
+	for (unsigned int joyNum = 0; joyNum < array.size(); ++joyNum) {
+
+		low_punch = array[joyNum].get(JSON_KEY_LOW_PUNCH, "").asString();
+		high_punch = array[joyNum].get(JSON_KEY_HIGH_PUNCH, "").asString();
+		low_kick = array[joyNum].get(JSON_KEY_LOW_KICK, "").asString();
+		high_kick = array[joyNum].get(JSON_KEY_HIGH_KICK, "").asString();
+
+		InputControl::Instance()->setActionButton(joyNum, LOW_PUNCH, atoi(low_punch.c_str()) );
+		InputControl::Instance()->setActionButton(joyNum, HIGH_PUNCH, atoi(high_punch.c_str()) );
+		InputControl::Instance()->setActionButton(joyNum, LOW_KICK, atoi(low_kick.c_str()) );
+		InputControl::Instance()->setActionButton(joyNum, HIGH_KICK, atoi(high_kick.c_str()) );
+}
+
+	return;
+}
+
 void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
 	float windowWidth = window->getWidth();
 	float windowHeight = window->getHeightPx();
@@ -355,6 +383,7 @@ GameGUI* GameGUIBuilder::create() {
 		const Json::Value value2 = root.get(JSON_KEY_CAPAS,0);
 		Json::Value value3 = root[JSON_KEY_ESCENARIO];
 		Json::Value value14 = root[JSON_KEY_VENTANA];
+		Json::Value value5 = root[JSON_KEY_JOYSTICKS];
 	}catch(std::exception const & e){
 		FILE_LOG(logDEBUG) << "Corrupt JSON File. Exception: "<<e.what();
 		return createDefault();
@@ -380,6 +409,9 @@ GameGUI* GameGUIBuilder::create() {
 	gameGUI->setLayers(layers);
 
 	createGameInfo(window, characters, ratioX, ratioY);
+
+
+	jsonGetJoysticks(root);
 
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 

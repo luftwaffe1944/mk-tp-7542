@@ -350,3 +350,22 @@ void InputControl::clean() {
 
 
 }
+
+void InputControl::setActionButton(int joy, string action, int button) {
+	//this->joystickActionButton[joy][action] = button;
+
+	std::vector< std::map <std::string, int > > joysticks;
+	std::map<std::string, int> actionButton;
+	joysticks.push_back(actionButton);
+
+	this->joystickActionButton.push_back(joysticks[0]);
+
+	//this->joystickActionButton.assign(joy,actionButton);
+	this->joystickActionButton.at(joy)[action] = button;
+
+
+}
+
+int InputControl::getActionButton(int joy, string action) {
+	return this->joystickActionButton[joy][action];
+}

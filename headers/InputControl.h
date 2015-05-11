@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include "SDL.h"
 
 
@@ -43,7 +44,6 @@ private:
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
 
-
 public:
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
@@ -66,6 +66,9 @@ public:
 	std::vector<SDL_Joystick*> joysticks;
 	bool getButtonState(int joyNum, int buttonNumber);
 	void setButtonStateFalse(int joy, int but);
+	std::vector< std::map <std::string, int > > joystickActionButton;
+	void setActionButton(int joy, std::string action, int buttonNumber);
+	int getActionButton(int joy, std::string action);
 };
 
 #endif /* INPUTCONTROL_H_ */
