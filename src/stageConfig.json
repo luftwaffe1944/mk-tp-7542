@@ -30,13 +30,34 @@
 			"imagen_fondo": "images/arenas/jadesdesert/p_1n.png",
 			"ancho": 338.85
 		}
+	], 
+	"personajes": [
+		{
+			"nombre": "subzero",
+			"ancho": 55,
+			"alto": 70,
+			"zindex": 99,
+			"color-alternativo": {
+				"h-inicial": 180,
+				"h-final": 300,
+				"desplazamiento": 60
+			}
+		},
+		{
+			"nombre": "scorpion",
+			"ancho": 55,
+			"alto": 70,
+			"zindex": 99,
+			"color-alternativo": {
+				"h-inicial": 180,
+				"h-final": 300,
+				"desplazamiento": 60
+			}
+		}
 	],
-	"personaje": {
-		"nombre": "subzero",
-		"ancho": 55,
-		"alto": 70,
-		"zindex": 99,
-		"orientacion": "right"
+	"pelea": {
+		"luchador1": "subzero",
+		"luchador2": "scorpion"
 	},
 	"joysticks": [ 
 		{
@@ -51,6 +72,5 @@
 			"patada_alta": 3,
 			"patada_baja": 2
 		}
-	]
-		 
+	]	
 }

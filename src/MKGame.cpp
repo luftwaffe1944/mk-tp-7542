@@ -120,6 +120,14 @@ void MKGame::draw() {
 	}
 }
 
+vector<Collitionable*> convertVector(vector<Character*> oldVec){
+	vector<Collitionable*> newVec;
+	for (std::vector<Character*>::size_type i = 0; i != oldVec.size(); i++) {
+		newVec.push_back((Collitionable*) oldVec[i]);
+		}
+	return newVec;
+}
+
 void MKGame::update() {
 	if (shouldBeShaking) {
 		this->offSetPosY = (rand() % shakeIntensity) - 0.5f;
@@ -137,7 +145,14 @@ void MKGame::update() {
 		LayerManager::Instance()->refresh();
 		objectList[i]->setPositionY(objectList[i]->getPositionY() + this->offSetPosY);
 	}
+
+	GameGUI* pgamegui = this->getGameGUI();
+	vector<Collitionable*> collObjects = convertVector(this->getGameGUI()->getCharacters());
+	CollitionManager::Instance()->solveCollitions(collObjects);
+
 }
+
+
 
 void MKGame::handleEvents() {
 	SDL_Event event;

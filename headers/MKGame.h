@@ -22,6 +22,7 @@
 #include "Log.h"
 #include "GameInfo.h"
 #include "SDL_ttf.h"
+#include "CollitionManager.h"
 
 //#include "SDL_gamecontroller.h"
 //#include "SDL_joystick.h"

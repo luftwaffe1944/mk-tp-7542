@@ -15,7 +15,8 @@
 #include "GameGUI.h"
 #include "Log.h"
 #include "Constants.h"
-
+#include "Stage.h"
+#include "Window.h"
 class LayerManager {
 public:
 	static LayerManager* Instance();

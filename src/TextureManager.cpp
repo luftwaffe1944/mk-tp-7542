@@ -6,7 +6,6 @@
  */
 
 #include "../headers/TextureManager.h"
-
 TextureManager* TextureManager::t_pInstance = NULL;
 TextureManager* TextureManager::Instance() {
 	if (!t_pInstance) {
@@ -34,11 +33,217 @@ void TextureManager::resetInstance() {
 	this->m_textureMap.clear();
 }
 
+hsv rgb2hsv(rgb in)
+{
+    hsv         out;
+    double      min, max, delta;
+
+    min = in.r < in.g ? in.r : in.g;
+    min = min  < in.b ? min  : in.b;
+
+    max = in.r > in.g ? in.r : in.g;
+    max = max  > in.b ? max  : in.b;
+
+    out.v = max;                                // v
+    delta = max - min;
+    if( max > 0.0 ) { // NOTE: if Max is == 0, this divide would cause a crash
+        out.s = (delta / max);                  // s
+    } else {
+        // if max is 0, then r = g = b = 0
+            // s = 0, v is undefined
+        out.s = 0.0;
+        out.h = NAN;                            // its now undefined
+        return out;
+    }
+    if( in.r >= max )                           // > is bogus, just keeps compilor happy
+        out.h = ( in.g - in.b ) / delta;        // between yellow & magenta
+    else
+    if( in.g >= max )
+        out.h = 2.0 + ( in.b - in.r ) / delta;  // between cyan & yellow
+    else
+        out.h = 4.0 + ( in.r - in.g ) / delta;  // between magenta & cyan
+
+    out.h *= 60.0;                              // degrees
+
+    if( out.h < 0.0 )
+        out.h += 360.0;
+
+    return out;
+}
+
+
+rgb hsv2rgb(hsv in)
+{
+    double      hh, p, q, t, ff;
+    long        i;
+    rgb         out;
+
+    if(in.s <= 0.0) {       // < is bogus, just shuts up warnings
+        out.r = in.v;
+        out.g = in.v;
+        out.b = in.v;
+        return out;
+    }
+    hh = in.h;
+    if(hh >= 360.0) hh = 0.0;
+    hh /= 60.0;
+    i = (long)hh;
+    ff = hh - i;
+    p = in.v * (1.0 - in.s);
+    q = in.v * (1.0 - (in.s * ff));
+    t = in.v * (1.0 - (in.s * (1.0 - ff)));
+
+    switch(i) {
+    case 0:
+        out.r = in.v;
+        out.g = t;
+        out.b = p;
+        break;
+    case 1:
+        out.r = q;
+        out.g = in.v;
+        out.b = p;
+        break;
+    case 2:
+        out.r = p;
+        out.g = in.v;
+        out.b = t;
+        break;
+
+    case 3:
+        out.r = p;
+        out.g = q;
+        out.b = in.v;
+        break;
+    case 4:
+        out.r = t;
+        out.g = p;
+        out.b = in.v;
+        break;
+    case 5:
+    default:
+        out.r = in.v;
+        out.g = p;
+        out.b = q;
+        break;
+    }
+    return out;
+}
+
+
+void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
+{
+    int bpp = surface->format->BytesPerPixel;
+    /* Here p is the address to the pixel we want to set */
+    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+
+    switch(bpp) {
+    case 1:
+        *p = pixel;
+        break;
+
+    case 2:
+        *(Uint16 *)p = pixel;
+        break;
+
+    case 3:
+        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+            p[0] = (pixel >> 16) & 0xff;
+            p[1] = (pixel >> 8) & 0xff;
+            p[2] = pixel & 0xff;
+        } else {
+            p[0] = pixel & 0xff;
+            p[1] = (pixel >> 8) & 0xff;
+            p[2] = (pixel >> 16) & 0xff;
+        }
+        break;
+
+    case 4:
+        *(Uint32 *)p = pixel;
+        break;
+    }
+}
+
+Uint32 getpixel(SDL_Surface *surface, int x, int y)
+{
+    int bpp = surface->format->BytesPerPixel;
+    /* Here p is the address to the pixel we want to retrieve */
+    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+
+    switch(bpp) {
+    case 1:
+        return *p;
+        break;
+
+    case 2:
+        return *(Uint16 *)p;
+        break;
+
+    case 3:
+        if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
+            return p[0] << 16 | p[1] << 8 | p[2];
+        else
+            return p[0] | p[1] << 8 | p[2] << 16;
+        break;
+
+    case 4:
+        return *(Uint32 *)p;
+        break;
+
+    default:
+        return 0;       /* shouldn't happen, but avoids warnings */
+    }
+}
+
+
 bool TextureManager::load(std::string fileName, std::string id,
 		SDL_Renderer* pRenderer) {
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 	if (pTempSurface == 0) {
 		return false;
+	}
+	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer,
+			pTempSurface);
+	SDL_FreeSurface(pTempSurface);
+
+	if (pTexture != 0) {
+		m_textureMap[id] = pTexture;
+		return true;
+	}
+
+	return false;
+}
+
+void changeToAltColor(SDL_Surface* pTempSurface, AlternativeColor* altColor) {
+	Uint8 a;
+	rgb rgb;
+	hsv newHsv;
+	for (int i = 0; i < pTempSurface->w; i++) {
+		for (int j=0; j < pTempSurface->h; j++) {
+			SDL_GetRGBA(getpixel(pTempSurface, i, j), pTempSurface->format, &rgb.r, &rgb.g, &rgb.b, &a);
+            if (a == 0) {
+                continue;
+            }
+			newHsv = rgb2hsv(rgb);
+			if ((altColor->getInitialH() <= newHsv.h) && (newHsv.h <= altColor->getFinalH())) {
+				newHsv.h += altColor->getShift();
+			}
+			rgb = hsv2rgb(newHsv);
+			putpixel(pTempSurface, i, j, SDL_MapRGB(pTempSurface->format, rgb.r, rgb.g, rgb.b));
+		}
+	}
+}
+
+bool TextureManager::load(std::string fileName, std::string id,
+		SDL_Renderer* pRenderer, bool isAltPlayer, AlternativeColor* altColor) {
+	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
+	if (pTempSurface == 0) {
+		return false;
+	}
+	if (isAltPlayer) {
+		SDL_LockSurface(pTempSurface);
+		changeToAltColor(pTempSurface, altColor);
+		SDL_UnlockSurface(pTempSurface);
 	}
 	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer,
 			pTempSurface);
@@ -157,4 +362,3 @@ bool TextureManager::unload( std::string id )
 	}
 	return false;
 }
-

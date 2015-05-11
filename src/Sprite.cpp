@@ -27,6 +27,17 @@ Sprite::Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer
 	this->currentFrame = 0;
 }
 
+Sprite::Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount, bool isAltPlayer, AlternativeColor* altColor) {
+	if (!TextureManager::Instance()->load(spritePath, id, m_pRenderer, isAltPlayer, altColor)) {
+		cout << "error con el load";
+	}
+	this->spriteId = id;
+	this->spriteWidth = w;
+	this->spriteHeight = h;
+	this->framesAmount = framesAmount;
+	this->currentFrame = 0;
+}
+
 std::string Sprite::getSpriteId() {
 	return this->spriteId;
 }
