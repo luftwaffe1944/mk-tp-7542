@@ -7,9 +7,10 @@
 
 #ifndef SPRITE_H_
 #define SPRITE_H_
-#include "../headers/Log.h"
-#include "../headers/TextureManager.h"
-#include "../headers/InputControl.h"
+#include "Log.h"
+#include "TextureManager.h"
+#include "InputControl.h"
+#include "AlternativeColor.h"
 #include <SDL.h>
 #include <stdio.h>
 #include <iostream>
@@ -20,7 +21,7 @@ public:
 	Sprite();
 	virtual ~Sprite();
 	Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount);
-	Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount, bool isAltPlayer, double shift);
+	Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount, bool isAltPlayer, AlternativeColor* altColor);
     //void runForward(int firstFrame, int lastFrame, float fpsSpeed);
     //void runBackward(int firstFrame, int lastFrame, float fpsSpeed);
     std::string getSpriteId();

@@ -11,11 +11,32 @@
 #include <iostream>
 #include <map>
 #include <SDL.h>
-#include "RGBAndHSV.h"
+#include <SDL_stdinc.h>
+#include <SDL_endian.h>
+#include <SDL_surface.h>
 #include <SDL_image.h>
+#include <limits>
 #include "SDL_ttf.h"
+#include "AlternativeColor.h"
 #include "Log.h"
 using namespace std;
+
+#ifndef NAN
+	static const unsigned long __nan[2] = {0xffffffff, 0x7fffffff};
+	#define NAN (*(const float *) __nan)
+#endif
+
+typedef struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+} rgb;
+
+typedef struct {
+    double h;
+    double s;
+    double v;
+} hsv;
 
 class TextureManager {
 public:
@@ -25,7 +46,7 @@ public:
 
 	bool load(std::string fileName, std::string id, SDL_Renderer* pRenderer);
 
-	bool load(std::string fileName, std::string id, SDL_Renderer* pRenderer, bool isAltPlayer, double shift);
+	bool load(std::string fileName, std::string id, SDL_Renderer* pRenderer, bool isAltPlayer, AlternativeColor* altColor);
 
 	// draw
 	void draw(std::string id, int x, int y, int width, int height,

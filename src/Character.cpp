@@ -8,7 +8,6 @@
 #include "../headers/Character.h"
 #include "../headers/TextureManager.h"
 #include "../headers/MKGame.h"
-#include "../headers/RGBAndHSV.h"
 #include <SDL.h>
 #include <stdlib.h>
 #include <fstream>
@@ -61,33 +60,33 @@ bool Character::load(SDL_Renderer* render) {
 	}
 
 	Sprite* spriteWalk = new Sprite(this->name+this->playerNumber+WALK_SUFFIX, characterPath+WALK_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 	Sprite* spriteStance = new Sprite(this->name+this->playerNumber+STANCE_SUFFIX, characterPath+STANCE_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9, this->isAltPlayer, this->altColor);
 	Sprite* spriteJump = new Sprite(this->name+this->playerNumber+JUMP_SUFFIX, characterPath+JUMP_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 	Sprite* spriteJumpDiagonal = new Sprite(this->name+this->playerNumber+JUMP_DIAGONAL_SUFFIX, characterPath+DIAGONAL_JUMP_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9, this->isAltPlayer, this->altColor);
 	Sprite* spriteDuck = new Sprite(this->name+this->playerNumber+DUCK_SUFFIX, characterPath+DUCK_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 	Sprite* spriteHighPunch = new Sprite(this->name+this->playerNumber+HI_PUNCH_SUFFIX, characterPath+HIPUNCH_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7, this->isAltPlayer, this->altColor);
 	Sprite* spriteLowPunch = new Sprite(this->name+this->playerNumber+LO_PUNCH_SUFFIX, characterPath+LOPUNCH_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
 	Sprite* spriteDuckPunch = new Sprite(this->name+this->playerNumber+DUCK_PUNCH_SUFFIX, characterPath+DUCKPUNCH_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 2, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 2, this->isAltPlayer, this->altColor);
 	Sprite* spriteUpperCut = new Sprite(this->name+this->playerNumber+UPPERCUT_SUFFIX, characterPath+UPPERCUT_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT +30, 5, this->isAltPlayer, this->altColor->getShift());
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT +30, 5, this->isAltPlayer, this->altColor);
 	Sprite* spriteLowKick = new Sprite(this->name+this->playerNumber+LOW_KICK_SUFFIX, characterPath+LOW_KICK_SPRITE,
-			renderer, 200, 170, 6, this->isAltPlayer, this->altColor->getShift());
+			renderer, 200, 170, 6, this->isAltPlayer, this->altColor);
 	Sprite* spriteHighKick = new Sprite(this->name+this->playerNumber+HIGH_KICK_SUFFIX, characterPath+HIGH_KICK_SPRITE,
-			renderer, 200, 170, 6, this->isAltPlayer, this->altColor->getShift());
+			renderer, 200, 170, 6, this->isAltPlayer, this->altColor);
 	Sprite* spriteDuckLowKick = new Sprite(this->name+this->playerNumber+DUCK_LOW_KICK_SUFFIX, characterPath+DUCK_LOW_KICK_SPRITE,
-			renderer, 200, 170, 3, this->isAltPlayer, this->altColor->getShift());
+			renderer, 200, 170, 3, this->isAltPlayer, this->altColor);
 	Sprite* spriteDuckHighKick = new Sprite(this->name+this->playerNumber+DUCK_HIGH_KICK_SUFFIX, characterPath+DUCK_HIGH_KICK_SPRITE,
-			renderer, 200, 170, 4, this->isAltPlayer, this->altColor->getShift());
+			renderer, 200, 170, 4, this->isAltPlayer, this->altColor);
 	Sprite* spriteSuperKick = new Sprite(this->name+this->playerNumber+SUPER_KICK_SUFFIX, characterPath+SUPER_KICK_SPRITE,
-			renderer, 200, 170, 8, this->isAltPlayer, this->altColor->getShift());
+			renderer, 200, 170, 8, this->isAltPlayer, this->altColor);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+STANCE_SUFFIX, spriteStance));
@@ -656,9 +655,9 @@ void Character::setEnergy(float newEnergyValue){
 }
 Character* Character::getCopyInstance() {
 	LoaderParams* characterParams = new LoaderParams(positionX, positionY, width, height, zIndex, ratioX, ratioY, name);
-	AlternativeColor* altColor = new AlternativeColor(altColor->getInitialH(), altColor->getFinalH(), altColor->getShift());
+	AlternativeColor* copyAltColor = new AlternativeColor(altColor->getInitialH(), altColor->getFinalH(), altColor->getShift());
 	Character* copyOfCharacter = new Character(characterParams);
-	copyOfCharacter->setAlternativeColor(altColor);
+	copyOfCharacter->setAlternativeColor(copyAltColor);
 	copyOfCharacter->setPlayerNumber(playerNumber);
 	return copyOfCharacter;
 
