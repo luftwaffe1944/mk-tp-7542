@@ -19,7 +19,7 @@ using namespace std;
 
 class GameInfo : public SDLObjectGUI {
 public:
-	GameInfo(const LoaderParams* pParams, vector<std::string> playerName);
+	GameInfo(const LoaderParams* pParams, vector<Character*> characters);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
@@ -33,7 +33,7 @@ public:
 	virtual bool load();
 	virtual bool load(SDL_Renderer* r);
 private:
-	vector<std::string> playerName;
+	vector<Character*> characters;
 	float barWidth;
 	SDL_Color frontColor;
 	SDL_Color bgColor;
