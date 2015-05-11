@@ -18,17 +18,17 @@
 #include <iostream>
 #include "AlternativeColor.h"
 #include "Collitionable.h"
+#include "DamageObject.h"
 using namespace std;
 
 
-class Character : public SDLObjectGUI, Collitionable {
+class Character : public SDLObjectGUI, public Collitionable {
 private:
 	Sprite* currentSprite;
 	std::string name;
 	int zindex;
 	bool isRightOriented;
 	float yGround;
-	float energy = 1.0f;
 	std::string movement;
 	std::map<std::string,Sprite*> characterSprites;
 	SDL_Renderer* renderer; //TODO: review
@@ -87,9 +87,6 @@ public:
 	bool isMovingLeft();
 
 	virtual void getCNextPosition(float* nextPositionX, float* nextPositionY); //redefinir virtual
-	float getEnergy();
-	void setEnergy(float newEnergyValue);
-
 
 	string getName();
 	AlternativeColor* getAlternativeColor();

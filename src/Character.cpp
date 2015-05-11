@@ -400,6 +400,7 @@ void Character::walkLeft() {
 
 void Character::setMovement(std::string movement) {
 	this->movement = movement;
+	this->setDOMovement(movement);
 }
 
 std::string Character::getMovement() {
@@ -687,12 +688,6 @@ void Character::updateShapesOnStatus(){
 	}
 }
 
-float Character::getEnergy(){
-	return this->energy;
-}
-void Character::setEnergy(float newEnergyValue){
-	this->energy = newEnergyValue;
-}
 Character* Character::getCopyInstance() {
 	LoaderParams* characterParams = new LoaderParams(positionX, positionY, width, height, zIndex, ratioX, ratioY, name);
 	AlternativeColor* altColor = new AlternativeColor(altColor->getInitialH(), altColor->getFinalH(), altColor->getShift());

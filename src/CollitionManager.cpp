@@ -8,6 +8,7 @@
 #include "../headers/Box.h"
 #include "../headers/Collitionable.h"
 #include "../headers/CollitionManager.h"
+#include "../headers/DamageManager.h"
 #include "../headers/Log.h"
 
 CollitionManager* CollitionManager::cm_pInstance = NULL;
@@ -65,6 +66,7 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 					if (newActualBox->isColliding(newNextBox)){ //verifica superposicion
 						//resolver evento de colision
 						FILE_LOG(logDEBUG) << "Collition detected" ;
+						DamageManager::Instance()->solveDamage(actualObject, nextObject);
 					}
 
 					//--

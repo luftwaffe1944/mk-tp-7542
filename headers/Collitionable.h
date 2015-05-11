@@ -16,11 +16,12 @@
 #include <iostream>
 #include <vector>
 #include "Box.h"
+#include "DamageObject.h"
 using namespace std;
 
 
 
-class Collitionable {
+class Collitionable : public DamageObject {
 private:
 
 	vector<Box*> Shapes;
