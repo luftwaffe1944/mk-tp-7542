@@ -104,6 +104,7 @@ public:
 	void setMoveFlag(bool trueOrFalse);
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
+	void updateShapesOnStatus();
 };
 
 #endif /* CHARACTER_H_ */

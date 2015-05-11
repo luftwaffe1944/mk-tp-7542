@@ -292,7 +292,7 @@ void Character::update() {
 		}
 	}
 	//refresh Collition Shapes positions
-	this->updateCShapesPosition(this->positionX, this->positionY);
+	this->updateShapesOnStatus();
 
 	SDL_Delay(25);
 }
@@ -646,6 +646,45 @@ void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
 				*nextPositionY = yGround;
 			}
 		}
+}
+void Character::updateShapesOnStatus(){
+
+
+//		void updateCShapesPosition(float X, float Y, float W, float H, bool rightOriented, bool secShapeTop, float secShapeW, float secShapeH);
+
+	if (isJumping) {
+		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
+	}else if (isJumpingRight) {
+		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
+	}else if (isJumpingLeft) {
+		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
+	}else if (isKickingHigh){
+		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, this->width, this->height / 6);
+	}else if (isKickingLow) {
+		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, this->width, this->height / 6);
+	}else if (isKickingDuckHigh) {
+		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, this->width, this->height / 6);
+	}else if (isKickingDuckLow) {
+
+	}else if (isKickingSuper) {
+
+	}else if (isPunchingAnUppercut) {
+
+	}else if (isPunchingLow) {
+
+	}else if (isPunchingDuck) {
+		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, false, this->width, this->height / 6);
+	}else if (isPunchingHigh) {
+		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, this->width, this->height / 6);
+	}else if (isDucking) {
+		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
+	}else if (isWalkingRight) {
+		this->updateCShapesPosition(this->positionX, this->positionY);
+	}else if (isWalkingLeft) {
+		this->updateCShapesPosition(this->positionX, this->positionY);
+	}else{
+		this->updateCShapesPosition(this->positionX, this->positionY);
+	}
 }
 
 float Character::getEnergy(){

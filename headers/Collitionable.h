@@ -37,6 +37,8 @@ public:
 	void setCActive(bool active){this->isCActive = active;}
 	vector<Box*> getCShapes();
 	void updateCShapesPosition(float X, float Y);
+	void updateCShapesPosition(float X, float Y, float W, float H);
+	void updateCShapesPosition(float X, float Y, float W, float H, bool rightOriented, bool secShapeTop, float secShapeW, float secShapeH);
 
 };
 
