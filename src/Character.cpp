@@ -6,12 +6,18 @@
  */
 
 #include "../headers/Character.h"
-#include "../headers/TextureManager.h"
-#include "../headers/MKGame.h"
-#include <SDL.h>
-#include <stdlib.h>
+
+#include <SDL_render.h>
+#include <SDL_timer.h>
+#include <utility>
 #include <fstream>
-#include <iostream>
+
+#include "../headers/GameGUI.h"
+#include "../headers/LoaderParams.h"
+#include "../headers/Log.h"
+#include "../headers/Stage.h"
+#include "../headers/TextureManager.h"
+#include "../headers/Window.h"
 
 using namespace std;
 
@@ -20,6 +26,8 @@ float jumpVel = 60.0f;
 
 std::map<std::string,int> Character::movesCounter;
 
+bool somePunchInputCommand(InputCommand inputCommand);
+bool someKickInputCommand(InputCommand inputCommand);
 bool validateSpritesForSelectedCharacter(std::string characterPath);
 
 Character::Character(const LoaderParams* pParams, bool isRightOriented) :
@@ -61,25 +69,29 @@ bool Character::load(SDL_Renderer* render) {
 	Sprite* spriteDuckPunch = new Sprite(this->name+DUCK_PUNCH_SUFFIX, characterPath+DUCKPUNCH_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 2);
 	Sprite* spriteUpperCut = new Sprite(this->name+UPPERCUT_SUFFIX, characterPath+UPPERCUT_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT +30, 5);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 5);
 	Sprite* spriteLowKick = new Sprite(this->name+LOW_KICK_SUFFIX, characterPath+LOW_KICK_SPRITE,
-			renderer, 200, 170, 6);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6);
 	Sprite* spriteHighKick = new Sprite(this->name+HIGH_KICK_SUFFIX, characterPath+HIGH_KICK_SPRITE,
-			renderer, 200, 170, 6);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6);
 	Sprite* spriteDuckLowKick = new Sprite(this->name+DUCK_LOW_KICK_SUFFIX, characterPath+DUCK_LOW_KICK_SPRITE,
-			renderer, 200, 170, 3);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3);
 	Sprite* spriteDuckHighKick = new Sprite(this->name+DUCK_HIGH_KICK_SUFFIX, characterPath+DUCK_HIGH_KICK_SPRITE,
-			renderer, 200, 170, 4);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 4);
 	Sprite* spriteSuperKick = new Sprite(this->name+SUPER_KICK_SUFFIX, characterPath+SUPER_KICK_SPRITE,
-			renderer, 200, 170, 8);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8);
 	Sprite* spriteAirHighKick = new Sprite(this->name+AIR_HIGH_kICK_SUFFIX, characterPath+AIR_HIGH_KICK_SPRITE,
-			renderer, 200, 170, 3);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
 	Sprite* spriteAirLowKick = new Sprite(this->name+AIR_LOW_kICK_SUFFIX, characterPath+AIR_LOW_KICK_SPRITE,
-			renderer, 200, 170, 3);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
 	Sprite* spriteBlock = new Sprite(this->name+BLOCK_SUFFIX, characterPath+BLOCK_SPRITE,
-			renderer, 200, 170, 3);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
 	Sprite* spriteDuckBlock = new Sprite(this->name+DUCK_BLOCK_SUFFIX, characterPath+DUCK_BLOCK_SPRITE,
-			renderer, 200, 170, 3);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
+	Sprite* spriteUnderKick = new Sprite(this->name+UNDER_KICK_SUFFIX, characterPath+UNDER_KICK_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8);
+	Sprite* spriteAirPunch = new Sprite(this->name+AIR_PUNCH_SUFFIX, characterPath+AIR_PUNCH_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+STANCE_SUFFIX, spriteStance));
@@ -99,6 +111,8 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+AIR_LOW_kICK_SUFFIX, spriteAirLowKick));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+BLOCK_SUFFIX, spriteBlock));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+DUCK_BLOCK_SUFFIX, spriteDuckBlock));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+UNDER_KICK_SUFFIX, spriteUnderKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+AIR_PUNCH_SUFFIX, spriteAirPunch));
 	return true;
 }
 
@@ -150,12 +164,38 @@ void Character::update() {
 	InputCommand playerCommand = InputControl::Instance()->getFirstPlayerMove();
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
-	if (isJumping) {
+
+	if (isJumping && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
 		jump();
-	} else if (isJumpingRight) {
+	}
+	else if (isJumping && someKickInputCommand(playerCommand)) {
+		this->setMovement(AIR_HIGH_kICK_MOVEMENT);
+		setCurrentSprite();
+		airHighKick();
+	} else if (isJumping && somePunchInputCommand(playerCommand)) {
+		this->setMovement(AIR_PUNCH_MOVEMENT);
+		setCurrentSprite();
+		airPunch();
+	} else if (isJumpingRight && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
 		jumpRight();
-	} else if (isJumpingLeft) {
+	} else if (isJumpingRight && someKickInputCommand(playerCommand)) {
+		this->setMovement(AIR_LOW_kICK_MOVEMENT);
+		setCurrentSprite();
+		airLowKickRight();
+	} else if (isJumpingRight && somePunchInputCommand(playerCommand)) {
+		this->setMovement(AIR_PUNCH_MOVEMENT);
+		setCurrentSprite();
+		airPunch();
+	} else if (isJumpingLeft && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
 		jumpLeft();
+	} else if (isJumpingLeft && someKickInputCommand(playerCommand)) {
+		this->setMovement(AIR_LOW_kICK_MOVEMENT);
+		setCurrentSprite();
+		airLowKickLeft();
+	} else if (isJumpingLeft && somePunchInputCommand(playerCommand)) {
+		this->setMovement(AIR_PUNCH_MOVEMENT);
+		setCurrentSprite();
+		airPunch();
 	}else if (isKickingHigh){
 		completeMovement();
 	} else if (isKickingLow) {
@@ -166,6 +206,8 @@ void Character::update() {
 		completeMovement();
 	} else if (isKickingSuper) {
 		completeMovement();
+	} else if (isUnderKick) {
+		completeMovement();
 	} else if (isPunchingAnUppercut) {
 		completeMovement();
 	} else if (isPunchingLow) {
@@ -174,6 +216,18 @@ void Character::update() {
 		completeMovement();
 	} else if (isPunchingHigh) {
 		completeMovement();
+	} else if (isKickingAirHigh) {
+		airHighKick();
+	} else if (isKickingAirLowRight) {
+		airLowKickRight();
+	} else if (isKickingAirLowLeft) {
+		airLowKickLeft();
+	} else if (isAirPunching) {
+		airPunch();
+	} else if (isAirPunchingRight) {
+		airPunch();
+	} else if (isAirPunchingLeft) {
+		airPunch();
 	} else {
 		// Movements validation to refresh frames
 		if (isDucking && (playerCommand != FIRST_PLAYER_MOVE_DOWN &&
@@ -278,12 +332,56 @@ void Character::update() {
 			setCurrentSprite();
 			completeMovement();
 			break;
+		case FIRST_PLAYER_UNDER_KICK:
+			this->setMovement(UNDER_KICK_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			break;
+		case FIRST_PLAYER_AIR_LOW_kICK_R:
+			this->setMovement(AIR_LOW_kICK_MOVEMENT);
+			setCurrentSprite();
+			airLowKickRight();
+			break;
+		case FIRST_PLAYER_AIR_LOW_kICK_L:
+			this->setMovement(AIR_LOW_kICK_MOVEMENT);
+			setCurrentSprite();
+			airLowKickLeft();
+			break;
+		case FIRST_PLAYER_AIR_HIGH_kICK:
+			this->setMovement(AIR_HIGH_kICK_MOVEMENT);
+			setCurrentSprite();
+			airHighKick();
+			break;
+		case FIRST_PLAYER_BLOCK:
+			this->setMovement(BLOCK_MOVEMENT);
+			setCurrentSprite();
+			break;
+		case FIRST_PLAYER_DUCK_BLOCK:
+			this->setMovement(DUCK_BLOCK_MOVEMENT);
+			setCurrentSprite();
+			break;
+		case FIRST_PLAYER_AIR_PUNCH:
+			this->setMovement(AIR_PUNCH_MOVEMENT);
+			setCurrentSprite();
+			airPunch();
+			break;
+		case FIRST_PLAYER_AIR_PUNCH_R:
+			this->setMovement(AIR_PUNCH_MOVEMENT);
+			setCurrentSprite();
+			airPunch();
+			break;
+		case FIRST_PLAYER_AIR_PUNCH_L:
+			this->setMovement(AIR_PUNCH_MOVEMENT);
+			setCurrentSprite();
+			airPunch();
+			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
 			setCurrentSprite();
 			break;
 		}
 	}
+	cout << playerCommand << ": " << getMovement() << endl;
 	SDL_Delay(55);
 }
 
@@ -300,6 +398,14 @@ void Character::clearMovementsFlags(){
 	isPunchingAnUppercut = false;
 	isKickingHigh = false;
 	isKickingLow = false;
+	isKickingAirHigh = false;
+	isKickingAirLowRight = false;
+	isKickingAirLowLeft = false;
+	isBlocking = false;
+	isDuckBlocking = false;
+	isUnderKick = false;
+	isAirPunchingRight = false;
+	isAirPunchingLeft = false;
 }
 
 void Character::jump() {
@@ -308,6 +414,68 @@ void Character::jump() {
 	jumpVel -= gravity;
 	if (this->isTouchingGround(positionY)) {
 		isJumping = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY = yGround;
+		refreshFrames();
+	}
+}
+
+void Character::airHighKick() {
+	isKickingAirHigh = true;
+	isJumping = false;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	if (this->isTouchingGround(positionY)) {
+		isKickingAirHigh = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY = yGround;
+		refreshFrames();
+	}
+}
+
+void Character::airLowKickRight() {
+	isKickingAirLowRight = true;
+	isJumpingRight = false;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	if (!this->reachedWindowRightLimit()) {
+		positionX = positionX + (2 * ratioX);
+	}
+	if (this->isTouchingGround(positionY)) {
+		isKickingAirLowRight = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY = yGround;
+		refreshFrames();
+	}
+}
+
+void Character::airPunch() {
+	isAirPunching = true;
+	isJumpingRight = false;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	if (this->isTouchingGround(positionY)) {
+		isAirPunching = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY = yGround;
+		refreshFrames();
+	}
+}
+
+void Character::airLowKickLeft() {
+	isKickingAirLowLeft = true;
+	isJumpingLeft = false;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	if (!this->reachedWindowRightLimit()) {
+		positionX = positionX - (2 * ratioX);
+	}
+	if (this->isTouchingGround(positionY)) {
+		isKickingAirLowLeft = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
 		this->positionY = yGround;
@@ -528,6 +696,25 @@ void Character::setCurrentSprite(){
 
 		} else if (this->getMovement() == SUPER_KICK_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+SUPER_KICK_SUFFIX];
+
+		} else if (this->getMovement() == AIR_HIGH_kICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+AIR_HIGH_kICK_SUFFIX];
+
+		} else if (this->getMovement() == AIR_LOW_kICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+AIR_LOW_kICK_SUFFIX];
+
+		} else if (this->getMovement() == DUCK_BLOCK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+DUCK_BLOCK_SUFFIX];
+
+		} else if (this->getMovement() == BLOCK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+BLOCK_SUFFIX];
+
+		} else if (this->getMovement() == UNDER_KICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+UNDER_KICK_SUFFIX];
+
+		} else if (this->getMovement() == AIR_PUNCH_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+AIR_PUNCH_SUFFIX];
+
 		} else{
 			//TODO: review
 		}
@@ -560,8 +747,30 @@ void Character::setMoveFlag(bool trueOrFalse){
 
 	} else if (this->getMovement() == SUPER_KICK_MOVEMENT) {
 		isKickingSuper = trueOrFalse;
+
+	} else if (this->getMovement() == AIR_HIGH_kICK_MOVEMENT) {
+		isKickingAirHigh = trueOrFalse;
+
+	} else if (this->getMovement() == UNDER_KICK_MOVEMENT) {
+		isUnderKick = trueOrFalse;
+
+	} else if (this->getMovement() == AIR_PUNCH_MOVEMENT){
+		isAirPunching = trueOrFalse;
+
 	} else {
 		//TODO: review
 	}
 
+}
+
+bool someKickInputCommand(InputCommand inputCommand) {
+	return ((inputCommand == FIRST_PLAYER_LOW_KICK) || (inputCommand == FIRST_PLAYER_HIGH_KICK) ||
+			(inputCommand == FIRST_PLAYER_AIR_HIGH_kICK) || (inputCommand == FIRST_PLAYER_AIR_LOW_kICK_R)
+			|| (inputCommand == FIRST_PLAYER_AIR_LOW_kICK_L));
+}
+
+bool somePunchInputCommand(InputCommand inputCommand) {
+	return ((inputCommand == FIRST_PLAYER_LO_PUNCH) || (inputCommand == FIRST_PLAYER_HI_PUNCH) ||
+			(inputCommand == FIRST_PLAYER_AIR_PUNCH_L) || (inputCommand == FIRST_PLAYER_AIR_PUNCH_R)
+			|| (inputCommand == FIRST_PLAYER_AIR_PUNCH));
 }

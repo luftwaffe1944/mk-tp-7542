@@ -15,6 +15,9 @@
 #include "../headers/MKGame.h"
 #include <stddef.h>
 
+bool somePunchButtonPressed(const Uint8* keyBoard);
+bool someKickButtonPressed(const Uint8* keyBoard);
+
 void InputControl::refreshInputs() {
 
 	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
@@ -31,12 +34,35 @@ void InputControl::refreshInputs() {
 
 		if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !somePunchButtonPressed(currentKeyStates)
+				&& !someKickButtonPressed(currentKeyStates)
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& somePunchButtonPressed(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			cout << "GFAFASFAFA" << endl;
+			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& someKickButtonPressed(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_HIGH_kICK;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& (currentKeyStates[SDL_SCANCODE_LEFT])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& someKickButtonPressed(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_L;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& someKickButtonPressed(currentKeyStates)
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_R;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
@@ -44,7 +70,7 @@ void InputControl::refreshInputs() {
 		}
 
 		//COMBINATION WITH DOWN
-	} else if (currentKeyStates[SDL_SCANCODE_DOWN]) {
+	} else if (currentKeyStates[SDL_SCANCODE_DOWN] && !currentKeyStates[SDL_SCANCODE_LCTRL]) {
 		if (currentKeyStates[SDL_SCANCODE_A]) {
 			this->firstPlayerMove = FIRST_PLAYER_DUCK_PUNCH;
 		} else if (currentKeyStates[SDL_SCANCODE_S]) {
@@ -72,6 +98,12 @@ void InputControl::refreshInputs() {
 		if (currentKeyStates[SDL_SCANCODE_X]){
 			this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
 		}
+		else if (currentKeyStates[SDL_SCANCODE_Z]){
+			this->firstPlayerMove = FIRST_PLAYER_UNDER_KICK;
+		}
+		else if (currentKeyStates[SDL_SCANCODE_LCTRL]){
+			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
+		}
 		else if (!(currentKeyStates[SDL_SCANCODE_UP])
 				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
@@ -81,8 +113,12 @@ void InputControl::refreshInputs() {
 	} else if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
 		if (!(currentKeyStates[SDL_SCANCODE_UP])
 				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !currentKeyStates[SDL_SCANCODE_LCTRL]
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])) {
 			this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+		}
+		else if (currentKeyStates[SDL_SCANCODE_LCTRL]){
+			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
 		}
 		//COMBINATION WITH S
 	} else if (currentKeyStates[SDL_SCANCODE_S]) {
@@ -97,6 +133,15 @@ void InputControl::refreshInputs() {
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 			this->firstPlayerMove = FIRST_PLAYER_LO_PUNCH;
+		}
+
+		//COMBINATION WITH LEFT CTRL
+	} else if (currentKeyStates[SDL_SCANCODE_LCTRL]) {
+		if (!(currentKeyStates[SDL_SCANCODE_DOWN])) {
+			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
+		}
+		else if((currentKeyStates[SDL_SCANCODE_DOWN])){
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_BLOCK;
 		}
 
 	} else if (currentKeyStates[SDL_SCANCODE_X]) {
@@ -248,4 +293,12 @@ void InputControl::clean() {
 	this->joysticks.clear();
 
 
+}
+
+bool someKickButtonPressed(const Uint8* keyBoard) {
+	return (keyBoard[SDL_SCANCODE_Z]) || (keyBoard[SDL_SCANCODE_X]);
+}
+
+bool somePunchButtonPressed(const Uint8* keyBoard) {
+	return (keyBoard[SDL_SCANCODE_A]) || (keyBoard[SDL_SCANCODE_S]);
 }
