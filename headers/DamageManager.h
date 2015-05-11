@@ -23,6 +23,9 @@ public:
 	}
 
 	void solveDamage(DamageObject* firstObject, DamageObject* secondObject);
+	bool IsObjectAttacking(DamageObject* obj);
+	bool IsObjectBlocking(DamageObject* obj);
+	float getDamageToDo(DamageObject* obj);
 
 private:
 	static DamageManager* dm_pInstance;

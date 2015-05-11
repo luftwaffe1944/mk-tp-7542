@@ -671,7 +671,7 @@ void Character::updateShapesOnStatus(){
 	}else if (isPunchingAnUppercut) {
 
 	}else if (isPunchingLow) {
-
+		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, this->width, this->height / 3);
 	}else if (isPunchingDuck) {
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, false, this->width, this->height / 6);
 	}else if (isPunchingHigh) {
