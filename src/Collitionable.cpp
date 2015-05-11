@@ -45,10 +45,15 @@ void Collitionable::updateCShapesPosition(float X, float Y, float W, float H, bo
 	float secX,secY;
 	if (rightOriented){
 		secX = X + (W/2) + (secShapeW/2);
-		if (secShapeTop){
-			secY = boxes[0]->getTopY() - (secShapeH/2);
-		}
+	}else{
+		secX = X - (W/2) - (secShapeW/2);
 	}
+	if (secShapeTop){
+		secY = boxes[0]->getTopY() - (secShapeH/2);
+	}else{
+		secY = boxes[0]->getBottomY() + (secShapeH/2);
+	}
+
 	boxes[1]->setCenter(secX,secY);
 	boxes[1]->setWidth(secShapeW);
 	boxes[1]->setHeight(secShapeH);
