@@ -64,8 +64,8 @@ public:
 	bool isAxisUp(int joystick);
 	bool isAxisDown(int joystick);
 	std::vector<SDL_Joystick*> joysticks;
-	bool getButtonState(int joyNum, int buttonNumber);
-	void setButtonStateFalse(int joy, int but);
+	bool getActionButtonState(int joyNum, std::string action);
+	void setActionButtonStateFalse(int joy, std::string action);
 	std::vector< std::map <std::string, int > > joystickActionButton;
 	void setActionButton(int joy, std::string action, int buttonNumber);
 	int getActionButton(int joy, std::string action);
