@@ -42,8 +42,17 @@ void InputControl::refreshInputs() {
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& somePunchButtonPressed(currentKeyStates)
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			cout << "GFAFASFAFA" << endl;
 			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& somePunchButtonPressed(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH_L;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& somePunchButtonPressed(currentKeyStates)
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH_R;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& someKickButtonPressed(currentKeyStates)

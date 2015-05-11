@@ -185,7 +185,7 @@ void Character::update() {
 	} else if (isJumpingRight && somePunchInputCommand(playerCommand)) {
 		this->setMovement(AIR_PUNCH_MOVEMENT);
 		setCurrentSprite();
-		airPunch();
+		airPunchRight();
 	} else if (isJumpingLeft && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
 		jumpLeft();
 	} else if (isJumpingLeft && someKickInputCommand(playerCommand)) {
@@ -195,7 +195,7 @@ void Character::update() {
 	} else if (isJumpingLeft && somePunchInputCommand(playerCommand)) {
 		this->setMovement(AIR_PUNCH_MOVEMENT);
 		setCurrentSprite();
-		airPunch();
+		airPunchLeft();
 	}else if (isKickingHigh){
 		completeMovement();
 	} else if (isKickingLow) {
@@ -225,9 +225,9 @@ void Character::update() {
 	} else if (isAirPunching) {
 		airPunch();
 	} else if (isAirPunchingRight) {
-		airPunch();
+		airPunchRight();
 	} else if (isAirPunchingLeft) {
-		airPunch();
+		airPunchLeft();
 	} else {
 		// Movements validation to refresh frames
 		if (isDucking && (playerCommand != FIRST_PLAYER_MOVE_DOWN &&
@@ -361,6 +361,7 @@ void Character::update() {
 			setCurrentSprite();
 			break;
 		case FIRST_PLAYER_AIR_PUNCH:
+			cout << "FIRST_PLAYER_AIR_PUNCH" << endl;
 			this->setMovement(AIR_PUNCH_MOVEMENT);
 			setCurrentSprite();
 			airPunch();
@@ -368,12 +369,12 @@ void Character::update() {
 		case FIRST_PLAYER_AIR_PUNCH_R:
 			this->setMovement(AIR_PUNCH_MOVEMENT);
 			setCurrentSprite();
-			airPunch();
+			airPunchRight();
 			break;
 		case FIRST_PLAYER_AIR_PUNCH_L:
 			this->setMovement(AIR_PUNCH_MOVEMENT);
 			setCurrentSprite();
-			airPunch();
+			airPunchLeft();
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
@@ -381,7 +382,6 @@ void Character::update() {
 			break;
 		}
 	}
-	cout << playerCommand << ": " << getMovement() << endl;
 	SDL_Delay(55);
 }
 
@@ -454,7 +454,7 @@ void Character::airLowKickRight() {
 
 void Character::airPunch() {
 	isAirPunching = true;
-	isJumpingRight = false;
+	isJumping = false;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (this->isTouchingGround(positionY)) {
@@ -465,6 +465,45 @@ void Character::airPunch() {
 		refreshFrames();
 	}
 }
+
+void Character::airPunchLeft() {
+	isJumpingLeft = false;
+	isAirPunchingLeft = true;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	if (!this->reachedWindowRightLimit()) {
+		positionX = positionX - (2 * ratioX);
+	}
+	if (this->isTouchingGround(positionY)) {
+		isAirPunchingLeft = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY = yGround;
+		refreshFrames();
+	}
+}
+
+void Character::airPunchRight() {
+	isJumpingRight = false;
+	isAirPunching = false;
+	isAirPunchingLeft = false;
+	isJumping = false;
+	isJumpingLeft = false;
+	isAirPunchingRight = true;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	if (!this->reachedWindowRightLimit()) {
+		positionX = positionX + (2 * ratioX);
+	}
+	if (this->isTouchingGround(positionY)) {
+		isAirPunchingRight = false;
+		jumpVel = 60.0f;
+		this->setMovement(STANCE);
+		this->positionY = yGround;
+		refreshFrames();
+	}
+}
+
 
 void Character::airLowKickLeft() {
 	isKickingAirLowLeft = true;
@@ -753,9 +792,6 @@ void Character::setMoveFlag(bool trueOrFalse){
 
 	} else if (this->getMovement() == UNDER_KICK_MOVEMENT) {
 		isUnderKick = trueOrFalse;
-
-	} else if (this->getMovement() == AIR_PUNCH_MOVEMENT){
-		isAirPunching = trueOrFalse;
 
 	} else {
 		//TODO: review

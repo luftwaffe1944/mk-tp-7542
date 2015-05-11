@@ -95,6 +95,8 @@ public:
 	void airLowKickLeft();
 	void airLowKickRight();
 	void airPunch();
+	void airPunchRight();
+	void airPunchLeft();
 };
 
 #endif /* CHARACTER_H_ */
