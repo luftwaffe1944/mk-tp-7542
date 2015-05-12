@@ -41,6 +41,8 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		// initializing movements statements
 		clearMovementsFlags();
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+		//TODO: setear en false
+		this->fire = true;
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -55,6 +57,8 @@ Character::Character(const LoaderParams* pParams) :
 		clearMovementsFlags();
 		//initializing shapes for colitions
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+		//TODO: setear en false
+		this->fire = true;
 }
 
 
@@ -969,4 +973,8 @@ Character* Character::getCopyInstance() {
 	copyOfCharacter->setAlternativeColor(copyAltColor);
 	copyOfCharacter->setPlayerNumber(playerNumber);
 	return copyOfCharacter;
+}
+
+int Character::getHeight(){
+	return this->height;
 }

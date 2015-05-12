@@ -458,6 +458,26 @@ void createGameInfo(Window* window, vector<Character*> characters, float ratioX,
 	MKGame::Instance()->getObjectList().push_back(info);
 }
 
+void createThrowableObject(vector<Character*> characters, float ratioX, float ratioY) {
+	float throwableHeight1 = characters[0]->getHeight();
+	float throwableHeight2 = characters[1]->getHeight();
+
+	LoaderParams* params1 = new LoaderParams(0, 0, throwableHeight1 * 0.1,  throwableHeight1 * 0.1 , characters[0]->getZIndex(), ratioX, ratioY, "throwable1");
+	LoaderParams* params2 = new LoaderParams(0, 0, throwableHeight2 * 0.1,  throwableHeight2 * 0.1 , characters[1]->getZIndex(), ratioX, ratioY, "throwable1");
+	ThrowableObject* tObject1 = new ThrowableObject(params1);
+	ThrowableObject* tObject2 = new ThrowableObject(params2);
+
+	tObject1->setReleaser(characters[0]);
+	tObject1->setReceiver(characters[1]);
+	tObject1->setImagePath("images/subzero/throwable.gif");
+	MKGame::Instance()->getObjectList().push_back(tObject1);
+
+	tObject2->setReleaser(characters[1]);
+	tObject2->setReceiver(characters[0]);
+	tObject2->setImagePath("images/subzero/throwable.gif");
+	MKGame::Instance()->getObjectList().push_back(tObject2);
+}
+
 GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "CONFIGURATION INITIALIZED";
 	GameGUI *gameGUI = GameGUI::getInstance();
@@ -523,6 +543,7 @@ GameGUI* GameGUIBuilder::create() {
 	fightingCharacters.push_back(fight->getFighterTwo());
 	gameGUI->setCharacters(fightingCharacters);
 	createGameInfo(window, fightingCharacters, ratioX, ratioY);
+	createThrowableObject(fightingCharacters, ratioX, ratioY);
 
 
 	jsonGetJoysticks(root);
@@ -603,6 +624,8 @@ GameGUI* GameGUIBuilder::createDefault() {
 	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));
 
 	createGameInfo(ptrWindow, characters, ratioX, ratioY);
+
+	createThrowableObject(characters, ratioX, ratioY);
 
 	FILE_LOG(logDEBUG) << "Configuration process finished";
 	return gameGUI;
