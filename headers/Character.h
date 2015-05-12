@@ -16,10 +16,13 @@
 #include <stdio.h>
 #include <map>
 #include <iostream>
+#include "AlternativeColor.h"
+#include "Collitionable.h"
+#include "DamageObject.h"
 using namespace std;
 
 
-class Character : public SDLObjectGUI {
+class Character : public SDLObjectGUI, public Collitionable {
 private:
 	Sprite* currentSprite;
 	std::string name;
@@ -35,6 +38,9 @@ private:
 	bool isJumpingRight;
 	bool isJumpingLeft;
 	bool isDucking;
+	std::string playerNumber;
+	AlternativeColor* altColor;
+	bool isAltPlayer;
 	bool isDuckingSingle;
 	bool isPunchingHigh;
 	bool isPunchingLow;
@@ -62,6 +68,7 @@ public:
 	void render(SDL_Renderer* render);
 	virtual ~Character();
 	Character(const LoaderParams* pParams, bool isRightOriented);
+	Character(const LoaderParams* pParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
@@ -70,6 +77,8 @@ public:
 	float getYGround();
 	bool reachedWindowLeftLimit();
 	bool reachedWindowRightLimit();
+	std::string getPlayerNumber();
+	void setPlayerNumber(std::string playerNumber);
 	float getPosXUL();
 	//Movement & position methods
 	void jump();
@@ -85,7 +94,15 @@ public:
 	void clearMovementsFlags();
 	bool isMovingRight();
 	bool isMovingLeft();
-	std::string getName();
+
+	virtual void getCNextPosition(float* nextPositionX, float* nextPositionY); //redefinir virtual
+
+	string getName();
+	AlternativeColor* getAlternativeColor();
+	void setAlternativeColor(AlternativeColor*);
+	bool getIsAlternativePlayer();
+	void setIsAlternativePlayer(bool isAltPlayer);
+	bool getIsRightOriented();
 	void incrementCounter(string moveKey);
 	void setCurrentSprite();
 	void resetCounter(string moveKey);
@@ -97,6 +114,9 @@ public:
 	void airPunch();
 	void airPunchRight();
 	void airPunchLeft();
+	void setIsRightOriented(bool isRightOriented);
+	Character* getCopyInstance();
+	void updateShapesOnStatus();
 };
 
 #endif /* CHARACTER_H_ */

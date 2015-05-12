@@ -10,7 +10,9 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include "SDL.h"
+
 
 
 enum InputCommand {
@@ -52,7 +54,6 @@ private:
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
 
-
 public:
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
@@ -73,7 +74,11 @@ public:
 	bool isAxisUp(int joystick);
 	bool isAxisDown(int joystick);
 	std::vector<SDL_Joystick*> joysticks;
-
+	bool getActionButtonState(int joyNum, std::string action);
+	void setActionButtonStateFalse(int joy, std::string action);
+	std::vector< std::map <std::string, int > > joystickActionButton;
+	void setActionButton(int joy, std::string action, int buttonNumber);
+	int getActionButton(int joy, std::string action);
 };
 
 #endif /* INPUTCONTROL_H_ */

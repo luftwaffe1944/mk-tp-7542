@@ -12,6 +12,7 @@
 #include "SDLObjectGUI.h"
 #include "TextureManager.h"
 #include "Log.h"
+
 using namespace std;
 
 class Layer: public SDLObjectGUI {

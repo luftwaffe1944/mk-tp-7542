@@ -33,11 +33,13 @@ void SDLObjectGUI::setImagePath(string imagePath) {
 }
 
 bool SDLObjectGUI::load() {
+	cout << textureID << endl;
 	return (TextureManager::Instance()->load(this->imagePath, textureID,
 			MKGame::Instance()->getRenderer()));
 }
 
 bool SDLObjectGUI::load(SDL_Renderer* render) {
+	cout << textureID << endl;
 	return (TextureManager::Instance()->load(this->imagePath, textureID,
 			MKGame::Instance()->getRenderer()));
 }
@@ -76,6 +78,14 @@ int SDLObjectGUI::getZIndex() {
 	return this->zIndex;
 }
 
+float SDLObjectGUI::getPositionX() {
+	return this->positionX;
+}
+
+void SDLObjectGUI::setPositionX(float positionX) {
+	this->positionX = positionX;
+}
+
 void SDLObjectGUI::setPositionY(float posY) {
 	this->positionY = posY;
 }
@@ -83,3 +93,4 @@ void SDLObjectGUI::setPositionY(float posY) {
 float SDLObjectGUI::getPositionY() {
 	return this->positionY;
 }
+

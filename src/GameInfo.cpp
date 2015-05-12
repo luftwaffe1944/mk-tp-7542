@@ -7,9 +7,9 @@
 
 #include "../headers/GameInfo.h"
 
-GameInfo::GameInfo(const LoaderParams* pParams, vector<std::string> playerName) :
+GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 		SDLObjectGUI(pParams) {
-	this->playerName = playerName;
+	this->characters = characters;
 	bgColor = {204, 0, 0};
 	frontColor = {0, 0, 204};
 	barWidth = ((pParams->getWidth() * 0.9) - (WINDOW_MARGIN * 2)) / 2;
@@ -29,7 +29,7 @@ bool GameInfo::load() {
 	SDL_Color textColor = {255, 255, 255};
 	TTF_Font* font = TTF_OpenFont( "fonts/MK4.ttf", 28 );
 
-	return (TextureManager::Instance()->loadFromRenderedText( this->textureID, playerName[0], textColor, font, render ));
+	return (TextureManager::Instance()->loadFromRenderedText( this->textureID, characters[0]->getName(), textColor, font, render ));
 }
 
 void GameInfo::loadTextTimer() {
@@ -52,18 +52,21 @@ void GameInfo::loadTextTimer() {
 bool GameInfo::load(SDL_Renderer* r) {
 	SDL_Renderer* render = MKGame::Instance()->getRenderer();
 	TTF_Font* font = TTF_OpenFont( "fonts/mk1.ttf", 100 );
+	string name = "";
 
 	//Timer
 	loadTextTimer();
 
 	SDL_Color playerColor = {255, 255, 255};
 	//jugador 1
-	std::transform(this->playerName[0].begin(), this->playerName[0].end(), this->playerName[0].begin(), ::toupper);
-	TextureManager::Instance()->loadFromRenderedText( this->textureID, playerName[0], playerColor, font, render);
+	name = this->characters[0]->getName();
+	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID, name, playerColor, font, render);
 
 	//jugador 2
-	//std::transform(this->playerName[1].begin(), this->playerName[1].end(), this->playerName[1].begin(), ::toupper);
-	//return (TextureManager::Instance()->loadFromRenderedText(playerName[1], textColor, font, render));
+	name = this->characters[1]->getName();
+	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID, name, playerColor, font, render);
 	TTF_CloseFont(font);
 	return true;
 }
@@ -131,13 +134,25 @@ void GameInfo::draw() {
 	int height = 15;
 	TextureManager::Instance()->draw( id, x, y, width, height, render);
 
+	string name = "";
+	float energy = 0.0f;
+
 	//jugador 1
-	TextureManager::Instance()->draw( this->textureID + this->playerName[0], WINDOW_MARGIN, 0, barWidth/2, 10, render );
-	HealthBar(positionX * ratioX, 35, barWidth * ratioX, 20, percent, frontColor, bgColor, render, 0 );
+	name = this->characters[0]->getName();
+	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+	TextureManager::Instance()->draw( this->textureID + name, WINDOW_MARGIN, 0, barWidth/2, 10, render );
+	energy = this->characters[0]->getEnergy();
+	if (this->initAnimation) HealthBar(positionX * ratioX, 35, barWidth * ratioX, 20, percent, frontColor, bgColor, render, 0 );
+	else HealthBar(positionX * ratioX, 35, barWidth * ratioX, 20, energy, frontColor, bgColor, render, 0 );
 
 	//jugador 2
-	//TextureManager::Instance()->draw("name"+this->playerName[0], WINDOW_MARGIN,0,barWidth/2, 10, render);
-	HealthBar((this->width - WINDOW_MARGIN - barWidth) * ratioX, 35, barWidth * ratioX, 20, percent, frontColor, bgColor, render, 1);
+	name = this->characters[1]->getName();
+	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+	TextureManager::Instance()->draw(this->textureID + name, pParams->getWidth() - barWidth/2 - WINDOW_MARGIN,0,barWidth/2, 10, render);
+	energy = this->characters[1]->getEnergy();
+	if (this->initAnimation) {
+		HealthBar((this->width - WINDOW_MARGIN - barWidth) * ratioX, 35, barWidth * ratioX, 20, percent, frontColor, bgColor, render, 1);
+	} else HealthBar((this->width - WINDOW_MARGIN - barWidth) * ratioX, 35, barWidth * ratioX, 20, energy, frontColor, bgColor, render, 1);
 }
 
 

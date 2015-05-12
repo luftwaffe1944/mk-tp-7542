@@ -29,6 +29,8 @@ public:
 	string getImagePath();
 	string getTextureID();
 	int getZIndex();
+	float getPositionX();
+	void setPositionX(float positionX);
 	void setPositionY(float posY);
 	float getPositionY();
 

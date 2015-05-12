@@ -123,6 +123,10 @@ const string UNDER_KICK_SPRITE = "/underKick.png";
 const string AIR_PUNCH_SPRITE = "/airPunch.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
+const string LOW_PUNCH = "low_punch";
+const string HIGH_PUNCH = "high_punch";
+const string LOW_KICK = "low_kick";
+const string HIGH_KICK = "high_kick";
 
 // Json config constants
 
@@ -140,8 +144,22 @@ const string ROOT_IMAGE_PATH = "images/";
 
 #define JSON_KEY_NOMBRE "nombre"
 #define JSON_KEY_PERSONAJE "personaje"
+#define JSON_KEY_PERSONAJES "personajes"
+#define JSON_KEY_PELEA "pelea"
+#define JSON_KEY_LUCHADOR_1 "luchador1"
+#define JSON_KEY_LUCHADOR_2 "luchador2"
+#define JSON_KEY_COLOR_ALTERNATIVO "color-alternativo"
+#define JSON_KEY_H_INICIAL "h-inicial"
+#define JSON_KEY_H_FINAL "h-final"
+#define JSON_KEY_DESPLAZAMIENTO "desplazamiento"
 #define JSON_KEY_ZINDEX "zindex"
 #define JSON_KEY_ORIENTACION "orientacion"
+
+#define JSON_KEY_JOYSTICKS "joysticks"
+#define JSON_KEY_HIGH_PUNCH "piña_alta"
+#define JSON_KEY_LOW_PUNCH "piña_baja"
+#define JSON_KEY_HIGH_KICK "patada_alta"
+#define JSON_KEY_LOW_KICK "patada_baja"
 
 #define SPRITE_WIDTH 200
 #define SPRITE_HEIGHT 170
