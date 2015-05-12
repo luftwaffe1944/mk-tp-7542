@@ -906,6 +906,8 @@ void Character::updateShapesOnStatus(){
 
 //		void updateCShapesPosition(float X, float Y, float W, float H, bool rightOriented, bool secShapeTop, float secShapeW, float secShapeH);
 
+	float charWidht = this->width * ratioX;
+	float charHeight = this->height * ratioY;
 	if (isJumping) {
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
 	}else if (isJumpingRight) {
@@ -921,13 +923,15 @@ void Character::updateShapesOnStatus(){
 	}else if (isKickingDuckLow) {
 		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*3/4, ((this->height)/2) / 2);
 	}else if (isKickingSuper) {
-
+		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, (this->width)*3/4, (this->height)/3 );
+	}else if (isUnderKick){
+		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*2, (this->height)/4);
 	}else if (isPunchingAnUppercut) {
-
+		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), (this->width)*2/3, (this->height)/2, this->isRightOriented, false, (this->width)/10, this->height);
 	}else if (isPunchingLow) {
 		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, (this->width)/2, this->height / 3);
 	}else if (isPunchingDuck) {
-		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, false, this->width, this->height / 6);
+		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, true, this->width, this->height / 6);
 	}else if (isPunchingHigh) {
 		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, (this->width)*3/4, this->height / 6);
 	}else if (isDucking) {
@@ -936,9 +940,22 @@ void Character::updateShapesOnStatus(){
 		this->updateCShapesPosition(this->positionX, this->positionY);
 	}else if (isWalkingLeft) {
 		this->updateCShapesPosition(this->positionX, this->positionY);
+	}else if (isBlocking) {
+		this->updateCShapesPosition(this->positionX, this->positionY);
+	}else if (isDuckBlocking) {
+		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2);
 	}else{
 		this->updateCShapesPosition(this->positionX, this->positionY);
 	}
+
+	/*
+
+	bool isKickingAirHigh;
+	bool isKickingAirLowRight;
+	bool isKickingAirLowLeft;
+	bool isAirPunchingRight;
+	bool isAirPunching;
+	bool isAirPunchingLeft;*/
 }
 
 bool Character::getIsRightOriented(){
