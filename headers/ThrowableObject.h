@@ -18,6 +18,8 @@
 #include "DamageObject.h"
 #include "Character.h"
 
+#define OBJECT_SPEED 4
+
 class ThrowableObject : public SDLObjectGUI, public Collitionable {
 public:
 	ThrowableObject(const LoaderParams* pParams);

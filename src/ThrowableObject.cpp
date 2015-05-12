@@ -66,7 +66,7 @@ void ThrowableObject::update() {
 		//TODO: hacerlo colisionable ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
 		if (this->playerIsRightOriented && !endBoom) {
 			if (this->positionX < (this->receiver->getPositionX() / ratioX + (this->receiver->getWidth())* 1/5)) {
-				this->positionX+= 2;
+				this->positionX+= OBJECT_SPEED;
 			} else {
 				endBoom = true;
 			}
@@ -75,7 +75,7 @@ void ThrowableObject::update() {
 		//TODO: hacerlo colisionable, ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
 		if (!this->playerIsRightOriented && !endBoom) {
 			if ((this->receiver->getPositionX() / ratioX + (this->receiver->getWidth())* 3/5 < this->positionX)) {
-				this->positionX-= 2;
+				this->positionX-= OBJECT_SPEED;
 			} else {
 				endBoom = true;
 			}
