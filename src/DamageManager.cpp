@@ -24,6 +24,8 @@ DamageManager::DamageManager(){
 bool DamageManager::IsObjectAttacking(DamageObject* obj){
 	string objectMovement = obj->getDOMovement();
 	bool isOjectAttacking = (objectMovement == PUNCHING_HIGH_MOVEMENT)||(objectMovement == PUNCHING_LOW_MOVEMENT)||(objectMovement==LOW_KICK_MOVEMENT)||(objectMovement==HIGH_KICK_MOVEMENT);
+	isOjectAttacking = isOjectAttacking||(objectMovement == DUCK_HIGH_KICK_MOVEMENT)||(objectMovement == DUCK_LOW_KICK_MOVEMENT)||(objectMovement==PUNCHING_DUCK_MOVEMENT)||(objectMovement==UPPERCUT_MOVEMENT);
+
 	return isOjectAttacking;
 }
 
@@ -36,14 +38,22 @@ bool DamageManager::IsObjectBlocking(DamageObject* obj){
 float DamageManager::getDamageToDo(DamageObject* obj){
 	string objectMovement = obj->getDOMovement();
 	float damage = 0;
-    if (objectMovement==PUNCHING_HIGH_MOVEMENT){
+    if (objectMovement==PUNCHING_HIGH_MOVEMENT){ //piña alta
     	damage = 0.01f;
-    }else if (objectMovement==PUNCHING_LOW_MOVEMENT){
+    }else if (objectMovement==PUNCHING_LOW_MOVEMENT){ //piña baja
     	damage = 0.005f;
-    }else if (objectMovement==LOW_KICK_MOVEMENT){
+    }else if (objectMovement==LOW_KICK_MOVEMENT){ //patada baja
     	damage = 0.01f;
-    }else if (objectMovement==HIGH_KICK_MOVEMENT){
+    }else if (objectMovement==HIGH_KICK_MOVEMENT){ //patada alta
     	damage = 0.02f;
+    }else if (objectMovement==DUCK_HIGH_KICK_MOVEMENT){ //patada alta agachado
+        	damage = 0.015;
+    }else if (objectMovement==DUCK_LOW_KICK_MOVEMENT){ //patada baja agachado
+       	damage = 0.01;
+    }else if (objectMovement==PUNCHING_DUCK_MOVEMENT){ //piña agachado
+      	damage = 0.01;
+    }else if (objectMovement==UPPERCUT_MOVEMENT){ //gancho
+       	damage = 0.04;
     }
     return damage;
 }

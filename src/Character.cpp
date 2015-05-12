@@ -663,9 +663,9 @@ void Character::updateShapesOnStatus(){
 	}else if (isKickingLow) {
 		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, false, (this->width)*3/4, this->height / 3);
 	}else if (isKickingDuckHigh) {
-		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, this->width, this->height / 6);
+		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*3/4, ((this->height)/2) *3/ 4);
 	}else if (isKickingDuckLow) {
-
+		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*3/4, ((this->height)/2) / 2);
 	}else if (isKickingSuper) {
 
 	}else if (isPunchingAnUppercut) {
@@ -677,7 +677,7 @@ void Character::updateShapesOnStatus(){
 	}else if (isPunchingHigh) {
 		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, (this->width)*3/4, this->height / 6);
 	}else if (isDucking) {
-		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
+		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2);
 	}else if (isWalkingRight) {
 		this->updateCShapesPosition(this->positionX, this->positionY);
 	}else if (isWalkingLeft) {

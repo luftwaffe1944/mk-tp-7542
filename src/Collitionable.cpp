@@ -34,7 +34,11 @@ void Collitionable::updateCShapesPosition(float X, float Y){
 }
 
 void Collitionable::updateCShapesPosition(float X, float Y, float W, float H){
+	this->Shapes[0]->setCenter(X,Y);
+	this->Shapes[0]->setWidth(W);
+	this->Shapes[0]->setHeight(H);
 
+	this->Shapes[1]->setActive(false);
 }
 void Collitionable::updateCShapesPosition(float X, float Y, float W, float H, bool rightOriented, bool secShapeTop, float secShapeW, float secShapeH){
 	vector<Box*> boxes = this->Shapes;
