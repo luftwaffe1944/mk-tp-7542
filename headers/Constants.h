@@ -67,6 +67,12 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define DUCK_LOW_KICK_MOVEMENT "duckLowKick"
 #define DUCK_HIGH_KICK_MOVEMENT "duckHighKick"
 #define SUPER_KICK_MOVEMENT "superKick"
+#define AIR_HIGH_kICK_MOVEMENT "airHighKick"
+#define AIR_LOW_kICK_MOVEMENT "airLowKick"
+#define BLOCK_MOVEMENT "block"
+#define DUCK_BLOCK_MOVEMENT "duckBlock"
+#define UNDER_KICK_MOVEMENT "underKick"
+#define AIR_PUNCH_MOVEMENT "airPunch"
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
@@ -83,16 +89,22 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define DUCK_LOW_KICK_SUFFIX "duckLowKick"
 #define DUCK_HIGH_KICK_SUFFIX "duckHighKick"
 #define SUPER_KICK_SUFFIX "superKick"
+#define AIR_HIGH_kICK_SUFFIX "airHighKick"
+#define AIR_LOW_kICK_SUFFIX "airLowKick"
+#define BLOCK_SUFFIX "block"
+#define DUCK_BLOCK_SUFFIX "duckBlock"
+#define UNDER_KICK_SUFFIX "underKick"
+#define AIR_PUNCH_SUFFIX "airPunch"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
 
 
 //Sprites images
-const string WALK_SPRITE = "/walk2.png";
-const string JUMP_SPRITE = "/jump2.png";
-const string STANCE_SPRITE = "/stance2.png";
-const string DIAGONAL_JUMP_SPRITE = "/diagonalJump2.png";
+const string WALK_SPRITE = "/walk.png";
+const string JUMP_SPRITE = "/jump.png";
+const string STANCE_SPRITE = "/stance.png";
+const string DIAGONAL_JUMP_SPRITE = "/diagonalJump.png";
 const string DUCK_SPRITE = "/singleDuck.png";
 const string HIPUNCH_SPRITE = "/highPunch.png";
 const string LOPUNCH_SPRITE = "/lowPunch.png";
@@ -103,6 +115,12 @@ const string HIGH_KICK_SPRITE = "/highKick.png";
 const string DUCK_LOW_KICK_SPRITE = "/duckLowKick.png";
 const string DUCK_HIGH_KICK_SPRITE = "/duckHighKick.png";
 const string SUPER_KICK_SPRITE = "/superKick.png";
+const string AIR_HIGH_KICK_SPRITE = "/airHighKickSingle.png";
+const string AIR_LOW_KICK_SPRITE = "/airLowKickSingle.png";
+const string DUCK_BLOCK_SPRITE = "/duckBlockSingle.png";
+const string BLOCK_SPRITE = "/blockSingle.png";
+const string UNDER_KICK_SPRITE = "/underKick.png";
+const string AIR_PUNCH_SPRITE = "/airPunch.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";

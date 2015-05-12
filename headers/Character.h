@@ -51,6 +51,15 @@ private:
 	bool isKickingDuckHigh;
 	bool isKickingDuckLow;
 	bool isKickingSuper;
+	bool isKickingAirHigh;
+	bool isKickingAirLowRight;
+	bool isKickingAirLowLeft;
+	bool isBlocking;
+	bool isDuckBlocking;
+	bool isUnderKick;
+	bool isAirPunchingRight;
+	bool isAirPunching;
+	bool isAirPunchingLeft;
 
 public:
 	static std::map<std::string,int> movesCounter;
@@ -99,6 +108,12 @@ public:
 	void resetCounter(string moveKey);
 	void completeMovement();
 	void setMoveFlag(bool trueOrFalse);
+	void airHighKick();
+	void airLowKickLeft();
+	void airLowKickRight();
+	void airPunch();
+	void airPunchRight();
+	void airPunchLeft();
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
