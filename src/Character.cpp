@@ -42,7 +42,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		clearMovementsFlags();
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
 		//TODO: setear en false
-		this->fire = true;
+		this->fire = false;
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -58,7 +58,7 @@ Character::Character(const LoaderParams* pParams) :
 		//initializing shapes for colitions
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
 		//TODO: setear en false
-		this->fire = true;
+		this->fire = false;
 }
 
 

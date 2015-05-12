@@ -83,7 +83,11 @@ void ThrowableObject::update() {
 
 		//Si llego al personaje que recibe, se setea que no se muestre mas
 		//TODO: hacerlo colisionable
-		if (endBoom) this->releaser->fire = false;
+		if (endBoom) {
+			this->releaser->fire = false;
+			this->posXSetReleaser = false;
+			this->posYsetReleaser = false;
+		}
 	}
 }
 
