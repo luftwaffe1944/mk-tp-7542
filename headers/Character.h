@@ -116,6 +116,9 @@ public:
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
+
+	bool fire;
+	int getHeight();
 };
 
 #endif /* CHARACTER_H_ */
