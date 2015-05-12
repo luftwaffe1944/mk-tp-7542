@@ -93,7 +93,7 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
 	Sprite* spriteDuckHighKick = new Sprite(this->name+this->playerNumber+DUCK_HIGH_KICK_SUFFIX, characterPath+DUCK_HIGH_KICK_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 4, this->isAltPlayer, this->altColor);
-	Sprite* spriteSuperKick = new Sprite(this->name+SUPER_KICK_SUFFIX, characterPath+SUPER_KICK_SPRITE,
+	Sprite* spriteSuperKick = new Sprite(this->name+this->playerNumber+SUPER_KICK_SUFFIX, characterPath+SUPER_KICK_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 	Sprite* spriteAirHighKick = new Sprite(this->name+this->playerNumber+AIR_HIGH_kICK_SUFFIX, characterPath+AIR_HIGH_KICK_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
@@ -154,8 +154,8 @@ void Character::draw() {
 }
 
 bool Character::shouldMoveForward() {
-	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) ||
-			(!this->isRightOriented && (isJumpingLeft || isWalkingLeft))  ) {
+	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
+			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))  ) {
 		return true;
 	} else {
 		return false;
