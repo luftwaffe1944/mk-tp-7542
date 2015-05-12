@@ -504,7 +504,7 @@ void Character::airPunchLeft() {
 	isAirPunchingLeft = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	if (!this->reachedWindowRightLimit()) {
+	if (!this->reachedWindowLeftLimit()) {
 		positionX = positionX - (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
@@ -543,7 +543,7 @@ void Character::airLowKickLeft() {
 	isJumpingLeft = false;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	if (!this->reachedWindowRightLimit()) {
+	if (!this->reachedWindowLeftLimit()) {
 		positionX = positionX - (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
@@ -665,12 +665,12 @@ void Character::setPlayerNumber(std::string playerNumber) {
 
 
 bool Character::isMovingRight(){
-	if (this->isJumpingRight || this->isWalkingRight) return true;
+	if (this->isJumpingRight || this->isWalkingRight || this->isAirPunchingRight || this->isKickingAirLowRight) return true;
 	return false;
 }
 
 bool Character::isMovingLeft(){
-	if (this->isJumpingLeft || this->isWalkingLeft) return true;
+	if (this->isJumpingLeft || this->isWalkingLeft || this->isAirPunchingLeft || this->isKickingAirLowLeft) return true;
 	return false;
 }
 
