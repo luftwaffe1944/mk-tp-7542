@@ -22,7 +22,7 @@
 using namespace std;
 
 float gravity = 14.0f;
-float jumpVel = 40.0f;
+float jumpVel = 60.0f;
 
 std::map<std::string,int> Character::movesCounter;
 
@@ -466,7 +466,7 @@ void Character::airLowKickRight() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX + (2 * ratioX);
+		positionX = positionX + (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isKickingAirLowRight = false;
@@ -497,7 +497,7 @@ void Character::airPunchLeft() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX - (2 * ratioX);
+		positionX = positionX - (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isAirPunchingLeft = false;
@@ -518,7 +518,7 @@ void Character::airPunchRight() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX + (2 * ratioX);
+		positionX = positionX + (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isAirPunchingRight = false;
@@ -536,7 +536,7 @@ void Character::airLowKickLeft() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX - (2 * ratioX);
+		positionX = positionX - (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isKickingAirLowLeft = false;
@@ -553,7 +553,7 @@ void Character::jumpRight() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX + (4 * ratioX);
+		positionX = positionX + (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isJumpingRight = false;
@@ -569,7 +569,7 @@ void Character::jumpLeft() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowLeftLimit()) {
-		positionX = positionX - (4 * ratioX);
+		positionX = positionX - (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isJumpingLeft = false;
