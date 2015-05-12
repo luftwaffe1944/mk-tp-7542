@@ -200,11 +200,12 @@ void MKGame::handleEvents() {
 
 		}
 	}
-	InputControl::Instance()->refreshInputs();
+	//InputControl::Instance()->refreshInputs();
 
 	if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0)
 		InputControl::Instance()->refreshJoystickInputs();
 	//InputControl::Instance()->update();
+	InputControl::Instance()->refreshInputs();
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}

@@ -22,7 +22,7 @@ void InputControl::refreshInputs() {
 
 	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
 
-	this->firstPlayerMove = NO_INPUT;
+	//this->firstPlayerMove = NO_INPUT;
 	this->secondPlayerMove = NO_INPUT;
 	this->controlOption = NO_INPUT;
 
@@ -37,87 +37,87 @@ void InputControl::refreshInputs() {
 				&& !somePunchButtonPressed(currentKeyStates)
 				&& !someKickButtonPressed(currentKeyStates)
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP;
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_UP;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& somePunchButtonPressed(currentKeyStates)
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH;
+			this->secondPlayerMove = FIRST_PLAYER_AIR_PUNCH;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& (currentKeyStates[SDL_SCANCODE_LEFT])
 				&& somePunchButtonPressed(currentKeyStates)
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH_L;
+			this->secondPlayerMove = FIRST_PLAYER_AIR_PUNCH_L;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& somePunchButtonPressed(currentKeyStates)
 				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH_R;
+			this->secondPlayerMove = FIRST_PLAYER_AIR_PUNCH_R;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& someKickButtonPressed(currentKeyStates)
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_AIR_HIGH_kICK;
+			this->secondPlayerMove = FIRST_PLAYER_AIR_HIGH_kICK;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& (currentKeyStates[SDL_SCANCODE_LEFT])
 				&& !(someKickButtonPressed(currentKeyStates))
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& (currentKeyStates[SDL_SCANCODE_LEFT])
 				&& someKickButtonPressed(currentKeyStates)
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_L;
+			this->secondPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_L;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& someKickButtonPressed(currentKeyStates)
 				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_R;
+			this->secondPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_R;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
 		}
 
 		//COMBINATION WITH DOWN
 	} else if (currentKeyStates[SDL_SCANCODE_DOWN] && !currentKeyStates[SDL_SCANCODE_LCTRL]) {
 		if (currentKeyStates[SDL_SCANCODE_A]) {
-			this->firstPlayerMove = FIRST_PLAYER_DUCK_PUNCH;
+			this->secondPlayerMove = FIRST_PLAYER_DUCK_PUNCH;
 		} else if (currentKeyStates[SDL_SCANCODE_S]) {
-			this->firstPlayerMove = FIRST_PLAYER_UPPERCUT;
+			this->secondPlayerMove = FIRST_PLAYER_UPPERCUT;
 		} else if (currentKeyStates[SDL_SCANCODE_Z]) {
-			this->firstPlayerMove = FIRST_PLAYER_DUCK_LOW_kICK;
+			this->secondPlayerMove = FIRST_PLAYER_DUCK_LOW_kICK;
 		} else if (currentKeyStates[SDL_SCANCODE_X]) {
-			this->firstPlayerMove = FIRST_PLAYER_DUCK_HIGH_kICK;
+			this->secondPlayerMove = FIRST_PLAYER_DUCK_HIGH_kICK;
 		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
 		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
 				&& (currentKeyStates[SDL_SCANCODE_LEFT])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
 		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN;
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_DOWN;
 
 		}
 		//COMBINATION WITH LEFT
 	} else if (currentKeyStates[SDL_SCANCODE_LEFT]) {
 		if (currentKeyStates[SDL_SCANCODE_X]){
-			this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
+			this->secondPlayerMove = FIRST_PLAYER_SUPER_kICK;
 		}
 		else if (currentKeyStates[SDL_SCANCODE_Z]){
-			this->firstPlayerMove = FIRST_PLAYER_UNDER_KICK;
+			this->secondPlayerMove = FIRST_PLAYER_UNDER_KICK;
 		}
 		else if (currentKeyStates[SDL_SCANCODE_LCTRL]){
-			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
+			this->secondPlayerMove = FIRST_PLAYER_BLOCK;
 		}
 		else if (!(currentKeyStates[SDL_SCANCODE_UP])
 				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_LEFT;
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_LEFT;
 		}
 		//COMBINATION WITH RIGHT
 	} else if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
@@ -125,41 +125,41 @@ void InputControl::refreshInputs() {
 				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !currentKeyStates[SDL_SCANCODE_LCTRL]
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
 		}
 		else if (currentKeyStates[SDL_SCANCODE_LCTRL]){
-			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
+			this->secondPlayerMove = FIRST_PLAYER_BLOCK;
 		}
 		//COMBINATION WITH S
 	} else if (currentKeyStates[SDL_SCANCODE_S]) {
 		if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_HI_PUNCH;
+			this->secondPlayerMove = FIRST_PLAYER_HI_PUNCH;
 		}
 		//COMBINATION WITH A
 	} else if (currentKeyStates[SDL_SCANCODE_A]) {
 		if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
-			this->firstPlayerMove = FIRST_PLAYER_LO_PUNCH;
+			this->secondPlayerMove = FIRST_PLAYER_LO_PUNCH;
 		}
 
 		//COMBINATION WITH LEFT CTRL
 	} else if (currentKeyStates[SDL_SCANCODE_LCTRL]) {
 		if (!(currentKeyStates[SDL_SCANCODE_DOWN])) {
-			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
+			this->secondPlayerMove = FIRST_PLAYER_BLOCK;
 		}
 		else if((currentKeyStates[SDL_SCANCODE_DOWN])){
-			this->firstPlayerMove = FIRST_PLAYER_DUCK_BLOCK;
+			this->secondPlayerMove = FIRST_PLAYER_DUCK_BLOCK;
 		}
 
 	} else if (currentKeyStates[SDL_SCANCODE_X]) {
-		this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
+		this->secondPlayerMove = FIRST_PLAYER_HIGH_KICK;
 	}
 
 	else if (currentKeyStates[SDL_SCANCODE_Z]) {
-		this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
+		this->secondPlayerMove = FIRST_PLAYER_LOW_KICK;
 	}
 
 }
@@ -169,7 +169,7 @@ void InputControl::refreshJoystickInputs() {
 	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
 
 	this->firstPlayerMove = NO_INPUT;
-	this->secondPlayerMove = NO_INPUT;
+//	this->secondPlayerMove = NO_INPUT;
 	this->controlOption = NO_INPUT;
 
 	int character = 0;
