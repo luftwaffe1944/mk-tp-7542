@@ -357,6 +357,9 @@ void InputControl::refreshJoystickInputs() {
 			else if (getActionButtonState(joystick,LOW_KICK)) {
 				setPlayerMove( joystick, FIRST_PLAYER_LOW_KICK);
 			}
+			else if (getActionButtonState( joystick, FIRE)) {
+				setPlayerMove( joystick, FIRST_PLAYER_FIRE);
+			}
 			this->setActionButtonStateFalse(joystick,HIGH_KICK);
 			this->setActionButtonStateFalse(joystick,LOW_KICK);
 			this->setActionButtonStateFalse(joystick,HIGH_PUNCH);

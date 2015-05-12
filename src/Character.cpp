@@ -383,7 +383,7 @@ void Character::update() {
 			setCurrentSprite();
 			break;
 		case FIRST_PLAYER_AIR_PUNCH:
-			cout << "FIRST_PLAYER_AIR_PUNCH" << endl;
+			//cout << "FIRST_PLAYER_AIR_PUNCH" << endl;
 			this->setMovement(AIR_PUNCH_MOVEMENT);
 			setCurrentSprite();
 			airPunch();
@@ -397,6 +397,9 @@ void Character::update() {
 			this->setMovement(AIR_PUNCH_MOVEMENT);
 			setCurrentSprite();
 			airPunchLeft();
+			break;
+		case FIRST_PLAYER_FIRE:
+
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
