@@ -53,7 +53,7 @@ private:
 	InputCommand firstPlayerMove;
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
-
+	std::vector<InputCommand> playerMove;
 public:
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
@@ -63,6 +63,7 @@ public:
 	void update();
 	void clean();
 	void initJoysticks();
+
 	InputCommand getFirstPlayerMove();
 	InputCommand getSecondPlayerMove();
 	InputCommand getControlOption();
@@ -79,6 +80,8 @@ public:
 	std::vector< std::map <std::string, int > > joystickActionButton;
 	void setActionButton(int joy, std::string action, int buttonNumber);
 	int getActionButton(int joy, std::string action);
+	InputCommand getPlayerMove(int joy);
+	void setPlayerMove(int joy, InputCommand action);
 };
 
 #endif /* INPUTCONTROL_H_ */

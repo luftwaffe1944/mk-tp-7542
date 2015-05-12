@@ -171,140 +171,147 @@ void InputControl::refreshJoystickInputs() {
 	this->secondPlayerMove = NO_INPUT;
 	this->controlOption = NO_INPUT;
 
-	int joystick = 0;
 	int character = 0;
 
 	if ((currentKeyStates[SDL_SCANCODE_R])) {
 		this->controlOption = RESET;
 
 		//COMBINATION WITH UP
-	} else if (this->isAxisUp( joystick )) {
+	} else {
+		for (int joystick = 0; joystick < SDL_NumJoysticks() ; joystick ++) {
 
-		if (!(this->isAxisDown( joystick ))
-				&& !(this->isAxisLeft( joystick ))
-				&& !(this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP;
-		} else if (!(this->isAxisDown( joystick ))
-				&& (this->isAxisLeft( joystick ))
-				&& !(this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
-		} else if (!(this->isAxisDown( joystick ))
-				&& !(this->isAxisLeft( joystick ))
-				&& (this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
-		}
+			if (this->isAxisUp( joystick )) {
 
-		//COMBINATION WITH DOWN
-	} else if (this->isAxisDown( joystick )) {
-		if (this->getActionButtonState(joystick, LOW_PUNCH)) {
-			this->firstPlayerMove = FIRST_PLAYER_DUCK_PUNCH;
-			this->setActionButtonStateFalse(joystick,LOW_PUNCH);
-		} else if (this->getActionButtonState(joystick,HIGH_PUNCH)) {
-			this->firstPlayerMove = FIRST_PLAYER_UPPERCUT;
-			this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
-		} else if (this->getActionButtonState(joystick,LOW_KICK)) {
-			this->firstPlayerMove = FIRST_PLAYER_DUCK_LOW_kICK;
-			this->setActionButtonStateFalse(joystick,LOW_KICK);
-		} else if (this->getActionButtonState(joystick,HIGH_KICK)) {
-			this->firstPlayerMove = FIRST_PLAYER_DUCK_HIGH_kICK;
-			this->setActionButtonStateFalse(joystick,HIGH_KICK);
-		} else if (!(this->isAxisUp( joystick ))
-				&& !(this->isAxisLeft( joystick ))
-				&& (this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
-		} else if (!(this->isAxisUp( joystick ))
-				&& (this->isAxisLeft( joystick ))
-				&& !(this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
-		} else if (!(this->isAxisUp( joystick ))
-				&& !(this->isAxisLeft( joystick ))
-				&& !(this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN;
+				if (!(this->isAxisDown( joystick ))
+						&& !(this->isAxisLeft( joystick ))
+						&& !(this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_MOVE_UP);
+				} else if (!(this->isAxisDown( joystick ))
+						&& (this->isAxisLeft( joystick ))
+						&& !(this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_MOVE_UP_LEFT);
+				} else if (!(this->isAxisDown( joystick ))
+						&& !(this->isAxisLeft( joystick ))
+						&& (this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_MOVE_UP_RIGHT);
+				}
 
-		}
+			//COMBINATION WITH DOWN
+			} else if (this->isAxisDown( joystick )) {
 
-		//COMBINATION WITH LEFT --> ATRAS
-	} else if (this->isAxisLeft( joystick )) {
-		if (this->getActionButtonState(joystick,HIGH_KICK)){
-			if ( GameGUI::getInstance()->getCharacters()[character]->getIsRightOriented() ) {
-				this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
-			} else {
-				this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
-			}
-			this->setActionButtonStateFalse(joystick,HIGH_KICK);
-		}
-		else if (this->getActionButtonState(joystick,LOW_KICK)){
-			this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
-			this->setActionButtonStateFalse(joystick,LOW_KICK);
-		}
-		else if (this->getActionButtonState(joystick,LOW_PUNCH)){
-			this->firstPlayerMove = FIRST_PLAYER_LO_PUNCH;
-			this->setActionButtonStateFalse(joystick,LOW_PUNCH);
-		}
-		else if (this->getActionButtonState(joystick,HIGH_PUNCH)){
-			this->firstPlayerMove = FIRST_PLAYER_HI_PUNCH;
-			this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
-		}
-		else if (!(this->isAxisUp( joystick ))
-				&& !(this->isAxisDown( joystick ))
-				&& !(this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_LEFT;
-		}
-		//COMBINATION WITH RIGHT --> ADELANTE
-	} else if (this->isAxisRight( joystick )) {
-		if (this->getActionButtonState(joystick,HIGH_KICK)){
-			if ( !GameGUI::getInstance()->getCharacters()[character]->getIsRightOriented() ) {
-				this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
-			} else {
-				this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
-			}
-			this->setActionButtonStateFalse(joystick,HIGH_KICK);
-		}
-		else if (this->getActionButtonState(joystick,LOW_KICK)){
-					this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
+				if (this->getActionButtonState(joystick, LOW_PUNCH)) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_DUCK_PUNCH);
+					this->setActionButtonStateFalse(joystick,LOW_PUNCH);
+				} else if (this->getActionButtonState(joystick,HIGH_PUNCH)) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_UPPERCUT);
+					this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
+				} else if (this->getActionButtonState(joystick,LOW_KICK)) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_DUCK_LOW_kICK);
+					this->setActionButtonStateFalse(joystick,LOW_KICK);
+				} else if (this->getActionButtonState(joystick,HIGH_KICK)) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_DUCK_HIGH_kICK);
+					this->setActionButtonStateFalse(joystick,HIGH_KICK);
+				} else if (!(this->isAxisUp( joystick ))
+						&& !(this->isAxisLeft( joystick ))
+						&& (this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_MOVE_DOWN_RIGHT);
+				} else if (!(this->isAxisUp( joystick ))
+						&& (this->isAxisLeft( joystick ))
+						&& !(this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_MOVE_DOWN_LEFT);
+				} else if (!(this->isAxisUp( joystick ))
+						&& !(this->isAxisLeft( joystick ))
+						&& !(this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_MOVE_DOWN);
+
+				}
+
+				//COMBINATION WITH LEFT --> ATRAS
+			} else if (this->isAxisLeft( joystick )) {
+
+				if (this->getActionButtonState(joystick,HIGH_KICK)){
+					if ( GameGUI::getInstance()->getCharacters()[character]->getIsRightOriented() ) {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_SUPER_kICK);
+					} else {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_HIGH_KICK);
+					}
+					this->setActionButtonStateFalse(joystick,HIGH_KICK);
+				}
+				else if (this->getActionButtonState(joystick,LOW_KICK)){
+					this->setPlayerMove( joystick,  FIRST_PLAYER_LOW_KICK);
 					this->setActionButtonStateFalse(joystick,LOW_KICK);
 				}
-		else if (this->getActionButtonState(joystick,LOW_PUNCH)){
-					this->firstPlayerMove = FIRST_PLAYER_LO_PUNCH;
+				else if (this->getActionButtonState(joystick,LOW_PUNCH)){
+					this->setPlayerMove( joystick,  FIRST_PLAYER_LO_PUNCH);
 					this->setActionButtonStateFalse(joystick,LOW_PUNCH);
 				}
-		else if (this->getActionButtonState(joystick,HIGH_PUNCH)){
-					this->firstPlayerMove = FIRST_PLAYER_HI_PUNCH;
+				else if (this->getActionButtonState(joystick,HIGH_PUNCH)){
+					this->setPlayerMove( joystick,  FIRST_PLAYER_HI_PUNCH);
 					this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
 				}
+				else if (!(this->isAxisUp( joystick ))
+						&& !(this->isAxisDown( joystick ))
+						&& !(this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_MOVE_LEFT);
+				}
+				//COMBINATION WITH RIGHT --> ADELANTE
+			} else if (this->isAxisRight( joystick )) {
+				if (this->getActionButtonState(joystick,HIGH_KICK)){
+					if ( !GameGUI::getInstance()->getCharacters()[character]->getIsRightOriented() ) {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_SUPER_kICK);
+					} else {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_HIGH_KICK);
+					}
+					this->setActionButtonStateFalse(joystick,HIGH_KICK);
+				}
+				else if (this->getActionButtonState(joystick,LOW_KICK)){
+							this->setPlayerMove( joystick,  FIRST_PLAYER_LOW_KICK);
+							this->setActionButtonStateFalse(joystick,LOW_KICK);
+						}
+				else if (this->getActionButtonState(joystick,LOW_PUNCH)){
+							this->setPlayerMove( joystick,  FIRST_PLAYER_LO_PUNCH);
+							this->setActionButtonStateFalse(joystick,LOW_PUNCH);
+						}
+				else if (this->getActionButtonState(joystick,HIGH_PUNCH)){
+							this->setPlayerMove( joystick,  FIRST_PLAYER_HI_PUNCH);
+							this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
+						}
 
-		else if (!(this->isAxisUp( joystick ))
-			&& !(this->isAxisDown( joystick ))
-			&& !(this->isAxisLeft( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
-		}
+				else if (!(this->isAxisUp( joystick ))
+					&& !(this->isAxisDown( joystick ))
+					&& !(this->isAxisLeft( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_MOVE_RIGHT);
+				}
 
-		//COMBINATION WITH S
-	} else if (this->getActionButtonState(joystick,HIGH_PUNCH)) {
-		if (!(this->isAxisDown( joystick ))
-				&& !(this->isAxisLeft( joystick ))
-				&& !(this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_HI_PUNCH;
-			this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
-		}
-		//COMBINATION WITH A
-	} else if (this->getActionButtonState(joystick,LOW_PUNCH)) {
-		if (!(this->isAxisDown( joystick ))
-				&& !(this->isAxisLeft( joystick ))
-				&& !(this->isAxisRight( joystick ))) {
-			this->firstPlayerMove = FIRST_PLAYER_LO_PUNCH;
-			this->setActionButtonStateFalse(joystick,LOW_PUNCH);
-		}
+				//COMBINATION WITH S
+			} else if (this->getActionButtonState(joystick,HIGH_PUNCH)) {
+				if (!(this->isAxisDown( joystick ))
+						&& !(this->isAxisLeft( joystick ))
+						&& !(this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_HI_PUNCH);
+					this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
+				}
+				//COMBINATION WITH A
+			} else if (this->getActionButtonState(joystick,LOW_PUNCH)) {
+				if (!(this->isAxisDown( joystick ))
+						&& !(this->isAxisLeft( joystick ))
+						&& !(this->isAxisRight( joystick ))) {
+					this->setPlayerMove( joystick,  FIRST_PLAYER_LO_PUNCH);
+					this->setActionButtonStateFalse(joystick,LOW_PUNCH);
+				}
 
-	} else if (this->getActionButtonState(joystick,HIGH_KICK)) {
-		this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
-		this->setActionButtonStateFalse(joystick,HIGH_KICK);
+			} else if (this->getActionButtonState(joystick,HIGH_KICK)) {
+				this->setPlayerMove( joystick,  FIRST_PLAYER_HIGH_KICK);
+				this->setActionButtonStateFalse(joystick,HIGH_KICK);
+			}
+
+			else if (this->getActionButtonState(joystick,LOW_KICK)) {
+				this->setPlayerMove( joystick,  FIRST_PLAYER_LOW_KICK);
+				this->setActionButtonStateFalse(joystick,LOW_KICK);
+		}
+		}
 	}
 
-	else if (this->getActionButtonState(joystick,LOW_KICK)) {
-		this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
-		this->setActionButtonStateFalse(joystick,LOW_KICK);
-	}
 }
 
 
@@ -433,4 +440,14 @@ bool someKickButtonPressed(const Uint8* keyBoard) {
 
 bool somePunchButtonPressed(const Uint8* keyBoard) {
 	return (keyBoard[SDL_SCANCODE_A]) || (keyBoard[SDL_SCANCODE_S]);
+}
+
+void InputControl::setPlayerMove(int joy, InputCommand action) {
+	//this->playerMove[joy] = action;
+	if (joy == 0) this->firstPlayerMove = action;
+	else if (joy == 1) this->secondPlayerMove = action;
+}
+
+InputCommand InputControl::getPlayerMove(int joy) {
+	return this->playerMove[joy];
 }
