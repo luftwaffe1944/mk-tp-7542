@@ -582,11 +582,12 @@ GameGUI* GameGUIBuilder::createDefault() {
 	fighterOne->setPlayerNumber("1");
 	fighterOne->setAlternativeColor(altColor);
 	fighterOne->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - fighterOne->getWidth() * fighterOne->getRatioX()/2);
-
+	fighterOne->setIsRightOriented(true);
 	Character* fighterTwo = fighterOne->getCopyInstance();
 	fighterTwo->setPlayerNumber("2");
 	fighterTwo->setPositionX((GameGUI::getInstance()->getWindow()->widthPx / 4)*3 -  fighterTwo->getWidth() * fighterTwo->getRatioX()/2);
-
+	fighterTwo->setIsAlternativePlayer(true);
+	fighterTwo->setIsRightOriented(false);
 	Fight* fight = new Fight();
 	fight->setFighterOne(fighterOne);
 	fight->setFighterTwo(fighterTwo);
