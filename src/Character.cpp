@@ -154,7 +154,7 @@ void Character::draw() {
 }
 
 bool Character::shouldMoveForward() {
-	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) ||
+	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
 			(!this->isRightOriented && (isJumpingLeft || isWalkingLeft))  ) {
 		return true;
 	} else {

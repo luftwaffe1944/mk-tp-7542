@@ -60,6 +60,7 @@ void InputControl::refreshInputs() {
 			this->firstPlayerMove = FIRST_PLAYER_AIR_HIGH_kICK;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
 				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(someKickButtonPressed(currentKeyStates))
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
 		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
