@@ -463,7 +463,7 @@ void createThrowableObject(vector<Character*> characters, float ratioX, float ra
 	float throwableHeight2 = characters[1]->getHeight();
 
 	LoaderParams* params1 = new LoaderParams(0, 0, throwableHeight1 * 0.1,  throwableHeight1 * 0.1 , characters[0]->getZIndex(), ratioX, ratioY, "throwable1");
-	LoaderParams* params2 = new LoaderParams(0, 0, throwableHeight2 * 0.1,  throwableHeight2 * 0.1 , characters[1]->getZIndex(), ratioX, ratioY, "throwable1");
+	LoaderParams* params2 = new LoaderParams(0, 0, throwableHeight2 * 0.1,  throwableHeight2 * 0.1 , characters[1]->getZIndex(), ratioX, ratioY, "throwable2");
 	ThrowableObject* tObject1 = new ThrowableObject(params1);
 	ThrowableObject* tObject2 = new ThrowableObject(params2);
 
