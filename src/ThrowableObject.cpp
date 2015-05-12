@@ -26,16 +26,14 @@ void ThrowableObject::setReleaser(Character* releaser) {
 
 
 void ThrowableObject::draw() {
-	//if (this->releaser->fire) {
-	this->positionX = this->releaser->getPositionX() / ratioX + (this->releaser->getWidth()) /2;
-	this->positionY = this->releaser->getPositionY() / ratioY + (this->releaser->getPositionY() / ratioY) * 0.5;
+	if (this->releaser->fire) {
 	SDLObjectGUI::draw();
-	//}
+	}
 }
 
 
 void ThrowableObject::update() {
-	/*
+
 	if (this->releaser->fire) {
 		//orientacion del que dispara
 		this->playerIsRightOriented = this->releaser->getIsRightOriented();
@@ -91,7 +89,6 @@ void ThrowableObject::update() {
 			this->posYsetReleaser = false;
 		}
 	}
-	*/
 }
 
 void ThrowableObject::clean(){
