@@ -380,19 +380,17 @@ Fight* jsonGetFight(Json::Value root) {
 		defaultCharacter = characters[0];
 	}
 
+	Character* fighterOne;
+	Character* fighterTwo;
+
 	for (unsigned int index=0; index<characters.size(); index++) {
 		Character* character = characters[index];
 		if (character->getName() == fighterOneName) {
-			Character* fighterOne = character->getCopyInstance();
-			fighterOne->setPlayerNumber("1");
-			fight->setFighterOne(fighterOne);
+			fighterOne = character->getCopyInstance();
 			isFighterOneNameValid = true;
 		}
 		if (character->getName() == fighterTwoName) {
-			Character* fighterTwo = character->getCopyInstance();
-			fighterTwo->setPlayerNumber("2");
-			fighterTwo->setPositionX(fighterTwo->getPositionX() + 120); //TODO: posX character2 hardcoded
-			fight->setFighterTwo(fighterTwo);
+			fighterTwo = character->getCopyInstance();
 			isFighterTwoNameValid = true;
 		}
 	}
@@ -400,19 +398,22 @@ Fight* jsonGetFight(Json::Value root) {
 	if (!isFighterOneNameValid) {
 		FILE_LOG(logDEBUG) << "JSON - Fighter one name is not valid, "
 				"default character was set: " << defaultCharacter->getName();
-		Character* fighterOne = defaultCharacter->getCopyInstance();
-		fighterOne->setPlayerNumber("1");
-		fight->setFighterOne(fighterOne);
+		fighterOne = defaultCharacter->getCopyInstance();
 	}
 
 	if (!isFighterTwoNameValid) {
 		FILE_LOG(logDEBUG) << "JSON - Fighter two name is not valid, "
 				"default character was set: " << defaultCharacter->getName();
-		Character* fighterTwo = defaultCharacter->getCopyInstance();
-		fighterTwo->setPlayerNumber("2");
-		fighterTwo->setPositionX(fighterTwo->getPositionX() + 120); //TODO: posX character2 hardcoded
-		fight->setFighterTwo(fighterTwo);
+		fighterTwo = defaultCharacter->getCopyInstance();
 	}
+
+	fighterOne->setPlayerNumber("1");
+	fighterOne->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - fighterOne->getWidth() * fighterOne->getRatioX()/2);
+	fight->setFighterOne(fighterOne);
+	fighterTwo->setPlayerNumber("2");
+	fighterTwo->setPositionX((GameGUI::getInstance()->getWindow()->widthPx / 4)*3 -  fighterTwo->getWidth() * fighterTwo->getRatioX()/2);
+	fight->setFighterTwo(fighterTwo);
+
 	return fight;
 }
 
