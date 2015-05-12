@@ -101,10 +101,10 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 
 //Sprites images
-const string WALK_SPRITE = "/walk2.png";
-const string JUMP_SPRITE = "/jump2.png";
-const string STANCE_SPRITE = "/stance2.png";
-const string DIAGONAL_JUMP_SPRITE = "/diagonalJump2.png";
+const string WALK_SPRITE = "/walk.png";
+const string JUMP_SPRITE = "/jump.png";
+const string STANCE_SPRITE = "/stance.png";
+const string DIAGONAL_JUMP_SPRITE = "/diagonalJump.png";
 const string DUCK_SPRITE = "/singleDuck.png";
 const string HIPUNCH_SPRITE = "/highPunch.png";
 const string LOPUNCH_SPRITE = "/lowPunch.png";
