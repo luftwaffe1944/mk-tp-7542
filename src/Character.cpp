@@ -399,7 +399,8 @@ void Character::update() {
 			airPunchLeft();
 			break;
 		case FIRST_PLAYER_FIRE:
-
+			std::cout << "DISPARO" << std::endl;
+			this->fire = true;
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
