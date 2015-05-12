@@ -326,9 +326,9 @@ vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratio
 		}
 
 		if (set_default_alternative_color){
-			 character_alt_color_h_inicial = 40;
-			 character_alt_color_h_final = 45;
-			 character_alt_color_shift = 30;
+			 character_alt_color_h_inicial = 180;
+			 character_alt_color_h_final = 300;
+			 character_alt_color_shift = 60;
 		}
 		FILE_LOG(logDEBUG) << "Final values for character.";
 		FILE_LOG(logDEBUG) << "JSON - Character name: " << character_name;
@@ -380,19 +380,17 @@ Fight* jsonGetFight(Json::Value root) {
 		defaultCharacter = characters[0];
 	}
 
+	Character* fighterOne;
+	Character* fighterTwo;
+
 	for (unsigned int index=0; index<characters.size(); index++) {
 		Character* character = characters[index];
 		if (character->getName() == fighterOneName) {
-			Character* fighterOne = character->getCopyInstance();
-			fighterOne->setPlayerNumber("1");
-			fight->setFighterOne(fighterOne);
+			fighterOne = character->getCopyInstance();
 			isFighterOneNameValid = true;
 		}
 		if (character->getName() == fighterTwoName) {
-			Character* fighterTwo = character->getCopyInstance();
-			fighterTwo->setPlayerNumber("2");
-			fighterTwo->setPositionX(fighterTwo->getPositionX() + 120); //TODO: posX character2 hardcoded
-			fight->setFighterTwo(fighterTwo);
+			fighterTwo = character->getCopyInstance();
 			isFighterTwoNameValid = true;
 		}
 	}
@@ -400,19 +398,22 @@ Fight* jsonGetFight(Json::Value root) {
 	if (!isFighterOneNameValid) {
 		FILE_LOG(logDEBUG) << "JSON - Fighter one name is not valid, "
 				"default character was set: " << defaultCharacter->getName();
-		Character* fighterOne = defaultCharacter->getCopyInstance();
-		fighterOne->setPlayerNumber("1");
-		fight->setFighterOne(fighterOne);
+		fighterOne = defaultCharacter->getCopyInstance();
 	}
 
 	if (!isFighterTwoNameValid) {
 		FILE_LOG(logDEBUG) << "JSON - Fighter two name is not valid, "
 				"default character was set: " << defaultCharacter->getName();
-		Character* fighterTwo = defaultCharacter->getCopyInstance();
-		fighterTwo->setPlayerNumber("2");
-		fighterTwo->setPositionX(fighterTwo->getPositionX() + 120); //TODO: posX character2 hardcoded
-		fight->setFighterTwo(fighterTwo);
+		fighterTwo = defaultCharacter->getCopyInstance();
 	}
+
+	fighterOne->setPlayerNumber("1");
+	fighterOne->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - fighterOne->getWidth() * fighterOne->getRatioX()/2);
+	fight->setFighterOne(fighterOne);
+	fighterTwo->setPlayerNumber("2");
+	fighterTwo->setPositionX((GameGUI::getInstance()->getWindow()->widthPx / 4)*3 -  fighterTwo->getWidth() * fighterTwo->getRatioX()/2);
+	fight->setFighterTwo(fighterTwo);
+
 	return fight;
 }
 
@@ -568,21 +569,37 @@ GameGUI* GameGUIBuilder::createDefault() {
 	float character_height = DEFAULT_CHARACTER_HEIGHT;
 	int character_zindex = DEFAULT_CHARACTER_ZINDEX;
 	string character_name = "default";
-	float characterPosX = GameGUI::getInstance()->getWindow()->widthPx / 2 - character_width * ratioX/2;
+	float characterPosX = 0;
 	float stage_win_ypiso = DEFAULT_STAGE_YFLOOR;
 	float characterPosY = (stage_win_ypiso - character_height) * ratioY;
-	bool isRightOrientation = true;
-	LoaderParams* characterParams = new LoaderParams(characterPosX, characterPosY, character_width, character_height, character_zindex,
-			ratioX, ratioY, character_name);
+	double character_alt_color_h_inicial = 180;
+	double character_alt_color_h_final = 300;
+	double character_alt_color_shift = 60;
+	LoaderParams* characterParams = new LoaderParams(characterPosX, characterPosY, character_width, character_height, character_zindex, ratioX, ratioY, character_name);
+	AlternativeColor* altColor = new AlternativeColor(character_alt_color_h_inicial, character_alt_color_h_final, character_alt_color_shift);
 
-	Character* playerOne = new Character(characterParams, isRightOrientation);
-	characters.push_back(playerOne);
+	Character* fighterOne = new Character(characterParams);
+	fighterOne->setPlayerNumber("1");
+	fighterOne->setAlternativeColor(altColor);
+	fighterOne->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - fighterOne->getWidth() * fighterOne->getRatioX()/2);
+	fighterOne->setIsRightOriented(true);
+	Character* fighterTwo = fighterOne->getCopyInstance();
+	fighterTwo->setPlayerNumber("2");
+	fighterTwo->setPositionX((GameGUI::getInstance()->getWindow()->widthPx / 4)*3 -  fighterTwo->getWidth() * fighterTwo->getRatioX()/2);
+	fighterTwo->setIsAlternativePlayer(true);
+	fighterTwo->setIsRightOriented(false);
+	Fight* fight = new Fight();
+	fight->setFighterOne(fighterOne);
+	fight->setFighterTwo(fighterTwo);
 
-	//Add layers to the game loop
-	MKGame::Instance()->getObjectList().push_back(playerOne);
+	characters.push_back(fight->getFighterOne());
+	characters.push_back(fight->getFighterTwo());
 
+	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
+	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
 	gameGUI->setCharacters(characters);
 
+	//Add layers to the game loop
 	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));
 
 	createGameInfo(ptrWindow, characters, ratioX, ratioY);
