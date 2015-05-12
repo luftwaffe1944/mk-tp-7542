@@ -41,7 +41,6 @@ private:
 	std::string playerNumber;
 	AlternativeColor* altColor;
 	bool isAltPlayer;
-	bool isDuckingSingle;
 	bool isPunchingHigh;
 	bool isPunchingLow;
 	bool isPunchingDuck;
