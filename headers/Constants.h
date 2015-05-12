@@ -127,6 +127,8 @@ const string LOW_PUNCH = "low_punch";
 const string HIGH_PUNCH = "high_punch";
 const string LOW_KICK = "low_kick";
 const string HIGH_KICK = "high_kick";
+const string FIRE = "fire";
+const string BLOCK = "block";
 
 // Json config constants
 
@@ -160,6 +162,8 @@ const string HIGH_KICK = "high_kick";
 #define JSON_KEY_LOW_PUNCH "piña_baja"
 #define JSON_KEY_HIGH_KICK "patada_alta"
 #define JSON_KEY_LOW_KICK "patada_baja"
+#define JSON_KEY_BLOCK "bloquear"
+#define JSON_KEY_FIRE "disparar"
 
 #define SPRITE_WIDTH 200
 #define SPRITE_HEIGHT 170

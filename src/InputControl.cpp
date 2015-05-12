@@ -169,7 +169,215 @@ void InputControl::refreshJoystickInputs() {
 	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
 
 	this->firstPlayerMove = NO_INPUT;
-//	this->secondPlayerMove = NO_INPUT;
+	this->secondPlayerMove = NO_INPUT;
+	this->controlOption = NO_INPUT;
+
+	int character = 0;
+
+	if ((currentKeyStates[SDL_SCANCODE_R])) {
+		this->controlOption = RESET;
+
+		//COMBINATION WITH UP
+	} else {
+		for (int joystick = 0; joystick < SDL_NumJoysticks() ; joystick ++) {
+
+			if (isAxisUp(joystick)) {
+
+				if (!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& !someJoyPunchButtonPressed( joystick )
+						&& !someJoyKickButtonPressed( joystick )
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_MOVE_UP);
+				} else if (!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& someJoyPunchButtonPressed( joystick )
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_AIR_PUNCH);
+				} else if (!(isAxisDown(joystick))
+						&& (isAxisLeft(joystick))
+						&& someJoyPunchButtonPressed( joystick )
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_AIR_PUNCH_L);
+				} else if (!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& someJoyPunchButtonPressed( joystick )
+						&& (isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_AIR_PUNCH_R);
+				} else if (!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& someJoyKickButtonPressed( joystick )
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_AIR_HIGH_kICK);
+				} else if (!(isAxisDown(joystick))
+						&& (isAxisLeft(joystick))
+						&& !(someJoyKickButtonPressed( joystick ))
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_MOVE_UP_LEFT);
+				} else if (!(isAxisDown(joystick))
+						&& (isAxisLeft(joystick))
+						&& someJoyKickButtonPressed( joystick )
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_AIR_LOW_kICK_L);
+				} else if (!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& someJoyKickButtonPressed( joystick )
+						&& (isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_AIR_LOW_kICK_R);
+				} else if (!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& (isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_MOVE_UP_RIGHT);
+				}
+
+					//COMBINATION WITH DOWN
+			} else if (isAxisDown(joystick) && !getActionButtonState(joystick, BLOCK)) {
+
+				if (getActionButtonState(joystick, LOW_PUNCH)) {
+					setPlayerMove( joystick,  FIRST_PLAYER_DUCK_PUNCH);
+					setActionButtonStateFalse(joystick,LOW_PUNCH);
+				} else if (getActionButtonState(joystick,HIGH_PUNCH)) {
+					setPlayerMove( joystick,  FIRST_PLAYER_UPPERCUT);
+					setActionButtonStateFalse(joystick,HIGH_PUNCH);
+				} else if (getActionButtonState(joystick,LOW_KICK)) {
+					setPlayerMove( joystick,  FIRST_PLAYER_DUCK_LOW_kICK);
+					setActionButtonStateFalse(joystick,LOW_KICK);
+				} else if (getActionButtonState(joystick,HIGH_KICK)) {
+					setPlayerMove( joystick,  FIRST_PLAYER_DUCK_HIGH_kICK);
+					setActionButtonStateFalse(joystick,HIGH_KICK);
+				} else if (!(isAxisUp( joystick ))
+						&& !(isAxisLeft( joystick ))
+						&& (isAxisRight( joystick ))) {
+					setPlayerMove( joystick,  FIRST_PLAYER_MOVE_DOWN_RIGHT);
+				} else if (!(isAxisUp( joystick ))
+						&& (isAxisLeft( joystick ))
+						&& !(isAxisRight( joystick ))) {
+					setPlayerMove( joystick,  FIRST_PLAYER_MOVE_DOWN_LEFT);
+				} else if (!(isAxisUp( joystick ))
+						&& !(isAxisLeft( joystick ))
+						&& !(isAxisRight( joystick ))) {
+					setPlayerMove( joystick,  FIRST_PLAYER_MOVE_DOWN);
+
+				}
+					//COMBINATION WITH LEFT
+			} else if (isAxisLeft(joystick)) {
+				if (getActionButtonState(joystick,HIGH_KICK)){
+					if ( GameGUI::getInstance()->getCharacters()[joystick]->getIsRightOriented() ) {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_SUPER_kICK);
+					} else {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_HIGH_KICK);
+					}
+				}
+				else if (getActionButtonState(joystick,BLOCK)){
+					setPlayerMove( joystick, FIRST_PLAYER_BLOCK);
+				}
+				else if (this->getActionButtonState(joystick,LOW_KICK)){
+					if ( GameGUI::getInstance()->getCharacters()[joystick]->getIsRightOriented() ) {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_UNDER_KICK);
+					} else {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_LOW_KICK);
+					}
+				}
+				else if (this->getActionButtonState(joystick,LOW_PUNCH)){
+					this->setPlayerMove( joystick,  FIRST_PLAYER_LO_PUNCH);
+					this->setActionButtonStateFalse(joystick,LOW_PUNCH);
+				}
+				else if (this->getActionButtonState(joystick,HIGH_PUNCH)){
+					this->setPlayerMove( joystick,  FIRST_PLAYER_HI_PUNCH);
+					this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
+				}
+				else if (!(isAxisUp(joystick))
+						&& !(isAxisDown(joystick))
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_MOVE_LEFT);
+				}
+					//COMBINATION WITH RIGHT
+			} else if (isAxisRight(joystick)) {
+				if (getActionButtonState(joystick,HIGH_KICK)){
+					if ( !GameGUI::getInstance()->getCharacters()[joystick]->getIsRightOriented() ) {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_SUPER_kICK);
+					} else {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_HIGH_KICK);
+					}
+					this->setActionButtonStateFalse(joystick,HIGH_KICK);
+
+				}
+				else if (this->getActionButtonState(joystick,LOW_KICK)){
+					if ( !GameGUI::getInstance()->getCharacters()[joystick]->getIsRightOriented() ) {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_UNDER_KICK);
+					} else {
+						this->setPlayerMove( joystick,  FIRST_PLAYER_LOW_KICK);
+					}
+				}
+				else if (this->getActionButtonState(joystick,LOW_PUNCH)){
+					this->setPlayerMove( joystick,  FIRST_PLAYER_LO_PUNCH);
+					this->setActionButtonStateFalse(joystick,LOW_PUNCH);
+				}
+				else if (this->getActionButtonState(joystick,HIGH_PUNCH)){
+					this->setPlayerMove( joystick,  FIRST_PLAYER_HI_PUNCH);
+					this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
+				}
+				else if (!(isAxisUp(joystick))
+						&& !(isAxisDown(joystick))
+						&& !getActionButtonState(joystick,BLOCK)
+						&& !(isAxisLeft(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_MOVE_RIGHT);
+				}
+				else if (getActionButtonState(joystick,BLOCK)){
+					setPlayerMove( joystick, FIRST_PLAYER_BLOCK);
+				}
+				//COMBINATION WITH S
+			} else if (getActionButtonState(joystick,HIGH_PUNCH)) {
+				if (!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_HI_PUNCH);
+				}
+					//COMBINATION WITH A
+			} else if (getActionButtonState(joystick,LOW_PUNCH)) {
+				if (!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& !(isAxisRight(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_LO_PUNCH);
+				}
+
+				//COMBINATION WITH LEFT CTRL
+			} else if (getActionButtonState(joystick,BLOCK)) {
+				if (!(isAxisDown(joystick))) {
+					setPlayerMove( joystick, FIRST_PLAYER_BLOCK);
+				}
+				else if((isAxisDown(joystick))){
+					setPlayerMove( joystick, FIRST_PLAYER_DUCK_BLOCK);
+				}
+
+			} else if (getActionButtonState(joystick,HIGH_KICK)) {
+				setPlayerMove( joystick, FIRST_PLAYER_HIGH_KICK);
+			}
+
+			else if (getActionButtonState(joystick,LOW_KICK)) {
+				setPlayerMove( joystick, FIRST_PLAYER_LOW_KICK);
+			}
+			this->setActionButtonStateFalse(joystick,HIGH_KICK);
+			this->setActionButtonStateFalse(joystick,LOW_KICK);
+			this->setActionButtonStateFalse(joystick,HIGH_PUNCH);
+			this->setActionButtonStateFalse(joystick,LOW_PUNCH);
+			this->setActionButtonStateFalse(joystick,FIRE);
+		}
+	}
+
+}
+
+
+
+/*
+ *
+ *
+void InputControl::refreshJoystickInputs() {
+
+	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
+
+	this->firstPlayerMove = NO_INPUT;
+	this->secondPlayerMove = NO_INPUT;
 	this->controlOption = NO_INPUT;
 
 	int character = 0;
@@ -315,7 +523,8 @@ void InputControl::refreshJoystickInputs() {
 
 }
 
-
+ *
+ * */
 
 
 bool InputControl::isAxisRight(int joystick) {
@@ -441,6 +650,14 @@ bool someKickButtonPressed(const Uint8* keyBoard) {
 
 bool somePunchButtonPressed(const Uint8* keyBoard) {
 	return (keyBoard[SDL_SCANCODE_A]) || (keyBoard[SDL_SCANCODE_S]);
+}
+
+bool InputControl::someJoyKickButtonPressed(int joy) {
+	return (getActionButtonState(joy, LOW_KICK)) || (getActionButtonState(joy, HIGH_KICK) ) ;
+}
+
+bool InputControl::someJoyPunchButtonPressed(int joy) {
+	return (getActionButtonState(joy, LOW_PUNCH)) || (getActionButtonState(joy, HIGH_PUNCH));
 }
 
 void InputControl::setPlayerMove(int joy, InputCommand action) {

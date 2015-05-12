@@ -429,17 +429,23 @@ void jsonGetJoysticks(Json::Value root) {
 	string high_punch;
 	string low_kick;
 	string high_kick;
+	string block;
+	string fire;
 	for (unsigned int joyNum = 0; joyNum < array.size(); ++joyNum) {
 
 		low_punch = array[joyNum].get(JSON_KEY_LOW_PUNCH, "").asString();
 		high_punch = array[joyNum].get(JSON_KEY_HIGH_PUNCH, "").asString();
 		low_kick = array[joyNum].get(JSON_KEY_LOW_KICK, "").asString();
 		high_kick = array[joyNum].get(JSON_KEY_HIGH_KICK, "").asString();
+		block = array[joyNum].get(JSON_KEY_BLOCK, "").asString();
+		fire = array[joyNum].get(JSON_KEY_FIRE, "").asString();
 
 		InputControl::Instance()->setActionButton(joyNum, LOW_PUNCH, atoi(low_punch.c_str()) );
 		InputControl::Instance()->setActionButton(joyNum, HIGH_PUNCH, atoi(high_punch.c_str()) );
 		InputControl::Instance()->setActionButton(joyNum, LOW_KICK, atoi(low_kick.c_str()) );
 		InputControl::Instance()->setActionButton(joyNum, HIGH_KICK, atoi(high_kick.c_str()) );
+		InputControl::Instance()->setActionButton(joyNum, BLOCK, atoi(block.c_str()) );
+		InputControl::Instance()->setActionButton(joyNum, FIRE, atoi(fire.c_str()) );
 }
 
 	return;

@@ -64,13 +64,17 @@
 			"piña_alta": 0,
 			"piña_baja": 1,
 			"patada_alta": 3,
-			"patada_baja": 2
+			"patada_baja": 2,
+			"bloquear": 4,
+			"disparar": 5
 		},
 		{
 			"piña_alta": 0,
 			"piña_baja": 1,
 			"patada_alta": 3,
-			"patada_baja": 2
+			"patada_baja": 2,
+			"bloquear": 4,
+			"disparar": 5
 		}
 	]	
 }

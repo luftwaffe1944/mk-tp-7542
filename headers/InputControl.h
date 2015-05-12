@@ -54,6 +54,9 @@ private:
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
 	std::vector<InputCommand> playerMove;
+
+	bool someJoyKickButtonPressed(int joy);
+	bool someJoyPunchButtonPressed(int joy);
 public:
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
