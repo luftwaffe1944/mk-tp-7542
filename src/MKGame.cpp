@@ -123,6 +123,7 @@ void MKGame::draw() {
 vector<Collitionable*> convertVector(vector<Character*> oldVec){
 	vector<Collitionable*> newVec;
 	for (std::vector<Character*>::size_type i = 0; i != oldVec.size(); i++) {
+		oldVec[i]->setIsWeapon(false);
 		newVec.push_back((Collitionable*) oldVec[i]);
 		}
 	return newVec;

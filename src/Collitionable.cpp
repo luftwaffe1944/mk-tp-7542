@@ -8,6 +8,7 @@
 Collitionable::Collitionable(){
 	this->isCActive=true;
 	this->isCMoving=false;
+	this->setIsWeapon(true);
 }
 
 Collitionable::~Collitionable(){
@@ -68,3 +69,4 @@ void Collitionable::updateCShapesPosition(float X, float Y, float W, float H, bo
 void Collitionable::getCNextPosition(float* nextPositionX, float* nextPositionY){
 
 }
+

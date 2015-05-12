@@ -59,6 +59,8 @@ private:
 	bool isAirPunchingRight;
 	bool isAirPunching;
 	bool isAirPunchingLeft;
+	bool isBeingHintStanceUp;
+	bool isBeingHintStanceDown;
 
 public:
 	static std::map<std::string,int> movesCounter;

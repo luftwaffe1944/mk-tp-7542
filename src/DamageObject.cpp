@@ -17,6 +17,7 @@ DamageObject::DamageObject(){
 	this->isDestroy = false;
 	this->energy = 1.0f;
 }
+
 DamageObject::~DamageObject(){}
 
 float DamageObject::getEnergy(){
@@ -36,4 +37,12 @@ void DamageObject::setDOMovement(string movement){
 }
 string DamageObject::getDOMovement(){
 	return this->doMovement;
+}
+
+void DamageObject::setIsWeapon(bool isWeapon){
+	this->isWeapon = isWeapon;
+}
+
+bool DamageObject::isCharacter(){
+	return !this->isWeapon;
 }

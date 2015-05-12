@@ -111,6 +111,10 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 	Sprite* spriteAirPunch = new Sprite(this->name+this->playerNumber+AIR_PUNCH_SUFFIX, characterPath+AIR_PUNCH_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteBeingHintStanceUp = new Sprite(this->name+this->playerNumber+BEING_HINT_STANCE_UP_SUFFIX, characterPath+BEING_HINT_STANCE_UP_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
+	Sprite* spriteBeingHintStanceDown = new Sprite(this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX, characterPath+BEING_HINT_STANCE_DOWN_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+STANCE_SUFFIX, spriteStance));
@@ -132,6 +136,8 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+DUCK_BLOCK_SUFFIX, spriteDuckBlock));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+UNDER_KICK_SUFFIX, spriteUnderKick));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+AIR_PUNCH_SUFFIX, spriteAirPunch));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_STANCE_UP_SUFFIX, spriteBeingHintStanceUp));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX, spriteBeingHintStanceDown));
 	return true;
 }
 
@@ -184,10 +190,27 @@ void Character::update() {
 	} else {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
+//	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
-	if (isJumping && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
+	if (isBeingHintStanceUp){
+		completeMovement();
+	}
+
+	else if (isBeingHintStanceDown){
+		completeMovement();
+	}
+
+	else if (getMovement() == BEING_HINT_STANCE_UP_MOVEMENT){
+		setCurrentSprite();
+		completeMovement();
+	}
+	else if (getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT){
+		setCurrentSprite();
+		completeMovement();
+	}
+	else if (isJumping && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
 		jump();
 	}
 	else if (isJumping && someKickInputCommand(playerCommand)) {
@@ -250,6 +273,8 @@ void Character::update() {
 		airPunchRight();
 	} else if (isAirPunchingLeft) {
 		airPunchLeft();
+	} else if (isBeingHintStanceUp) {
+		completeMovement();
 	} else {
 		// Movements validation to refresh frames
 		if (isDucking && (playerCommand != FIRST_PLAYER_MOVE_DOWN &&
@@ -263,6 +288,7 @@ void Character::update() {
 		if (isWalkingLeft && playerCommand != FIRST_PLAYER_MOVE_LEFT){
 			this->refreshFrames();
 		}
+
 		this->clearMovementsFlags();
 
 		switch (playerCommand) {
@@ -439,6 +465,8 @@ void Character::clearMovementsFlags(){
 	isKickingDuckHigh = false;
 	isKickingDuckLow = false;
 	isKickingSuper = false;
+	isBeingHintStanceUp = false;
+	isBeingHintStanceDown = false;
 }
 
 void Character::jump() {
@@ -682,6 +710,7 @@ void Character::completeMovement(){
 	if (moveCounter == spriteAmount) {
 		setMoveFlag(false);
 		resetCounter(getMovement());
+		this->movement="";
 	}
 }
 
@@ -817,6 +846,12 @@ void Character::setCurrentSprite(){
 		} else if (this->getMovement() == AIR_PUNCH_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+AIR_PUNCH_SUFFIX];
 
+		} else if (this->getMovement() == BEING_HINT_STANCE_UP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+BEING_HINT_STANCE_UP_SUFFIX];
+
+		} else if (this->getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX];
+
 		} else{
 			//TODO: review
 		}
@@ -855,6 +890,12 @@ void Character::setMoveFlag(bool trueOrFalse){
 
 	} else if (this->getMovement() == UNDER_KICK_MOVEMENT) {
 		isUnderKick = trueOrFalse;
+
+	} else if (this->getMovement() == BEING_HINT_STANCE_UP_MOVEMENT) {
+		isBeingHintStanceUp = trueOrFalse;
+
+	} else if (this->getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT) {
+		isBeingHintStanceDown = trueOrFalse;
 
 	} else {
 		//TODO: review
