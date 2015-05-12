@@ -908,6 +908,9 @@ void Character::updateShapesOnStatus(){
 
 	float charWidht = this->width * ratioX;
 	float charHeight = this->height * ratioY;
+	float centerX = this->getPositionX() / ratioX + (this->width) / 2;
+	float centerY = this->getPositionY() / ratioY + (this->height) / 2;
+
 	if (isJumping) {
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
 	}else if (isJumpingRight) {
@@ -915,37 +918,37 @@ void Character::updateShapesOnStatus(){
 	}else if (isJumpingLeft) {
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
 	}else if (isKickingHigh){
-		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, false, (this->width)*11/10, (this->height) *2/3 );
+		this->updateCShapesPosition(centerX, centerY, this->width, this->height, this->isRightOriented, false, (this->width)*11/10, (this->height) *2/3 );
 	}else if (isKickingLow) {
-		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, false, (this->width)*3/4, this->height / 3);
+		this->updateCShapesPosition(centerX, centerY, this->width, this->height, this->isRightOriented, false, (this->width)*3/4, this->height / 3);
 	}else if (isKickingDuckHigh) {
-		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*3/4, ((this->height)/2) *3/ 4);
+		this->updateCShapesPosition(centerX, (centerY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*3/4, ((this->height)/2) *3/ 4);
 	}else if (isKickingDuckLow) {
-		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*3/4, ((this->height)/2) / 2);
+		this->updateCShapesPosition(centerX, (centerY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*3/4, ((this->height)/2) / 2);
 	}else if (isKickingSuper) {
-		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, (this->width)*3/4, (this->height)/3 );
+		this->updateCShapesPosition(centerX, centerY, this->width, this->height, this->isRightOriented, true, (this->width)*3/4, (this->height)/3 );
 	}else if (isUnderKick){
-		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*2, (this->height)/4);
+		this->updateCShapesPosition(centerX, (centerY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, false, (this->width)*2, (this->height)/4);
 	}else if (isPunchingAnUppercut) {
-		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), (this->width)*2/3, (this->height)/2, this->isRightOriented, false, (this->width)/10, this->height);
+		this->updateCShapesPosition(centerX, (centerY)+((this->height)/4), (this->width)*2/3, (this->height)/2, this->isRightOriented, false, (this->width)/10, this->height);
 	}else if (isPunchingLow) {
-		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, (this->width)/2, this->height / 3);
+		this->updateCShapesPosition(centerX, centerY, this->width, this->height, this->isRightOriented, true, (this->width)/2, this->height / 4);
 	}else if (isPunchingDuck) {
-		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, true, this->width, this->height / 6);
+		this->updateCShapesPosition(centerX, (centerY)+((this->height)/4), this->width, (this->height)/2, this->isRightOriented, true, this->width, this->height / 6);
 	}else if (isPunchingHigh) {
-		this->updateCShapesPosition(this->positionX, this->positionY, this->width, this->height, this->isRightOriented, true, (this->width)*3/4, this->height / 6);
+		this->updateCShapesPosition(centerX, centerY, this->width, this->height, this->isRightOriented, true, (this->width)*3/4, this->height / 6);
 	}else if (isDucking) {
-		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2);
+		this->updateCShapesPosition(centerX, (centerY)+((this->height)/4), (this->width)/2, (this->height)/3);
 	}else if (isWalkingRight) {
-		this->updateCShapesPosition(this->positionX, this->positionY);
+		this->updateCShapesPosition(centerX, centerY);
 	}else if (isWalkingLeft) {
-		this->updateCShapesPosition(this->positionX, this->positionY);
+		this->updateCShapesPosition(centerX, centerY);
 	}else if (isBlocking) {
-		this->updateCShapesPosition(this->positionX, this->positionY);
+		this->updateCShapesPosition(centerX, centerY);
 	}else if (isDuckBlocking) {
-		this->updateCShapesPosition(this->positionX, (this->positionY)+((this->height)/4), this->width, (this->height)/2);
+		this->updateCShapesPosition(centerX, (centerY)+((this->height)/4), this->width, (this->height)/2);
 	}else{
-		this->updateCShapesPosition(this->positionX, this->positionY);
+		this->updateCShapesPosition(centerX, centerY);
 	}
 
 	/*
