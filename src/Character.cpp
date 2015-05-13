@@ -11,6 +11,7 @@
 #include <SDL_timer.h>
 #include <utility>
 #include <fstream>
+#include "../headers/MKGame.h"
 
 #include "../headers/GameGUI.h"
 #include "../headers/LoaderParams.h"
@@ -703,6 +704,7 @@ void Character::flyFalling() {
 }
 
 void Character::flyFallingUpper() {
+	MKGame::Instance()->setShaking(true);
 	isHintFlyingUpper = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
