@@ -32,6 +32,10 @@ void ThrowableObject::setReleaser(Character* releaser) {
 void ThrowableObject::draw() {
 	if (this->releaser->fire) {
 	SDLObjectGUI::draw();
+	//draw box colisionale
+    SDL_Rect outlineRect2 = { this->positionX, positionY, this->width, this->height };
+    SDL_SetRenderDrawColor( this->render, 0xFF, 0x00, 0x00, 0xFF );
+    SDL_RenderDrawRect( render, &outlineRect2 );
 	}
 }
 

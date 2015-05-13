@@ -30,6 +30,7 @@ public:
 	void setReleaser(Character* character);
 	void setReceiver(Character* character);
 	void getCNextPosition(float* nextPositionX, float* nextPositionY);
+	SDL_Renderer* render;
 
 private:
 	Character* releaser;
