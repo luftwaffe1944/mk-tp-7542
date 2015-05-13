@@ -197,7 +197,7 @@ bool Character::reachedWindowRightLimit(){
 }
 
 void Character::update() {
-	if (this->orientationPosXFix != 0) {
+	if (this->orientationPosXFix != 0) { //acomoda la posX si se desplaza la cámara
 		this->fixPosXStandingCharacter();
 		this->orientationPosXFix = 0;
 	}
@@ -422,7 +422,6 @@ void Character::update() {
 			airPunchLeft();
 			break;
 		case FIRST_PLAYER_FIRE:
-			std::cout << "DISPARO" << std::endl;
 			this->fire = true;
 			break;
 		case NO_INPUT:
