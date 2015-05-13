@@ -82,12 +82,14 @@ void DamageManager::solveDamage(DamageObject* firstObject, DamageObject* secondO
 		if ((this->IsObjectAttacking(secondObject)) &&  !(this->IsObjectBlocking(firstObject)) && !(this->IsObjectAttacking(firstObject))){
 			firstObject->setDamage(this->getDamageToDo(secondObject));
 		}
-	}else if (!firstObject->isCharacter()){
+	}else if (firstObject->isWeapon){
 		firstObject->setDamage(1.0f);
 		secondObject->setDamage(0.02f);
-	}else if (!secondObject->isCharacter()) {
+		cout << "first" << endl;
+	}else if (secondObject->isWeapon) {
 		firstObject->setDamage(0.02f);
 		secondObject->setDamage(1.0f);
+		cout << "second" << endl;
 	}
 }
 

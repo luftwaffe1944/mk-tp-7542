@@ -22,10 +22,10 @@ private:
 	bool isDestroy;
 	float energy;
 	string doMovement;
-	bool isWeapon;
 
 public:
 	DamageObject();
+	bool isWeapon;
 	virtual ~DamageObject();
 	float getEnergy();
 	void setEnergy(float newEnergyValue);

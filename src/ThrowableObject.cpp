@@ -14,6 +14,7 @@ ThrowableObject::ThrowableObject(const LoaderParams* pParams, float widthWindow)
 	this->widthWindow = widthWindow;
 	this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
 	this->setCMoving(true);
+	this->isWeapon = true;
 }
 
 ThrowableObject::~ThrowableObject() {
@@ -68,10 +69,13 @@ void ThrowableObject::update() {
 			}
 
 			this->posXSetReleaser = true;
+			cout << "X salida: " << this->positionX << " ";
+
 		}
 		if(!this->posYsetReleaser) {
 			this->positionY = posYCharacter + centerHeightCharacter;
 			this->posYsetReleaser = true;
+			cout << "Y salida: " << this->positionY << " ";
 		}
 
 
@@ -104,8 +108,11 @@ void ThrowableObject::update() {
 			this->posXSetReleaser = false;
 			this->posYsetReleaser = false;
 		}
+		cout << "X Actual: " << this->getPositionX() << endl;
+		//cout << "Y: " << this->positionY << " " << this->receiver->getPositionY() << endl;
+		this->updateCShapesPosition(this->positionX * ratioX, this->positionY * ratioY, this->width * ratioX, this->height * ratioY);
 	}
-	this->updateCShapesPosition(this->positionX * ratioX, this->positionY * ratioY, this->width * ratioX, this->height * ratioY );
+	
 }
 
 void ThrowableObject::clean(){
