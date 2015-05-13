@@ -169,19 +169,21 @@ void Character::draw() {
 			1, currentFrame,
 			renderer, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(), (!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
 
-	//draw original sprite
-    SDL_Rect outlineRect = { this->positionX, this->positionY, this->getWidth() * ratioX, this->height * ratioY };
-    SDL_SetRenderDrawColor( renderer, 0x00, 0xFF, 0x00, 0xFF );
-    SDL_RenderDrawRect( renderer, &outlineRect );
+	if (this->showBoxes) {
+		//draw original sprite
+		SDL_Rect outlineRect = { this->positionX, this->positionY, this->getWidth() * ratioX, this->height * ratioY };
+		SDL_SetRenderDrawColor( renderer, 0x00, 0xFF, 0x00, 0xFF );
+		SDL_RenderDrawRect( renderer, &outlineRect );
 
-	//draw box colisionale
-    SDL_Rect outlineRect2 = { this->posXBox, this->posYBox, this->widthBox, this->heightBox };
-    SDL_SetRenderDrawColor( renderer, 0xFF, 0x00, 0x00, 0xFF );
-    SDL_RenderDrawRect( renderer, &outlineRect2 );
+		//draw box colisionale
+		SDL_Rect outlineRect2 = { this->posXBox, this->posYBox, this->widthBox, this->heightBox };
+		SDL_SetRenderDrawColor( renderer, 0xFF, 0x00, 0x00, 0xFF );
+		SDL_RenderDrawRect( renderer, &outlineRect2 );
 
-    SDL_Rect outlineRect3 = { this->posXBox2, this->posYBox2, this->widthBox2, this->heightBox2 };
-    SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );
-    SDL_RenderDrawRect( renderer, &outlineRect3 );
+		SDL_Rect outlineRect3 = { this->posXBox2, this->posYBox2, this->widthBox2, this->heightBox2 };
+		SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );
+		SDL_RenderDrawRect( renderer, &outlineRect3 );
+	}
 }
 
 bool Character::shouldMoveForward() {
