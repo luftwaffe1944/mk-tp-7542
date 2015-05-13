@@ -686,7 +686,7 @@ void Character::flyFalling() {
 	isHintFlying = true;
 	positionY = positionY - jumpVelFalling;
 	jumpVelFalling -= gravity;
-	if (!this->reachedWindowRightLimit()) {
+	if (!this->reachedWindowRightLimit() && !this->reachedWindowLeftLimit()) {
 		if (isRightOriented){
 			positionX = positionX - (6 * ratioX);
 		} else {
@@ -706,7 +706,7 @@ void Character::flyFallingUpper() {
 	isHintFlyingUpper = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	if (!this->reachedWindowRightLimit()) {
+	if (!this->reachedWindowRightLimit() && !this->reachedWindowLeftLimit()) {
 		if (isRightOriented) {
 			positionX = positionX - (4 * ratioX);
 		} else {
