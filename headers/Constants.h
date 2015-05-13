@@ -76,6 +76,10 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define AIR_PUNCH_MOVEMENT "airPunch"
 #define BEING_HINT_STANCE_UP_MOVEMENT "beingHintStanceUp"
 #define BEING_HINT_STANCE_DOWN_MOVEMENT "beingHintStanceDown"
+#define BEING_HINT_FALLING_UNDER_KICK_MOVEMENT "beingHintFallingUnderKick"
+#define HINT_FLYING_MOVEMENT "hintFlying"
+#define HINT_FLYING_UPPER_MOVEMENT "hintFlyingUpper"
+#define GET_UP_MOVEMENT "getUp"
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
@@ -100,6 +104,9 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define AIR_PUNCH_SUFFIX "airPunch"
 #define BEING_HINT_STANCE_UP_SUFFIX "beingHintStanceUp"
 #define BEING_HINT_STANCE_DOWN_SUFFIX "beingHintStanceDown"
+#define BEING_HINT_FALLING_UNDER_KICK_SUFFIX "beingHintFallingUnderKick"
+#define HINT_FLYING_SUFFIX "hintFlying"
+#define GET_UP_SUFFIX "getUp"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -128,6 +135,9 @@ const string UNDER_KICK_SPRITE = "/underKick.png";
 const string AIR_PUNCH_SPRITE = "/airPunch.png";
 const string BEING_HINT_STANCE_UP_SPRITE = "/hintStance1.png";
 const string BEING_HINT_STANCE_DOWN_SPRITE = "/hintStance2.png";
+const string BEING_HINT_FALLING_UNDER_KICK_SPRITE = "/hintFallingUnderKick.png";
+const string HINT_FLYING_SPRITE = "/hintSuperDamage2.png";
+const string GET_UP_SPRITE ="/getUp.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";

@@ -46,11 +46,22 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 	}
 
 
-	if (character1->getMovement() == PUNCHING_HIGH_MOVEMENT){
+	if (character1->getMovement() == PUNCHING_HIGH_MOVEMENT || character1->getMovement() == HIGH_KICK_MOVEMENT){
 		character2->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 	}
-	else if (character1->getMovement() == PUNCHING_LOW_MOVEMENT){
+	else if (character1->getMovement() == PUNCHING_LOW_MOVEMENT || character1->getMovement() == LOW_KICK_MOVEMENT){
 		character2->setMovement(BEING_HINT_STANCE_DOWN_MOVEMENT);
+	}
+	else if (character1->getMovement() == UNDER_KICK_MOVEMENT){
+		character2->setMovement(BEING_HINT_FALLING_UNDER_KICK_MOVEMENT);
+	}
+
+	else if (character1->getMovement() == SUPER_KICK_MOVEMENT){
+		character2->setMovement(HINT_FLYING_MOVEMENT);
+	}
+
+	else if (character1->getMovement() == UPPERCUT_MOVEMENT){
+		character2->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 	}
 
 //	Character* character2 = GameGUI::getInstance()->getCharacters().at(1);

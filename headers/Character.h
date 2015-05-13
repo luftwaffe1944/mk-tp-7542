@@ -65,6 +65,10 @@ private:
 
 	bool isBeingHintStanceUp;
 	bool isBeingHintStanceDown;
+	bool isBeingHintFallingUnderKick;
+	bool isGettingUp;
+	bool isHintFlying;
+	bool isHintFlyingUpper;
 
 
 public:
@@ -100,6 +104,8 @@ public:
 	void clearMovementsFlags();
 	bool isMovingRight();
 	bool isMovingLeft();
+	void flyFalling();
+	void flyFallingUpper();
 	void fixPosXStandingCharacter();
 	void setFixPosXStandingCharacter( int orientation);
 
