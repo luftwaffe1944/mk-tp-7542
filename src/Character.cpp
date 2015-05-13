@@ -818,12 +818,14 @@ void Character::setPlayerNumber(std::string playerNumber) {
 
 
 bool Character::isMovingRight(){
-	if (this->isJumpingRight || this->isWalkingRight || this->isAirPunchingRight || this->isKickingAirLowRight) return true;
+	if (this->isJumpingRight || this->isWalkingRight || this->isAirPunchingRight || this->isKickingAirLowRight
+			|| this->isHintFlying || this->isHintFlyingUpper) return true;
 	return false;
 }
 
 bool Character::isMovingLeft(){
-	if (this->isJumpingLeft || this->isWalkingLeft || this->isAirPunchingLeft || this->isKickingAirLowLeft) return true;
+	if (this->isJumpingLeft || this->isWalkingLeft || this->isAirPunchingLeft || this->isKickingAirLowLeft
+			|| this->isHintFlying || this->isHintFlyingUpper) return true;
 	return false;
 }
 
