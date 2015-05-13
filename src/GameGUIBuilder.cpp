@@ -429,17 +429,23 @@ void jsonGetJoysticks(Json::Value root) {
 	string high_punch;
 	string low_kick;
 	string high_kick;
+	string block;
+	string fire;
 	for (unsigned int joyNum = 0; joyNum < array.size(); ++joyNum) {
 
 		low_punch = array[joyNum].get(JSON_KEY_LOW_PUNCH, "").asString();
 		high_punch = array[joyNum].get(JSON_KEY_HIGH_PUNCH, "").asString();
 		low_kick = array[joyNum].get(JSON_KEY_LOW_KICK, "").asString();
 		high_kick = array[joyNum].get(JSON_KEY_HIGH_KICK, "").asString();
+		block = array[joyNum].get(JSON_KEY_BLOCK, "").asString();
+		fire = array[joyNum].get(JSON_KEY_FIRE, "").asString();
 
 		InputControl::Instance()->setActionButton(joyNum, LOW_PUNCH, atoi(low_punch.c_str()) );
 		InputControl::Instance()->setActionButton(joyNum, HIGH_PUNCH, atoi(high_punch.c_str()) );
 		InputControl::Instance()->setActionButton(joyNum, LOW_KICK, atoi(low_kick.c_str()) );
 		InputControl::Instance()->setActionButton(joyNum, HIGH_KICK, atoi(high_kick.c_str()) );
+		InputControl::Instance()->setActionButton(joyNum, BLOCK, atoi(block.c_str()) );
+		InputControl::Instance()->setActionButton(joyNum, FIRE, atoi(fire.c_str()) );
 }
 
 	return;
@@ -456,6 +462,26 @@ void createGameInfo(Window* window, vector<Character*> characters, float ratioX,
 	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
 	GameInfo* info = new GameInfo(params, characters);
 	MKGame::Instance()->getObjectList().push_back(info);
+}
+
+void createThrowableObject(vector<Character*> characters, float ratioX, float ratioY) {
+	float throwableHeight1 = characters[0]->getHeight();
+	float throwableHeight2 = characters[1]->getHeight();
+
+	LoaderParams* params1 = new LoaderParams(0, 0, throwableHeight1 * 0.1,  throwableHeight1 * 0.1 , characters[0]->getZIndex(), ratioX, ratioY, "throwable1");
+	LoaderParams* params2 = new LoaderParams(0, 0, throwableHeight2 * 0.1,  throwableHeight2 * 0.1 , characters[1]->getZIndex(), ratioX, ratioY, "throwable2");
+	ThrowableObject* tObject1 = new ThrowableObject(params1);
+	ThrowableObject* tObject2 = new ThrowableObject(params2);
+
+	tObject1->setReleaser(characters[0]);
+	tObject1->setReceiver(characters[1]);
+	tObject1->setImagePath("images/subzero/throwable.gif");
+	MKGame::Instance()->getObjectList().push_back(tObject1);
+
+	tObject2->setReleaser(characters[1]);
+	tObject2->setReceiver(characters[0]);
+	tObject2->setImagePath("images/subzero/throwable.gif");
+	MKGame::Instance()->getObjectList().push_back(tObject2);
 }
 
 GameGUI* GameGUIBuilder::create() {
@@ -523,6 +549,7 @@ GameGUI* GameGUIBuilder::create() {
 	fightingCharacters.push_back(fight->getFighterTwo());
 	gameGUI->setCharacters(fightingCharacters);
 	createGameInfo(window, fightingCharacters, ratioX, ratioY);
+	createThrowableObject(fightingCharacters, ratioX, ratioY);
 
 
 	jsonGetJoysticks(root);
@@ -603,6 +630,8 @@ GameGUI* GameGUIBuilder::createDefault() {
 	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));
 
 	createGameInfo(ptrWindow, characters, ratioX, ratioY);
+
+	createThrowableObject(characters, ratioX, ratioY);
 
 	FILE_LOG(logDEBUG) << "Configuration process finished";
 	return gameGUI;

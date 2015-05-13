@@ -21,9 +21,10 @@
 
 using namespace std;
 
+/*
 float gravity = 14.0f;
 float jumpVel = 60.0f;
-
+*/
 std::map<std::string,int> Character::movesCounter;
 
 bool somePunchInputCommand(InputCommand inputCommand);
@@ -41,6 +42,10 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		// initializing movements statements
 		clearMovementsFlags();
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+		//TODO: setear en false
+		this->fire = false;
+		gravity = 14.0f;
+		jumpVel = 60.0f;
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -55,6 +60,10 @@ Character::Character(const LoaderParams* pParams) :
 		clearMovementsFlags();
 		//initializing shapes for colitions
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+		//TODO: setear en false
+		this->fire = false;
+		gravity = 14.0f;
+		jumpVel = 60.0f;
 }
 
 
@@ -177,17 +186,21 @@ bool Character::shouldMoveForward() {
 }
 
 bool Character::reachedWindowLeftLimit(){
-	if (this->getPosXUL() < WINDOW_MARGIN -1) return true;
+	if (this->getPosXUL() < WINDOW_MARGIN -15) return true;
 	return false;
 }
 
 bool Character::reachedWindowRightLimit(){
 	float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
-	if ( ( windowWidth - this->getPosXUL() - this->width ) < WINDOW_MARGIN -1) return true;
+	if ( ( windowWidth - this->getPosXUL() - this->width ) < WINDOW_MARGIN -15) return true;
 	return false;
 }
 
 void Character::update() {
+	if (this->orientationPosXFix != 0) {
+		this->fixPosXStandingCharacter();
+		this->orientationPosXFix = 0;
+	}
 	InputCommand playerCommand;
 	if (this->playerNumber == "1") {
 		playerCommand = InputControl::Instance()->getFirstPlayerMove();
@@ -393,7 +406,7 @@ void Character::update() {
 			setCurrentSprite();
 			break;
 		case FIRST_PLAYER_AIR_PUNCH:
-			cout << "FIRST_PLAYER_AIR_PUNCH" << endl;
+			//cout << "FIRST_PLAYER_AIR_PUNCH" << endl;
 			this->setMovement(AIR_PUNCH_MOVEMENT);
 			setCurrentSprite();
 			airPunch();
@@ -407,6 +420,10 @@ void Character::update() {
 			this->setMovement(AIR_PUNCH_MOVEMENT);
 			setCurrentSprite();
 			airPunchLeft();
+			break;
+		case FIRST_PLAYER_FIRE:
+			std::cout << "DISPARO" << std::endl;
+			this->fire = true;
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
@@ -510,7 +527,7 @@ void Character::airPunchLeft() {
 	isAirPunchingLeft = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	if (!this->reachedWindowRightLimit()) {
+	if (!this->reachedWindowLeftLimit()) {
 		positionX = positionX - (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
@@ -549,7 +566,7 @@ void Character::airLowKickLeft() {
 	isJumpingLeft = false;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
-	if (!this->reachedWindowRightLimit()) {
+	if (!this->reachedWindowLeftLimit()) {
 		positionX = positionX - (3 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
@@ -612,7 +629,7 @@ void Character::refreshFrames(){
 void Character::walkRight() {
 	isWalkingRight = true;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX + 2 * ratioX;
+		positionX = positionX + FRONTAL_LAYER_SPEED * ratioX;
 	}
 
 
@@ -621,7 +638,7 @@ void Character::walkRight() {
 void Character::walkLeft() {
 	isWalkingLeft = true;
 	if (!this->reachedWindowLeftLimit()){
-		positionX = positionX - 2 * ratioX;
+		positionX = positionX - FRONTAL_LAYER_SPEED * ratioX;
 	}
 
 }
@@ -671,12 +688,12 @@ void Character::setPlayerNumber(std::string playerNumber) {
 
 
 bool Character::isMovingRight(){
-	if (this->isJumpingRight || this->isWalkingRight) return true;
+	if (this->isJumpingRight || this->isWalkingRight || this->isAirPunchingRight || this->isKickingAirLowRight) return true;
 	return false;
 }
 
 bool Character::isMovingLeft(){
-	if (this->isJumpingLeft || this->isWalkingLeft) return true;
+	if (this->isJumpingLeft || this->isWalkingLeft || this->isAirPunchingLeft || this->isKickingAirLowLeft) return true;
 	return false;
 }
 
@@ -888,9 +905,9 @@ void Character::setIsRightOriented(bool isRightOriented) {
 void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
 
 		if ((!this->reachedWindowRightLimit()) && (this->isWalkingRight)){ //si no llego al limite de pantalla y esta caminando para derecha
-			*nextPositionX = positionX + 2 * ratioX;
+			*nextPositionX = positionX + FRONTAL_LAYER_SPEED * ratioX;
 		}else if ((!this->reachedWindowLeftLimit()) && (this->isWalkingLeft)){
-			*nextPositionX = positionX - 2 * ratioX;
+			*nextPositionX = positionX - FRONTAL_LAYER_SPEED * ratioX;
 		}else if (this->isJumping){
 			*nextPositionY = positionY - jumpVel;
 			if (this->isTouchingGround(*nextPositionY)) {
@@ -899,7 +916,7 @@ void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
 		}else if (this->isJumpingRight){
 			*nextPositionY = this->positionY - jumpVel;
 			if (!this->reachedWindowRightLimit()) {
-				*nextPositionX = positionX + (2 * ratioX);
+				*nextPositionX = positionX + (FRONTAL_LAYER_SPEED * ratioX);
 			}
 			if (this->isTouchingGround(*nextPositionY)) {
 				*nextPositionY = yGround;
@@ -908,7 +925,7 @@ void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
 		}else if (this->isJumpingLeft){
 			*nextPositionY = positionY - jumpVel;
 			if (!this->reachedWindowLeftLimit()) {
-				*nextPositionX = positionX - (2 * ratioX);
+				*nextPositionX = positionX - (FRONTAL_LAYER_SPEED * ratioX);
 			}
 			if (this->isTouchingGround(*nextPositionY)) {
 				*nextPositionY = yGround;
@@ -1030,4 +1047,16 @@ Character* Character::getCopyInstance() {
 	copyOfCharacter->setAlternativeColor(copyAltColor);
 	copyOfCharacter->setPlayerNumber(playerNumber);
 	return copyOfCharacter;
+}
+
+int Character::getHeight(){
+	return this->height;
+}
+
+void Character::setFixPosXStandingCharacter( int orientation) {
+	this->orientationPosXFix = orientation;
+}
+
+void Character::fixPosXStandingCharacter() {
+	positionX = positionX + FRONTAL_LAYER_SPEED * ratioX * this->orientationPosXFix *-1;
 }

@@ -36,6 +36,7 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define DEFAULT_STAGE_YFLOOR 125
 
 //layers
+const float FRONTAL_LAYER_SPEED = 2;
 #define DEFAULT_LAYER1_ID "layer0"
 #define DEFAULT_LAYER1_PATH "images/arenas/default/p_3n.png"
 #define DEFAULT_LAYER1_WIDTH 206
@@ -127,6 +128,8 @@ const string LOW_PUNCH = "low_punch";
 const string HIGH_PUNCH = "high_punch";
 const string LOW_KICK = "low_kick";
 const string HIGH_KICK = "high_kick";
+const string FIRE = "fire";
+const string BLOCK = "block";
 
 // Json config constants
 
@@ -160,6 +163,8 @@ const string HIGH_KICK = "high_kick";
 #define JSON_KEY_LOW_PUNCH "piña_baja"
 #define JSON_KEY_HIGH_KICK "patada_alta"
 #define JSON_KEY_LOW_KICK "patada_baja"
+#define JSON_KEY_BLOCK "bloquear"
+#define JSON_KEY_FIRE "disparar"
 
 #define SPRITE_WIDTH 200
 #define SPRITE_HEIGHT 170

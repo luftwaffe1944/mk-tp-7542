@@ -23,6 +23,7 @@
 #include "LayerManager.h"
 #include "AlternativeColor.h"
 #include "GameInfo.h"
+#include "ThrowableObject.h"
 using namespace std;
 
 class GameGUIBuilder {

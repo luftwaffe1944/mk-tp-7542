@@ -44,7 +44,8 @@ enum InputCommand {
 	FIRST_PLAYER_UNDER_KICK,
 	FIRST_PLAYER_AIR_PUNCH_R,
 	FIRST_PLAYER_AIR_PUNCH,
-	FIRST_PLAYER_AIR_PUNCH_L
+	FIRST_PLAYER_AIR_PUNCH_L,
+	FIRST_PLAYER_FIRE
 
 };
 
@@ -54,6 +55,9 @@ private:
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
 	std::vector<InputCommand> playerMove;
+
+	bool someJoyKickButtonPressed(int joy);
+	bool someJoyPunchButtonPressed(int joy);
 public:
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
