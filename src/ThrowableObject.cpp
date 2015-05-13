@@ -34,7 +34,7 @@ void ThrowableObject::draw() {
 	if (this->releaser->fire) {
 	SDLObjectGUI::draw();
 	//draw box colisionale
-    SDL_Rect outlineRect2 = { this->positionX, positionY, this->width+100, this->height+100 };
+    SDL_Rect outlineRect2 = { this->positionX, positionY, this->width, this->height };
     SDL_SetRenderDrawColor( MKGame::Instance()->getRenderer(), 0xFF, 0x00, 0x00, 0xFF );
     SDL_RenderDrawRect( MKGame::Instance()->getRenderer(), &outlineRect2 );
 	}
@@ -54,20 +54,20 @@ void ThrowableObject::update() {
 		//arranca la bola pegada al personaje
 		if (this->playerIsRightOriented) {
 			if (!this->posXSetReleaser) {
-				this->positionX = this->releaser->getPositionX() / ratioX + (this->releaser->getWidth())* 4/5;
+				this->positionX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX /2;;
 				this->posXSetReleaser = true;
 			}
 			if(!this->posYsetReleaser) {
-				this->positionY = this->releaser->getPositionY() / ratioY + (this->releaser->getPositionY() / ratioY) * 0.5;
+				this->positionY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY /2;
 				this->posYsetReleaser = true;
 			}
 		} else {
 			if (!this->posXSetReleaser) {
-				this->positionX = this->releaser->getPositionX() / ratioX + (this->releaser->getWidth())* 1/5;
+				this->positionX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX /2;;
 				this->posXSetReleaser = true;
 			}
 			if(!this->posYsetReleaser) {
-				this->positionY = this->releaser->getPositionY() / ratioY + (this->releaser->getPositionY() / ratioY) * 0.5;
+				this->positionY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY /2;
 				this->posYsetReleaser = true;
 			}
 		}
@@ -79,7 +79,7 @@ void ThrowableObject::update() {
 		//si esta mirando para la derecha
 		//TODO: hacerlo colisionable ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
 		if (this->playerIsRightOriented && !endBoom) {
-			if (this->positionX < (this->receiver->getPositionX() / ratioX + (this->receiver->getWidth())* 1/5)) {
+			if (this->positionX < this->receiver->getPositionX() + this->receiver->getWidth() * ratioX /2) {
 				this->positionX+= OBJECT_SPEED;
 			} else {
 				endBoom = true;
@@ -88,7 +88,7 @@ void ThrowableObject::update() {
 		//si esta mirando para izq
 		//TODO: hacerlo colisionable, ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
 		if (!this->playerIsRightOriented && !endBoom) {
-			if ((this->receiver->getPositionX() / ratioX + (this->receiver->getWidth())* 3/5 < this->positionX)) {
+			if ((this->positionX < this->receiver->getPositionX() + this->receiver->getWidth() * ratioX /2 < this->positionX)) {
 				this->positionX-= OBJECT_SPEED;
 			} else {
 				endBoom = true;
