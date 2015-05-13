@@ -178,6 +178,10 @@ bool Character::reachedWindowRightLimit(){
 }
 
 void Character::update() {
+	if (this->orientationPosXFix != 0) {
+		this->fixPosXStandingCharacter();
+		this->orientationPosXFix = 0;
+	}
 	InputCommand playerCommand;
 	if (this->playerNumber == "1") {
 		playerCommand = InputControl::Instance()->getFirstPlayerMove();
@@ -981,4 +985,12 @@ Character* Character::getCopyInstance() {
 
 int Character::getHeight(){
 	return this->height;
+}
+
+void Character::setFixPosXStandingCharacter( int orientation) {
+	this->orientationPosXFix = orientation;
+}
+
+void Character::fixPosXStandingCharacter() {
+	positionX = positionX + 3 * ratioX * this->orientationPosXFix *-1;
 }

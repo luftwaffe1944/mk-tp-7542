@@ -36,6 +36,7 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define DEFAULT_STAGE_YFLOOR 125
 
 //layers
+const float FRONTAL_LAYER_SPEED = 3;
 #define DEFAULT_LAYER1_ID "layer0"
 #define DEFAULT_LAYER1_PATH "images/arenas/default/p_3n.png"
 #define DEFAULT_LAYER1_WIDTH 206
