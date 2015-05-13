@@ -35,6 +35,7 @@ private:
 	}
 
 public:
+	vector<ThrowableObject*> tObjects;
 	static GameGUI* getInstance();
 	void clean();
 	void setStage(Stage* stage);
@@ -49,6 +50,7 @@ public:
 	void setFight(Fight* fight);
 	void addCharacter(Character* character);
 	void addLayer(Layer* layer);
+
 	~GameGUI() {
 		if (gameGui != NULL) delete gameGui;
 		gameGui = NULL;
