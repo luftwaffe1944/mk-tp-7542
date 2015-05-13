@@ -119,6 +119,9 @@ public:
 
 	bool fire;
 	int getHeight();
+
+	float gravity;
+	float jumpVel;
 };
 
 #endif /* CHARACTER_H_ */
