@@ -74,6 +74,8 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define DUCK_BLOCK_MOVEMENT "duckBlock"
 #define UNDER_KICK_MOVEMENT "underKick"
 #define AIR_PUNCH_MOVEMENT "airPunch"
+#define BEING_HINT_STANCE_UP_MOVEMENT "beingHintStanceUp"
+#define BEING_HINT_STANCE_DOWN_MOVEMENT "beingHintStanceDown"
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
@@ -96,6 +98,8 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define DUCK_BLOCK_SUFFIX "duckBlock"
 #define UNDER_KICK_SUFFIX "underKick"
 #define AIR_PUNCH_SUFFIX "airPunch"
+#define BEING_HINT_STANCE_UP_SUFFIX "beingHintStanceUp"
+#define BEING_HINT_STANCE_DOWN_SUFFIX "beingHintStanceDown"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -122,6 +126,8 @@ const string DUCK_BLOCK_SPRITE = "/duckBlockSingle.png";
 const string BLOCK_SPRITE = "/blockSingle.png";
 const string UNDER_KICK_SPRITE = "/underKick.png";
 const string AIR_PUNCH_SPRITE = "/airPunch.png";
+const string BEING_HINT_STANCE_UP_SPRITE = "/hintStance1.png";
+const string BEING_HINT_STANCE_DOWN_SPRITE = "/hintStance2.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";

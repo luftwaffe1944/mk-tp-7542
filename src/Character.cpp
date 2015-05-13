@@ -42,6 +42,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		// initializing movements statements
 		clearMovementsFlags();
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+		this->setIsWeapon(false);
 		//TODO: setear en false
 		this->fire = false;
 		gravity = 14.0f;
@@ -60,6 +61,7 @@ Character::Character(const LoaderParams* pParams) :
 		clearMovementsFlags();
 		//initializing shapes for colitions
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+		this->setIsWeapon(false);
 		//TODO: setear en false
 		this->fire = false;
 		gravity = 14.0f;
@@ -116,6 +118,10 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 	Sprite* spriteAirPunch = new Sprite(this->name+this->playerNumber+AIR_PUNCH_SUFFIX, characterPath+AIR_PUNCH_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteBeingHintStanceUp = new Sprite(this->name+this->playerNumber+BEING_HINT_STANCE_UP_SUFFIX, characterPath+BEING_HINT_STANCE_UP_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
+	Sprite* spriteBeingHintStanceDown = new Sprite(this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX, characterPath+BEING_HINT_STANCE_DOWN_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+STANCE_SUFFIX, spriteStance));
@@ -137,6 +143,8 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+DUCK_BLOCK_SUFFIX, spriteDuckBlock));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+UNDER_KICK_SUFFIX, spriteUnderKick));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+AIR_PUNCH_SUFFIX, spriteAirPunch));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_STANCE_UP_SUFFIX, spriteBeingHintStanceUp));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX, spriteBeingHintStanceDown));
 	return true;
 }
 
@@ -161,19 +169,21 @@ void Character::draw() {
 			1, currentFrame,
 			renderer, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(), (!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
 
-	//draw original sprite
-    SDL_Rect outlineRect = { this->positionX, this->positionY, this->getWidth() * ratioX, this->height * ratioY };
-    SDL_SetRenderDrawColor( renderer, 0x00, 0xFF, 0x00, 0xFF );
-    SDL_RenderDrawRect( renderer, &outlineRect );
+	if (this->showBoxes) {
+		//draw original sprite
+		SDL_Rect outlineRect = { this->positionX, this->positionY, this->getWidth() * ratioX, this->height * ratioY };
+		SDL_SetRenderDrawColor( renderer, 0x00, 0xFF, 0x00, 0xFF );
+		SDL_RenderDrawRect( renderer, &outlineRect );
 
-	//draw box colisionale
-    SDL_Rect outlineRect2 = { this->posXBox, this->posYBox, this->widthBox, this->heightBox };
-    SDL_SetRenderDrawColor( renderer, 0xFF, 0x00, 0x00, 0xFF );
-    SDL_RenderDrawRect( renderer, &outlineRect2 );
+		//draw box colisionale
+		SDL_Rect outlineRect2 = { this->posXBox, this->posYBox, this->widthBox, this->heightBox };
+		SDL_SetRenderDrawColor( renderer, 0xFF, 0x00, 0x00, 0xFF );
+		SDL_RenderDrawRect( renderer, &outlineRect2 );
 
-    SDL_Rect outlineRect3 = { this->posXBox2, this->posYBox2, this->widthBox2, this->heightBox2 };
-    SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );
-    SDL_RenderDrawRect( renderer, &outlineRect3 );
+		SDL_Rect outlineRect3 = { this->posXBox2, this->posYBox2, this->widthBox2, this->heightBox2 };
+		SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );
+		SDL_RenderDrawRect( renderer, &outlineRect3 );
+	}
 }
 
 bool Character::shouldMoveForward() {
@@ -221,10 +231,27 @@ void Character::update() {
 	} else {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
+//	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
-	if (isJumping && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
+	if (isBeingHintStanceUp){
+		completeMovement();
+	}
+
+	else if (isBeingHintStanceDown){
+		completeMovement();
+	}
+
+	else if (getMovement() == BEING_HINT_STANCE_UP_MOVEMENT){
+		setCurrentSprite();
+		completeMovement();
+	}
+	else if (getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT){
+		setCurrentSprite();
+		completeMovement();
+	}
+	else if (isJumping && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
 		jump();
 	}
 	else if (isJumping && someKickInputCommand(playerCommand)) {
@@ -287,6 +314,8 @@ void Character::update() {
 		airPunchRight();
 	} else if (isAirPunchingLeft) {
 		airPunchLeft();
+	} else if (isBeingHintStanceUp) {
+		completeMovement();
 	} else {
 		// Movements validation to refresh frames
 		if (isDucking && (playerCommand != FIRST_PLAYER_MOVE_DOWN &&
@@ -300,6 +329,7 @@ void Character::update() {
 		if (isWalkingLeft && playerCommand != FIRST_PLAYER_MOVE_LEFT){
 			this->refreshFrames();
 		}
+
 		this->clearMovementsFlags();
 
 		switch (playerCommand) {
@@ -475,6 +505,8 @@ void Character::clearMovementsFlags(){
 	isKickingDuckHigh = false;
 	isKickingDuckLow = false;
 	isKickingSuper = false;
+	isBeingHintStanceUp = false;
+	isBeingHintStanceDown = false;
 }
 
 void Character::jump() {
@@ -718,6 +750,7 @@ void Character::completeMovement(){
 	if (moveCounter == spriteAmount) {
 		setMoveFlag(false);
 		resetCounter(getMovement());
+		this->movement="";
 	}
 }
 
@@ -853,6 +886,12 @@ void Character::setCurrentSprite(){
 		} else if (this->getMovement() == AIR_PUNCH_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+AIR_PUNCH_SUFFIX];
 
+		} else if (this->getMovement() == BEING_HINT_STANCE_UP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+BEING_HINT_STANCE_UP_SUFFIX];
+
+		} else if (this->getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX];
+
 		} else{
 			//TODO: review
 		}
@@ -891,6 +930,12 @@ void Character::setMoveFlag(bool trueOrFalse){
 
 	} else if (this->getMovement() == UNDER_KICK_MOVEMENT) {
 		isUnderKick = trueOrFalse;
+
+	} else if (this->getMovement() == BEING_HINT_STANCE_UP_MOVEMENT) {
+		isBeingHintStanceUp = trueOrFalse;
+
+	} else if (this->getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT) {
+		isBeingHintStanceDown = trueOrFalse;
 
 	} else {
 		//TODO: review
@@ -1103,11 +1148,10 @@ void Character::updateShapesOnStatus(){
 		if (false){secY=(centerY+charHeight/8)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/8)-(heightBox/2)+(heightBox2/2);}
 		posXBox2 = secX - widthBox2/2;
 		posYBox2 = secY - heightBox2/2;
-
 	}else if (isDuckBlocking) {
-		this->updateCShapesPosition(centerX, (centerY), (charWidht)/3, (charHeight));
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/3), (charWidht)/3, (charHeight));
 		posXBox = centerX - widthBox/2;
-		posYBox = (centerY) - heightBox/2;
+		posYBox = (centerY  + charHeight/3) - heightBox/2;
 		widthBox = charWidht/3;
 		heightBox = charHeight;
 	}else if (isDucking) {
@@ -1134,6 +1178,84 @@ void Character::updateShapesOnStatus(){
 		posYBox = (centerY  + charHeight/8) - heightBox/2;
 		widthBox = charWidht/3;
 		heightBox = charHeight*3/4;
+	}else if (isKickingAirHigh){
+		this->updateCShapesPosition(centerX, (centerY), charWidht/3, charHeight/2, this->isRightOriented, false, charWidht/4, charHeight/6);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/2;
+		float secX,secY;
+		widthBox2 = charWidht/4;
+		heightBox2 = charHeight/6;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/8)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/8)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isKickingAirLowRight){
+		this->updateCShapesPosition(centerX, (centerY + charHeight/4), charWidht/3, charHeight/2, this->isRightOriented, true, charWidht/4, charHeight/6);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY + charHeight/4) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/2;
+		float secX,secY;
+		widthBox2 = charWidht/4;
+		heightBox2 = charHeight/6;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (true){secY=(centerY+charHeight/4)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/4)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isKickingAirLowLeft){
+		this->updateCShapesPosition(centerX, (centerY + charHeight/4), charWidht/3, charHeight/2, this->isRightOriented, true, charWidht/4, charHeight/6);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY + charHeight/4) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/2;
+		float secX,secY;
+		widthBox2 = charWidht/4;
+		heightBox2 = charHeight/6;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (true){secY=(centerY+charHeight/4)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/4)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isAirPunchingRight){
+		this->updateCShapesPosition(centerX, (centerY + charHeight/4), charWidht/3, charHeight/2, this->isRightOriented, true, charWidht/4, charHeight/6);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY + charHeight/4) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/2;
+		float secX,secY;
+		widthBox2 = charWidht/4;
+		heightBox2 = charHeight/6;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (true){secY=(centerY+charHeight/4)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/4)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isAirPunching){
+		this->updateCShapesPosition(centerX, (centerY + charHeight/4), charWidht/3, charHeight/2, this->isRightOriented, true, charWidht/4, charHeight/6);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY + charHeight/4) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/2;
+		float secX,secY;
+		widthBox2 = charWidht/4;
+		heightBox2 = charHeight/6;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (true){secY=(centerY+charHeight/4)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/4)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isAirPunchingLeft){
+		this->updateCShapesPosition(centerX, (centerY + charHeight/4), charWidht/3, charHeight/2, this->isRightOriented, true, charWidht/4, charHeight/6);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY + charHeight/4) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/2;
+		float secX,secY;
+		widthBox2 = charWidht/4;
+		heightBox2 = charHeight/6;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (true){secY=(centerY+charHeight/4)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/4)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
 	}else{
 		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3,charHeight*3/4);
 		posXBox = centerX - widthBox/2;
@@ -1141,15 +1263,6 @@ void Character::updateShapesOnStatus(){
 		widthBox = charWidht/3;
 		heightBox = charHeight*3/4;
 	}
-
-	/*
-
-	bool isKickingAirHigh;
-	bool isKickingAirLowRight;
-	bool isKickingAirLowLeft;
-	bool isAirPunchingRight;
-	bool isAirPunching;
-	bool isAirPunchingLeft;*/
 }
 
 bool Character::getIsRightOriented(){

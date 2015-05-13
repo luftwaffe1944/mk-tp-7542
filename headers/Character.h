@@ -60,7 +60,12 @@ private:
 	bool isAirPunchingRight;
 	bool isAirPunching;
 	bool isAirPunchingLeft;
+
 	void fixOrientation();
+
+	bool isBeingHintStanceUp;
+	bool isBeingHintStanceDown;
+
 
 public:
 	static std::map<std::string,int> movesCounter;
@@ -120,6 +125,7 @@ public:
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
+	bool showBoxes = true;
 
 
 	float posXBox;

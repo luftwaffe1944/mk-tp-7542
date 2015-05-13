@@ -11,6 +11,7 @@
 #include <iostream>
 #include <map>
 #include "Collitionable.h"
+#include "CharacterManager.h"
 using namespace std;
 
 class CollitionManager {

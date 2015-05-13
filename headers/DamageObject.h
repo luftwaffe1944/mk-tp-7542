@@ -22,7 +22,7 @@ private:
 	bool isDestroy;
 	float energy;
 	string doMovement;
-
+	bool isWeapon;
 
 public:
 	DamageObject();
@@ -32,6 +32,10 @@ public:
 	void setDamage(float damage);
 	void setDOMovement(string movement);
 	string getDOMovement();
+	void setIsWeapon(bool isWeapon);
+	bool isCharacter();
+	void setAgain();
+	void setKill();
 };
 
 #endif /* CHARACTER_H_ */
