@@ -1091,9 +1091,9 @@ void Character::updateShapesOnStatus(){
 		posYBox2 = secY - heightBox2/2;
 
 	}else if (isDuckBlocking) {
-		this->updateCShapesPosition(centerX, (centerY), (charWidht)/3, (charHeight));
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/3), (charWidht)/3, (charHeight));
 		posXBox = centerX - widthBox/2;
-		posYBox = (centerY) - heightBox/2;
+		posYBox = (centerY  + charHeight/3) - heightBox/2;
 		widthBox = charWidht/3;
 		heightBox = charHeight;
 	}else if (isDucking) {
