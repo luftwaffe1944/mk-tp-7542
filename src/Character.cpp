@@ -1173,14 +1173,20 @@ void Character::updateShapesOnStatus(){
 		heightBox = charHeight*3/4;
 	}
 
-	/*
 
-	bool isKickingAirHigh;
-	bool isKickingAirLowRight;
-	bool isKickingAirLowLeft;
-	bool isAirPunchingRight;
-	bool isAirPunching;
-	bool isAirPunchingLeft;*/
+	if (isKickingAirHigh){
+
+	}else if (isKickingAirLowRight){
+
+	}else if (isKickingAirLowLeft){
+
+	}else if (isAirPunchingRight){
+
+	}else if (isAirPunching){
+
+	}else if (isAirPunchingLeft){
+
+	}
 }
 
 bool Character::getIsRightOriented(){
