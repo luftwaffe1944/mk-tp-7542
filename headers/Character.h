@@ -116,6 +116,11 @@ public:
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
+
+	float posXBox;
+	float posYBox;
+	float widthBox;
+	float heightBox;
 };
 
 #endif /* CHARACTER_H_ */

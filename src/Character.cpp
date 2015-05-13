@@ -152,10 +152,15 @@ void Character::draw() {
 			1, currentFrame,
 			renderer, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(), (!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
 
-	//draw box
+	//draw original sprite
     SDL_Rect outlineRect = { this->positionX, this->positionY, this->getWidth() * ratioX, this->height * ratioY };
     SDL_SetRenderDrawColor( renderer, 0x00, 0xFF, 0x00, 0xFF );
     SDL_RenderDrawRect( renderer, &outlineRect );
+
+	//draw box colisionale
+    SDL_Rect outlineRect2 = { this->posXBox, this->posYBox, this->widthBox, this->heightBox };
+    SDL_SetRenderDrawColor( renderer, 0xFF, 0x00, 0x00, 0xFF );
+    SDL_RenderDrawRect( renderer, &outlineRect2 );
 }
 
 bool Character::shouldMoveForward() {
@@ -926,6 +931,10 @@ void Character::updateShapesOnStatus(){
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
 	}else if (isKickingHigh){
 		this->updateCShapesPosition(centerX, centerY, charWidht, charHeight, this->isRightOriented, false, (charWidht)*11/10, (charHeight) *2/3 );
+			posXBox = centerX - charWidht * 11/10 / 2;
+			posYBox = centerY - charHeight * 2/3 / 2;
+			widthBox = charWidht * 11/10;
+			heightBox = charHeight * 2/3;
 	}else if (isKickingLow) {
 		this->updateCShapesPosition(centerX, centerY, charWidht, charHeight, this->isRightOriented, false, (charWidht)*3/4, charHeight / 3);
 	}else if (isKickingDuckHigh) {
