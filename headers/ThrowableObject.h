@@ -29,6 +29,7 @@ public:
 	void clean();
 	void setReleaser(Character* character);
 	void setReceiver(Character* character);
+	void getCNextPosition(float* nextPositionX, float* nextPositionY)
 
 private:
 	Character* releaser;

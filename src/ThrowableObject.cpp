@@ -12,6 +12,8 @@ ThrowableObject::ThrowableObject(const LoaderParams* pParams, float widthWindow)
 	this->posYsetReleaser = false;
 	this->widthWindow = widthWindow;
 	this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+	this->setCMoving(true);
+
 }
 
 ThrowableObject::~ThrowableObject() {
@@ -33,6 +35,11 @@ void ThrowableObject::draw() {
 	}
 }
 
+
+void ThrowableObject::getCNextPosition(float* nextPositionX, float* nextPositionY){
+	*nextPositionX = this->positionX + OBJECT_SPEED;
+	*nextPositionY = this->positionY;
+}
 
 void ThrowableObject::update() {
 
