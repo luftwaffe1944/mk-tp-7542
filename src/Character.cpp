@@ -953,35 +953,130 @@ void Character::updateShapesOnStatus(){
 	}else if (isJumpingLeft) {
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
 	}else if (isKickingHigh){
-		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3, charHeight*3/4, this->isRightOriented, false, (charWidht)*11/10, (charHeight) *2/3 );
-			posXBox = centerX - widthBox/2;
-			posYBox = (centerY  + charHeight/8) - heightBox/2;
-			widthBox = charWidht/3;
-			heightBox = charHeight*3/4;
-	}else if (isKickingLow) {
-		this->updateCShapesPosition(centerX, centerY, charWidht, charHeight, this->isRightOriented, false, (charWidht)*3/4, charHeight / 3);
-	}else if (isKickingDuckHigh) {
-		this->updateCShapesPosition(centerX, (centerY)+((charHeight)/4), charWidht, (charHeight)/2, this->isRightOriented, false, (charWidht)*3/4, ((charHeight)/2) *3/ 4);
-	}else if (isKickingDuckLow) {
-		this->updateCShapesPosition(centerX, (centerY)+((charHeight)/4), charWidht, (charHeight)/2, this->isRightOriented, false, (charWidht)*3/4, ((charHeight)/2) / 2);
-	}else if (isKickingSuper) {
-		this->updateCShapesPosition(centerX, centerY, charWidht, charHeight, this->isRightOriented, true, (charWidht)*3/4, (charHeight)/3 );
-	}else if (isUnderKick){
-		this->updateCShapesPosition(centerX, (centerY)+((charHeight)/4), charWidht, (charHeight)/2, this->isRightOriented, false, (charWidht)*2, (charHeight)/4);
-	}else if (isPunchingAnUppercut) {
-		this->updateCShapesPosition(centerX, (centerY)+((charHeight)/4), (charWidht)*2/3, (charHeight)/2, this->isRightOriented, false, (charWidht)/10, charHeight);
-	}else if (isPunchingLow) {
-		this->updateCShapesPosition(centerX, centerY, charWidht, charHeight, this->isRightOriented, true, (charWidht)/2, charHeight / 4);
-	}else if (isPunchingDuck) {
-		this->updateCShapesPosition(centerX, (centerY)+((charHeight)/4), charWidht, (charHeight)/2, this->isRightOriented, true, charWidht, charHeight / 6);
-	}else if (isPunchingHigh) {
-		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3, charHeight*3/4, this->isRightOriented, false, charWidht/12, charHeight/6);
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3, charHeight*3/4, this->isRightOriented, false, (charWidht)/4, (charHeight)/3 );
 		posXBox = centerX - widthBox/2;
 		posYBox = (centerY  + charHeight/8) - heightBox/2;
 		widthBox = charWidht/3;
 		heightBox = charHeight*3/4;
 		float secX,secY;
-		widthBox2 = charWidht/12;
+		widthBox2 = charWidht/4;
+		heightBox2 = charHeight/3;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/8)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/8)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isKickingLow) {
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3, charHeight*3/4, this->isRightOriented, false, (charWidht)/6, charHeight *2/ 5);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/8) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight*3/4;
+		float secX,secY;
+		widthBox2 = charWidht/6;
+		heightBox2 = charHeight*2/5;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/8)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/8)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isKickingDuckHigh) {
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/3), charWidht/3, (charHeight)/3, this->isRightOriented, false, (charWidht)/8, (charHeight)/3);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/3) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/3;
+		float secX,secY;
+		widthBox2 = charWidht/8;
+		heightBox2 = charHeight/3;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/3)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/3)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isKickingDuckLow) {
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/3), charWidht/3, (charHeight)/3, this->isRightOriented, true, (charWidht)/8, (charHeight)/3);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/3) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/3;
+		float secX,secY;
+		widthBox2 = charWidht/8;
+		heightBox2 = charHeight/3;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (true){secY=(centerY+charHeight/3)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/3)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isKickingSuper) {
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3, charHeight*3/4, this->isRightOriented, true, (charWidht)/4, (charHeight)/3 );
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/8) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight*3/4;
+		float secX,secY;
+		widthBox2 = charWidht/4;
+		heightBox2 = charHeight/3;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/8)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/8)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isUnderKick){
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/3) , charWidht/3, (charHeight)/3, this->isRightOriented, false, (charWidht)/3, (charHeight)/3);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/3) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/3;
+		float secX,secY;
+		widthBox2 = charWidht/3;
+		heightBox2 = charHeight/3;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/3)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/3)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isPunchingAnUppercut) {
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), (charWidht)/3, (charHeight)*3/4, this->isRightOriented, false, (charWidht)/9, charHeight/3);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/8) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight*3/4;
+		float secX,secY;
+		widthBox2 = charWidht/9;
+		heightBox2 = charHeight/3;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/8)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/8)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isPunchingLow) {
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3, charHeight*3/4, this->isRightOriented, false, (charWidht)/14, charHeight /3);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/8) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight*3/4;
+		float secX,secY;
+		widthBox2 = charWidht/14;
+		heightBox2 = charHeight/3;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/8)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/8)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isPunchingDuck) {
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/3), charWidht/3, (charHeight)/3, this->isRightOriented, false, charWidht/8, charHeight / 3);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/3) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/3;
+		float secX,secY;
+		widthBox2 = charWidht/8;
+		heightBox2 = charHeight/3;
+		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
+		if (false){secY=(centerY+charHeight/3)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/3)-(heightBox/2)+(heightBox2/2);}
+		posXBox2 = secX - widthBox2/2;
+		posYBox2 = secY - heightBox2/2;
+	}else if (isPunchingHigh) {
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3, charHeight*3/4, this->isRightOriented, false, charWidht/14, charHeight/6);
+		posXBox = centerX - widthBox/2;
+		posYBox = (centerY  + charHeight/8) - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight*3/4;
+		float secX,secY;
+		widthBox2 = charWidht/14;
 		heightBox2 = charHeight/6;
 		if (this->isRightOriented){secX =centerX+(widthBox/2)+(widthBox2/2);}else{secX=centerX-(widthBox/2)-(widthBox2/2);}
 		if (false){secY=(centerY+charHeight/8)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/8)-(heightBox/2)+(heightBox2/2);}
