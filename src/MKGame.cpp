@@ -123,7 +123,6 @@ void MKGame::draw() {
 vector<Collitionable*> convertVector(vector<Character*> oldVec){
 	vector<Collitionable*> newVec;
 	for (std::vector<Character*>::size_type i = 0; i != oldVec.size(); i++) {
-		oldVec[i]->setIsWeapon(false);
 		newVec.push_back((Collitionable*) oldVec[i]);
 		}
 	return newVec;
@@ -148,7 +147,15 @@ void MKGame::update() {
 	}
 
 	GameGUI* pgamegui = this->getGameGUI();
+	//metemos caracteres
 	vector<Collitionable*> collObjects = convertVector(this->getGameGUI()->getCharacters());
+	//metemos arrojables
+
+	Collitionable* arrojable1 = (Collitionable*) objectList[objectList.size()-2];
+	Collitionable* arrojable2 = (Collitionable*) objectList[objectList.size()-1];
+	collObjects.push_back(arrojable1);
+	collObjects.push_back(arrojable2);
+
 	CollitionManager::Instance()->solveCollitions(collObjects);
 
 }

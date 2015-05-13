@@ -89,6 +89,7 @@ void ThrowableObject::update() {
 			this->posYsetReleaser = false;
 		}
 	}
+	//this->updateCShapesPosition(centerX, (centerY  + charHeight/4), charWidht/3, charHeight/2);
 }
 
 void ThrowableObject::clean(){

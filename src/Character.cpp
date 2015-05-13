@@ -42,6 +42,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		// initializing movements statements
 		clearMovementsFlags();
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+		this->setIsWeapon(false);
 		//TODO: setear en false
 		this->fire = false;
 		gravity = 14.0f;
@@ -60,6 +61,7 @@ Character::Character(const LoaderParams* pParams) :
 		clearMovementsFlags();
 		//initializing shapes for colitions
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
+		this->setIsWeapon(false);
 		//TODO: setear en false
 		this->fire = false;
 		gravity = 14.0f;
