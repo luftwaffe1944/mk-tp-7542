@@ -917,8 +917,6 @@ void Character::updateShapesOnStatus(){
 
 	float centerY = this->getPositionY() / ratioY + (this->getPositionY() / ratioY / 2);
 
-	float centerY =  this->getPositionY() / ratioY + (this->getPositionY() / ratioY) * 0.5;
-
 
 	if (isJumping) {
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
