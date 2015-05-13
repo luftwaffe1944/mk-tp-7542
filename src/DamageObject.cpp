@@ -27,6 +27,14 @@ float DamageObject::getEnergy(){
 void DamageObject::setEnergy(float newEnergyValue){
 	this->energy = newEnergyValue;
 }
+void DamageObject::setAgain(){
+	this->energy = 1.0f;
+	this->isDestroy = false;
+}
+void DamageObject::setKill(){
+	this->energy = 0.0f;
+	this->isDestroy = true;
+}
 void DamageObject::setDamage(float damage){
 	this->energy = (this->energy - damage);
 	if (this->energy <= 0) {

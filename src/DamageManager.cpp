@@ -66,11 +66,19 @@ float DamageManager::getDamageToDo(DamageObject* obj){
 
 void DamageManager::solveDamage(DamageObject* firstObject, DamageObject* secondObject){
 
-	if ((this->IsObjectAttacking(firstObject)) &&  !(this->IsObjectBlocking(secondObject)) && !(this->IsObjectAttacking(secondObject))){
-		secondObject->setDamage(this->getDamageToDo(firstObject));
-	}
-	if ((this->IsObjectAttacking(secondObject)) &&  !(this->IsObjectBlocking(firstObject)) && !(this->IsObjectAttacking(firstObject))){
-		firstObject->setDamage(this->getDamageToDo(secondObject));
+	if (firstObject->isCharacter() && secondObject->isCharacter()){
+		if ((this->IsObjectAttacking(firstObject)) &&  !(this->IsObjectBlocking(secondObject)) && !(this->IsObjectAttacking(secondObject))){
+			secondObject->setDamage(this->getDamageToDo(firstObject));
+		}
+		if ((this->IsObjectAttacking(secondObject)) &&  !(this->IsObjectBlocking(firstObject)) && !(this->IsObjectAttacking(firstObject))){
+			firstObject->setDamage(this->getDamageToDo(secondObject));
+		}
+	}else if (!firstObject->isCharacter()){
+		firstObject->setDamage(1.0f);
+		secondObject->setDamage(0.02f);
+	}else if (!secondObject->isCharacter()) {
+		firstObject->setDamage(0.02f);
+		secondObject->setDamage(1.0f);
 	}
 }
 

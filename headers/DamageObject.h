@@ -34,6 +34,8 @@ public:
 	string getDOMovement();
 	void setIsWeapon(bool isWeapon);
 	bool isCharacter();
+	void setAgain();
+	void setKill();
 };
 
 #endif /* CHARACTER_H_ */
