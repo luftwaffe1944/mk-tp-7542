@@ -91,5 +91,115 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		character1->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 	}
 
+	//DON'T OVERLAP LOGIC FOR CHARACTER 2
+	//FOR WALKING
+	if ( character2->getMovement() == WALKING_LEFT_MOVEMENT && !character2->getIsRightOriented() ) {
+		// stop walking
+		character1->setPositionX(character1->getPositionX() - FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
+		character2->setPositionX(character1->posXBox);
+	}
+
+	if (character2->getMovement() == WALKING_RIGHT_MOVEMENT && character2->getIsRightOriented()) {
+		character1->setPositionX(character1->getPositionX() + FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
+		character2->setPositionX(character1->posXBox - character1->widthBox*2);
+	}
+
+
+	//FOR JUMPING
+	if ( character2->getMovement() == JUMPING_LEFT_MOVEMENT && !character2->getIsRightOriented() ) {
+		//TODO: review if the jump is too close
+		if ( ((character1->posYBox - character2->posYBox) < 30*character2->getRatioY())) {
+			character2->setPositionX(character1->posXBox);
+		} else {
+			character2->setPositionX(character1->posXBox - character1->widthBox*2);
+		}
+	}
+
+	if ( character2->getMovement() == JUMPING_RIGHT_MOVEMENT && character2->getIsRightOriented() ) {
+		if ( ((character1->posYBox - character2->posYBox) < 30*character2->getRatioY())) {
+			character2->setPositionX(character1->posXBox);
+		} else {
+			character2->setPositionX(character1->posXBox);
+		}
+	}
+
+
+	//FOR AIR KICKING
+	if ( character2->getIsKickingAirLowLeft() && !character2->getIsRightOriented() ) {
+		//TODO: review if the jump is too close
+		character2->setPositionX(character1->posXBox);
+	}
+
+	if ( character2->getIsKickingAirLowRight() && character2->getIsRightOriented() ) {
+		character2->setPositionX(character1->posXBox - character1->widthBox*2);
+	}
+
+
+	//FOR AIR PUNCHING
+	if ( character2->getIsAirPunchingLeft() && !character2->getIsRightOriented() ) {
+		//TODO: review if the jump is too close
+		character2->setPositionX(character1->posXBox);
+	}
+
+	if ( character2->getIsAirPunchingRight() && character2->getIsRightOriented() ) {
+		character2->setPositionX(character1->posXBox - character1->widthBox*2);
+	}
+
+	//----------------------------------------------------------------------------------------------
+	//DON'T OVERLAP LOGIC FOR CHARACTER 1
+	//FOR WALKING
+	if ( character1->getMovement() == WALKING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
+		// stop walking
+		character2->setPositionX(character2->getPositionX() - FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
+		character1->setPositionX(character2->posXBox);
+	}
+
+	if (character1->getMovement() == WALKING_RIGHT_MOVEMENT && character1->getIsRightOriented()) {
+		character2->setPositionX(character2->getPositionX() + FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
+		character1->setPositionX(character2->posXBox - character2->widthBox*2);
+	}
+
+
+	//FOR JUMPING
+	if ( character1->getMovement() == JUMPING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
+		//TODO: review if the jump is too close
+		if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
+			character1->setPositionX(character2->posXBox);
+		} else {
+			character1->setPositionX(character2->posXBox - character2->widthBox*2);
+		}
+	}
+
+	if ( character1->getMovement() == JUMPING_RIGHT_MOVEMENT && character1->getIsRightOriented() ) {
+		if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
+			character1->setPositionX(character2->posXBox);
+		} else {
+			character1->setPositionX(character2->posXBox);
+		}
+	}
+
+
+	//FOR AIR KICKING
+	if ( character1->getIsKickingAirLowLeft() && !character1->getIsRightOriented() ) {
+		//TODO: review if the jump is too close
+		character1->setPositionX(character2->posXBox);
+	}
+
+	if ( character1->getIsKickingAirLowRight() && character1->getIsRightOriented() ) {
+		character1->setPositionX(character2->posXBox - character2->widthBox*2);
+	}
+
+
+	//FOR AIR PUNCHING
+	if ( character1->getIsAirPunchingLeft() && !character1->getIsRightOriented() ) {
+		//TODO: review if the jump is too close
+		character1->setPositionX(character2->posXBox);
+	}
+
+	if ( character1->getIsAirPunchingRight() && character1->getIsRightOriented() ) {
+		character1->setPositionX(character2->posXBox - character2->widthBox*2);
+	}
+
+
 }
 

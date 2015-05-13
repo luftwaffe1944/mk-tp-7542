@@ -34,6 +34,7 @@ public:
 	void setPositionY(float posY);
 	float getPositionY();
 	float getRatioX();
+	float getRatioY();
 
 protected:
 	const LoaderParams* pParams;

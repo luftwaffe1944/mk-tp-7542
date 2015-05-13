@@ -149,6 +149,11 @@ public:
 	float gravity;
 	float jumpVel;
 
+	bool getIsKickingAirLowRight();
+	bool getIsKickingAirLowLeft();
+	bool getIsAirPunchingRight();
+	bool getIsAirPunchingLeft();
+
 };
 
 #endif /* CHARACTER_H_ */

@@ -1402,3 +1402,16 @@ void Character::setFixPosXStandingCharacter( int orientation) {
 void Character::fixPosXStandingCharacter() {
 	positionX = positionX + FRONTAL_LAYER_SPEED * ratioX * this->orientationPosXFix *-1;
 }
+
+bool Character::getIsKickingAirLowRight() {
+	return this->isKickingAirLowRight;
+}
+bool Character::getIsKickingAirLowLeft() {
+	return this->isKickingAirLowLeft;
+}
+bool Character::getIsAirPunchingRight() {
+	return this->isAirPunchingRight;
+}
+bool Character::getIsAirPunchingLeft() {
+	return this->isAirPunchingLeft;
+}

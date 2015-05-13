@@ -221,15 +221,14 @@ void changeToAltColor(SDL_Surface* pTempSurface, AlternativeColor* altColor) {
 	for (int i = 0; i < pTempSurface->w; i++) {
 		for (int j=0; j < pTempSurface->h; j++) {
 			SDL_GetRGBA(getpixel(pTempSurface, i, j), pTempSurface->format, &rgb.r, &rgb.g, &rgb.b, &a);
-            if (a == 0) {
-                continue;
+            if (a != 0) {
+				newHsv = rgb2hsv(rgb);
+				if ((altColor->getInitialH() <= newHsv.h) && (newHsv.h <= altColor->getFinalH())) {
+					newHsv.h += altColor->getShift();
+				}
+				rgb = hsv2rgb(newHsv);
+				putpixel(pTempSurface, i, j, SDL_MapRGB(pTempSurface->format, rgb.r, rgb.g, rgb.b));
             }
-			newHsv = rgb2hsv(rgb);
-			if ((altColor->getInitialH() <= newHsv.h) && (newHsv.h <= altColor->getFinalH())) {
-				newHsv.h += altColor->getShift();
-			}
-			rgb = hsv2rgb(newHsv);
-			putpixel(pTempSurface, i, j, SDL_MapRGB(pTempSurface->format, rgb.r, rgb.g, rgb.b));
 		}
 	}
 }
