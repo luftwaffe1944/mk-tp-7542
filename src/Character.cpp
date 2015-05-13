@@ -916,11 +916,11 @@ void Character::updateShapesOnStatus(){
 
 //		void updateCShapesPosition(float X, float Y, float W, float H, bool rightOriented, bool secShapeTop, float secShapeW, float secShapeH);
 
-	float charWidht = (this->getWidth());
-	float charHeight = (this->getPositionY() / ratioY);
-	float centerX = this->getPositionX() / ratioX + (this->width) / 2;
+	float charWidht = this->getWidth();
+	float charHeight = (this->height);
+	float centerX = this->getPositionX() + this->width * ratioX /2;
 
-	float centerY = this->getPositionY() / ratioY + (this->getPositionY() / ratioY / 2);
+	float centerY = this->getPositionY() + this->height * ratioY /2;
 
 
 	if (isJumping) {
@@ -931,10 +931,10 @@ void Character::updateShapesOnStatus(){
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
 	}else if (isKickingHigh){
 		this->updateCShapesPosition(centerX, centerY, charWidht, charHeight, this->isRightOriented, false, (charWidht)*11/10, (charHeight) *2/3 );
-			posXBox = centerX - charWidht * 11/10 / 2;
-			posYBox = centerY - charHeight * 2/3 / 2;
-			widthBox = charWidht * 11/10;
-			heightBox = charHeight * 2/3;
+			posXBox = centerX;
+			posYBox = centerY;
+			widthBox = 20;
+			heightBox = 20;
 	}else if (isKickingLow) {
 		this->updateCShapesPosition(centerX, centerY, charWidht, charHeight, this->isRightOriented, false, (charWidht)*3/4, charHeight / 3);
 	}else if (isKickingDuckHigh) {
