@@ -151,6 +151,11 @@ void Character::draw() {
 			(int) positionX, (int) positionY, width * ratioX, height * ratioY,
 			1, currentFrame,
 			renderer, currentSprite->getSpriteWidth(), currentSprite->getSpriteHeight(), (!isRightOriented)? SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
+
+	//draw box
+    SDL_Rect outlineRect = { this->positionX, this->positionY, this->getWidth() * ratioX, this->height * ratioY };
+    SDL_SetRenderDrawColor( renderer, 0x00, 0xFF, 0x00, 0xFF );
+    SDL_RenderDrawRect( renderer, &outlineRect );
 }
 
 bool Character::shouldMoveForward() {
@@ -909,7 +914,7 @@ void Character::updateShapesOnStatus(){
 	float charWidht = this->width * ratioX;
 	float charHeight = this->height * ratioY;
 	float centerX = this->getPositionX() / ratioX + (this->width) / 2;
-	float centerY = this->getPositionY() / ratioY + (this->height) / 2;
+	float centerY = this->getPositionY() / ratioY + (this->getPositionY() / ratioY / 2);
 
 	if (isJumping) {
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
