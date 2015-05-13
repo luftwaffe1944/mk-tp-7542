@@ -27,7 +27,7 @@ void ThrowableObject::setReleaser(Character* releaser) {
 
 void ThrowableObject::draw() {
 	if (this->releaser->fire) {
-		SDLObjectGUI::draw();
+	SDLObjectGUI::draw();
 	}
 }
 

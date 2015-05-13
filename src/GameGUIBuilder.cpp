@@ -417,6 +417,8 @@ Fight* jsonGetFight(Json::Value root) {
 	return fight;
 }
 
+
+
 void jsonGetJoysticks(Json::Value root) {
 
 	FILE_LOG(logDEBUG) << "JOYSTICKS CONFIGURATION";
@@ -425,29 +427,50 @@ void jsonGetJoysticks(Json::Value root) {
 	FILE_LOG(logDEBUG) << "JSON - Number of Joysticks to process: " << array.size();
 
 	vector<map <string,int> > joystickActionButtons;
-	string low_punch;
-	string high_punch;
-	string low_kick;
-	string high_kick;
-	string block;
-	string fire;
+
 	for (unsigned int joyNum = 0; joyNum < array.size(); ++joyNum) {
 
-		low_punch = array[joyNum].get(JSON_KEY_LOW_PUNCH, "").asString();
-		high_punch = array[joyNum].get(JSON_KEY_HIGH_PUNCH, "").asString();
-		low_kick = array[joyNum].get(JSON_KEY_LOW_KICK, "").asString();
-		high_kick = array[joyNum].get(JSON_KEY_HIGH_KICK, "").asString();
-		block = array[joyNum].get(JSON_KEY_BLOCK, "").asString();
-		fire = array[joyNum].get(JSON_KEY_FIRE, "").asString();
+		string low_punch = array[joyNum].get(JSON_KEY_LOW_PUNCH, "").asString();
+		string high_punch = array[joyNum].get(JSON_KEY_HIGH_PUNCH, "").asString();
+		string low_kick = array[joyNum].get(JSON_KEY_LOW_KICK, "").asString();
+		string high_kick = array[joyNum].get(JSON_KEY_HIGH_KICK, "").asString();
+		string block = array[joyNum].get(JSON_KEY_BLOCK, "").asString();
+		string fire = array[joyNum].get(JSON_KEY_FIRE, "").asString();
 
-		InputControl::Instance()->setActionButton(joyNum, LOW_PUNCH, atoi(low_punch.c_str()) );
-		InputControl::Instance()->setActionButton(joyNum, HIGH_PUNCH, atoi(high_punch.c_str()) );
-		InputControl::Instance()->setActionButton(joyNum, LOW_KICK, atoi(low_kick.c_str()) );
-		InputControl::Instance()->setActionButton(joyNum, HIGH_KICK, atoi(high_kick.c_str()) );
-		InputControl::Instance()->setActionButton(joyNum, BLOCK, atoi(block.c_str()) );
-		InputControl::Instance()->setActionButton(joyNum, FIRE, atoi(fire.c_str()) );
-}
+		int intLow_punch = atoi(low_punch.c_str()) ;
+		int intHigh_punch = atoi(high_punch.c_str());
+		int intLow_kick = atoi(low_kick.c_str()) ;
+		int intHigh_kick = atoi(high_kick.c_str()) ;
+		int intBlock = atoi(block.c_str()) ;
+		int intFire = atoi(fire.c_str()) ;
 
+		map<int,bool> repeatedButtonsValidator;
+
+		repeatedButtonsValidator[intLow_punch];
+		repeatedButtonsValidator[intHigh_punch];
+		repeatedButtonsValidator[intLow_kick];
+		repeatedButtonsValidator[intHigh_kick];
+		repeatedButtonsValidator[intBlock];
+		repeatedButtonsValidator[intFire];
+
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Piña baja: " << intLow_punch;
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Piña alta: " << intHigh_punch;
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Patada baja: " << intLow_kick;
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Patada alta: " << intHigh_kick;
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Bloqueo: " << intBlock;
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Disparo: " << intFire;
+
+		if ( repeatedButtonsValidator.size() < 6 || intLow_punch < 0 || intHigh_punch < 0 || intHigh_kick < 0 || intLow_kick < 0 || intBlock < 0 || intFire < 0 ) {
+			InputControl::Instance()->loadDefaultButtons(joyNum);
+		} else {
+			InputControl::Instance()->setActionButton(joyNum, LOW_PUNCH, intLow_punch );
+			InputControl::Instance()->setActionButton(joyNum, HIGH_PUNCH, intHigh_punch );
+			InputControl::Instance()->setActionButton(joyNum, LOW_KICK, intLow_kick );
+			InputControl::Instance()->setActionButton(joyNum, HIGH_KICK, intHigh_kick );
+			InputControl::Instance()->setActionButton(joyNum, BLOCK, intBlock );
+			InputControl::Instance()->setActionButton(joyNum, FIRE, intFire );
+		}
+	}
 	return;
 }
 

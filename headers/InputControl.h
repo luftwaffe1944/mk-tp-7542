@@ -56,6 +56,7 @@ private:
 	InputCommand controlOption;
 	std::vector<InputCommand> playerMove;
 
+	void validateButtonsRange(int joyNum, int joyButtonCount);
 	bool someJoyKickButtonPressed(int joy);
 	bool someJoyPunchButtonPressed(int joy);
 public:
@@ -86,6 +87,7 @@ public:
 	int getActionButton(int joy, std::string action);
 	InputCommand getPlayerMove(int joy);
 	void setPlayerMove(int joy, InputCommand action);
+	void loadDefaultButtons(int joyNum);
 };
 
 #endif /* INPUTCONTROL_H_ */
