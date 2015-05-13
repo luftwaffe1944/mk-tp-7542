@@ -115,6 +115,14 @@ void GameInfo::time() {
 void GameInfo::update() {
 	animation();
 	time();
+	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f) {
+		if (this->characters[0]->getEnergy() <= 0.0f) {
+			FILE_LOG(logDEBUG) << "RESULT: " << this->characters[0]->getName() << "Wins";
+		} else {
+			FILE_LOG(logDEBUG) << "RESULT: " << this->characters[0]->getName() << " Wins";
+		}
+		MKGame::Instance()->setOnReset();
+	}
 }
 
 void GameInfo::clean() {

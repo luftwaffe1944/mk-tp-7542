@@ -172,13 +172,13 @@ bool Character::shouldMoveForward() {
 }
 
 bool Character::reachedWindowLeftLimit(){
-	if (this->getPosXUL() < WINDOW_MARGIN -1) return true;
+	if (this->getPosXUL() < WINDOW_MARGIN -15) return true;
 	return false;
 }
 
 bool Character::reachedWindowRightLimit(){
 	float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
-	if ( ( windowWidth - this->getPosXUL() - this->width ) < WINDOW_MARGIN -1) return true;
+	if ( ( windowWidth - this->getPosXUL() - this->width ) < WINDOW_MARGIN -15) return true;
 	return false;
 }
 
