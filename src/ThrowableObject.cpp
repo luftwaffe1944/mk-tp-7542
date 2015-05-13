@@ -32,10 +32,16 @@ void ThrowableObject::setReleaser(Character* releaser) {
 
 void ThrowableObject::draw() {
 	if (this->releaser->fire) {
-		SDLObjectGUI::draw();
 
+		float auxX = this->positionX;
+		float auxY = this->positionY;
+		this->positionX = this->positionX / ratioX;
+		this->positionY = this->positionY / ratioY;
+		SDLObjectGUI::draw();
+		this->positionX = auxX;
+		this->positionY = auxY;
 		//draw box colisionale
-		SDL_Rect outlineRect2 = { this->positionX * ratioX, positionY * ratioY, this->width * ratioX, this->height * ratioY };
+		SDL_Rect outlineRect2 = { this->positionX, positionY, this->width * ratioX, this->height * ratioY };
 		SDL_SetRenderDrawColor( MKGame::Instance()->getRenderer(), 0xFF, 0x00, 0x00, 0xFF );
 		SDL_RenderDrawRect( MKGame::Instance()->getRenderer(), &outlineRect2 );
 	}
@@ -51,6 +57,12 @@ void ThrowableObject::update() {
 
 	if (this->releaser->fire) {
 
+		float charWidht = this->releaser->getWidth()*ratioX;
+		float charHeight = (this->releaser->getHeight())*ratioY;
+		float centerX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX / 2;
+		float centerY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY / 2;
+
+
 		//orientacion del que dispara
 		this->playerIsRightOriented = this->releaser->getIsRightOriented();
 
@@ -62,10 +74,10 @@ void ThrowableObject::update() {
 
 		if (!this->posXSetReleaser) {
 			if (this->playerIsRightOriented) {
-				this->positionX = posXCharacter + centerWidthCharacter + 10;
+				this->positionX = centerX + 10;
 			}
 			else {
-				this->positionX = posXCharacter + centerWidthCharacter - 10;
+				this->positionX = centerX - 10;
 			}
 
 			this->posXSetReleaser = true;
@@ -73,12 +85,12 @@ void ThrowableObject::update() {
 
 		}
 		if(!this->posYsetReleaser) {
-			this->positionY = posYCharacter + centerHeightCharacter;
+			this->positionY = centerY;
 			this->posYsetReleaser = true;
 			cout << "Y salida: " << this->positionY << " ";
 		}
 
-
+		/*
 
 		bool endBoom = false;
 		//si esta mirando para la derecha
@@ -108,9 +120,16 @@ void ThrowableObject::update() {
 			this->posXSetReleaser = false;
 			this->posYsetReleaser = false;
 		}
+		*/
+		this->positionX += OBJECT_SPEED;
+		if (this->positionX / ratioX > this->widthWindow) {
+			this->releaser->fire = false;
+			this->posXSetReleaser = false;
+			this->posYsetReleaser = false;
+		}
 		cout << "X Actual: " << this->getPositionX() << endl;
 		//cout << "Y: " << this->positionY << " " << this->receiver->getPositionY() << endl;
-		this->updateCShapesPosition(this->positionX * ratioX, this->positionY * ratioY, this->width * ratioX, this->height * ratioY);
+		this->updateCShapesPosition(this->positionX, this->positionY, this->width * ratioX, this->height * ratioY);
 	}
 	
 }
