@@ -408,10 +408,10 @@ Fight* jsonGetFight(Json::Value root) {
 	}
 
 	fighterOne->setPlayerNumber("1");
-	fighterOne->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - fighterOne->getWidth() * fighterOne->getRatioX()/2);
+	fighterOne->setPositionX(25);
 	fight->setFighterOne(fighterOne);
 	fighterTwo->setPlayerNumber("2");
-	fighterTwo->setPositionX((GameGUI::getInstance()->getWindow()->widthPx / 4)*3 -  fighterTwo->getWidth() * fighterTwo->getRatioX()/2);
+	fighterTwo->setPositionX(70);
 	fight->setFighterTwo(fighterTwo);
 
 	return fight;

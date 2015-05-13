@@ -23,6 +23,8 @@ using namespace std;
 
 float gravity = 14.0f;
 float jumpVel = 60.0f;
+float jumpVelFalling = 40.0f;
+float jumpVelFallingUpper = 50.0f;
 
 std::map<std::string,int> Character::movesCounter;
 
@@ -115,6 +117,13 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
 	Sprite* spriteBeingHintStanceDown = new Sprite(this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX, characterPath+BEING_HINT_STANCE_DOWN_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
+	Sprite* spriteBeingHintFallingUnderKick = new Sprite(this->name+this->playerNumber+BEING_HINT_FALLING_UNDER_KICK_SUFFIX, characterPath+BEING_HINT_FALLING_UNDER_KICK_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 11, this->isAltPlayer, this->altColor);
+	Sprite* spriteHintFlying = new Sprite(this->name+this->playerNumber+HINT_FLYING_SUFFIX, characterPath+HINT_FLYING_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
+	Sprite* spriteGetUp = new Sprite(this->name+this->playerNumber+GET_UP_SUFFIX, characterPath+GET_UP_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7, this->isAltPlayer, this->altColor);
+
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+STANCE_SUFFIX, spriteStance));
@@ -138,6 +147,9 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+AIR_PUNCH_SUFFIX, spriteAirPunch));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_STANCE_UP_SUFFIX, spriteBeingHintStanceUp));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX, spriteBeingHintStanceDown));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_FALLING_UNDER_KICK_SUFFIX, spriteBeingHintFallingUnderKick));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HINT_FLYING_SUFFIX, spriteHintFlying));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+GET_UP_SUFFIX, spriteGetUp));
 	return true;
 }
 
@@ -165,7 +177,8 @@ void Character::draw() {
 
 bool Character::shouldMoveForward() {
 	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
-			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))  ) {
+			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))
+			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying) {
 		return true;
 	} else {
 		return false;
@@ -201,12 +214,39 @@ void Character::update() {
 	else if (isBeingHintStanceDown){
 		completeMovement();
 	}
-
+	else if(isBeingHintFallingUnderKick){
+		completeMovement();
+	}
+	else if(isHintFlying){
+		flyFalling();
+	}
+	else if(isHintFlyingUpper){
+		flyFallingUpper();
+	}
+	else if(isGettingUp){
+		completeMovement();
+	}
+	else if (getMovement() == HINT_FLYING_MOVEMENT){
+		setCurrentSprite();
+		flyFalling();
+	}
+	else if (getMovement() == HINT_FLYING_UPPER_MOVEMENT){
+		setCurrentSprite();
+		flyFallingUpper();
+	}
+	else if (getMovement() == BEING_HINT_FALLING_UNDER_KICK_MOVEMENT){
+		setCurrentSprite();
+		completeMovement();
+	}
 	else if (getMovement() == BEING_HINT_STANCE_UP_MOVEMENT){
 		setCurrentSprite();
 		completeMovement();
 	}
 	else if (getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT){
+		setCurrentSprite();
+		completeMovement();
+	}
+	else if (getMovement() == GET_UP_MOVEMENT){
 		setCurrentSprite();
 		completeMovement();
 	}
@@ -467,6 +507,9 @@ void Character::clearMovementsFlags(){
 	isKickingSuper = false;
 	isBeingHintStanceUp = false;
 	isBeingHintStanceDown = false;
+	isBeingHintFallingUnderKick = false;
+	isHintFlying = false;
+	isGettingUp = false;
 }
 
 void Character::jump() {
@@ -595,6 +638,42 @@ void Character::jumpRight() {
 		isJumpingRight = false;
 		jumpVel = 60.0f;
 		this->setMovement(STANCE);
+		this->positionY = yGround;
+		refreshFrames();
+	}
+}
+
+void Character::flyFalling() {
+	isHintFlying = true;
+	positionY = positionY - jumpVelFalling;
+	jumpVelFalling -= gravity;
+	if (!this->reachedWindowRightLimit()) {
+		positionX = positionX + (6 * ratioX);
+	}
+	if (this->isTouchingGround(positionY)) {
+		isHintFlying = false;
+		jumpVelFalling = 40.0f;
+		this->setMovement(GET_UP_MOVEMENT);
+		this->setCurrentSprite();
+		completeMovement();
+		this->positionY = yGround;
+		refreshFrames();
+	}
+}
+
+void Character::flyFallingUpper() {
+	isHintFlyingUpper = true;
+	positionY = positionY - jumpVel;
+	jumpVel -= gravity;
+	if (!this->reachedWindowRightLimit()) {
+		positionX = positionX + (2 * ratioX);
+	}
+	if (this->isTouchingGround(positionY)) {
+		isHintFlyingUpper = false;
+		jumpVel = 60.0f;
+		this->setMovement(GET_UP_MOVEMENT);
+		this->setCurrentSprite();
+		completeMovement();
 		this->positionY = yGround;
 		refreshFrames();
 	}
@@ -852,6 +931,18 @@ void Character::setCurrentSprite(){
 		} else if (this->getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+BEING_HINT_STANCE_DOWN_SUFFIX];
 
+		} else if (this->getMovement() == BEING_HINT_FALLING_UNDER_KICK_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+BEING_HINT_FALLING_UNDER_KICK_SUFFIX];
+
+		} else if (this->getMovement() == HINT_FLYING_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+HINT_FLYING_SUFFIX];
+
+		} else if (this->getMovement() == HINT_FLYING_UPPER_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+HINT_FLYING_SUFFIX];
+
+		} else if (this->getMovement() == GET_UP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+GET_UP_SUFFIX];
+
 		} else{
 			//TODO: review
 		}
@@ -896,6 +987,18 @@ void Character::setMoveFlag(bool trueOrFalse){
 
 	} else if (this->getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT) {
 		isBeingHintStanceDown = trueOrFalse;
+
+	} else if (this->getMovement() == BEING_HINT_FALLING_UNDER_KICK_MOVEMENT) {
+		isBeingHintFallingUnderKick = trueOrFalse;
+
+	} else if (this->getMovement() == HINT_FLYING_MOVEMENT) {
+		isHintFlying = trueOrFalse;
+
+	} else if (this->getMovement() == HINT_FLYING_UPPER_MOVEMENT) {
+		isHintFlyingUpper = trueOrFalse;
+
+	} else if (this->getMovement() == GET_UP_MOVEMENT) {
+		isGettingUp = trueOrFalse;
 
 	} else {
 		//TODO: review

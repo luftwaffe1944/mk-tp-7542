@@ -61,6 +61,10 @@ private:
 	bool isAirPunchingLeft;
 	bool isBeingHintStanceUp;
 	bool isBeingHintStanceDown;
+	bool isBeingHintFallingUnderKick;
+	bool isGettingUp;
+	bool isHintFlying;
+	bool isHintFlyingUpper;
 
 public:
 	static std::map<std::string,int> movesCounter;
@@ -95,6 +99,8 @@ public:
 	void clearMovementsFlags();
 	bool isMovingRight();
 	bool isMovingLeft();
+	void flyFalling();
+	void flyFallingUpper();
 
 	virtual void getCNextPosition(float* nextPositionX, float* nextPositionY); //redefinir virtual
 
