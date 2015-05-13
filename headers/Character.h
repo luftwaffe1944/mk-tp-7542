@@ -131,7 +131,7 @@ public:
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
-	bool showBoxes = true;
+	bool showBoxes = false;
 
 
 	float posXBox;
