@@ -22,13 +22,15 @@
 
 class ThrowableObject : public SDLObjectGUI, public Collitionable {
 public:
-	ThrowableObject(const LoaderParams* pParams);
+	ThrowableObject(const LoaderParams* pParams, float widthWindow);
 	virtual ~ThrowableObject();
 	void update();
 	void draw();
 	void clean();
 	void setReleaser(Character* character);
 	void setReceiver(Character* character);
+	void getCNextPosition(float* nextPositionX, float* nextPositionY);
+	SDL_Renderer* render;
 
 private:
 	Character* releaser;
@@ -36,6 +38,8 @@ private:
 	bool playerIsRightOriented;
 	bool posXSetReleaser;
 	bool posYsetReleaser;
+
+	float widthWindow;
 };
 
 #endif /* THROWABLEOBJECT_H_ */

@@ -16,6 +16,7 @@ using namespace std;
 DamageObject::DamageObject(){
 	this->isDestroy = false;
 	this->energy = 1.0f;
+	this->isWeapon=true;
 }
 
 DamageObject::~DamageObject(){}
@@ -26,10 +27,19 @@ float DamageObject::getEnergy(){
 void DamageObject::setEnergy(float newEnergyValue){
 	this->energy = newEnergyValue;
 }
+void DamageObject::setAgain(){
+	this->energy = 1.0f;
+	this->isDestroy = false;
+}
+void DamageObject::setKill(){
+	this->energy = 0.0f;
+	this->isDestroy = true;
+}
 void DamageObject::setDamage(float damage){
 	this->energy = (this->energy - damage);
 	if (this->energy <= 0) {
 		this->isDestroy = true;
+		energy=0;
 	}
 }
 void DamageObject::setDOMovement(string movement){

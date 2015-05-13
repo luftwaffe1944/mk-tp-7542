@@ -48,5 +48,6 @@ protected:
 	int currentRow;
 	int currentFrame;
 	std::string textureID;
+	SDL_Renderer* render;
 };
 #endif /* SDLOBJECTGUI_H_ */

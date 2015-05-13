@@ -39,6 +39,7 @@ bool SDLObjectGUI::load() {
 }
 
 bool SDLObjectGUI::load(SDL_Renderer* render) {
+	this->render = render;
 	cout << textureID << endl;
 	return (TextureManager::Instance()->load(this->imagePath, textureID,
 			MKGame::Instance()->getRenderer()));

@@ -25,6 +25,7 @@ using namespace std;
 class Character : public SDLObjectGUI, public Collitionable {
 private:
 	Sprite* currentSprite;
+	int orientationPosXFix = 0;
 	std::string name;
 	int zindex;
 	bool isRightOriented;
@@ -59,12 +60,16 @@ private:
 	bool isAirPunchingRight;
 	bool isAirPunching;
 	bool isAirPunchingLeft;
+
+	void fixOrientation();
+
 	bool isBeingHintStanceUp;
 	bool isBeingHintStanceDown;
 	bool isBeingHintFallingUnderKick;
 	bool isGettingUp;
 	bool isHintFlying;
 	bool isHintFlyingUpper;
+
 
 public:
 	static std::map<std::string,int> movesCounter;
@@ -101,6 +106,8 @@ public:
 	bool isMovingLeft();
 	void flyFalling();
 	void flyFallingUpper();
+	void fixPosXStandingCharacter();
+	void setFixPosXStandingCharacter( int orientation);
 
 	virtual void getCNextPosition(float* nextPositionX, float* nextPositionY); //redefinir virtual
 
@@ -124,9 +131,24 @@ public:
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
+	bool showBoxes = true;
+
+
+	float posXBox;
+	float posYBox;
+	float widthBox;
+	float heightBox;
+	float posXBox2;
+	float posYBox2;
+	float widthBox2;
+	float heightBox2;
 
 	bool fire;
 	int getHeight();
+
+	float gravity;
+	float jumpVel;
+
 };
 
 #endif /* CHARACTER_H_ */
