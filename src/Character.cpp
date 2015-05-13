@@ -948,9 +948,17 @@ void Character::updateShapesOnStatus(){
 		widthBox = charWidht/3;
 		heightBox = charHeight/2;
 	}else if (isJumpingRight) {
-		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/4), charWidht/3, charHeight/2);
+		posXBox = centerX - widthBox/2;
+		posYBox = centerY - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/2;
 	}else if (isJumpingLeft) {
-		//this->updateCShapesPosition(this->positionX, this->positionY, this->width, (this->height )/2);
+		this->updateCShapesPosition(centerX, (centerY  + charHeight/4), charWidht/3, charHeight/2);
+		posXBox = centerX - widthBox/2;
+		posYBox = centerY - heightBox/2;
+		widthBox = charWidht/3;
+		heightBox = charHeight/2;
 	}else if (isKickingHigh){
 		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3, charHeight*3/4, this->isRightOriented, false, (charWidht)/4, (charHeight)/3 );
 		posXBox = centerX - widthBox/2;
