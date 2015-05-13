@@ -461,6 +461,7 @@ void jsonGetJoysticks(Json::Value root) {
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Disparo: " << intFire;
 
 		if ( repeatedButtonsValidator.size() < 6 || intLow_punch < 0 || intHigh_punch < 0 || intHigh_kick < 0 || intLow_kick < 0 || intBlock < 0 || intFire < 0 ) {
+			FILE_LOG(logERROR) << "Bad buttons configuration in joystick " << joyNum << ", default configuration loaded";
 			InputControl::Instance()->loadDefaultButtons(joyNum);
 		} else {
 			InputControl::Instance()->setActionButton(joyNum, LOW_PUNCH, intLow_punch );
@@ -655,6 +656,9 @@ GameGUI* GameGUIBuilder::createDefault() {
 	createGameInfo(ptrWindow, characters, ratioX, ratioY);
 
 	createThrowableObject(characters, ratioX, ratioY);
+
+	InputControl::Instance()->loadDefaultButtons(0);
+	InputControl::Instance()->loadDefaultButtons(1);
 
 	FILE_LOG(logDEBUG) << "Configuration process finished";
 	return gameGUI;

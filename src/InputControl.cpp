@@ -410,6 +410,7 @@ void InputControl::validateButtonsRange(int joyNum, int butCount) {
 
 	if ( lk > butCount || hk > butCount || lp > butCount || hp > butCount || bl > butCount || fr > butCount ) {
 		FILE_LOG(logERROR) << "Setted button in joystick " << joyNum << " is higher than buttons in joystick (" << butCount << ")";
+		FILE_LOG(logERROR) << "Bad buttons configuration in joystick " << joyNum << ", default configuration loaded";
 		this->loadDefaultButtons(joyNum);
 	}
 }
@@ -531,7 +532,6 @@ InputCommand InputControl::getPlayerMove(int joy) {
 }
 
 void InputControl::loadDefaultButtons(int joyNum) {
-	FILE_LOG(logERROR) << "Bad buttons configuration in joystick " << joyNum << ", default configuration loaded";
 	setActionButton(joyNum, LOW_PUNCH, 1 );
 	setActionButton(joyNum, HIGH_PUNCH, 0 );
 	setActionButton(joyNum, LOW_KICK, 2 );
