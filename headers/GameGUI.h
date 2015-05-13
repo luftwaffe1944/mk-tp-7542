@@ -12,6 +12,7 @@
 #include "Window.h"
 #include "Character.h"
 #include "Layer.h"
+#include "ThrowableObject.h"
 #include <vector>
 #include <iostream>
 
