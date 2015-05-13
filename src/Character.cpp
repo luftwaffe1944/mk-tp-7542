@@ -172,18 +172,18 @@ bool Character::shouldMoveForward() {
 }
 
 bool Character::reachedWindowLeftLimit(){
-	if (this->getPosXUL() < WINDOW_MARGIN -1) return true;
+	if (this->getPosXUL() < WINDOW_MARGIN -15) return true;
 	return false;
 }
 
 bool Character::reachedWindowRightLimit(){
 	float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
-	if ( ( windowWidth - this->getPosXUL() - this->width ) < WINDOW_MARGIN -1) return true;
+	if ( ( windowWidth - this->getPosXUL() - this->width ) < WINDOW_MARGIN -15) return true;
 	return false;
 }
 
 void Character::update() {
-	if (this->orientationPosXFix != 0) {
+	if (this->orientationPosXFix != 0) { //acomoda la posX si se desplaza la cámara
 		this->fixPosXStandingCharacter();
 		this->orientationPosXFix = 0;
 	}
@@ -408,7 +408,6 @@ void Character::update() {
 			airPunchLeft();
 			break;
 		case FIRST_PLAYER_FIRE:
-			std::cout << "DISPARO" << std::endl;
 			this->fire = true;
 			break;
 		case NO_INPUT:
