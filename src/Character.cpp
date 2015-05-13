@@ -120,7 +120,7 @@ bool Character::load(SDL_Renderer* render) {
 	Sprite* spriteBeingHintFallingUnderKick = new Sprite(this->name+this->playerNumber+BEING_HINT_FALLING_UNDER_KICK_SUFFIX, characterPath+BEING_HINT_FALLING_UNDER_KICK_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 11, this->isAltPlayer, this->altColor);
 	Sprite* spriteHintFlying = new Sprite(this->name+this->playerNumber+HINT_FLYING_SUFFIX, characterPath+HINT_FLYING_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9, this->isAltPlayer, this->altColor);
 	Sprite* spriteGetUp = new Sprite(this->name+this->playerNumber+GET_UP_SUFFIX, characterPath+GET_UP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7, this->isAltPlayer, this->altColor);
 
@@ -159,11 +159,11 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-
 	if(this->isDucking) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
+			if (isGettingUp) cout <<"FORWARD" << endl;
 			currentFrame = currentSprite->getNextForwardingFrame();
 		} else {
 			currentFrame = currentSprite->getNextBackwardingFrame();
@@ -178,7 +178,7 @@ void Character::draw() {
 bool Character::shouldMoveForward() {
 	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
 			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))
-			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying) {
+			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper) {
 		return true;
 	} else {
 		return false;
@@ -510,6 +510,7 @@ void Character::clearMovementsFlags(){
 	isBeingHintFallingUnderKick = false;
 	isHintFlying = false;
 	isGettingUp = false;
+	isHintFlyingUpper = false;
 }
 
 void Character::jump() {
@@ -654,8 +655,6 @@ void Character::flyFalling() {
 		isHintFlying = false;
 		jumpVelFalling = 40.0f;
 		this->setMovement(GET_UP_MOVEMENT);
-		this->setCurrentSprite();
-		completeMovement();
 		this->positionY = yGround;
 		refreshFrames();
 	}
@@ -666,7 +665,7 @@ void Character::flyFallingUpper() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX + (2 * ratioX);
+		positionX = positionX + (4 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isHintFlyingUpper = false;
