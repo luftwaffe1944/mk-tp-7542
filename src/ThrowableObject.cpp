@@ -56,6 +56,11 @@ void ThrowableObject::getCNextPosition(float* nextPositionX, float* nextPosition
 void ThrowableObject::update() {
 
 	if (this->releaser->fire) {
+		if (this->orientationPosXFix != 0) {
+			this->fixPosXStandingCharacter();
+			this->orientationPosXFix = 0;
+		}
+
 
 		float charWidht = this->releaser->getWidth()*ratioX;
 		float charHeight = (this->releaser->getHeight())*ratioY;
@@ -67,10 +72,10 @@ void ThrowableObject::update() {
 		this->playerIsRightOriented = this->releaser->getIsRightOriented();
 
 		//arranca la bola pegada al personaje
-		float posXCharacter = this->releaser->getPositionX() / ratioX;
-		float posYCharacter = this->releaser->getPositionY() / ratioY;
-		float centerWidthCharacter = (this->releaser->getWidth() / 2);
-		float centerHeightCharacter = (this->releaser->getHeight() / 2);
+		//float posXCharacter = this->releaser->getPositionX() / ratioX;
+		//float posYCharacter = this->releaser->getPositionY() / ratioY;
+		//float centerWidthCharacter = (this->releaser->getWidth() / 2);
+		//float centerHeightCharacter = (this->releaser->getHeight() / 2);
 
 		if (!this->posXSetReleaser) {
 			if (this->playerIsRightOriented) {
@@ -136,4 +141,12 @@ void ThrowableObject::update() {
 
 void ThrowableObject::clean(){
 
+}
+
+void ThrowableObject::setFixPosXStandingCharacter( int orientation) {
+	this->orientationPosXFix = orientation;
+}
+
+void ThrowableObject::fixPosXStandingCharacter() {
+	positionX = positionX + FRONTAL_LAYER_SPEED * ratioX * this->orientationPosXFix * -1;
 }
