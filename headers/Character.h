@@ -121,6 +121,10 @@ public:
 	float posYBox;
 	float widthBox;
 	float heightBox;
+	float posXBox2;
+	float posYBox2;
+	float widthBox2;
+	float heightBox2;
 };
 
 #endif /* CHARACTER_H_ */
