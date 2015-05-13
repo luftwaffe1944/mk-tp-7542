@@ -21,9 +21,10 @@
 
 using namespace std;
 
+/*
 float gravity = 14.0f;
 float jumpVel = 60.0f;
-
+*/
 std::map<std::string,int> Character::movesCounter;
 
 bool somePunchInputCommand(InputCommand inputCommand);
@@ -43,6 +44,8 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
 		//TODO: setear en false
 		this->fire = false;
+		gravity = 14.0f;
+		jumpVel = 60.0f;
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -59,6 +62,8 @@ Character::Character(const LoaderParams* pParams) :
 		this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
 		//TODO: setear en false
 		this->fire = false;
+		gravity = 14.0f;
+		jumpVel = 60.0f;
 }
 
 
