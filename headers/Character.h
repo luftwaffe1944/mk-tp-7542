@@ -120,11 +120,22 @@ public:
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
 
+
+	float posXBox;
+	float posYBox;
+	float widthBox;
+	float heightBox;
+	float posXBox2;
+	float posYBox2;
+	float widthBox2;
+	float heightBox2;
+
 	bool fire;
 	int getHeight();
 
 	float gravity;
 	float jumpVel;
+
 };
 
 #endif /* CHARACTER_H_ */
