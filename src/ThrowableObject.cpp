@@ -7,9 +7,10 @@
 
 #include "../headers/ThrowableObject.h"
 
-ThrowableObject::ThrowableObject(const LoaderParams* pParams) : SDLObjectGUI(pParams) {
+ThrowableObject::ThrowableObject(const LoaderParams* pParams, float widthWindow) : SDLObjectGUI(pParams) {
 	this->posXSetReleaser = false;
 	this->posYsetReleaser = false;
+	this->widthWindow = widthWindow;
 }
 
 ThrowableObject::~ThrowableObject() {
