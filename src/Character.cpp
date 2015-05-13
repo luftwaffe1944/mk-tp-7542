@@ -615,7 +615,7 @@ void Character::refreshFrames(){
 void Character::walkRight() {
 	isWalkingRight = true;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX + 2 * ratioX;
+		positionX = positionX + FRONTAL_LAYER_SPEED * ratioX;
 	}
 
 
@@ -624,7 +624,7 @@ void Character::walkRight() {
 void Character::walkLeft() {
 	isWalkingLeft = true;
 	if (!this->reachedWindowLeftLimit()){
-		positionX = positionX - 2 * ratioX;
+		positionX = positionX - FRONTAL_LAYER_SPEED * ratioX;
 	}
 
 }
@@ -891,9 +891,9 @@ void Character::setIsRightOriented(bool isRightOriented) {
 void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
 
 		if ((!this->reachedWindowRightLimit()) && (this->isWalkingRight)){ //si no llego al limite de pantalla y esta caminando para derecha
-			*nextPositionX = positionX + 2 * ratioX;
+			*nextPositionX = positionX + FRONTAL_LAYER_SPEED * ratioX;
 		}else if ((!this->reachedWindowLeftLimit()) && (this->isWalkingLeft)){
-			*nextPositionX = positionX - 2 * ratioX;
+			*nextPositionX = positionX - FRONTAL_LAYER_SPEED * ratioX;
 		}else if (this->isJumping){
 			*nextPositionY = positionY - jumpVel;
 			if (this->isTouchingGround(*nextPositionY)) {
@@ -902,7 +902,7 @@ void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
 		}else if (this->isJumpingRight){
 			*nextPositionY = this->positionY - jumpVel;
 			if (!this->reachedWindowRightLimit()) {
-				*nextPositionX = positionX + (2 * ratioX);
+				*nextPositionX = positionX + (FRONTAL_LAYER_SPEED * ratioX);
 			}
 			if (this->isTouchingGround(*nextPositionY)) {
 				*nextPositionY = yGround;
@@ -911,7 +911,7 @@ void Character::getCNextPosition(float* nextPositionX, float* nextPositionY){
 		}else if (this->isJumpingLeft){
 			*nextPositionY = positionY - jumpVel;
 			if (!this->reachedWindowLeftLimit()) {
-				*nextPositionX = positionX - (2 * ratioX);
+				*nextPositionX = positionX - (FRONTAL_LAYER_SPEED * ratioX);
 			}
 			if (this->isTouchingGround(*nextPositionY)) {
 				*nextPositionY = yGround;
@@ -997,5 +997,5 @@ void Character::setFixPosXStandingCharacter( int orientation) {
 }
 
 void Character::fixPosXStandingCharacter() {
-	positionX = positionX + 3 * ratioX * this->orientationPosXFix *-1;
+	positionX = positionX + FRONTAL_LAYER_SPEED * ratioX * this->orientationPosXFix *-1;
 }
