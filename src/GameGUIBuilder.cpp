@@ -563,9 +563,9 @@ GameGUI* GameGUIBuilder::create() {
 	gameGUI->setCharacters(characters);
 	Fight* fight = jsonGetFight(root);
 	gameGUI->setFight(fight);
-	//if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
+	if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
 		fight->getFighterTwo()->setIsAlternativePlayer(true);
-	//}
+	}
 	fight->getFighterOne()->setIsRightOriented(true);
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
