@@ -6,6 +6,7 @@
  */
 
 #include "../headers/ThrowableObject.h"
+#include "../headers/MKGame.h"
 
 ThrowableObject::ThrowableObject(const LoaderParams* pParams, float widthWindow) : SDLObjectGUI(pParams) {
 	this->posXSetReleaser = false;
@@ -33,9 +34,9 @@ void ThrowableObject::draw() {
 	if (this->releaser->fire) {
 	SDLObjectGUI::draw();
 	//draw box colisionale
-    SDL_Rect outlineRect2 = { this->positionX, positionY, this->width, this->height };
-    SDL_SetRenderDrawColor( this->render, 0xFF, 0x00, 0x00, 0xFF );
-    SDL_RenderDrawRect( render, &outlineRect2 );
+    SDL_Rect outlineRect2 = { this->positionX, positionY, this->width+100, this->height+100 };
+    SDL_SetRenderDrawColor( MKGame::Instance()->getRenderer(), 0xFF, 0x00, 0x00, 0xFF );
+    SDL_RenderDrawRect( MKGame::Instance()->getRenderer(), &outlineRect2 );
 	}
 }
 
