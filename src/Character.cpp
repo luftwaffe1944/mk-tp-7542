@@ -196,14 +196,28 @@ bool Character::reachedWindowRightLimit(){
 	return false;
 }
 
+void Character::fixOrientation() {
+	Character * p1 = GameGUI::getInstance()->getCharacters()[0];
+	Character * p2 = GameGUI::getInstance()->getCharacters()[1];
+	if ( p1->positionX < p2->positionX) {
+		p1->isRightOriented = true;
+		p2->isRightOriented = false;
+	} else {
+		p1->isRightOriented = false;
+		p2->isRightOriented = true;
+	}
+}
+
 void Character::update() {
 	if (this->orientationPosXFix != 0) { //acomoda la posX si se desplaza la cámara
 		this->fixPosXStandingCharacter();
 		this->orientationPosXFix = 0;
 	}
+	fixOrientation();
 	InputCommand playerCommand;
 	if (this->playerNumber == "1") {
 		playerCommand = InputControl::Instance()->getFirstPlayerMove();
+
 	} else {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}

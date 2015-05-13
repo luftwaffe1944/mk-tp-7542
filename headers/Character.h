@@ -60,6 +60,7 @@ private:
 	bool isAirPunchingRight;
 	bool isAirPunching;
 	bool isAirPunchingLeft;
+	void fixOrientation();
 
 public:
 	static std::map<std::string,int> movesCounter;
