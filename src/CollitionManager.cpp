@@ -67,11 +67,12 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 
 					if (newActualBox->isColliding(newNextBox)){ //verifica superposicion
 						//resolver evento de colision
-						FILE_LOG(logDEBUG) << "Collition detected" ;
+						//FILE_LOG(logDEBUG) << "Collition detected" ;
 
-						CharacterManager::Instance()->solveMovesBeignHint(actualObject, nextObject);
 
 						DamageManager::Instance()->solveDamage(actualObject, nextObject);
+						CharacterManager::Instance()->solveMovesBeignHint(actualObject, nextObject);
+
 					}
 
 					//--

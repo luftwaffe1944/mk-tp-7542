@@ -65,6 +65,10 @@ private:
 
 	bool isBeingHintStanceUp;
 	bool isBeingHintStanceDown;
+	bool isBeingHintFallingUnderKick;
+	bool isGettingUp;
+	bool isHintFlying;
+	bool isHintFlyingUpper;
 
 
 public:
@@ -100,6 +104,8 @@ public:
 	void clearMovementsFlags();
 	bool isMovingRight();
 	bool isMovingLeft();
+	void flyFalling();
+	void flyFallingUpper();
 	void fixPosXStandingCharacter();
 	void setFixPosXStandingCharacter( int orientation);
 
@@ -125,7 +131,7 @@ public:
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
-	bool showBoxes = true;
+	bool showBoxes = false;
 
 
 	float posXBox;
@@ -142,6 +148,11 @@ public:
 
 	float gravity;
 	float jumpVel;
+
+	bool getIsKickingAirLowRight();
+	bool getIsKickingAirLowLeft();
+	bool getIsAirPunchingRight();
+	bool getIsAirPunchingLeft();
 
 };
 

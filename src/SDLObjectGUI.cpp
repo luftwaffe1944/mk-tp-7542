@@ -99,3 +99,6 @@ float SDLObjectGUI::getRatioX() {
 	return this->ratioX;
 }
 
+float SDLObjectGUI::getRatioY(){
+	return this->ratioY;
+}
