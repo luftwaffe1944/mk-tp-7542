@@ -92,14 +92,51 @@ void ThrowableObject::update() {
 			this->positionY = centerY;
 			this->posYsetReleaser = true;
 		}
+/*
+		float charWidht = this->releaser->getWidth()*ratioX;
+		float charHeight = (this->releaser->getHeight())*ratioY;
+		float centerX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX / 2;
+		float centerY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY / 2;
 
+*/
+		//orientacion del que dispara
+		this->playerIsRightOriented = this->releaser->getIsRightOriented();
 
+		//arranca la bola pegada al personaje
+		//float posXCharacter = this->releaser->getPositionX() / ratioX;
+		//float posYCharacter = this->releaser->getPositionY() / ratioY;
+		//float centerWidthCharacter = (this->releaser->getWidth() / 2);
+		//float centerHeightCharacter = (this->releaser->getHeight() / 2);
+
+		if (!this->posXSetReleaser) {
+			if (this->playerIsRightOriented) {
+				this->positionX = centerX + 10;
+			}
+			else {
+				this->positionX = centerX - 10;
+			}
+
+			this->posXSetReleaser = true;
+			cout << "X salida: " << this->positionX << " ";
+
+		}
+		if(!this->posYsetReleaser) {
+			this->positionY = centerY;
+			this->posYsetReleaser = true;
+			cout << "Y salida: " << this->positionY << " ";
+		}
+
+		/*
 
 		bool endBoom = false;
 		//si esta mirando para la derecha
 		//TODO: hacerlo colisionable ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
 		if (this->playerIsRightOriented && !endBoom) {
+<<<<<<< HEAD
 			if (this->positionX / ratioX < this->widthWindow) {
+=======
+			if (this->positionX < this->receiver->getPositionX() / ratioX + this->receiver->getWidth() /2) {
+>>>>>>> refs/remotes/origin/master
 				this->positionX+= OBJECT_SPEED;
 			} else {
 				endBoom = true;
@@ -109,7 +146,11 @@ void ThrowableObject::update() {
 		//si esta mirando para izq
 		//TODO: hacerlo colisionable, ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
 		if (!this->playerIsRightOriented && !endBoom) {
+<<<<<<< HEAD
 			if (0 < this->positionX / ratioX) {
+=======
+			if (this->receiver->getPositionX() / ratioX + this->receiver->getWidth()/ 2 < this->positionX) {
+>>>>>>> refs/remotes/origin/master
 				this->positionX-= OBJECT_SPEED;
 			} else {
 				endBoom = true;
@@ -123,6 +164,7 @@ void ThrowableObject::update() {
 			this->posXSetReleaser = false;
 			this->posYsetReleaser = false;
 		}
+<<<<<<< HEAD
 
 		//if (this->positionX / ratioX > this->widthWindow) {
 		//	this->releaser->fire = false;
@@ -131,6 +173,17 @@ void ThrowableObject::update() {
 		//}
 		//cout << "Y: " << this->positionY << " " << this->receiver->getPositionY() << endl;
 		//this->updateCShapesPosition(this->positionX, this->positionY, this->width * ratioX, this->height * ratioY);
+=======
+		*/
+		this->positionX += OBJECT_SPEED;
+		if (this->positionX / ratioX > this->widthWindow) {
+			this->releaser->fire = false;
+			this->posXSetReleaser = false;
+			this->posYsetReleaser = false;
+		}
+		cout << "X Actual: " << this->getPositionX() << endl;
+		//cout << "Y: " << this->positionY << " " << this->receiver->getPositionY() << endl;
+		this->updateCShapesPosition(this->positionX, this->positionY, this->width * ratioX, this->height * ratioY);
 	}
 	
 }

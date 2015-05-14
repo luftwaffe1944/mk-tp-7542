@@ -58,7 +58,6 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 	else if (character1->getMovement() == UNDER_KICK_MOVEMENT  && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 		character2->setMovement(BEING_HINT_FALLING_UNDER_KICK_MOVEMENT);
 	}
-
 	else if ((character1->getMovement() == SUPER_KICK_MOVEMENT || character1->getMovement() == AIR_HIGH_kICK_MOVEMENT
 			|| character1->getMovement() == AIR_LOW_kICK_MOVEMENT) && character2->getMovement() != BLOCK_MOVEMENT){
 		character2->setMovement(HINT_FLYING_MOVEMENT);

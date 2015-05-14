@@ -684,6 +684,7 @@ void Character::jumpRight() {
 }
 
 void Character::flyFalling() {
+
 	MKGame::Instance()->setShaking(true);
 	isHintFlying = true;
 	isJumpingRight = false;
