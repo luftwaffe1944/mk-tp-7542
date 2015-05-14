@@ -11,7 +11,9 @@ Collitionable::Collitionable(){
 	this->setIsWeapon(true);
 }
 
+
 Collitionable::~Collitionable(){
+
 }
 
 vector<Box*> Collitionable::getCShapes(){

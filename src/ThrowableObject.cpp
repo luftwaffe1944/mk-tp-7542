@@ -19,6 +19,7 @@ ThrowableObject::ThrowableObject(const LoaderParams* pParams, float widthWindow)
 
 ThrowableObject::~ThrowableObject() {
 	// TODO Auto-generated destructor stub
+
 }
 
 void ThrowableObject::setReceiver(Character* receiver) {

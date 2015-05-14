@@ -127,9 +127,9 @@ vector<Collitionable*> convertVector(vector<Character*> oldVec){
 		}
 	return newVec;
 }
-void addVector(vector<ThrowableObject*> oldVec, vector<Collitionable*> newVec){
+void addVector(vector<ThrowableObject*> oldVec, vector<Collitionable*> *newVec){
 	for (std::vector<ThrowableObject*>::size_type i = 0; i != oldVec.size(); i++) {
-		newVec.push_back((Collitionable*) oldVec[i]);
+		newVec->push_back((Collitionable*) oldVec[i]);
 		}
 }
 
@@ -155,7 +155,8 @@ void MKGame::update() {
 	//metemos caracteres
 	vector<Collitionable*> collObjects = convertVector(this->getGameGUI()->getCharacters());
 	//metemos arrojables
-	addVector(this->getGameGUI()->tObjects, collObjects);
+	vector<ThrowableObject*> throObjects= this->getGameGUI()->tObjects;
+	addVector(throObjects, &collObjects);
 
 	CollitionManager::Instance()->solveCollitions(collObjects);
 
