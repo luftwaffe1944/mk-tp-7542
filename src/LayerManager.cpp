@@ -155,8 +155,15 @@ void LayerManager::refresh() {
 
 	if (refresh == true && standingCharacter != -1 ) {
 		this->characters[standingCharacter]->setFixPosXStandingCharacter( orientation );
-		for( unsigned int i =0; i < GameGUI::getInstance()->tObjects.size(); i++) {
-			GameGUI::getInstance()->tObjects[i]->setFixPosXStandingCharacter( orientation);
+		//for( unsigned int i =0; i < GameGUI::getInstance()->tObjects.size(); i++) {
+		//	GameGUI::getInstance()->tObjects[i]->setFixPosXStandingCharacter( orientation);
+		//}
+		vector<Collitionable*> vColl = GameGUI::getInstance()->vCollitionable;
+		for( unsigned int i =0; i < vColl.size(); i++) {
+			if (!vColl[i]->isCharacter()) {
+				ThrowableObject* weapon = (ThrowableObject*) vColl[i];
+				weapon->setFixPosXStandingCharacter( orientation);
+			}
 		}
 	}
 

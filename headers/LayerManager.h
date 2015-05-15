@@ -12,6 +12,7 @@
 
 #include "Layer.h"
 #include "Character.h"
+#include "ThrowableObject.h"
 #include "GameGUI.h"
 #include "Log.h"
 #include "Constants.h"
