@@ -34,6 +34,7 @@ public:
 	virtual ~Collitionable();
 	void getCNextPosition(float* nextPositionX, float* nextPositionY);
 	bool getCMoving(){return this->isCMoving;}
+	bool getCActive(){return this->isCActive;}
 	void setCMoving(bool moving){this->isCMoving = moving;}
 	void setCActive(bool active){this->isCActive = active;}
 	vector<Box*> getCShapes();

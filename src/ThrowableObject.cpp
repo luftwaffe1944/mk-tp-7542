@@ -13,7 +13,8 @@ ThrowableObject::ThrowableObject(const LoaderParams* pParams, float widthWindow)
 	this->posYsetReleaser = false;
 	this->widthWindow = widthWindow;
 	this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
-	this->setCMoving(true);
+	this->setCMoving(false);
+	this->setCActive(false);
 	this->isWeapon = true;
 }
 
@@ -50,14 +51,19 @@ void ThrowableObject::draw() {
 
 
 void ThrowableObject::getCNextPosition(float* nextPositionX, float* nextPositionY){
-	*nextPositionX = this->positionX + OBJECT_SPEED;
+	if (this->playerIsRightOriented) {
+		*nextPositionX = this->positionX + OBJECT_SPEED;
+	}else{
+		*nextPositionX = this->positionX - OBJECT_SPEED;
+	}
 	*nextPositionY = this->positionY;
 }
 
 void ThrowableObject::update() {
 
 	if (this->releaser->fire) {
-
+		this->setCMoving(true);
+		this->setCActive(true);
 		float charWidht = this->releaser->getWidth()*ratioX;
 		float charHeight = (this->releaser->getHeight())*ratioY;
 		float centerX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX / 2;
@@ -125,6 +131,8 @@ void ThrowableObject::update() {
 		this->positionX += OBJECT_SPEED;
 		if (this->positionX / ratioX > this->widthWindow) {
 			this->releaser->fire = false;
+			this->setCMoving(false);
+			this->setCActive(false);
 			this->posXSetReleaser = false;
 			this->posYsetReleaser = false;
 		}

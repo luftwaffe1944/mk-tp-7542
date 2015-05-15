@@ -42,41 +42,45 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 			nextObject = objects[(i-1)+j];
 			nextObjectBoxes = nextObject->getCShapes();
 
-			//verificar colision entre boxes
-			for (int k=1; k<=(actualObjectBoxes.size()); k++){
-				Box* actualBox = actualObjectBoxes[k-1];
-				Box* newActualBox = actualBox->cloneBox(); //box auxiliar clonada para expandir
+			//verificar colision entre boxes si ambos objetos esatan activos
+			if ((actualObject->getCActive()) && (nextObject->getCActive())) {
+				for (int k=1; k<=(actualObjectBoxes.size()); k++){
+					Box* actualBox = actualObjectBoxes[k-1];
+					Box* newActualBox = actualBox->cloneBox(); //box auxiliar clonada para expandir
 
-				for (int n=1; n<=(nextObjectBoxes.size()); n++){
-					Box* nextBox = nextObjectBoxes[n-1];
- 					Box* newNextBox = nextBox->cloneBox(); //box auxiliar clonada para expandir
+					for (int n=1; n<=(nextObjectBoxes.size()); n++){
+						Box* nextBox = nextObjectBoxes[n-1];
+						Box* newNextBox = nextBox->cloneBox(); //box auxiliar clonada para expandir
 
-					if (actualObject->getCMoving()){
-						//expandir box
-						float newX,newY;
-						actualObject->getCNextPosition(&newX, &newY);
-						newActualBox->resizeBox(newX, newY);
+						if (actualObject->getCMoving()){
+							//expandir box
+							float newX,newY;
+							ThrowableObject* weapon = (ThrowableObject*) nextObject;
+							weapon->getCNextPosition(&newX, &newY);
+							newActualBox->resizeBox(newX, newY);
+						}
+						if (nextObject->getCMoving()){
+							//expandir box
+							float newX,newY;
+							ThrowableObject* weapon = (ThrowableObject*) nextObject;
+							weapon->getCNextPosition(&newX, &newY);
+							newNextBox->resizeBox(newX, newY);
+						}
+
+						if (newActualBox->isColliding(newNextBox)){ //verifica superposicion
+							//resolver evento de colision
+							//FILE_LOG(logDEBUG) << "Collition detected" ;
+
+							CharacterManager::Instance()->solveMovesBeignHint(actualObject, nextObject);
+
+							DamageManager::Instance()->solveDamage(actualObject, nextObject);
+						}
+
+						//--
+						newNextBox->~Box();
 					}
-					if (nextObject->getCMoving()){
-						//expandir box
-						float newX,newY;
-						nextObject->getCNextPosition(&newX, &newY);
-						newNextBox->resizeBox(newX, newY);
-					}
-
-					if (newActualBox->isColliding(newNextBox)){ //verifica superposicion
-						//resolver evento de colision
-						//FILE_LOG(logDEBUG) << "Collition detected" ;
-
-						CharacterManager::Instance()->solveMovesBeignHint(actualObject, nextObject);
-
-						DamageManager::Instance()->solveDamage(actualObject, nextObject);
-					}
-
-					//--
-					newNextBox->~Box();
+					newActualBox->~Box();
 				}
-				newActualBox->~Box();
 			}
 		}
 	}
