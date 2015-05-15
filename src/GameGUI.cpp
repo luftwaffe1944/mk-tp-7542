@@ -20,6 +20,7 @@ GameGUI* GameGUI::getInstance() {
 void GameGUI::clean(){
 	delete this->stage;
 	delete this->window;
+	this->vCollitionable.clear();
 }
 
 void GameGUI::setWindow(Window* window) {

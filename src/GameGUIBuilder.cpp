@@ -502,13 +502,18 @@ void createThrowableObject(vector<Character*> characters, Window* window, float 
 	tObject1->setReceiver(characters[1]);
 	tObject1->setImagePath("images/subzero/throwable.gif");
 	MKGame::Instance()->getObjectList().push_back(tObject1);
-	GameGUI::getInstance()->tObjects.push_back(tObject1);
+
 
 	tObject2->setReleaser(characters[1]);
 	tObject2->setReceiver(characters[0]);
 	tObject2->setImagePath("images/subzero/throwable.gif");
 	MKGame::Instance()->getObjectList().push_back(tObject2);
-	GameGUI::getInstance()->tObjects.push_back(tObject2);
+
+
+	GameGUI::getInstance()->vCollitionable.push_back(characters[0]);
+	GameGUI::getInstance()->vCollitionable.push_back(characters[1]);
+	GameGUI::getInstance()->vCollitionable.push_back(tObject1);
+	GameGUI::getInstance()->vCollitionable.push_back(tObject2);
 }
 
 GameGUI* GameGUIBuilder::create() {

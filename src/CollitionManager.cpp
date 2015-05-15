@@ -34,16 +34,15 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 	vector<Box*> nextObjectBoxes;
 
 	int cantObjects = objects.size();
-	for (std::vector<Collitionable*>::size_type i = 1; i <= cantObjects;	i++) {
+	for (std::vector<Collitionable*>::size_type i = 1; i <= (cantObjects-1);	i++) {
 	//for (int i=1; i<=(cantObjects-1); i++){  //itera todos los objectos
 		 actualObject = objects[i-1];
+		 actualObjectBoxes = actualObject->getCShapes();
 		for (std::vector<Collitionable*>::size_type j=1;j<=(cantObjects-i); j++){ //itera uno contra todos
 			nextObject = objects[(i-1)+j];
-			//verificar colision entre boxes
-
-			actualObjectBoxes = actualObject->getCShapes();
 			nextObjectBoxes = nextObject->getCShapes();
 
+			//verificar colision entre boxes
 			for (int k=1; k<=(actualObjectBoxes.size()); k++){
 				Box* actualBox = actualObjectBoxes[k-1];
 				Box* newActualBox = actualBox->cloneBox(); //box auxiliar clonada para expandir

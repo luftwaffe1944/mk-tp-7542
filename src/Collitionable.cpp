@@ -13,8 +13,12 @@ Collitionable::Collitionable(){
 
 
 Collitionable::~Collitionable(){
-
+	for (std::vector<Box*>::size_type i = 0; i != this->Shapes.size(); i++) {
+		delete Shapes[i];
+	}
+	this->Shapes.clear();
 }
+
 
 vector<Box*> Collitionable::getCShapes(){
 	return this->Shapes;

@@ -36,7 +36,7 @@ private:
 	}
 
 public:
-	vector<ThrowableObject*> tObjects;
+	vector<Collitionable*> vCollitionable;
 	static GameGUI* getInstance();
 	void clean();
 	void setStage(Stage* stage);
