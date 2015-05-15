@@ -516,7 +516,7 @@ void Character::update() {
 	//refresh Collition Shapes positions
 	this->updateShapesOnStatus();
 
-	SDL_Delay(25);
+	SDL_Delay(300);
 }
 
 void Character::clearMovementsFlags(){
@@ -685,6 +685,9 @@ void Character::jumpRight() {
 
 void Character::flyFalling() {
 	isHintFlying = true;
+	isJumpingRight = false;
+	isJumping = false;
+	isJumpingLeft = false;
 	positionY = positionY - jumpVelFalling;
 	jumpVelFalling -= gravity;
 	if (!this->reachedWindowRightLimit() && !this->reachedWindowLeftLimit()) {
@@ -706,6 +709,9 @@ void Character::flyFalling() {
 void Character::flyFallingUpper() {
 	MKGame::Instance()->setShaking(true);
 	isHintFlyingUpper = true;
+	isJumpingRight = false;
+	isJumping = false;
+	isJumpingLeft = false;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit() && !this->reachedWindowLeftLimit()) {

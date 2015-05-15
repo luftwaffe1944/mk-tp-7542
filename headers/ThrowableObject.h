@@ -31,6 +31,8 @@ public:
 	void setReceiver(Character* character);
 	void getCNextPosition(float* nextPositionX, float* nextPositionY);
 	SDL_Renderer* render;
+	void setFixPosXStandingCharacter( int orientation);
+	void fixPosXStandingCharacter();
 
 private:
 	Character* releaser;
@@ -40,6 +42,7 @@ private:
 	bool posYsetReleaser;
 
 	float widthWindow;
+	int orientationPosXFix;
 };
 
 #endif /* THROWABLEOBJECT_H_ */
