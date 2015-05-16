@@ -64,93 +64,48 @@ void ThrowableObject::update() {
 	float centerY;
 
 	if (!this->getCActive()){
-		this->positionX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX / 2;
-		this->positionY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY / 2;
+		//
+
+		this->positionY = this->releaser->posYBox + this->releaser->heightBox / 2;
 		//orientacion del que dispara
 		this->playerIsRightOriented = this->releaser->getIsRightOriented();
+		if (this->playerIsRightOriented) {
+			this->positionX = this->releaser->posXBox + this->releaser->widthBox *2;
+		}else{
+			this->positionX = this->releaser->posXBox - this->releaser->widthBox;
+		}
+		this->setLive();
 	}
 
 	if (this->releaser->fire) {
-
-		this->setCMoving(true);
-		this->setCActive(true);
+		if (!this->getDestroy()) {
+			this->Cactivation(true);
+		}else{
+			this->releaser->fire = false;
+			this->Cactivation(false);
+		}
 
 		if (this->orientationPosXFix != 0) {
 			this->fixPosXStandingCharacter();
 			this->orientationPosXFix = 0;
 		}
-
-
 		if (this->playerIsRightOriented) {
 			this->positionX = this->positionX + OBJECT_SPEED;
 		}
 		else {
 			this->positionX = this->positionX - OBJECT_SPEED;
 		}
-
-
-
-
-
-		//arranca la bola pegada al personaje
-		//float posXCharacter = this->releaser->getPositionX() / ratioX;
-		//float posYCharacter = this->releaser->getPositionY() / ratioY;
-		//float centerWidthCharacter = (this->releaser->getWidth() / 2);
-		//float centerHeightCharacter = (this->releaser->getHeight() / 2);
-
 		if (!this->posXSetReleaser) {
-			/*if (this->playerIsRightOriented) {
-				this->positionX = centerX + OBJECT_SPEED;
-			}
-			else {
-				this->positionX = centerX - OBJECT_SPEED;
-			}*/
-
 			this->posXSetReleaser = true;
 			cout << "X salida: " << this->positionX << " ";
-
 		}
 		if(!this->posYsetReleaser) {
-			//this->positionY = centerY;
 			this->posYsetReleaser = true;
 			cout << "Y salida: " << this->positionY << " ";
 		}
-
-		/*
-
-		bool endBoom = false;
-		//si esta mirando para la derecha
-		//TODO: hacerlo colisionable ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
-		if (this->playerIsRightOriented && !endBoom) {
-			if (this->positionX < this->receiver->getPositionX() / ratioX + this->receiver->getWidth() /2) {
-				this->positionX+= OBJECT_SPEED;
-			} else {
-				endBoom = true;
-			}
-		}
-
-		//si esta mirando para izq
-		//TODO: hacerlo colisionable, ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
-		if (!this->playerIsRightOriented && !endBoom) {
-			if (this->receiver->getPositionX() / ratioX + this->receiver->getWidth()/ 2 < this->positionX) {
-				this->positionX-= OBJECT_SPEED;
-			} else {
-				endBoom = true;
-			}
-		}
-
-		//Si llego al personaje que recibe, se setea que no se muestre mas
-		//TODO: hacerlo colisionable
-		if (endBoom) {
-			this->releaser->fire = false;
-			this->posXSetReleaser = false;
-			this->posYsetReleaser = false;
-		}
-		*/
-		//this->positionX += OBJECT_SPEED;
 		if ((this->positionX / ratioX > this->widthWindow) || (this->positionX / ratioX <0)) {
 			this->releaser->fire = false;
-			this->setCMoving(false);
+			this->Cactivation(false);
 			this->setCActive(false);
 			this->posXSetReleaser = false;
 			this->posYsetReleaser = false;

@@ -18,7 +18,7 @@
 #include "DamageObject.h"
 #include "Character.h"
 
-#define OBJECT_SPEED 10
+#define OBJECT_SPEED 100
 
 class ThrowableObject : public SDLObjectGUI, public Collitionable {
 public:

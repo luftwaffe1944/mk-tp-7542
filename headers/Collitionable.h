@@ -41,6 +41,7 @@ public:
 	void updateCShapesPosition(float X, float Y);
 	void updateCShapesPosition(float X, float Y, float W, float H);
 	void updateCShapesPosition(float X, float Y, float W, float H, bool rightOriented, bool secShapeTop, float secShapeW, float secShapeH);
+	void Cactivation(bool active);
 
 
 };
