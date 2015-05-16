@@ -60,6 +60,15 @@ void ThrowableObject::getCNextPosition(float* nextPositionX, float* nextPosition
 }
 
 void ThrowableObject::update() {
+	float centerX;
+	float centerY;
+
+	if (!this->getCActive()){
+		this->positionX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX / 2;
+		this->positionY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY / 2;
+		//orientacion del que dispara
+		this->playerIsRightOriented = this->releaser->getIsRightOriented();
+	}
 
 	if (this->releaser->fire) {
 
@@ -72,15 +81,16 @@ void ThrowableObject::update() {
 		}
 
 
+		if (this->playerIsRightOriented) {
+			this->positionX = this->positionX + OBJECT_SPEED;
+		}
+		else {
+			this->positionX = this->positionX - OBJECT_SPEED;
+		}
 
-		float charWidht = this->releaser->getWidth()*ratioX;
-		float charHeight = (this->releaser->getHeight())*ratioY;
-		float centerX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX / 2;
-		float centerY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY / 2;
 
 
-		//orientacion del que dispara
-		this->playerIsRightOriented = this->releaser->getIsRightOriented();
+
 
 		//arranca la bola pegada al personaje
 		//float posXCharacter = this->releaser->getPositionX() / ratioX;
@@ -89,19 +99,19 @@ void ThrowableObject::update() {
 		//float centerHeightCharacter = (this->releaser->getHeight() / 2);
 
 		if (!this->posXSetReleaser) {
-			if (this->playerIsRightOriented) {
-				this->positionX = centerX + 10;
+			/*if (this->playerIsRightOriented) {
+				this->positionX = centerX + OBJECT_SPEED;
 			}
 			else {
-				this->positionX = centerX - 10;
-			}
+				this->positionX = centerX - OBJECT_SPEED;
+			}*/
 
 			this->posXSetReleaser = true;
 			cout << "X salida: " << this->positionX << " ";
 
 		}
 		if(!this->posYsetReleaser) {
-			this->positionY = centerY;
+			//this->positionY = centerY;
 			this->posYsetReleaser = true;
 			cout << "Y salida: " << this->positionY << " ";
 		}
@@ -137,8 +147,8 @@ void ThrowableObject::update() {
 			this->posYsetReleaser = false;
 		}
 		*/
-		this->positionX += OBJECT_SPEED;
-		if (this->positionX / ratioX > this->widthWindow) {
+		//this->positionX += OBJECT_SPEED;
+		if ((this->positionX / ratioX > this->widthWindow) || (this->positionX / ratioX <0)) {
 			this->releaser->fire = false;
 			this->setCMoving(false);
 			this->setCActive(false);
