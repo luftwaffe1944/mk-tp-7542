@@ -516,7 +516,7 @@ void Character::update() {
 	//refresh Collition Shapes positions
 	this->updateShapesOnStatus();
 
-	SDL_Delay(300);
+	SDL_Delay(25);
 }
 
 void Character::clearMovementsFlags(){
