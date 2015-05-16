@@ -16,6 +16,7 @@ ThrowableObject::ThrowableObject(const LoaderParams* pParams, float widthWindow)
 	this->setCMoving(false);
 	this->setCActive(false);
 	this->isWeapon = true;
+	this->beginShoot = false;
 }
 
 ThrowableObject::~ThrowableObject() {
@@ -70,11 +71,12 @@ void ThrowableObject::update() {
 		//orientacion del que dispara
 		this->playerIsRightOriented = this->releaser->getIsRightOriented();
 		if (this->playerIsRightOriented) {
-			this->positionX = this->releaser->posXBox + this->releaser->widthBox *2;
+			this->positionX = this->releaser->posXBox + this->releaser->widthBox + ((this->width*ratioX/2)+1);
 		}else{
-			this->positionX = this->releaser->posXBox - this->releaser->widthBox;
+			this->positionX = this->releaser->posXBox - ((this->width*ratioX/2)+1);
 		}
 		this->setLive();
+		this->beginShoot = true;
 	}
 
 	if (this->releaser->fire) {
@@ -84,16 +86,19 @@ void ThrowableObject::update() {
 			this->releaser->fire = false;
 			this->Cactivation(false);
 		}
+		if (!this->beginShoot){
+			if (this->playerIsRightOriented) {
+				this->positionX = this->positionX + OBJECT_SPEED;
+			}else {
+				this->positionX = this->positionX - OBJECT_SPEED;
+			}
+		}else{
+			this->beginShoot = false;
+		}
 
 		if (this->orientationPosXFix != 0) {
 			this->fixPosXStandingCharacter();
 			this->orientationPosXFix = 0;
-		}
-		if (this->playerIsRightOriented) {
-			this->positionX = this->positionX + OBJECT_SPEED;
-		}
-		else {
-			this->positionX = this->positionX - OBJECT_SPEED;
 		}
 		if (!this->posXSetReleaser) {
 			this->posXSetReleaser = true;
