@@ -131,12 +131,12 @@ void LayerManager::refresh() {
 		int windowWidth = this->window->width;
 		int characterWidth = this->characters[i]->getWidth();
 
-		if ( ( (windowWidth - (posXCharacter + characterWidth )) < WINDOW_MARGIN -14) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight && !passiveCharacter->reachedWindowLeftLimit() ) {
+		if ( ( (windowWidth - (posXCharacter + characterWidth )) < WINDOW_MARGIN -1) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight && !passiveCharacter->reachedWindowLeftLimit() ) {
 			refresh = true;
 			rightOrientation = true;
 			orientation = 1;
 		}
-		else if  (( posXCharacter < WINDOW_MARGIN -14) && !layerReachedStageLimit( windowWidth, false) && isCharMovingLeft && !passiveCharacter->reachedWindowRightLimit())  {
+		else if  (( posXCharacter < WINDOW_MARGIN -1) && !layerReachedStageLimit( windowWidth, false) && isCharMovingLeft && !passiveCharacter->reachedWindowRightLimit())  {
 			refresh = true;
 			leftOrientation = true;
 			orientation = -1;
