@@ -1429,12 +1429,9 @@ bool Character::getIsAirPunchingLeft() {
 }
 
 void Character::smoothMovPosX() {
-	float stageWidth = GameGUI::getInstance()->getStage()->getWidth();
-	float offset = this->getPositionX() + this->smoothOrientation*15;
+	float offset = this->getPositionX() + this->smoothOrientation*10;
 	if (this->smoothOffsetX > 0) {
-		if (stageWidth > (offset + this->widthBox / ratioX)) {
 			this->setPositionX(offset);
-			this->smoothOffsetX-=15;
-		}
+			this->smoothOffsetX-=10;
 	}
 }

@@ -30,6 +30,8 @@ public:
 
 	void clean();
 
+	bool layerReachedStageLimit(int windowWidth, bool border);
+
 private:
 	static LayerManager* lm_pInstance;
 	vector<Layer*> layers;
@@ -46,7 +48,7 @@ private:
 	void setOffSceneFrontalLayer();
 	void centerFrontalLayer();
 	void centerLayers( Layer* layer);
-	bool layerReachedStageLimit(int windowWidth, bool border);
+
 };
 
 #endif /* LAYERMANAGER_H_ */

@@ -9,6 +9,7 @@
 #define CHARACTERMANAGER_H_
 
 #include "GameGUI.h"
+#include "LayerManager.h"
 
 using namespace std;
 
