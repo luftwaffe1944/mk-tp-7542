@@ -92,21 +92,30 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		}
 
 		//DON'T OVERLAP LOGIC FOR CHARACTER 2
+		float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
 		//FOR WALKING
 		if ( character2->getMovement() == WALKING_LEFT_MOVEMENT && !character2->getIsRightOriented() ) {
 			// stop walking
-			character1->setPositionX(character1->getPositionX() - FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
-			character2->setPositionX(character1->posXBox);
+			if (character1->posXBox > WINDOW_MARGIN * character1->getRatioX()) {
+				character1->setPositionX(character1->getPositionX() - FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
+				character2->setPositionX(character1->posXBox);
+			} else {
+				character2->setPositionX(character1->posXBox);
+			}
 		}
 
 		if (character2->getMovement() == WALKING_RIGHT_MOVEMENT && character2->getIsRightOriented()) {
-			character1->setPositionX(character1->getPositionX() + FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
-			character2->setPositionX(character1->posXBox - character1->widthBox*2);
+			if (character1->posXBox + character1->widthBox < (windowWidth - WINDOW_MARGIN ) * character1->getRatioX()) {
+				character1->setPositionX(character1->getPositionX() + FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
+				character2->setPositionX(character1->getPositionX() - character1->widthBox);
+			} else {
+				character2->setPositionX(character1->getPositionX() - character1->widthBox);
+			}
+
 		}
 
 
 		//FOR JUMPING
-		float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
 		float posYCharacter1 = character1->posYBox;
 		float posXCharacter1 = character1->posYBox;
 		float widthCharacter1 = character1->widthBox;
@@ -166,13 +175,22 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		//FOR WALKING
 		if ( character1->getMovement() == WALKING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
 			// stop walking
-			character2->setPositionX(character2->getPositionX() - FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
-			character1->setPositionX(character2->posXBox);
+			if (character2->posXBox > WINDOW_MARGIN * character2->getRatioX()) {
+				character2->setPositionX(character2->getPositionX() - FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
+				character1->setPositionX(character2->posXBox);
+			} else {
+				character1->setPositionX(character2->posXBox);
+			}
 		}
 
 		if (character1->getMovement() == WALKING_RIGHT_MOVEMENT && character1->getIsRightOriented()) {
-			character2->setPositionX(character2->getPositionX() + FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
-			character1->setPositionX(character2->posXBox - character2->widthBox*2);
+			if (character2->posXBox + character2->widthBox < (windowWidth - WINDOW_MARGIN ) * character2->getRatioX()) {
+				character2->setPositionX(character2->getPositionX() + FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
+				character1->setPositionX(character2->getPositionX() - character2->widthBox);
+			} else {
+				character1->setPositionX(character2->getPositionX() - character2->widthBox);
+			}
+
 		}
 
 
