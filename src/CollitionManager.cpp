@@ -77,9 +77,11 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 						}
 
 						//--
-						newNextBox->~Box();
+						//newNextBox->~Box();
+						delete newNextBox;
 					}
-					newActualBox->~Box();
+					//newActualBox->~Box();
+					delete newActualBox;
 				}
 			}
 		}

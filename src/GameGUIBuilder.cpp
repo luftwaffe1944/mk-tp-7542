@@ -657,6 +657,7 @@ GameGUI* GameGUIBuilder::createDefault() {
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
 	gameGUI->setCharacters(characters);
+	delete fight;
 
 	//Add layers to the game loop
 	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));

@@ -793,6 +793,7 @@ std::string Character::getMovement() {
 
 void Character::clean() {
 	delete this->pParams;
+	delete this->altColor;
 }
 
 
@@ -871,6 +872,9 @@ Character::~Character() {
 		 delete(it->second);
 	 }
 	 this->characterSprites.clear();
+
+	 delete this->altColor;
+
 
 }
 
