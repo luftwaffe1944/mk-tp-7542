@@ -49,6 +49,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		this->fire = false;
 		gravity = 14.0f;
 		jumpVel = 60.0f;
+		this->smoothOffsetX = 0;
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -68,6 +69,7 @@ Character::Character(const LoaderParams* pParams) :
 		this->fire = false;
 		gravity = 14.0f;
 		jumpVel = 60.0f;
+		this->smoothOffsetX = 0;
 }
 
 
@@ -221,7 +223,7 @@ bool Character::reachedWindowRightLimit(){
 void Character::fixOrientation() {
 	Character * p1 = GameGUI::getInstance()->getCharacters()[0];
 	Character * p2 = GameGUI::getInstance()->getCharacters()[1];
-	if ( p1->positionX < p2->positionX) {
+	if ( p1->posXBox < p2->posXBox) {
 		p1->isRightOriented = true;
 		p2->isRightOriented = false;
 	} else {
@@ -515,7 +517,7 @@ void Character::update() {
 	}
 	//refresh Collition Shapes positions
 	this->updateShapesOnStatus();
-
+	this->smoothMovPosX();
 	SDL_Delay(25);
 }
 
@@ -1424,4 +1426,15 @@ bool Character::getIsAirPunchingRight() {
 }
 bool Character::getIsAirPunchingLeft() {
 	return this->isAirPunchingLeft;
+}
+
+void Character::smoothMovPosX() {
+	float stageWidth = GameGUI::getInstance()->getStage()->getWidth();
+	float offset = this->getPositionX() + this->smoothOrientation*15;
+	if (this->smoothOffsetX > 0) {
+		if (stageWidth > (offset + this->widthBox / ratioX)) {
+			this->setPositionX(offset);
+			this->smoothOffsetX-=15;
+		}
+	}
 }

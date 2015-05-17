@@ -10,8 +10,8 @@
 GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 		SDLObjectGUI(pParams) {
 	this->characters = characters;
-	bgColor = {204, 0, 0};
-	frontColor = {0, 0, 204};
+	bgColor = {204, 0, 0, 150};
+	frontColor = {0, 0, 204, 255};
 	barWidth = ((pParams->getWidth() * 0.9) - (WINDOW_MARGIN * 2)) / 2;
 	this->percent = 0.0f;
 	TTF_Init();
@@ -78,6 +78,7 @@ void GameInfo::HealthBar(int x, int y, int w, int h, float Percent, SDL_Color FG
 	   SDL_GetRenderDrawColor(pRender, &old.r, &old.g, &old.g, &old.a);
 	   SDL_Rect bgrect = { x, y, w, h };
 	   SDL_SetRenderDrawColor(pRender, BGColor.r, BGColor.g, BGColor.b, BGColor.a);
+	   SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_BLEND);
 	   SDL_RenderFillRect(pRender, &bgrect);
 	   SDL_SetRenderDrawColor(pRender, FGColor.r, FGColor.g, FGColor.b, FGColor.a);
 	   int pw = (int)((float)w * Percent);

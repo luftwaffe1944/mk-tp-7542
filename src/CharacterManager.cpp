@@ -109,17 +109,27 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		if ( character2->getMovement() == JUMPING_LEFT_MOVEMENT && !character2->getIsRightOriented() ) {
 			//TODO: review if the jump is too close
 			if ( ((character1->posYBox - character2->posYBox) < 30*character2->getRatioY())) {
-				character2->setPositionX(character1->posXBox);
-			} else {
-				character2->setPositionX(character1->posXBox - character1->widthBox*2);
+				if (!character1->reachedWindowLeftLimit()){
+					character1->smoothOffsetX = character1->widthBox* 3/4;
+					character1->smoothOrientation =-1;
+				} else {
+					character2->smoothOffsetX = character2->widthBox* 3/4;
+					character2->smoothOrientation = 1;
+				}
 			}
 		}
 
 		if ( character2->getMovement() == JUMPING_RIGHT_MOVEMENT && character2->getIsRightOriented() ) {
 			if ( ((character1->posYBox - character2->posYBox) < 30*character2->getRatioY())) {
-				character2->setPositionX(character1->posXBox);
-			} else {
-				character2->setPositionX(character1->posXBox);
+				if (!character1->reachedWindowRightLimit()) {
+					character1->smoothOffsetX = character1->widthBox * 3/4;
+					character1->smoothOrientation = 1;
+				} else {
+					character2->smoothOffsetX = character2->widthBox* 3/4;
+					character2->smoothOrientation = -1;
+				}
+
+
 			}
 		}
 
@@ -164,17 +174,25 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		if ( character1->getMovement() == JUMPING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
 			//TODO: review if the jump is too close
 			if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
-				character1->setPositionX(character2->posXBox);
-			} else {
-				character1->setPositionX(character2->posXBox - character2->widthBox*2);
+				if (!character1->reachedWindowLeftLimit()) {
+					character2->smoothOffsetX = character2->widthBox* 3/4;
+					character2->smoothOrientation =-1;
+				} else {
+					character1->smoothOffsetX = character1->widthBox* 3/4;
+					character1->smoothOrientation = 1;
+				}
 			}
 		}
 
 		if ( character1->getMovement() == JUMPING_RIGHT_MOVEMENT && character1->getIsRightOriented() ) {
 			if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
-				character1->setPositionX(character2->posXBox);
-			} else {
-				character1->setPositionX(character2->posXBox);
+				if (!character1->reachedWindowRightLimit()) {
+					character2->smoothOffsetX = character2->widthBox * 3/4;
+					character2->smoothOrientation = 1;
+				} else {
+					character1->smoothOffsetX = character1->widthBox * 3/4;
+					character1->smoothOrientation = -1;
+				}
 			}
 		}
 

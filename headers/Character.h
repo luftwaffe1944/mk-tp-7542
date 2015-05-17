@@ -154,6 +154,11 @@ public:
 	bool getIsAirPunchingRight();
 	bool getIsAirPunchingLeft();
 
+	float smoothOffsetX;
+	int smoothOrientation;
+
+	void smoothMovPosX();
+
 };
 
 #endif /* CHARACTER_H_ */
