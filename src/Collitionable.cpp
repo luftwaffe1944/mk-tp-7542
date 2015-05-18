@@ -11,8 +11,26 @@ Collitionable::Collitionable(){
 	this->setIsWeapon(true);
 }
 
+
 Collitionable::~Collitionable(){
+	for (std::vector<Box*>::size_type i = 0; i != this->Shapes.size(); i++) {
+		delete Shapes[i];
+	}
+	this->Shapes.clear();
 }
+
+
+
+void Collitionable::Cactivation(bool active){
+	if (active){
+		this->isCActive=true;
+		this->isCMoving=true;
+	}else{
+		this->isCActive=false;
+		this->isCMoving=false;
+	}
+}
+
 
 vector<Box*> Collitionable::getCShapes(){
 	return this->Shapes;

@@ -49,6 +49,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		this->fire = false;
 		gravity = 14.0f;
 		jumpVel = 60.0f;
+		this->smoothOffsetX = 0;
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -68,6 +69,7 @@ Character::Character(const LoaderParams* pParams) :
 		this->fire = false;
 		gravity = 14.0f;
 		jumpVel = 60.0f;
+		this->smoothOffsetX = 0;
 }
 
 
@@ -208,20 +210,20 @@ bool Character::shouldMoveForward() {
 }
 
 bool Character::reachedWindowLeftLimit(){
-	if (this->getPosXUL() < WINDOW_MARGIN -15) return true;
+	if (this->posXBox / ratioX < WINDOW_MARGIN) return true;
 	return false;
 }
 
 bool Character::reachedWindowRightLimit(){
 	float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
-	if ( ( windowWidth - this->getPosXUL() - this->width ) < WINDOW_MARGIN -15) return true;
+	if ( ( windowWidth - (this->posXBox / ratioX) - this->widthBox / ratioX ) < WINDOW_MARGIN) return true;
 	return false;
 }
 
 void Character::fixOrientation() {
 	Character * p1 = GameGUI::getInstance()->getCharacters()[0];
 	Character * p2 = GameGUI::getInstance()->getCharacters()[1];
-	if ( p1->positionX < p2->positionX) {
+	if ( p1->posXBox < p2->posXBox) {
 		p1->isRightOriented = true;
 		p2->isRightOriented = false;
 	} else {
@@ -516,6 +518,7 @@ void Character::update() {
 	//refresh Collition Shapes positions
 	this->updateShapesOnStatus();
 
+	this->smoothMovPosX();
 	SDL_Delay(25);
 }
 
@@ -795,6 +798,7 @@ std::string Character::getMovement() {
 
 void Character::clean() {
 	delete this->pParams;
+	delete this->altColor;
 }
 
 
@@ -876,6 +880,9 @@ Character::~Character() {
 		 delete(it->second);
 	 }
 	 this->characterSprites.clear();
+
+	 delete this->altColor;
+
 
 }
 
@@ -1425,4 +1432,12 @@ bool Character::getIsAirPunchingRight() {
 }
 bool Character::getIsAirPunchingLeft() {
 	return this->isAirPunchingLeft;
+}
+
+void Character::smoothMovPosX() {
+	float offset = this->getPositionX() + this->smoothOrientation*10;
+	if (this->smoothOffsetX > 0) {
+			this->setPositionX(offset);
+			this->smoothOffsetX-=10;
+	}
 }

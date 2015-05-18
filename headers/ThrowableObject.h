@@ -18,7 +18,6 @@
 #include "DamageObject.h"
 #include "Character.h"
 
-#define OBJECT_SPEED 15
 
 class ThrowableObject : public SDLObjectGUI, public Collitionable {
 public:
@@ -40,7 +39,7 @@ private:
 	bool playerIsRightOriented;
 	bool posXSetReleaser;
 	bool posYsetReleaser;
-
+	bool beginShoot;
 	float widthWindow;
 	int orientationPosXFix;
 };

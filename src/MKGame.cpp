@@ -90,13 +90,14 @@ void MKGame::render() {
 
 void MKGame::clean() {
 	FILE_LOG(logDEBUG) << "cleaning game\n";
-	GameGUI::getInstance()->clean();
+
 
 	std::for_each(objectList.begin(),objectList.end(),delete_pointer_to<SDLObjectGUI>);
 	objectList.clear();
 
 	LayerManager::Instance()->clean();
 	InputControl::Instance()->clean();
+	GameGUI::getInstance()->clean();
 
 	TextureManager::Instance()->resetInstance();
 	SDL_DestroyRenderer(this->m_pRenderer);
@@ -127,9 +128,9 @@ vector<Collitionable*> convertVector(vector<Character*> oldVec){
 		}
 	return newVec;
 }
-void addVector(vector<ThrowableObject*> oldVec, vector<Collitionable*> newVec){
+void addVector(vector<ThrowableObject*> oldVec, vector<Collitionable*> *newVec){
 	for (std::vector<ThrowableObject*>::size_type i = 0; i != oldVec.size(); i++) {
-		newVec.push_back((Collitionable*) oldVec[i]);
+		newVec->push_back((Collitionable*) oldVec[i]);
 		}
 }
 
@@ -151,13 +152,14 @@ void MKGame::update() {
 		objectList[i]->setPositionY(objectList[i]->getPositionY() + this->offSetPosY);
 	}
 
-	GameGUI* pgamegui = this->getGameGUI();
+	//GameGUI* pgamegui = this->getGameGUI();
 	//metemos caracteres
-	vector<Collitionable*> collObjects = convertVector(this->getGameGUI()->getCharacters());
+	//vector<Collitionable*> collObjects = convertVector(this->getGameGUI()->getCharacters());
 	//metemos arrojables
-	addVector(this->getGameGUI()->tObjects, collObjects);
+	//vector<ThrowableObject*> throObjects= this->getGameGUI()->tObjects;
+	//addVector(throObjects, &collObjects);
 
-	CollitionManager::Instance()->solveCollitions(collObjects);
+	CollitionManager::Instance()->solveCollitions(this->getGameGUI()->vCollitionable);
 
 }
 

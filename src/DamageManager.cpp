@@ -83,12 +83,12 @@ void DamageManager::solveDamage(DamageObject* firstObject, DamageObject* secondO
 			firstObject->setDamage(this->getDamageToDo(secondObject));
 		}
 	}else if (firstObject->isWeapon){
-		firstObject->setDamage(1.0f);
-		secondObject->setDamage(0.02f);
+		firstObject->setKill();
+		secondObject->setDamage(0.05f);
 		cout << "first" << endl;
 	}else if (secondObject->isWeapon) {
-		firstObject->setDamage(0.02f);
-		secondObject->setDamage(1.0f);
+		firstObject->setDamage(0.05f);
+		secondObject->setKill();
 		cout << "second" << endl;
 	}
 }

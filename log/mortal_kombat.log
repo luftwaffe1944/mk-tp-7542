@@ -3731,3 +3731,102 @@
 - 00:09:06.444 DEBUG: init success
 - 00:10:19.771 DEBUG: cleaning game
 
+- 21:48:03.298 DEBUG: CONFIGURATION INITIALIZED
+- 21:48:03.299 DEBUG: WINDOW CONFIGURATION
+- 21:48:03.299 DEBUG: JSON - Window width: 640 px
+- 21:48:03.299 DEBUG: JSON - Window height: 480 px
+- 21:48:03.299 DEBUG: JSON - Window width: 150
+- 21:48:03.299 DEBUG: STAGE CONFIGURATION
+- 21:48:03.299 DEBUG: JSON - Stage width: 400
+- 21:48:03.299 DEBUG: JSON - Stage height: 167
+- 21:48:03.299 DEBUG: JSON - Stage ypiso: 185
+- 21:48:03.299 WARNING: Stage floor 'y' position out of range or inexistent (0 - 167). Set to default:151
+- 21:48:03.299 DEBUG: RatioX (window_width_px / window_width_lg): 4.26667
+- 21:48:03.299 DEBUG: RatioY (window_height_px / stage_height_lg): 2.87425
+- 21:48:03.299 DEBUG: LAYERS CONFIGURATION
+- 21:48:03.299 DEBUG: JSON - Number of Layers to process: 3
+- 21:48:03.299 DEBUG: JSON - Layer 0 input width: 206
+- 21:48:03.299 DEBUG: JSON - Layer 0 ID: layer0
+- 21:48:03.299 DEBUG: JSON - Layer 0 background image: images/arenas/default/p_3n.png
+- 21:48:03.299 DEBUG: JSON - Layer 0 width: 206
+- 21:48:03.299 DEBUG: JSON - Layer 0 width recalculado: 240.338
+- 21:48:03.299 DEBUG: JSON - Layer 1 input width: 237.43000000000001
+- 21:48:03.299 DEBUG: JSON - Layer 1 ID: layer1
+- 21:48:03.299 DEBUG: JSON - Layer 1 background image: images/arenas/default/p_2n.png
+- 21:48:03.299 DEBUG: JSON - Layer 1 width: 237.43
+- 21:48:03.299 DEBUG: JSON - Layer 1 width recalculado: 277.007
+- 21:48:03.299 DEBUG: JSON - Layer 2 input width: 342.85000000000002
+- 21:48:03.299 DEBUG: JSON - Layer 2 ID: layer2
+- 21:48:03.299 DEBUG: JSON - Layer 2 background image: images/arenas/default/p_1n.png
+- 21:48:03.299 DEBUG: JSON - Layer 2 width: 342.85
+- 21:48:03.299 DEBUG: JSON - Layer 2 width recalculado: 400
+- 21:48:03.299 DEBUG: JSON - Number of Layers successfully process: 3
+- 21:48:03.299 DEBUG: CHARACTERS CONFIGURATION
+- 21:48:03.299 DEBUG: JSON - Number of Characters to process: 2
+- 21:48:03.299 DEBUG: JSON - Input Character name: subzero
+- 21:48:03.299 DEBUG: JSON - Input Character width: 55
+- 21:48:03.299 DEBUG: JSON - Input Character height: 70
+- 21:48:03.299 DEBUG: JSON - Input Character z-index: 99
+- 21:48:03.299 DEBUG: JSON - tag COLOR-ALTERNATIVO de personaje leido. 
+- 21:48:03.300 DEBUG: JSON - tag COLOR-ALTERNATIVO h_inicial leido: 180
+- 21:48:03.300 DEBUG: JSON - tag COLOR-ALTERNATIVO h_final leido: 300
+- 21:48:03.300 DEBUG: JSON - tag COLOR-ALTERNATIVO desplazamiento leido: 360
+- 21:48:03.300 DEBUG: Final values for character.
+- 21:48:03.300 DEBUG: JSON - Character name: subzero
+- 21:48:03.300 DEBUG: JSON - Character width: 55
+- 21:48:03.300 DEBUG: JSON - Character height: 70
+- 21:48:03.300 DEBUG: JSON - Character z-index: 99
+- 21:48:03.300 DEBUG: JSON - Character alternative color h_inicial: 180
+- 21:48:03.300 DEBUG: JSON - Character alternative color h_final: 300
+- 21:48:03.300 DEBUG: JSON - Character alternative color shift: 360
+- 21:48:03.300 DEBUG: JSON - Input Character name: scorpion
+- 21:48:03.300 DEBUG: JSON - Input Character width: 5
+- 21:48:03.300 DEBUG: JSON - Input Character height: 70
+- 21:48:03.300 DEBUG: JSON - Input Character z-index: 99
+- 21:48:03.300 DEBUG: JSON - tag COLOR-ALTERNATIVO de personaje leido. 
+- 21:48:03.300 DEBUG: JSON - tag COLOR-ALTERNATIVO h_inicial leido: 180
+- 21:48:03.300 DEBUG: JSON - tag COLOR-ALTERNATIVO h_final leido: 300
+- 21:48:03.300 DEBUG: JSON - tag COLOR-ALTERNATIVO desplazamiento leido: 60
+- 21:48:03.300 DEBUG: Final values for character.
+- 21:48:03.300 DEBUG: JSON - Character name: scorpion
+- 21:48:03.300 DEBUG: JSON - Character width: 5
+- 21:48:03.300 DEBUG: JSON - Character height: 70
+- 21:48:03.300 DEBUG: JSON - Character z-index: 99
+- 21:48:03.300 DEBUG: JSON - Character alternative color h_inicial: 180
+- 21:48:03.300 DEBUG: JSON - Character alternative color h_final: 300
+- 21:48:03.300 DEBUG: JSON - Character alternative color shift: 60
+- 21:48:03.300 DEBUG: FIGHT CONFIGURATION
+- 21:48:03.300 DEBUG: JSON - Input fighter one name: subzero
+- 21:48:03.300 DEBUG: JSON - Input fighter one name: subzero
+- 21:48:03.300 DEBUG: JOYSTICKS CONFIGURATION
+- 21:48:03.300 DEBUG: JSON - Number of Joysticks to process: 2
+- 21:48:03.300 DEBUG: JSON - Joystick: 0 - Piña baja: 1
+- 21:48:03.300 DEBUG: JSON - Joystick: 0 - Piña alta: 0
+- 21:48:03.300 DEBUG: JSON - Joystick: 0 - Patada baja: 2
+- 21:48:03.300 DEBUG: JSON - Joystick: 0 - Patada alta: 3
+- 21:48:03.300 DEBUG: JSON - Joystick: 0 - Bloqueo: 4
+- 21:48:03.300 DEBUG: JSON - Joystick: 0 - Disparo: 5
+- 21:48:03.301 DEBUG: JSON - Joystick: 1 - Piña baja: 1
+- 21:48:03.301 DEBUG: JSON - Joystick: 1 - Piña alta: 0
+- 21:48:03.301 DEBUG: JSON - Joystick: 1 - Patada baja: 2
+- 21:48:03.301 DEBUG: JSON - Joystick: 1 - Patada alta: 3
+- 21:48:03.301 DEBUG: JSON - Joystick: 1 - Bloqueo: 4
+- 21:48:03.301 DEBUG: JSON - Joystick: 1 - Disparo: 5
+- 21:48:03.301 DEBUG: CONFIGURATION FINISHED
+- 21:48:03.301 DEBUG: Layer layer2 layeroffScene 125
+- 21:48:03.301 DEBUG: Layer layer2 speed: 2
+- 21:48:03.301 DEBUG: Layer layer1 layeroffScene 63.5
+- 21:48:03.301 DEBUG: Layer layer1 speed: 1.016
+- 21:48:03.301 DEBUG: Layer layer0 layeroffScene 45
+- 21:48:03.301 DEBUG: Layer layer0 speed: 0.72
+- 21:48:03.640 DEBUG: SDL init success
+- 21:48:03.640 DEBUG: Number of Joysticks connected: 2
+- 21:48:03.640 DEBUG: Joystick 0 button count 12
+- 21:48:03.640 DEBUG: Joystick 0 initialized
+- 21:48:03.640 DEBUG: Joystick 1 button count 19
+- 21:48:03.640 DEBUG: Joystick 1 initialized
+- 21:48:03.672 DEBUG: window creation success
+- 21:48:03.834 DEBUG: renderer creation success
+- 21:48:04.356 DEBUG: init success
+- 21:48:29.133 DEBUG: cleaning game
+

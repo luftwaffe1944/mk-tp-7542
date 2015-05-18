@@ -15,6 +15,9 @@ using namespace std;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
+//Throwable Speed Object
+#define OBJECT_SPEED 20
+
 
 //Joystick
 #define MAX_XAXIS 32000 //max 32767

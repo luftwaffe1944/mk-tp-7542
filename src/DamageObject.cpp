@@ -21,13 +21,17 @@ DamageObject::DamageObject(){
 
 DamageObject::~DamageObject(){}
 
+bool DamageObject::getDestroy(){
+	return this->isDestroy;
+}
+
 float DamageObject::getEnergy(){
 	return this->energy;
 }
 void DamageObject::setEnergy(float newEnergyValue){
 	this->energy = newEnergyValue;
 }
-void DamageObject::setAgain(){
+void DamageObject::setLive(){
 	this->energy = 1.0f;
 	this->isDestroy = false;
 }

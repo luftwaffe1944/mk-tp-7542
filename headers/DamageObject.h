@@ -28,13 +28,14 @@ public:
 	bool isWeapon;
 	virtual ~DamageObject();
 	float getEnergy();
+	bool getDestroy();
 	void setEnergy(float newEnergyValue);
 	void setDamage(float damage);
 	void setDOMovement(string movement);
 	string getDOMovement();
 	void setIsWeapon(bool isWeapon);
 	bool isCharacter();
-	void setAgain();
+	void setLive();
 	void setKill();
 };
 

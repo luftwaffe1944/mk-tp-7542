@@ -131,12 +131,12 @@ void LayerManager::refresh() {
 		int windowWidth = this->window->width;
 		int characterWidth = this->characters[i]->getWidth();
 
-		if ( ( (windowWidth - (posXCharacter + characterWidth )) < WINDOW_MARGIN -14) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight && !passiveCharacter->reachedWindowLeftLimit() ) {
+		if ( ( (windowWidth - (posXCharacter + characterWidth )) < WINDOW_MARGIN -1) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight && !passiveCharacter->reachedWindowLeftLimit() ) {
 			refresh = true;
 			rightOrientation = true;
 			orientation = 1;
 		}
-		else if  (( posXCharacter < WINDOW_MARGIN -14) && !layerReachedStageLimit( windowWidth, false) && isCharMovingLeft && !passiveCharacter->reachedWindowRightLimit())  {
+		else if  (( posXCharacter < WINDOW_MARGIN -1) && !layerReachedStageLimit( windowWidth, false) && isCharMovingLeft && !passiveCharacter->reachedWindowRightLimit())  {
 			refresh = true;
 			leftOrientation = true;
 			orientation = -1;
@@ -155,8 +155,15 @@ void LayerManager::refresh() {
 
 	if (refresh == true && standingCharacter != -1 ) {
 		this->characters[standingCharacter]->setFixPosXStandingCharacter( orientation );
-		for( unsigned int i =0; i < GameGUI::getInstance()->tObjects.size(); i++) {
-			GameGUI::getInstance()->tObjects[i]->setFixPosXStandingCharacter( orientation);
+		//for( unsigned int i =0; i < GameGUI::getInstance()->tObjects.size(); i++) {
+		//	GameGUI::getInstance()->tObjects[i]->setFixPosXStandingCharacter( orientation);
+		//}
+		vector<Collitionable*> vColl = GameGUI::getInstance()->vCollitionable;
+		for( unsigned int i =0; i < vColl.size(); i++) {
+			if (!vColl[i]->isCharacter()) {
+				ThrowableObject* weapon = (ThrowableObject*) vColl[i];
+				weapon->setFixPosXStandingCharacter( orientation);
+			}
 		}
 	}
 

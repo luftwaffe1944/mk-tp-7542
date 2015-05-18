@@ -37,7 +37,7 @@
 		},
 		{
 			"nombre": "scorpion",
-			"ancho": 55,
+			"ancho": 5,
 			"alto": 70,
 			"zindex": 99,
 			"color-alternativo": {

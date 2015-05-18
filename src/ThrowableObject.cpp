@@ -13,12 +13,15 @@ ThrowableObject::ThrowableObject(const LoaderParams* pParams, float widthWindow)
 	this->posYsetReleaser = false;
 	this->widthWindow = widthWindow;
 	this->initCShapes(2,this->positionX, this->positionY,this->width,this->height);
-	this->setCMoving(true);
+	this->setCMoving(false);
+	this->setCActive(false);
 	this->isWeapon = true;
+	this->beginShoot = false;
 }
 
 ThrowableObject::~ThrowableObject() {
 	// TODO Auto-generated destructor stub
+	delete this->pParams;
 }
 
 void ThrowableObject::setReceiver(Character* receiver) {
@@ -49,135 +52,66 @@ void ThrowableObject::draw() {
 
 
 void ThrowableObject::getCNextPosition(float* nextPositionX, float* nextPositionY){
-	*nextPositionX = this->positionX + OBJECT_SPEED;
+	if (this->playerIsRightOriented) {
+		*nextPositionX = this->positionX + OBJECT_SPEED;
+	}else{
+		*nextPositionX = this->positionX - OBJECT_SPEED;
+	}
 	*nextPositionY = this->positionY;
 }
 
 void ThrowableObject::update() {
+	float centerX;
+	float centerY;
+
+	if (!this->getCActive()){
+		//
+
+		this->positionY = this->releaser->posYBox + this->releaser->heightBox / 2;
+		//orientacion del que dispara
+		this->playerIsRightOriented = this->releaser->getIsRightOriented();
+		if (this->playerIsRightOriented) {
+			this->positionX = this->releaser->posXBox + this->releaser->widthBox + ((this->width*ratioX/2)+1);
+		}else{
+			this->positionX = this->releaser->posXBox - ((this->width*ratioX/2)+1);
+		}
+		this->setLive();
+		this->beginShoot = true;
+	}
 
 	if (this->releaser->fire) {
+		if (!this->getDestroy()) {
+			this->Cactivation(true);
+		}else{
+			this->releaser->fire = false;
+			this->Cactivation(false);
+		}
+		if (!this->beginShoot){
+			if (this->playerIsRightOriented) {
+				this->positionX = this->positionX + OBJECT_SPEED;
+			}else {
+				this->positionX = this->positionX - OBJECT_SPEED;
+			}
+		}else{
+			this->beginShoot = false;
+		}
+
 		if (this->orientationPosXFix != 0) {
 			this->fixPosXStandingCharacter();
 			this->orientationPosXFix = 0;
 		}
-
-
-		float charWidht = this->releaser->getWidth()*ratioX;
-		float charHeight = (this->releaser->getHeight())*ratioY;
-		float centerX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX / 2;
-		float centerY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY / 2;
-
-
-		//orientacion del que dispara
-		this->playerIsRightOriented = this->releaser->getIsRightOriented();
-
-		//arranca la bola pegada al personaje
-		//float posXCharacter = this->releaser->getPositionX() / ratioX;
-		//float posYCharacter = this->releaser->getPositionY() / ratioY;
-		//float centerWidthCharacter = (this->releaser->getWidth() / 2);
-		//float centerHeightCharacter = (this->releaser->getHeight() / 2);
-
 		if (!this->posXSetReleaser) {
-			if (this->playerIsRightOriented) {
-				this->positionX = centerX + 10;
-			}
-			else {
-				this->positionX = centerX - 10;
-			}
-
-			this->posXSetReleaser = true;
-
-		}
-		if(!this->posYsetReleaser) {
-			this->positionY = centerY;
-			this->posYsetReleaser = true;
-		}
-/*
-		float charWidht = this->releaser->getWidth()*ratioX;
-		float charHeight = (this->releaser->getHeight())*ratioY;
-		float centerX = this->releaser->getPositionX() + this->releaser->getWidth() * ratioX / 2;
-		float centerY = this->releaser->getPositionY() + this->releaser->getHeight() * ratioY / 2;
-
-*/
-		//orientacion del que dispara
-		this->playerIsRightOriented = this->releaser->getIsRightOriented();
-
-		//arranca la bola pegada al personaje
-		//float posXCharacter = this->releaser->getPositionX() / ratioX;
-		//float posYCharacter = this->releaser->getPositionY() / ratioY;
-		//float centerWidthCharacter = (this->releaser->getWidth() / 2);
-		//float centerHeightCharacter = (this->releaser->getHeight() / 2);
-
-		if (!this->posXSetReleaser) {
-			if (this->playerIsRightOriented) {
-				this->positionX = centerX + 10;
-			}
-			else {
-				this->positionX = centerX - 10;
-			}
-
 			this->posXSetReleaser = true;
 			cout << "X salida: " << this->positionX << " ";
-
 		}
 		if(!this->posYsetReleaser) {
-			this->positionY = centerY;
 			this->posYsetReleaser = true;
 			cout << "Y salida: " << this->positionY << " ";
 		}
-
-		/*
-
-		bool endBoom = false;
-		//si esta mirando para la derecha
-		//TODO: hacerlo colisionable ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
-		if (this->playerIsRightOriented && !endBoom) {
-<<<<<<< HEAD
-			if (this->positionX / ratioX < this->widthWindow) {
-=======
-			if (this->positionX < this->receiver->getPositionX() / ratioX + this->receiver->getWidth() /2) {
->>>>>>> refs/remotes/origin/master
-				this->positionX+= OBJECT_SPEED;
-			} else {
-				endBoom = true;
-			}
-		}
-
-		//si esta mirando para izq
-		//TODO: hacerlo colisionable, ahora corta cuando llega a la posX del personaje que recibe el objecto arrojable
-		if (!this->playerIsRightOriented && !endBoom) {
-<<<<<<< HEAD
-			if (0 < this->positionX / ratioX) {
-=======
-			if (this->receiver->getPositionX() / ratioX + this->receiver->getWidth()/ 2 < this->positionX) {
->>>>>>> refs/remotes/origin/master
-				this->positionX-= OBJECT_SPEED;
-			} else {
-				endBoom = true;
-			}
-		}
-
-		//Si llego al personaje que recibe, se setea que no se muestre mas
-		//TODO: hacerlo colisionable
-		if (endBoom) {
+		if ((this->positionX / ratioX > this->widthWindow) || (this->positionX / ratioX <0)) {
 			this->releaser->fire = false;
-			this->posXSetReleaser = false;
-			this->posYsetReleaser = false;
-		}
-<<<<<<< HEAD
-
-		//if (this->positionX / ratioX > this->widthWindow) {
-		//	this->releaser->fire = false;
-		//	this->posXSetReleaser = false;
-		//	this->posYsetReleaser = false;
-		//}
-		//cout << "Y: " << this->positionY << " " << this->receiver->getPositionY() << endl;
-		//this->updateCShapesPosition(this->positionX, this->positionY, this->width * ratioX, this->height * ratioY);
-=======
-		*/
-		this->positionX += OBJECT_SPEED;
-		if (this->positionX / ratioX > this->widthWindow) {
-			this->releaser->fire = false;
+			this->Cactivation(false);
+			this->setCActive(false);
 			this->posXSetReleaser = false;
 			this->posYsetReleaser = false;
 		}
@@ -189,7 +123,7 @@ void ThrowableObject::update() {
 }
 
 void ThrowableObject::clean(){
-
+	delete this->pParams;
 }
 
 void ThrowableObject::setFixPosXStandingCharacter( int orientation) {
