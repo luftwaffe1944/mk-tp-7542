@@ -12,6 +12,7 @@
 
 #include "Layer.h"
 #include "Character.h"
+#include "ThrowableObject.h"
 #include "GameGUI.h"
 #include "Log.h"
 #include "Constants.h"
@@ -29,6 +30,8 @@ public:
 
 	void clean();
 
+	bool layerReachedStageLimit(int windowWidth, bool border);
+
 private:
 	static LayerManager* lm_pInstance;
 	vector<Layer*> layers;
@@ -45,7 +48,7 @@ private:
 	void setOffSceneFrontalLayer();
 	void centerFrontalLayer();
 	void centerLayers( Layer* layer);
-	bool layerReachedStageLimit(int windowWidth, bool border);
+
 };
 
 #endif /* LAYERMANAGER_H_ */

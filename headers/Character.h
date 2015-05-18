@@ -131,7 +131,7 @@ public:
 	void setIsRightOriented(bool isRightOriented);
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
-	bool showBoxes = false;
+	bool showBoxes = true;
 
 
 	float posXBox;
@@ -153,6 +153,11 @@ public:
 	bool getIsKickingAirLowLeft();
 	bool getIsAirPunchingRight();
 	bool getIsAirPunchingLeft();
+
+	float smoothOffsetX;
+	int smoothOrientation;
+
+	void smoothMovPosX();
 
 };
 

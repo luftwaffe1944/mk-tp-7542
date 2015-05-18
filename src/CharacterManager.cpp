@@ -45,7 +45,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		character2 = dynamic_cast<Character*>(nextObj);
 	}
 
-	//GOLPES CHARACTER 12
+	if ((actualObj->isCharacter()) && (nextObj->isCharacter())){
+	//GOLPES CHARACTER 1
 	if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT || character1->getMovement() == HIGH_KICK_MOVEMENT
 			|| character1->getMovement() == AIR_PUNCH_MOVEMENT) && character2->getMovement() != BLOCK_MOVEMENT){
 		character2->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
@@ -103,24 +104,39 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		character2->setPositionX(character1->posXBox - character1->widthBox*2);
 	}
 
+//FOR JUMPING
+		float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
+		float posYCharacter1 = character1->posYBox;
+		float posXCharacter1 = character1->posYBox;
+		float widthCharacter1 = character1->widthBox;
 
-	//FOR JUMPING
-	if ( character2->getMovement() == JUMPING_LEFT_MOVEMENT && !character2->getIsRightOriented() ) {
-		//TODO: review if the jump is too close
-		if ( ((character1->posYBox - character2->posYBox) < 30*character2->getRatioY())) {
-			character2->setPositionX(character1->posXBox);
-		} else {
-			character2->setPositionX(character1->posXBox - character1->widthBox*2);
+		float posYCharacter2 = character2->posYBox;
+		float posXCharacter2 = character2->posYBox;
+		float widthCharacter2 = character2->widthBox;
+		if ( character2->getMovement() == JUMPING_LEFT_MOVEMENT && !character2->getIsRightOriented() ) {
+			//TODO: review if the jump is too close
+			if ( ((posYCharacter1 - posYCharacter2) < 30*character2->getRatioY())) {
+				if ((posXCharacter2 - posXCharacter1 < widthCharacter1) && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, false))){
+					character1->smoothOffsetX = widthCharacter1 * 3/4;
+					character1->smoothOrientation =-1;
+				} else {
+					character2->smoothOffsetX = widthCharacter2* 3/4;
+					character2->smoothOrientation = 1;
+				}
+			}
 		}
-	}
 
-	if ( character2->getMovement() == JUMPING_RIGHT_MOVEMENT && character2->getIsRightOriented() ) {
-		if ( ((character1->posYBox - character2->posYBox) < 30*character2->getRatioY())) {
-			character2->setPositionX(character1->posXBox);
-		} else {
-			character2->setPositionX(character1->posXBox);
+		if ( character2->getMovement() == JUMPING_RIGHT_MOVEMENT && character2->getIsRightOriented() ) {
+			if ( ((posYCharacter1 - posYCharacter2)  < 30*character2->getRatioY())) {
+				if (posXCharacter1 - posXCharacter2 < widthCharacter1 && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, true))) {
+					character1->smoothOffsetX = character1->widthBox * 3/4;
+					character1->smoothOrientation = 1;
+				} else {
+					character2->smoothOffsetX = character2->widthBox* 3/4;
+					character2->smoothOrientation = -1;
+				}
+			}
 		}
-	}
 
 
 	//FOR AIR KICKING
@@ -159,23 +175,34 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 	}
 
 
-	//FOR JUMPING
-	if ( character1->getMovement() == JUMPING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
-		//TODO: review if the jump is too close
-		if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
-			character1->setPositionX(character2->posXBox);
-		} else {
-			character1->setPositionX(character2->posXBox - character2->widthBox*2);
-		}
-	}
 
-	if ( character1->getMovement() == JUMPING_RIGHT_MOVEMENT && character1->getIsRightOriented() ) {
-		if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
-			character1->setPositionX(character2->posXBox);
-		} else {
-			character1->setPositionX(character2->posXBox);
+		//FOR JUMPING
+		if ( character1->getMovement() == JUMPING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
+			//TODO: review if the jump is too close
+			if ( ((posYCharacter2- posYCharacter1) < 30*character1->getRatioY())) {
+				if ((posXCharacter1 - posXCharacter2 < widthCharacter2) && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, false))) {
+					character2->smoothOffsetX = character2->widthBox* 3/4;
+					character2->smoothOrientation =-1;
+				} else {
+					character1->smoothOffsetX = character1->widthBox* 3/4;
+					character1->smoothOrientation = 1;
+				}
+			}
 		}
-	}
+
+		if ( character1->getMovement() == JUMPING_RIGHT_MOVEMENT && character1->getIsRightOriented() ) {
+			if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
+				if (posXCharacter2 - posXCharacter1 < widthCharacter2 && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, true))) {
+					character2->smoothOffsetX = character2->widthBox * 3/4;
+					character2->smoothOrientation = 1;
+				} else {
+					character1->smoothOffsetX = character1->widthBox * 3/4;
+					character1->smoothOrientation = -1;
+				}
+			}
+		}
+
+
 
 
 	//FOR AIR KICKING
@@ -199,6 +226,6 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		character1->setPositionX(character2->posXBox - character2->widthBox*2);
 	}
 
-
+	}
 }
 
