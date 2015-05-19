@@ -365,7 +365,8 @@ void Character::update() {
 		// Movements validation to refresh frames
 		if (isDucking && (playerCommand != FIRST_PLAYER_MOVE_DOWN &&
 				playerCommand != FIRST_PLAYER_MOVE_DOWN_LEFT &&
-				playerCommand != FIRST_PLAYER_MOVE_DOWN_RIGHT)) {
+				playerCommand != FIRST_PLAYER_MOVE_DOWN_RIGHT &&
+				playerCommand != FIRST_PLAYER_FIRE)) {
 			this->refreshFrames();
 		}
 		if (isWalkingRight && playerCommand != FIRST_PLAYER_MOVE_RIGHT){
@@ -511,6 +512,12 @@ void Character::update() {
 			airPunchLeft();
 			break;
 		case FIRST_PLAYER_FIRE:
+			this->fire = true;
+			break;
+		case FIRST_PLAYER_DUCK_FIRE:
+			this->setMovement(DUCKING_MOVEMENT);
+			setCurrentSprite();
+			this->isDucking = true;
 			this->fire = true;
 			break;
 		case NO_INPUT:

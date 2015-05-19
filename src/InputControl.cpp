@@ -544,6 +544,8 @@ void InputControl::refreshJoystickInputs() {
 				if (getActionButtonState(joystick, LOW_PUNCH)) {
 					setPlayerMove( joystick,  FIRST_PLAYER_DUCK_PUNCH);
 					setActionButtonStateFalse(joystick,LOW_PUNCH);
+				} else if ( getActionButtonState( joystick, FIRE) ) {
+					setPlayerMove( joystick, FIRST_PLAYER_DUCK_FIRE);
 				} else if (getActionButtonState(joystick,HIGH_PUNCH)) {
 					setPlayerMove( joystick,  FIRST_PLAYER_UPPERCUT);
 					setActionButtonStateFalse(joystick,HIGH_PUNCH);
