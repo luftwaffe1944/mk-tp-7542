@@ -292,6 +292,10 @@ void Character::update() {
 		setCurrentSprite();
 		completeMovement();
 	}
+	else if (isJumping && playerCommand == FIRST_PLAYER_FIRE && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
+		fire = true;
+		jump();
+	}
 	else if (isJumping && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
 		jump();
 	}

@@ -487,8 +487,16 @@ void InputControl::refreshJoystickInputs() {
 						&& !(isAxisLeft(joystick))
 						&& !someJoyPunchButtonPressed( joystick )
 						&& !someJoyKickButtonPressed( joystick )
-						&& !(isAxisRight(joystick))) {
+						&& !(isAxisRight(joystick))
+						&& !getActionButtonState( joystick, FIRE)) {
 					setPlayerMove( joystick, FIRST_PLAYER_MOVE_UP);
+				} else if (	!(isAxisDown(joystick))
+						&& !(isAxisLeft(joystick))
+						&& !someJoyPunchButtonPressed( joystick )
+						&& !someJoyKickButtonPressed( joystick )
+						&& !(isAxisRight(joystick))
+						&& getActionButtonState( joystick, FIRE)) {
+					setPlayerMove( joystick, FIRST_PLAYER_FIRE);
 				} else if (!(isAxisDown(joystick))
 						&& !(isAxisLeft(joystick))
 						&& someJoyPunchButtonPressed( joystick )
