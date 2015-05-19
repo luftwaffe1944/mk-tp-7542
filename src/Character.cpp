@@ -517,6 +517,7 @@ void Character::update() {
 	}
 	//refresh Collition Shapes positions
 	this->updateShapesOnStatus();
+
 	this->smoothMovPosX();
 	SDL_Delay(25);
 }
@@ -686,6 +687,8 @@ void Character::jumpRight() {
 }
 
 void Character::flyFalling() {
+
+	MKGame::Instance()->setShaking(true);
 	isHintFlying = true;
 	isJumpingRight = false;
 	isJumping = false;
@@ -847,6 +850,9 @@ void Character::completeMovement(){
 	int spriteAmount = currentSprite->getFramesAmount();
 	if (moveCounter == spriteAmount) {
 		setMoveFlag(false);
+		if (isTouchingGround(positionY)){
+			clearMovementsFlags();
+		}
 		resetCounter(getMovement());
 		this->movement="";
 	}

@@ -18,6 +18,13 @@
 bool somePunchButtonPressed(const Uint8* keyBoard);
 bool someKickButtonPressed(const Uint8* keyBoard);
 
+bool somePunchButtonPressed1(const Uint8* keyBoard);
+bool someKickButtonPressed1(const Uint8* keyBoard);
+
+bool somePunchButtonPressed2(const Uint8* keyBoard);
+bool someKickButtonPressed2(const Uint8* keyBoard);
+
+
 void InputControl::refreshInputs() {
 
 	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
@@ -163,6 +170,299 @@ void InputControl::refreshInputs() {
 	}
 
 }
+void InputControl::refreshInputs1() {
+
+	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
+
+	this->firstPlayerMove = NO_INPUT;
+	//this->secondPlayerMove = NO_INPUT;
+	this->controlOption = NO_INPUT;
+
+	if ((currentKeyStates[SDL_SCANCODE_R])) {
+		this->controlOption = RESET;
+
+		//COMBINATION WITH UP
+	} else if (currentKeyStates[SDL_SCANCODE_W]) {
+
+		if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& !somePunchButtonPressed1(currentKeyStates)
+				&& !someKickButtonPressed1(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP;
+		} else if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& somePunchButtonPressed1(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH;
+		} else if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& (currentKeyStates[SDL_SCANCODE_A])
+				&& somePunchButtonPressed1(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH_L;
+		} else if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& somePunchButtonPressed1(currentKeyStates)
+				&& (currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_PUNCH_R;
+		} else if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& someKickButtonPressed1(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_HIGH_kICK;
+		} else if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& (currentKeyStates[SDL_SCANCODE_A])
+				&& !(someKickButtonPressed1(currentKeyStates))
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& (currentKeyStates[SDL_SCANCODE_A])
+				&& someKickButtonPressed1(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_L;
+		} else if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& someKickButtonPressed1(currentKeyStates)
+				&& (currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_R;
+		} else if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& (currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
+		}
+
+		//COMBINATION WITH DOWN
+	} else if (currentKeyStates[SDL_SCANCODE_S] && !currentKeyStates[SDL_SCANCODE_LCTRL]) {
+		if (currentKeyStates[SDL_SCANCODE_F]) {
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_PUNCH;
+		} else if (currentKeyStates[SDL_SCANCODE_G]) {
+			this->firstPlayerMove = FIRST_PLAYER_UPPERCUT;
+		} else if (currentKeyStates[SDL_SCANCODE_V]) {
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_LOW_kICK;
+		} else if (currentKeyStates[SDL_SCANCODE_B]) {
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_HIGH_kICK;
+		} else if (!(currentKeyStates[SDL_SCANCODE_W])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& (currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_W])
+				&& (currentKeyStates[SDL_SCANCODE_A])
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_W])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_DOWN;
+
+		}
+		//COMBINATION WITH LEFT
+	} else if (currentKeyStates[SDL_SCANCODE_A]) {
+		if (currentKeyStates[SDL_SCANCODE_B]){
+			this->firstPlayerMove = FIRST_PLAYER_SUPER_kICK;
+		}
+		else if (currentKeyStates[SDL_SCANCODE_V]){
+			this->firstPlayerMove = FIRST_PLAYER_UNDER_KICK;
+		}
+		else if (currentKeyStates[SDL_SCANCODE_LCTRL]){
+			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
+		}
+		else if (!(currentKeyStates[SDL_SCANCODE_W])
+				&& !(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_LEFT;
+		}
+		//COMBINATION WITH RIGHT
+	} else if (currentKeyStates[SDL_SCANCODE_D]) {
+		if (!(currentKeyStates[SDL_SCANCODE_W])
+				&& !(currentKeyStates[SDL_SCANCODE_S])
+				&& !currentKeyStates[SDL_SCANCODE_LCTRL]
+				&& !(currentKeyStates[SDL_SCANCODE_A])) {
+			this->firstPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+		}
+		else if (currentKeyStates[SDL_SCANCODE_LCTRL]){
+			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
+		}
+		//COMBINATION WITH S
+	} else if (currentKeyStates[SDL_SCANCODE_G]) {
+		if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_HI_PUNCH;
+		}
+		//COMBINATION WITH A
+	} else if (currentKeyStates[SDL_SCANCODE_F]) {
+		if (!(currentKeyStates[SDL_SCANCODE_S])
+				&& !(currentKeyStates[SDL_SCANCODE_A])
+				&& !(currentKeyStates[SDL_SCANCODE_D])) {
+			this->firstPlayerMove = FIRST_PLAYER_LO_PUNCH;
+		}
+
+		//COMBINATION WITH LEFT CTRL
+	} else if (currentKeyStates[SDL_SCANCODE_LCTRL]) {
+		if (!(currentKeyStates[SDL_SCANCODE_S])) {
+			this->firstPlayerMove = FIRST_PLAYER_BLOCK;
+		}
+		else if((currentKeyStates[SDL_SCANCODE_S])){
+			this->firstPlayerMove = FIRST_PLAYER_DUCK_BLOCK;
+		}
+
+	} else if (currentKeyStates[SDL_SCANCODE_B]) {
+		this->firstPlayerMove = FIRST_PLAYER_HIGH_KICK;
+	}
+
+	else if (currentKeyStates[SDL_SCANCODE_V]) {
+		this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
+	}
+
+}
+
+
+void InputControl::refreshInputs2() {
+
+	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
+
+	//this->firstPlayerMove = NO_INPUT;
+	this->secondPlayerMove = NO_INPUT;
+	this->controlOption = NO_INPUT;
+
+	if ((currentKeyStates[SDL_SCANCODE_R])) {
+		this->controlOption = RESET;
+
+		//COMBINATION WITH UP
+	} else if (currentKeyStates[SDL_SCANCODE_UP]) {
+
+		if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !somePunchButtonPressed2(currentKeyStates)
+				&& !someKickButtonPressed2(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_UP;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& somePunchButtonPressed2(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_AIR_PUNCH;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& somePunchButtonPressed2(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_AIR_PUNCH_L;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& somePunchButtonPressed2(currentKeyStates)
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_AIR_PUNCH_R;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& someKickButtonPressed2(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_AIR_HIGH_kICK;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(someKickButtonPressed2(currentKeyStates))
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_UP_LEFT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& someKickButtonPressed2(currentKeyStates)
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_L;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& someKickButtonPressed2(currentKeyStates)
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_AIR_LOW_kICK_R;
+		} else if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_UP_RIGHT;
+		}
+
+		//COMBINATION WITH DOWN
+	} else if (currentKeyStates[SDL_SCANCODE_DOWN] && !currentKeyStates[SDL_SCANCODE_RCTRL]) {
+		if (currentKeyStates[SDL_SCANCODE_J]) {
+			this->secondPlayerMove = FIRST_PLAYER_DUCK_PUNCH;
+		} else if (currentKeyStates[SDL_SCANCODE_K]) {
+			this->secondPlayerMove = FIRST_PLAYER_UPPERCUT;
+		} else if (currentKeyStates[SDL_SCANCODE_N]) {
+			this->secondPlayerMove = FIRST_PLAYER_DUCK_LOW_kICK;
+		} else if (currentKeyStates[SDL_SCANCODE_M]) {
+			this->secondPlayerMove = FIRST_PLAYER_DUCK_HIGH_kICK;
+		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& (currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_DOWN_RIGHT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& (currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_DOWN_LEFT;
+		} else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_DOWN;
+
+		}
+		//COMBINATION WITH LEFT
+	} else if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+		if (currentKeyStates[SDL_SCANCODE_M]){
+			this->secondPlayerMove = FIRST_PLAYER_SUPER_kICK;
+		}
+		else if (currentKeyStates[SDL_SCANCODE_N]){
+			this->secondPlayerMove = FIRST_PLAYER_UNDER_KICK;
+		}
+		else if (currentKeyStates[SDL_SCANCODE_RCTRL]){
+			this->secondPlayerMove = FIRST_PLAYER_BLOCK;
+		}
+		else if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_LEFT;
+		}
+		//COMBINATION WITH RIGHT
+	} else if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+		if (!(currentKeyStates[SDL_SCANCODE_UP])
+				&& !(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !currentKeyStates[SDL_SCANCODE_RCTRL]
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])) {
+			this->secondPlayerMove = FIRST_PLAYER_MOVE_RIGHT;
+		}
+		else if (currentKeyStates[SDL_SCANCODE_RCTRL]){
+			this->secondPlayerMove = FIRST_PLAYER_BLOCK;
+		}
+		//COMBINATION WITH S
+	} else if (currentKeyStates[SDL_SCANCODE_K]) {
+		if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_HI_PUNCH;
+		}
+		//COMBINATION WITH A
+	} else if (currentKeyStates[SDL_SCANCODE_J]) {
+		if (!(currentKeyStates[SDL_SCANCODE_DOWN])
+				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
+				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
+			this->secondPlayerMove = FIRST_PLAYER_LO_PUNCH;
+		}
+
+		//COMBINATION WITH LEFT CTRL
+	} else if (currentKeyStates[SDL_SCANCODE_RCTRL]) {
+		if (!(currentKeyStates[SDL_SCANCODE_DOWN])) {
+			this->secondPlayerMove = FIRST_PLAYER_BLOCK;
+		}
+		else if((currentKeyStates[SDL_SCANCODE_DOWN])){
+			this->secondPlayerMove = FIRST_PLAYER_DUCK_BLOCK;
+		}
+
+	} else if (currentKeyStates[SDL_SCANCODE_M]) {
+		this->secondPlayerMove = FIRST_PLAYER_HIGH_KICK;
+	}
+
+	else if (currentKeyStates[SDL_SCANCODE_N]) {
+		this->secondPlayerMove = FIRST_PLAYER_LOW_KICK;
+	}
+
+}
+
 
 void InputControl::refreshJoystickInputs() {
 
@@ -513,6 +813,21 @@ bool somePunchButtonPressed(const Uint8* keyBoard) {
 	return (keyBoard[SDL_SCANCODE_A]) || (keyBoard[SDL_SCANCODE_S]);
 }
 
+bool someKickButtonPressed1(const Uint8* keyBoard) {
+	return (keyBoard[SDL_SCANCODE_V]) || (keyBoard[SDL_SCANCODE_B]);
+}
+
+bool somePunchButtonPressed1(const Uint8* keyBoard) {
+	return (keyBoard[SDL_SCANCODE_F]) || (keyBoard[SDL_SCANCODE_G]);
+}
+
+bool someKickButtonPressed2(const Uint8* keyBoard) {
+	return (keyBoard[SDL_SCANCODE_N]) || (keyBoard[SDL_SCANCODE_M]);
+}
+
+bool somePunchButtonPressed2(const Uint8* keyBoard) {
+	return (keyBoard[SDL_SCANCODE_J]) || (keyBoard[SDL_SCANCODE_K]);
+}
 bool InputControl::someJoyKickButtonPressed(int joy) {
 	return (getActionButtonState(joy, LOW_KICK)) || (getActionButtonState(joy, HIGH_KICK) ) ;
 }

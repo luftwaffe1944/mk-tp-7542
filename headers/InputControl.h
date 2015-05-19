@@ -65,6 +65,8 @@ public:
 		return &t_pInstance;
 	}
 	void refreshInputs();
+	void refreshInputs2();
+	void refreshInputs1();
 	void update();
 	void clean();
 	void initJoysticks();

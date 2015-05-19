@@ -1,36 +1,28 @@
 {
 	"ventana": {
-		"anchopx": 525,
-		"altopx": 400,
+		"anchopx": 640,
+		"altopx": 480,
 		"ancho": 150
 	},
 	"escenario": {
-		"ancho": 500,
+		"ancho": 400,
 		"alto": 167.14,
 		"ypiso": 185
 	},
 	"capas": [
 		{
-			"imagen_fondo": "images/arenas/jadesdesert/p_5n.png",
-			"ancho": 113.71
+			"imagen_fondo": "images/arenas/default/p_3n.png",
+			"ancho": 206
 		},
 		{
-			"imagen_fondo": "images/arenas/jadesdesert/p_4n.png",
-			"ancho": 171.43
+			"imagen_fondo": "images/arenas/default/p_2n.png",
+			"ancho": 237.43
 		},
 		{
-			"imagen_fondo": "images/arenas/jadesdesert/p_3n.png",
-			"ancho": 228.28
-		},
-		{
-			"imagen_fondo": "images/arenas/jadesdesert/p_2n.png",
-			"ancho": 286.57
-		},
-		{
-			"imagen_fondo": "images/arenas/jadesdesert/p_1n.png",
-			"ancho": 338.85
+			"imagen_fondo": "images/arenas/default/p_1n.png",
+			"ancho": 342.85
 		}
-	], 
+	],
 	"personajes": [
 		{
 			"nombre": "subzero",
@@ -40,7 +32,7 @@
 			"color-alternativo": {
 				"h-inicial": 180,
 				"h-final": 300,
-				"desplazamiento": 60
+				"desplazamiento": 360
 			}
 		},
 		{
@@ -57,7 +49,7 @@
 	],
 	"pelea": {
 		"luchador1": "subzero",
-		"luchador2": "scorpion"
+		"luchador2": "subzero"
 	},
 	"joysticks": [ 
 		{
