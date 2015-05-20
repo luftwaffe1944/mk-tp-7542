@@ -33,43 +33,56 @@ void TextureManager::resetInstance() {
 	this->m_textureMap.clear();
 }
 
-hsv rgb2hsv(rgb in)
-{
-    hsv         out;
-    double      min, max, delta;
+hsv convertRGBToHSV(rgb RGB) {
+    hsv HSV;
+    double minRGBValue;
+    double maxRGBValue;
+    double deltaRGBValue;
 
-    min = in.r < in.g ? in.r : in.g;
-    min = min  < in.b ? min  : in.b;
 
-    max = in.r > in.g ? in.r : in.g;
-    max = max  > in.b ? max  : in.b;
+    //Taking the min value of r, g and b
+    if ((RGB.r <= RGB.g) && (RGB.r <= RGB.b)){
+    	minRGBValue = RGB.r;
+    } else if ((RGB.g <= RGB.r) && (RGB.g <= RGB.b)){
+    	minRGBValue = RGB.g;
+    } else if ((RGB.b <= RGB.r) && (RGB.b <= RGB.g)){
+    	minRGBValue = RGB.b;
+    }
 
-    out.v = max;                                // v
-    delta = max - min;
-    if( max > 0.0 ) { // NOTE: if Max is == 0, this divide would cause a crash
-        out.s = (delta*1.0 / max);                  // s
+    //Taking the max value of r, g and b
+    if ((RGB.r >= RGB.g) && (RGB.r >= RGB.b)) {
+    	maxRGBValue = RGB.r;
+    } else if ((RGB.g >= RGB.r) && (RGB.g >= RGB.b)) {
+    	maxRGBValue = RGB.g;
+    } else if ((RGB.b >= RGB.r) && (RGB.b >= RGB.g)) {
+    	maxRGBValue = RGB.b;
+}
+
+    HSV.v = maxRGBValue;
+    deltaRGBValue = maxRGBValue - minRGBValue;
+    if( maxRGBValue > 0.0 ) {
+        HSV.s = (deltaRGBValue / maxRGBValue);
     } else {
-        // if max is 0, then r = g = b = 0
-            // s = 0, v is undefined
-        out.s = 0.0;
-        out.h = NAN;                            // its now undefined
-        return out;
+        HSV.s = 0.0;
+        HSV.h = NAN;
+        return HSV;
     }
-    if( in.r >= max )                           // > is bogus, just keeps compilor happy
-        out.h = ( in.g - in.b ) / delta*1.0;        // between yellow & magenta
-    else
-    if( in.g >= max )
-        out.h = 2.0 + ( in.b - in.r ) / delta*1.0;  // between cyan & yellow
-    else
-        out.h = 4.0 + ( in.r - in.g ) / delta*1.0;  // between magenta & cyan
+    if( RGB.r >= maxRGBValue ) {
+        HSV.h = ( RGB.g - RGB.b ) / deltaRGBValue;
+    } else {
+    	if( RGB.g >= maxRGBValue ){
+    		HSV.h = 2.0 + ( RGB.b - RGB.r ) / deltaRGBValue;
+    	} else {
+    		HSV.h = 4.0 + ( RGB.r - RGB.g ) / deltaRGBValue;
+    	}
+    }
+    HSV.h *= 60.0;
 
-    out.h *= 60.0;                              // degrees
-
-    if( out.h < 0.0 ){
-        out.h += 360.0;
+    if( HSV.h < 0.0 ) {
+        HSV.h += 360.0;
     }
 
-    return out;
+    return HSV;
 }
 
 
@@ -227,7 +240,7 @@ void changeToAltColor(SDL_Surface* pTempSurface, AlternativeColor* altColor) {
 		for (int j=0; j < pTempSurface->h; j++) {
 			SDL_GetRGBA(getpixel(pTempSurface, i, j), pTempSurface->format, &rgb.r, &rgb.g, &rgb.b, &a);
             if (a != 0) {
-				newHsv = rgb2hsv(rgb);
+				newHsv = convertRGBToHSV(rgb);
 				if ((altColor->getInitialH() <= newHsv.h) && (newHsv.h <= altColor->getFinalH())) {
 					newHsv.h += altColor->getShift();
 				}
