@@ -274,6 +274,8 @@ void Character::fixOrientation() {
 }
 
 void Character::update() {
+	this->beingPushed = false;
+	this->beingPushed = false;
 	if (this->orientationPosXFix != 0) { //acomoda la posX si se desplaza la cámara
 		this->fixPosXStandingCharacter();
 		this->orientationPosXFix = 0;
@@ -738,7 +740,7 @@ void Character::jumpRight() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX + (3 * ratioX);
+		positionX = positionX + (4 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isJumpingRight = false;
@@ -806,7 +808,7 @@ void Character::jumpLeft() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowLeftLimit()) {
-		positionX = positionX - (3 * ratioX);
+		positionX = positionX - (4 * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isJumpingLeft = false;
