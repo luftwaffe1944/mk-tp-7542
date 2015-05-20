@@ -145,12 +145,18 @@ void LayerManager::refresh() {
 			pCLimitRight = false;
 		}
 
-		if (( offsetRightMargin < (WINDOW_MARGIN)* ratioX ) && !layerReachedStageLimit( windowWidth / ratioX, true) && isCharMovingRight && !pCLimitLeft ) {
+		if ( (offsetRightMargin < (WINDOW_MARGIN) * ratioX) &&
+				!layerReachedStageLimit( windowWidth / ratioX, true) &&
+				isCharMovingRight &&
+				!pCLimitLeft ) {
 			refresh = true;
 			rightOrientation = true;
 			orientation = 1;
 		}
-		else if  (( offsetLeftMargin < (WINDOW_MARGIN)* ratioX) && !layerReachedStageLimit( windowWidth / ratioX, false) && isCharMovingLeft && !pCLimitRight)  {
+		else if  ( (offsetLeftMargin < (WINDOW_MARGIN)* ratioX) &&
+				!layerReachedStageLimit( windowWidth / ratioX, false) &&
+				isCharMovingLeft &&
+				!pCLimitRight)  {
 			refresh = true;
 			leftOrientation = true;
 			orientation = -1;
@@ -182,5 +188,12 @@ void LayerManager::refresh() {
 				weapon->setFixPosXStandingCharacter( orientation);
 			}
 		}
+	}
+}
+
+void LayerManager::movLayers(int orientation) {
+	for(unsigned int index=0; index < this->layers.size(); ++index) {
+		this->layers[index]->setNeedRefresh(true);
+		this->layers[index]->setOrientation(orientation);
 	}
 }

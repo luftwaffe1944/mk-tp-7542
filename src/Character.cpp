@@ -896,13 +896,13 @@ void Character::setPlayerNumber(std::string playerNumber) {
 
 bool Character::isMovingRight(){
 	if (this->isJumpingRight || this->isWalkingRight || this->isAirPunchingRight || this->isKickingAirLowRight
-			|| this->isHintFlying || this->isHintFlyingUpper) return true;
+			|| this->isHintFlying || this->isHintFlyingUpper || this->beingPushed) return true;
 	return false;
 }
 
 bool Character::isMovingLeft(){
 	if (this->isJumpingLeft || this->isWalkingLeft || this->isAirPunchingLeft || this->isKickingAirLowLeft
-			|| this->isHintFlying || this->isHintFlyingUpper) return true;
+			|| this->isHintFlying || this->isHintFlyingUpper || this->beingPushed) return true;
 	return false;
 }
 
@@ -1500,7 +1500,9 @@ bool Character::getIsAirPunchingLeft() {
 void Character::smoothMovPosX() {
 	float offset = this->getPositionX() + this->smoothOrientation*10;
 	if (this->smoothOffsetX > 0) {
+		if( !this->reachedWindowLeftLimit() && !this->reachedWindowRightLimit()){
 			this->setPositionX(offset);
 			this->smoothOffsetX-=10;
+		}
 	}
 }

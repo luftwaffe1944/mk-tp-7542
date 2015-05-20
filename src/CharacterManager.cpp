@@ -131,6 +131,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			float posXCharacter2 = character2->posYBox;
 			float widthCharacter2 = character2->widthBox;
 			if ( character2->getMovement() == JUMPING_LEFT_MOVEMENT && !character2->getIsRightOriented() ) {
+				character1->beingPushed = true;
 				//TODO: review if the jump is too close
 				if ( ((posYCharacter1 - posYCharacter2) < 30*character2->getRatioY())) {
 					if ((posXCharacter2 - posXCharacter1 < widthCharacter1) && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, false))){
@@ -144,6 +145,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			}
 
 			if ( character2->getMovement() == JUMPING_RIGHT_MOVEMENT && character2->getIsRightOriented() ) {
+				character1->beingPushed = true;
 				if ( ((posYCharacter1 - posYCharacter2)  < 30*character2->getRatioY())) {
 					if (posXCharacter1 - posXCharacter2 < widthCharacter1 && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, true))) {
 						character1->smoothOffsetX = character1->widthBox * 3/4;
@@ -206,6 +208,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			//FOR JUMPING
 			if ( character1->getMovement() == JUMPING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
 				//TODO: review if the jump is too close
+				character2->beingPushed = true;
 				if ( ((posYCharacter2- posYCharacter1) < 30*character1->getRatioY())) {
 					if ((posXCharacter1 - posXCharacter2 < widthCharacter2) && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, false))) {
 						character2->smoothOffsetX = character2->widthBox* 3/4;
@@ -218,6 +221,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			}
 
 			if ( character1->getMovement() == JUMPING_RIGHT_MOVEMENT && character1->getIsRightOriented() ) {
+				character2->beingPushed = true;
 				if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
 					if (posXCharacter2 - posXCharacter1 < widthCharacter2 && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, true))) {
 						character2->smoothOffsetX = character2->widthBox * 3/4;
