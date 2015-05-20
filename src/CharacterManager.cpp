@@ -86,11 +86,11 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 	if ((actualObj->isCharacter()) && (nextObj->isCharacter())){
 		//GOLPES CHARACTER 1
 		if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT || character1->getMovement() == HIGH_KICK_MOVEMENT
-				|| character1->getMovement() == AIR_PUNCH_MOVEMENT) && character2->getMovement() != BLOCK_MOVEMENT){
+				|| character1->getMovement() == AIR_PUNCH_MOVEMENT) && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 		}
 		else if ((character1->getMovement() == PUNCHING_LOW_MOVEMENT || character1->getMovement() == LOW_KICK_MOVEMENT)
-				 && character2->getMovement() != BLOCK_MOVEMENT){
+				 && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(BEING_HINT_STANCE_DOWN_MOVEMENT);
 		}
 		else if ((character1->getMovement() == DUCK_HIGH_KICK_MOVEMENT || character1->getMovement() == DUCK_LOW_KICK_MOVEMENT
@@ -113,11 +113,11 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 
 		//GOLPES CHARACTER 2
 		if ((character2->getMovement() == PUNCHING_HIGH_MOVEMENT || character2->getMovement() == HIGH_KICK_MOVEMENT
-				|| character2->getMovement() == AIR_PUNCH_MOVEMENT) && character1->getMovement() != BLOCK_MOVEMENT){
+				|| character2->getMovement() == AIR_PUNCH_MOVEMENT) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 		}
 		else if ((character2->getMovement() == PUNCHING_LOW_MOVEMENT || character2->getMovement() == LOW_KICK_MOVEMENT
-				) && character1->getMovement() != BLOCK_MOVEMENT){
+				) && character1->getMovement() != BLOCK_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(BEING_HINT_STANCE_DOWN_MOVEMENT);
 		}
 		else if ((character2->getMovement() == DUCK_HIGH_KICK_MOVEMENT || character2->getMovement() == DUCK_LOW_KICK_MOVEMENT
