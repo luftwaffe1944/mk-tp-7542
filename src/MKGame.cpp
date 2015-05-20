@@ -147,8 +147,8 @@ void MKGame::update() {
 	}
 	for (std::vector<SDLObjectGUI*>::size_type i = 0; i != objectList.size();
 			i++) {
-		objectList[i]->update();
 		LayerManager::Instance()->refresh();
+		objectList[i]->update();
 		objectList[i]->setPositionY(objectList[i]->getPositionY() + this->offSetPosY);
 	}
 
