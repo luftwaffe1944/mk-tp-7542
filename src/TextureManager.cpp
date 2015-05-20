@@ -86,66 +86,66 @@ hsv convertRGBToHSV(rgb RGB) {
 }
 
 
-rgb hsv2rgb(hsv in)
+rgb convertHSVToRGB(hsv HSV)
 {
-    double      hh, p, q, t, ff;
-    long        i;
-    rgb         out;
+    double hueValue;
+    double p;
+    double q;
+    double t;
+    double ff;
+    long i;
+    rgb RGB;
 
-    if(in.s <= 0.0) {       // < is bogus, just shuts up warnings
-        out.r = in.v;
-        out.g = in.v;
-        out.b = in.v;
-        return out;
+    if(HSV.s <= 0.0) {
+        RGB.r = HSV.v;
+        RGB.g = HSV.v;
+        RGB.b = HSV.v;
+        return RGB;
     }
-    hh = in.h;
-    if(hh >= 360.0) hh = (int)hh % (int)360.0;
-    if(hh < 0.0){
-    	hh = (int)hh % (int)360.0;
-    	hh = 360.0 + hh;
-    }
-    hh /= 60.0;
-    i = (long)hh;
-    ff = hh - i;
-    p = in.v * (1.0 - in.s);
-    q = in.v * (1.0 - (in.s * ff));
-    t = in.v * (1.0 - (in.s * (1.0 - ff)));
+    hueValue = HSV.h;
 
-    switch(i) {
-    case 0:
-        out.r = in.v;
-        out.g = t;
-        out.b = p;
-        break;
-    case 1:
-        out.r = q;
-        out.g = in.v;
-        out.b = p;
-        break;
-    case 2:
-        out.r = p;
-        out.g = in.v;
-        out.b = t;
-        break;
-
-    case 3:
-        out.r = p;
-        out.g = q;
-        out.b = in.v;
-        break;
-    case 4:
-        out.r = t;
-        out.g = p;
-        out.b = in.v;
-        break;
-    case 5:
-    default:
-        out.r = in.v;
-        out.g = p;
-        out.b = q;
-        break;
+    if(hueValue >= 360.0) {
+    	hueValue = (int)hueValue % (int)360.0;
     }
-    return out;
+    if(hueValue < 0.0) {
+    	hueValue = (int)hueValue % (int)360.0;
+    	hueValue = 360.0 + hueValue;
+    }
+
+    hueValue /= 60.0;
+    i = (long)hueValue;
+    ff = hueValue - i;
+    p = HSV.v * (1.0 - HSV.s);
+    q = HSV.v * (1.0 - (HSV.s * ff));
+    t = HSV.v * (1.0 - (HSV.s * (1.0 - ff)));
+
+    if (i == 0) {
+        RGB.r = HSV.v;
+        RGB.g = t;
+        RGB.b = p;
+    } else if (i == 1) {
+        RGB.r = q;
+        RGB.g = HSV.v;
+        RGB.b = p;
+    } else if (i == 2) {
+        RGB.r = p;
+        RGB.g = HSV.v;
+        RGB.b = t;
+    } else if (i == 3) {
+        RGB.r = p;
+        RGB.g = q;
+        RGB.b = HSV.v;
+    } else if (i == 4) {
+        RGB.r = t;
+        RGB.g = p;
+        RGB.b = HSV.v;
+    } else {
+        RGB.r = HSV.v;
+        RGB.g = p;
+        RGB.b = q;
+    }
+
+    return RGB;
 }
 
 
@@ -244,7 +244,7 @@ void changeToAltColor(SDL_Surface* pTempSurface, AlternativeColor* altColor) {
 				if ((altColor->getInitialH() <= newHsv.h) && (newHsv.h <= altColor->getFinalH())) {
 					newHsv.h += altColor->getShift();
 				}
-				rgb = hsv2rgb(newHsv);
+				rgb = convertHSVToRGB(newHsv);
 				putpixel(pTempSurface, i, j, SDL_MapRGB(pTempSurface->format, rgb.r, rgb.g, rgb.b));
             }
 		}
