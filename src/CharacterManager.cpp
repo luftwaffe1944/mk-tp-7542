@@ -48,20 +48,20 @@ void pushCharacter(Character* character1, Character* character2, bool pushChar1,
 	else if (pushChar1) {
 		if (rightOrientation) {
 			character1->setPositionX(character1->getPositionX() + FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
-			character2->setPositionX(character1->getPositionX() - character1->widthBox);
+			character2->setPositionX(character1->posXBox - character2->widthBox * 2);
 		} else {
 			character1->setPositionX(character1->getPositionX() - FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
-			character2->setPositionX(character1->posXBox);
+			character2->setPositionX((character1->posXBox + character1->widthBox) - character2->widthBox );
 		}
 
 	//Char1 empujando al 2
 	} else if (pushChar2) {
 		if (rightOrientation) {
 			character2->setPositionX(character2->getPositionX() + FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
-			character1->setPositionX(character2->getPositionX() - character2->widthBox);
+			character1->setPositionX(character2->posXBox - character1->widthBox * 2);
 		}else {
 			character2->setPositionX(character2->getPositionX() - FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
-			character1->setPositionX(character2->posXBox);
+			character1->setPositionX((character2->posXBox + character2->widthBox) - character1->widthBox);
 		}
 	}
 }
@@ -142,7 +142,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 				pushChar1 = true;
 				rightOrientation = false;
 			} else {
-				character2->setPositionX(character1->posXBox);
+				character2->setPositionX((character1->posXBox + character1->widthBox) - character2->widthBox);
 			}
 		}
 
@@ -152,7 +152,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 				pushChar1 = true;
 				rightOrientation = true;
 			} else {
-				character2->setPositionX(character1->getPositionX() - character1->widthBox);
+				character2->setPositionX(character1->posXBox - character2->widthBox * 2);
 			}
 
 		}
@@ -222,7 +222,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 					rightOrientation = false;
 
 				} else {
-					character1->setPositionX(character2->posXBox);
+					character1->setPositionX((character2->posXBox + character2->widthBox) - character1->widthBox);
 				}
 			}
 
@@ -233,7 +233,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 					rightOrientation = true;
 
 				} else {
-					character1->setPositionX(character2->getPositionX() - character2->widthBox);
+					character1->setPositionX(character2->posXBox - character1->widthBox * 2);
 				}
 
 			}
