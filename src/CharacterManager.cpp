@@ -80,8 +80,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		character2 = dynamic_cast<Character*>(nextObj);
 	}
 
-	character1->beingPushed = false;
-	character2->beingPushed = false;
+	//character1->beingPushed = false;
+	//character2->beingPushed = false;
 
 	if ((actualObj->isCharacter()) && (nextObj->isCharacter())){
 		//GOLPES CHARACTER 1
