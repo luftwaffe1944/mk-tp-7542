@@ -45,6 +45,9 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		character2 = dynamic_cast<Character*>(nextObj);
 	}
 
+	character1->beingPushed = false;
+	character2->beingPushed = false;
+
 	if ((actualObj->isCharacter()) && (nextObj->isCharacter())){
 		//GOLPES CHARACTER 1
 		if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT || character1->getMovement() == HIGH_KICK_MOVEMENT
@@ -96,6 +99,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
 		//FOR WALKING
 		if ( character2->getMovement() == WALKING_LEFT_MOVEMENT && !character2->getIsRightOriented() ) {
+			character1->beingPushed = true;
 			// stop walking
 			if (character1->posXBox > WINDOW_MARGIN * character1->getRatioX()) {
 				character1->setPositionX(character1->getPositionX() - FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
@@ -106,6 +110,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		}
 
 		if (character2->getMovement() == WALKING_RIGHT_MOVEMENT && character2->getIsRightOriented()) {
+			character1->beingPushed = true;
 			if (character1->posXBox + character1->widthBox < (windowWidth - WINDOW_MARGIN ) * character1->getRatioX()) {
 				character1->setPositionX(character1->getPositionX() + FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
 				character2->setPositionX(character1->getPositionX() - character1->widthBox);
@@ -176,6 +181,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		//DON'T OVERLAP LOGIC FOR CHARACTER 1
 		//FOR WALKING
 			if ( character1->getMovement() == WALKING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
+				character2->beingPushed = true;
 				// stop walking
 				if (character2->posXBox > WINDOW_MARGIN * character2->getRatioX()) {
 					character2->setPositionX(character2->getPositionX() - FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
@@ -186,6 +192,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			}
 
 			if (character1->getMovement() == WALKING_RIGHT_MOVEMENT && character1->getIsRightOriented()) {
+				character2->beingPushed = true;
 				if (character2->posXBox + character2->widthBox < (windowWidth - WINDOW_MARGIN ) * character2->getRatioX()) {
 					character2->setPositionX(character2->getPositionX() + FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
 					character1->setPositionX(character2->getPositionX() - character2->widthBox);

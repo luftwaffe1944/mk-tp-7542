@@ -50,6 +50,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		gravity = 14.0f;
 		jumpVel = 60.0f;
 		this->smoothOffsetX = 0;
+		this->beingPushed = false;
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -70,6 +71,7 @@ Character::Character(const LoaderParams* pParams) :
 		gravity = 14.0f;
 		jumpVel = 60.0f;
 		this->smoothOffsetX = 0;
+		this->beingPushed = false;
 }
 
 
@@ -196,7 +198,46 @@ void Character::draw() {
 		SDL_Rect outlineRect3 = { this->posXBox2, this->posYBox2, this->widthBox2, this->heightBox2 };
 		SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );
 		SDL_RenderDrawRect( renderer, &outlineRect3 );
+
+		//lineas bordes
+		SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		SDL_RenderDrawLine( renderer,
+				WINDOW_MARGIN * ratioX, /* inicio X */
+				0, 						/* inicio Y */
+				WINDOW_MARGIN * ratioX, /* fin X */
+				GameGUI::getInstance()->getWindow()->getHeightPx()); /* fin Y*/
+
+		SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		SDL_RenderDrawLine( renderer,
+				GameGUI::getInstance()->getWindow()->widthPx - WINDOW_MARGIN * ratioX,
+				0,
+				GameGUI::getInstance()->getWindow()->widthPx - WINDOW_MARGIN * ratioX,
+				GameGUI::getInstance()->getWindow()->getHeightPx());
+
+		//lineas dinamicas chequeo de desplazamaiento
+		float posXCharacter = this->posXBox; 						/* pos character en unidades logicas*/
+		float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();	/* tamaño de la ventana en unidades logicas */
+		float characterWidth = this->widthBox;
+		if (this->isMovingRight()) {
+			SDL_SetRenderDrawColor( renderer, 0x00, 0xCC, 0xCC, 0xFF );
+			SDL_RenderDrawLine( renderer,
+					(posXCharacter + characterWidth ),
+					0,
+					(posXCharacter + characterWidth ),
+					GameGUI::getInstance()->getWindow()->getHeightPx());
+		}
+
+		if (this->isMovingLeft()) {
+			SDL_SetRenderDrawColor( renderer, 0x00, 0xCC, 0xCC, 0xFF );
+			SDL_RenderDrawLine( renderer,
+					posXCharacter,
+					0,
+					posXCharacter,
+					GameGUI::getInstance()->getWindow()->getHeightPx());
+		}
+
 	}
+	//this->beingPushed = false;
 }
 
 bool Character::shouldMoveForward() {
@@ -564,6 +605,7 @@ void Character::clearMovementsFlags(){
 	isHintFlying = false;
 	isGettingUp = false;
 	isHintFlyingUpper = false;
+	//this->beingPushed = false;
 }
 
 void Character::jump() {

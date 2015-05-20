@@ -127,16 +127,30 @@ void LayerManager::refresh() {
 
 		bool isCharMovingRight = this->characters[i]->isMovingRight();
 		bool isCharMovingLeft = this->characters[i]->isMovingLeft();
-		int posXCharacter = this->characters[i]->getPosXUL();
-		int windowWidth = this->window->width;
-		int characterWidth = this->characters[i]->getWidth();
 
-		if ( ( (windowWidth - (posXCharacter + characterWidth )) < WINDOW_MARGIN -1) && !layerReachedStageLimit( windowWidth, true) && isCharMovingRight && !passiveCharacter->reachedWindowLeftLimit() ) {
+		float ratioX = this->characters[i]->getRatioX();
+		float posXCharacter = this->characters[i]->posXBox;
+		int windowWidth = this->window->widthPx;
+		float characterWidth = this->characters[i]->widthBox;
+
+		float offsetLeftMargin = posXCharacter;
+		float offsetRightMargin = windowWidth - (posXCharacter + characterWidth );
+		bool pCLimitLeft = passiveCharacter->reachedWindowLeftLimit();
+		bool pCLimitRight = passiveCharacter->reachedWindowRightLimit();
+
+		if (passiveCharacter->beingPushed) {
+			offsetRightMargin = windowWidth - (posXCharacter + characterWidth + passiveCharacter->widthBox);
+			offsetLeftMargin = posXCharacter - passiveCharacter->widthBox;
+			pCLimitLeft = false;
+			pCLimitRight = false;
+		}
+
+		if (( offsetRightMargin < (WINDOW_MARGIN)* ratioX ) && !layerReachedStageLimit( windowWidth / ratioX, true) && isCharMovingRight && !pCLimitLeft ) {
 			refresh = true;
 			rightOrientation = true;
 			orientation = 1;
 		}
-		else if  (( posXCharacter < WINDOW_MARGIN -1) && !layerReachedStageLimit( windowWidth, false) && isCharMovingLeft && !passiveCharacter->reachedWindowRightLimit())  {
+		else if  (( offsetLeftMargin < (WINDOW_MARGIN)* ratioX) && !layerReachedStageLimit( windowWidth / ratioX, false) && isCharMovingLeft && !pCLimitRight)  {
 			refresh = true;
 			leftOrientation = true;
 			orientation = -1;
@@ -154,7 +168,10 @@ void LayerManager::refresh() {
 	}
 
 	if (refresh == true && standingCharacter != -1 ) {
-		this->characters[standingCharacter]->setFixPosXStandingCharacter( orientation );
+		if (!this->characters[standingCharacter]->beingPushed) {
+			this->characters[standingCharacter]->setFixPosXStandingCharacter( orientation );
+		}
+
 		//for( unsigned int i =0; i < GameGUI::getInstance()->tObjects.size(); i++) {
 		//	GameGUI::getInstance()->tObjects[i]->setFixPosXStandingCharacter( orientation);
 		//}
@@ -166,5 +183,4 @@ void LayerManager::refresh() {
 			}
 		}
 	}
-
 }

@@ -159,6 +159,8 @@ public:
 
 	void smoothMovPosX();
 
+	bool beingPushed;
+
 };
 
 #endif /* CHARACTER_H_ */

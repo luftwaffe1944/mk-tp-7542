@@ -219,7 +219,7 @@ void MKGame::handleEvents() {
 	//Para solo jugar con joysticks comentar todos
 
 	// Para teclado y joystick descomentar el siguiente
-	//InputControl::Instance()->refreshInputs();
+	InputControl::Instance()->refreshInputs();
 
 	//Para jugar 2 con teclado usar estos 2
 	InputControl::Instance()->refreshInputs1();
