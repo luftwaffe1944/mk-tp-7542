@@ -43,10 +43,14 @@ void ThrowableObject::draw() {
 		SDLObjectGUI::draw();
 		this->positionX = auxX;
 		this->positionY = auxY;
+
+
 		//draw box colisionale
-		SDL_Rect outlineRect2 = { this->positionX, positionY, this->width * ratioX, this->height * ratioY };
-		SDL_SetRenderDrawColor( MKGame::Instance()->getRenderer(), 0xFF, 0x00, 0x00, 0xFF );
-		SDL_RenderDrawRect( MKGame::Instance()->getRenderer(), &outlineRect2 );
+		if (this->showBoxes) {
+			SDL_Rect outlineRect2 = { this->positionX, positionY, this->width * ratioX, this->height * ratioY };
+			SDL_SetRenderDrawColor( MKGame::Instance()->getRenderer(), 0xFF, 0x00, 0x00, 0xFF );
+			SDL_RenderDrawRect( MKGame::Instance()->getRenderer(), &outlineRect2 );
+		}
 	}
 }
 
