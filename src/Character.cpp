@@ -321,11 +321,21 @@ void Character::update() {
 		setCurrentSprite();
 		completeMovement();
 	}
-	else if (getMovement() == BEING_HINT_STANCE_UP_MOVEMENT){
+	else if (getMovement() == BEING_HINT_STANCE_UP_MOVEMENT && !isTouchingGround(positionY)){
+		setMovement(HINT_FLYING_MOVEMENT);
 		setCurrentSprite();
 		completeMovement();
 	}
-	else if (getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT){
+	else if (getMovement() == BEING_HINT_STANCE_UP_MOVEMENT && isTouchingGround(positionY)){
+		setCurrentSprite();
+		completeMovement();
+	}
+	else if (getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT && !isTouchingGround(positionY)){
+		setMovement(HINT_FLYING_MOVEMENT);
+		setCurrentSprite();
+		completeMovement();
+	}
+	else if (getMovement() == BEING_HINT_STANCE_DOWN_MOVEMENT && isTouchingGround(positionY)){
 		setCurrentSprite();
 		completeMovement();
 	}
