@@ -31,6 +31,41 @@ void CharacterManager::solveMovesBeignHint(){
 
 }
 
+void pushCharacter(Character* character1, Character* character2, bool pushChar1, bool pushChar2, bool rightOrientation) {
+
+	//si los 2 se empujan
+	if (pushChar1 && pushChar2) {
+		if (rightOrientation) { //la ultima orientacion seteada es la del character 1
+			character1->walkLeft();
+			character2->walkRight();
+		} else {
+			character1->walkRight();
+			character2->walkLeft();
+		}
+	}
+
+	//Char2 empujando al 1
+	else if (pushChar1) {
+		if (rightOrientation) {
+			character1->setPositionX(character1->getPositionX() + FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
+			character2->setPositionX(character1->getPositionX() - character1->widthBox);
+		} else {
+			character1->setPositionX(character1->getPositionX() - FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
+			character2->setPositionX(character1->posXBox);
+		}
+
+	//Char1 empujando al 2
+	} else if (pushChar2) {
+		if (rightOrientation) {
+			character2->setPositionX(character2->getPositionX() + FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
+			character1->setPositionX(character2->getPositionX() - character2->widthBox);
+		}else {
+			character2->setPositionX(character2->getPositionX() - FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
+			character1->setPositionX(character2->posXBox);
+		}
+	}
+}
+
 void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject* nextObj){
 
 	Character* character1;
@@ -95,6 +130,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 		}
 
+		bool rightOrientation = false;
+		bool pushChar1 = false;
 		//DON'T OVERLAP LOGIC FOR CHARACTER 2
 		float windowWidth = GameGUI::getInstance()->getWindow()->getWidth();
 		//FOR WALKING
@@ -102,8 +139,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->beingPushed = true;
 			// stop walking
 			if (character1->posXBox > WINDOW_MARGIN * character1->getRatioX()) {
-				character1->setPositionX(character1->getPositionX() - FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
-				character2->setPositionX(character1->posXBox);
+				pushChar1 = true;
+				rightOrientation = false;
 			} else {
 				character2->setPositionX(character1->posXBox);
 			}
@@ -112,8 +149,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		if (character2->getMovement() == WALKING_RIGHT_MOVEMENT && character2->getIsRightOriented()) {
 			character1->beingPushed = true;
 			if (character1->posXBox + character1->widthBox < (windowWidth - WINDOW_MARGIN ) * character1->getRatioX()) {
-				character1->setPositionX(character1->getPositionX() + FRONTAL_LAYER_SPEED/2 * character1->getRatioX());
-				character2->setPositionX(character1->getPositionX() - character1->widthBox);
+				pushChar1 = true;
+				rightOrientation = true;
 			} else {
 				character2->setPositionX(character1->getPositionX() - character1->widthBox);
 			}
@@ -178,6 +215,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		if ( character2->getIsAirPunchingRight() && character2->getIsRightOriented() ) {
 			character2->setPositionX(character1->posXBox - character1->widthBox*2);
 		}
+		bool pushChar2 = false;
 
 		//----------------------------------------------------------------------------------------------
 		//DON'T OVERLAP LOGIC FOR CHARACTER 1
@@ -186,8 +224,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 				character2->beingPushed = true;
 				// stop walking
 				if (character2->posXBox > WINDOW_MARGIN * character2->getRatioX()) {
-					character2->setPositionX(character2->getPositionX() - FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
-					character1->setPositionX(character2->posXBox);
+					pushChar2 = true;
+					rightOrientation = false;
 				} else {
 					character1->setPositionX(character2->posXBox);
 				}
@@ -196,14 +234,17 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			if (character1->getMovement() == WALKING_RIGHT_MOVEMENT && character1->getIsRightOriented()) {
 				character2->beingPushed = true;
 				if (character2->posXBox + character2->widthBox < (windowWidth - WINDOW_MARGIN ) * character2->getRatioX()) {
-					character2->setPositionX(character2->getPositionX() + FRONTAL_LAYER_SPEED/2 * character2->getRatioX());
-					character1->setPositionX(character2->getPositionX() - character2->widthBox);
+					pushChar2 = true;
+					rightOrientation = true;
+
 				} else {
 					character1->setPositionX(character2->getPositionX() - character2->widthBox);
 				}
 
 			}
 
+
+			pushCharacter(character1,character2, pushChar1,pushChar2,rightOrientation);
 
 			//FOR JUMPING
 			if ( character1->getMovement() == JUMPING_LEFT_MOVEMENT && !character1->getIsRightOriented() ) {
