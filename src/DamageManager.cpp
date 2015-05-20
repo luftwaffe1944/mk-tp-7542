@@ -6,6 +6,7 @@
  */
 
 #include "../headers/DamageManager.h"
+#include "../headers/ThrowableObject.h"
 #include "../headers/Log.h"
 
 DamageManager* DamageManager::dm_pInstance = NULL;
@@ -82,11 +83,11 @@ void DamageManager::solveDamage(DamageObject* firstObject, DamageObject* secondO
 		if ((this->IsObjectAttacking(secondObject)) &&  !(this->IsObjectBlocking(firstObject)) && !(this->IsObjectAttacking(firstObject))){
 			firstObject->setDamage(this->getDamageToDo(secondObject));
 		}
-	}else if (firstObject->isWeapon){
+	}else if ((firstObject->isWeapon)&&(!secondObject->isWeapon)&&((((ThrowableObject*)firstObject)->receiver)==secondObject)){
 		firstObject->setKill();
 		secondObject->setDamage(0.05f);
 		cout << "first" << endl;
-	}else if (secondObject->isWeapon) {
+	}else if ((secondObject->isWeapon)&&(!firstObject->isWeapon)&&((((ThrowableObject*)secondObject)->receiver)==firstObject)) {
 		firstObject->setDamage(0.05f);
 		secondObject->setKill();
 		cout << "second" << endl;

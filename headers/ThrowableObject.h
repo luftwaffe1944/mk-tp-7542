@@ -33,10 +33,11 @@ public:
 	void setFixPosXStandingCharacter( int orientation);
 	void fixPosXStandingCharacter();
 	bool showBoxes = DRAW_COLLITIONABLE_BOXES;
-
-private:
 	Character* releaser;
 	Character* receiver;
+
+private:
+
 	bool playerIsRightOriented;
 	bool posXSetReleaser;
 	bool posYsetReleaser;

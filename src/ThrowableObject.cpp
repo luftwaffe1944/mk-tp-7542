@@ -97,6 +97,11 @@ void ThrowableObject::update() {
 				this->positionX = this->positionX - OBJECT_SPEED;
 			}
 		}else{
+			if (this->playerIsRightOriented) {
+				this->positionX = this->releaser->posXBox + this->releaser->widthBox + ((this->width*ratioX/2)+1);
+			}else{
+				this->positionX = this->releaser->posXBox - ((this->width*ratioX/2)+1);
+			}
 			this->beginShoot = false;
 		}
 
@@ -106,11 +111,11 @@ void ThrowableObject::update() {
 		}
 		if (!this->posXSetReleaser) {
 			this->posXSetReleaser = true;
-			cout << "X salida: " << this->positionX << " ";
+			//cout << "X salida: " << this->positionX << " ";
 		}
 		if(!this->posYsetReleaser) {
 			this->posYsetReleaser = true;
-			cout << "Y salida: " << this->positionY << " ";
+			//cout << "Y salida: " << this->positionY << " ";
 		}
 		if ((this->positionX / ratioX > this->widthWindow) || (this->positionX / ratioX <0)) {
 			this->releaser->fire = false;
@@ -119,7 +124,7 @@ void ThrowableObject::update() {
 			this->posXSetReleaser = false;
 			this->posYsetReleaser = false;
 		}
-		cout << "X Actual: " << this->getPositionX() << endl;
+		//cout << "X Actual: " << this->getPositionX() << endl;
 		//cout << "Y: " << this->positionY << " " << this->receiver->getPositionY() << endl;
 		this->updateCShapesPosition(this->positionX, this->positionY, this->width * ratioX, this->height * ratioY);
 	}

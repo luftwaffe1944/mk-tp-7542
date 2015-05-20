@@ -19,7 +19,7 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 const bool DRAW_COLLITIONABLE_BOXES = false;
 
 //Throwable Speed Object
-#define OBJECT_SPEED 20
+#define OBJECT_SPEED 30
 
 
 //Joystick
