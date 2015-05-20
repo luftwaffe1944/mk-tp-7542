@@ -43,13 +43,13 @@
 			"color-alternativo": {
 				"h-inicial": 180,
 				"h-final": 300,
-				"desplazamiento": 60
+				"desplazamiento": 180
 			}
 		}
 	],
 	"pelea": {
 		"luchador1": "subzero",
-		"luchador2": "scorpion"
+		"luchador2": "subzero"
 	},
 	"joysticks": [ 
 		{
