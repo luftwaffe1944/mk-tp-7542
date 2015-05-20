@@ -94,7 +94,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character2->setMovement(BEING_HINT_STANCE_DOWN_MOVEMENT);
 		}
 		else if ((character1->getMovement() == DUCK_HIGH_KICK_MOVEMENT || character1->getMovement() == DUCK_LOW_KICK_MOVEMENT
-				|| character1->getMovement() == PUNCHING_DUCK_MOVEMENT || character1->getMovement() == UPPERCUT_MOVEMENT) && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
+				|| character1->getMovement() == PUNCHING_DUCK_MOVEMENT)
+					&& character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(BEING_HINT_STANCE_DOWN_MOVEMENT);
 		}
 		else if (character1->getMovement() == UNDER_KICK_MOVEMENT  && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
@@ -106,7 +107,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character2->setMovement(HINT_FLYING_MOVEMENT);
 		}
 
-		else if (character1->getMovement() == UPPERCUT_MOVEMENT && character2->getMovement() != BLOCK_MOVEMENT){
+		else if (character1->getMovement() == UPPERCUT_MOVEMENT && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 		}
 
@@ -120,7 +121,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->setMovement(BEING_HINT_STANCE_DOWN_MOVEMENT);
 		}
 		else if ((character2->getMovement() == DUCK_HIGH_KICK_MOVEMENT || character2->getMovement() == DUCK_LOW_KICK_MOVEMENT
-				|| character2->getMovement() == PUNCHING_DUCK_MOVEMENT || character2->getMovement() == UPPERCUT_MOVEMENT) && character1->getMovement() != DUCK_BLOCK_MOVEMENT) {
+				|| character2->getMovement() == PUNCHING_DUCK_MOVEMENT) && character1->getMovement() != DUCK_BLOCK_MOVEMENT) {
 			character1->setMovement(BEING_HINT_STANCE_DOWN_MOVEMENT);
 		}
 		else if (character2->getMovement() == UNDER_KICK_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
@@ -132,7 +133,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->setMovement(HINT_FLYING_MOVEMENT);
 		}
 
-		else if (character2->getMovement() == UPPERCUT_MOVEMENT && character1->getMovement() != BLOCK_MOVEMENT){
+		else if (character2->getMovement() == UPPERCUT_MOVEMENT && character1->getMovement() != BLOCK_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 		}
 
