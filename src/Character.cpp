@@ -1500,11 +1500,11 @@ bool Character::getIsAirPunchingLeft() {
 }
 
 void Character::smoothMovPosX() {
-	float offset = this->getPositionX() + this->smoothOrientation*10;
+	float offset = this->getPositionX() + this->smoothOrientation*15;
 	if (this->smoothOffsetX > 0) {
-		if( !this->reachedWindowLeftLimit() && !this->reachedWindowRightLimit()){
+	//	if( !this->reachedWindowLeftLimit() && !this->reachedWindowRightLimit()){
 			this->setPositionX(offset);
-			this->smoothOffsetX-=10;
-		}
+			this->smoothOffsetX-=15;
+	//	}
 	}
 }

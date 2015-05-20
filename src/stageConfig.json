@@ -37,7 +37,7 @@
 		},
 		{
 			"nombre": "scorpion",
-			"ancho": 5,
+			"ancho": 55,
 			"alto": 70,
 			"zindex": 99,
 			"color-alternativo": {
@@ -49,7 +49,7 @@
 	],
 	"pelea": {
 		"luchador1": "subzero",
-		"luchador2": "subzero"
+		"luchador2": "scorpion"
 	},
 	"joysticks": [ 
 		{

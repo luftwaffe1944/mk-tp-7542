@@ -138,7 +138,7 @@ void LayerManager::refresh() {
 		bool pCLimitLeft = passiveCharacter->reachedWindowLeftLimit();
 		bool pCLimitRight = passiveCharacter->reachedWindowRightLimit();
 
-		if (passiveCharacter->beingPushed and !this->characters[i]->beingPushed) {
+		if (passiveCharacter->beingPushed && !this->characters[i]->beingPushed) {
 			offsetRightMargin = windowWidth - (posXCharacter + characterWidth + passiveCharacter->widthBox);
 			offsetLeftMargin = posXCharacter - passiveCharacter->widthBox;
 			pCLimitLeft = false;

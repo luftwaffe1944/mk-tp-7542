@@ -171,11 +171,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 				character1->beingPushed = true;
 				//TODO: review if the jump is too close
 				if ( ((posYCharacter1 - posYCharacter2) < 30*character2->getRatioY())) {
-					if ((posXCharacter2 - posXCharacter1 < widthCharacter1) && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, false))){
-						character1->smoothOffsetX = widthCharacter1 * 3/4;
-						character1->smoothOrientation =-1;
-					} else {
-						character2->smoothOffsetX = widthCharacter2* 3/4;
+					if ((posXCharacter2 - posXCharacter1 < widthCharacter1) && (character2->jumpVel < 0)){
+						character2->smoothOffsetX = widthCharacter2;
 						character2->smoothOrientation = 1;
 					}
 				}
@@ -184,11 +181,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			if ( character2->getMovement() == JUMPING_RIGHT_MOVEMENT && character2->getIsRightOriented() ) {
 				character1->beingPushed = true;
 				if ( ((posYCharacter1 - posYCharacter2)  < 30*character2->getRatioY())) {
-					if (posXCharacter1 - posXCharacter2 < widthCharacter1 && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, true))) {
-						character1->smoothOffsetX = character1->widthBox * 3/4;
-						character1->smoothOrientation = 1;
-					} else {
-						character2->smoothOffsetX = character2->widthBox* 3/4;
+					if (posXCharacter1 - posXCharacter2 < widthCharacter1 && (character2->jumpVel < 0)) {
+						character2->smoothOffsetX = character2->widthBox;
 						character2->smoothOrientation = -1;
 					}
 				}
@@ -226,6 +220,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 				if (character2->posXBox > WINDOW_MARGIN * character2->getRatioX()) {
 					pushChar2 = true;
 					rightOrientation = false;
+
 				} else {
 					character1->setPositionX(character2->posXBox);
 				}
@@ -251,11 +246,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 				//TODO: review if the jump is too close
 				character2->beingPushed = true;
 				if ( ((posYCharacter2- posYCharacter1) < 30*character1->getRatioY())) {
-					if ((posXCharacter1 - posXCharacter2 < widthCharacter2) && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, false))) {
-						character2->smoothOffsetX = character2->widthBox* 3/4;
-						character2->smoothOrientation =-1;
-					} else {
-						character1->smoothOffsetX = character1->widthBox* 3/4;
+					if ((posXCharacter1 - posXCharacter2 < widthCharacter2) && (character1->jumpVel < 0)) {
+						character1->smoothOffsetX = character1->widthBox;
 						character1->smoothOrientation = 1;
 					}
 				}
@@ -264,11 +256,8 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			if ( character1->getMovement() == JUMPING_RIGHT_MOVEMENT && character1->getIsRightOriented() ) {
 				character2->beingPushed = true;
 				if ( ((character2->posYBox - character1->posYBox) < 30*character1->getRatioY())) {
-					if (posXCharacter2 - posXCharacter1 < widthCharacter2 && (!LayerManager::Instance()->layerReachedStageLimit( windowWidth, true))) {
-						character2->smoothOffsetX = character2->widthBox * 3/4;
-						character2->smoothOrientation = 1;
-					} else {
-						character1->smoothOffsetX = character1->widthBox * 3/4;
+					if (posXCharacter2 - posXCharacter1 < widthCharacter2 && (character1->jumpVel < 0)) {
+						character1->smoothOffsetX = character1->widthBox;
 						character1->smoothOrientation = -1;
 					}
 				}
