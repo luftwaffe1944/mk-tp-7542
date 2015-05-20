@@ -190,10 +190,3 @@ void LayerManager::refresh() {
 		}
 	}
 }
-
-void LayerManager::movLayers(int orientation) {
-	for(unsigned int index=0; index < this->layers.size(); ++index) {
-		this->layers[index]->setNeedRefresh(true);
-		this->layers[index]->setOrientation(orientation);
-	}
-}
