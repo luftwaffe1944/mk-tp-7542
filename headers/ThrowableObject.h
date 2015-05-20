@@ -32,6 +32,7 @@ public:
 	SDL_Renderer* render;
 	void setFixPosXStandingCharacter( int orientation);
 	void fixPosXStandingCharacter();
+	bool showBoxes = DRAW_COLLITIONABLE_BOXES;
 
 private:
 	Character* releaser;
