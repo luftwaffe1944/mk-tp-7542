@@ -32,7 +32,7 @@
 			"color-alternativo": {
 				"h-inicial": 180,
 				"h-final": 300,
-				"desplazamiento": 180
+				"desplazamiento": 0.01
 			}
 		},
 		{
