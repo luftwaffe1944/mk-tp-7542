@@ -1533,6 +1533,14 @@ float Character::getPosXBoxUL() {
 	return this->posXBox / this->ratioX;
 }
 
+float Character::getPosXBox2UL() {
+	return this->posXBox2 / this->ratioX;
+}
+
 float Character::getWidthBoxUL() {
 	return this->widthBox / this->ratioX;
+}
+
+float Character::getWidthBox2UL() {
+	return this->widthBox2 / this->ratioX;
 }

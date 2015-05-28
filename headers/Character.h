@@ -133,7 +133,9 @@ public:
 	void updateShapesOnStatus();
 	bool showBoxes = DRAW_COLLITIONABLE_BOXES;
 	float getPosXBoxUL();
+	float getPosXBox2UL();
 	float getWidthBoxUL();
+	float getWidthBox2UL();
 
 	float posXBox;
 	float posYBox;
