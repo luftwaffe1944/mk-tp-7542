@@ -23,6 +23,7 @@ public:
 
 	void solveMovesBeignHint();
 	void solveMovesBeignHint(DamageObject* actualObj, DamageObject* nextObj);
+	float getCharacterDistance();
 
 private:
 	CharacterManager();

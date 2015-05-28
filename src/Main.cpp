@@ -33,6 +33,7 @@ int main(int argc, char* argv[]) {
 			std::cout << "game init success" << endl;
 			while ((MKGame::Instance()->running()) && !(MKGame::Instance()->reset()))  {
 				MKGame::Instance()->handleEvents();
+				MKGame::Instance()->handleAI();
 				MKGame::Instance()->update();
 				MKGame::Instance()->render();
 				SDL_Delay(5);

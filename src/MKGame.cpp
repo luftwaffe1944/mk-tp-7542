@@ -58,9 +58,9 @@ bool MKGame::init(GameGUI* gameGui) {
 		return false;
 	}
 
-    if( TTF_Init() == -1 ) {
-    	FILE_LOG(logERROR) << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError();
-    }
+	if( TTF_Init() == -1 ) {
+		FILE_LOG(logERROR) << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError();
+	}
 
 	FILE_LOG(logDEBUG) << "init success";
 	m_bRunning = true;
@@ -125,13 +125,13 @@ vector<Collitionable*> convertVector(vector<Character*> oldVec){
 	vector<Collitionable*> newVec;
 	for (std::vector<Character*>::size_type i = 0; i != oldVec.size(); i++) {
 		newVec.push_back((Collitionable*) oldVec[i]);
-		}
+	}
 	return newVec;
 }
 void addVector(vector<ThrowableObject*> oldVec, vector<Collitionable*> *newVec){
 	for (std::vector<ThrowableObject*>::size_type i = 0; i != oldVec.size(); i++) {
 		newVec->push_back((Collitionable*) oldVec[i]);
-		}
+	}
 }
 
 void MKGame::update() {
@@ -222,12 +222,17 @@ void MKGame::handleEvents() {
 	//InputControl::Instance()->refreshInputs();
 
 	//Para jugar 2 con teclado usar estos 2
-	//InputControl::Instance()->refreshInputs1();
-	//InputControl::Instance()->refreshInputs2();
+	InputControl::Instance()->refreshInputs1();
+	InputControl::Instance()->refreshInputs2();
 
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
+}
+
+
+void MKGame::handleAI() {
+	AIMovement::Instance()->setAIMovement();
 }
 
 void MKGame::quit(){

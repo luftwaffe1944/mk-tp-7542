@@ -23,6 +23,8 @@
 #include "GameInfo.h"
 #include "SDL_ttf.h"
 #include "CollitionManager.h"
+#include "AIMovement.h"
+
 
 //#include "SDL_gamecontroller.h"
 //#include "SDL_joystick.h"
@@ -108,6 +110,7 @@ public:
 	}
 	void setOnReset(){m_bReset=true;}
 	void setOffReset(){m_bReset=false;}
+	void handleAI();
 };
 
 #endif /* MKGAME_H_ */

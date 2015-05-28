@@ -27,6 +27,7 @@ float jumpVel = 60.0f;
 float jumpVelFalling = 40.0f;
 float jumpVelFallingUpper = 50.0f;
 
+
 std::map<std::string,int> Character::movesCounter;
 
 bool somePunchInputCommand(InputCommand inputCommand);
@@ -734,13 +735,32 @@ void Character::airLowKickLeft() {
 	}
 }
 
+//Devuelve la distancia en X UL que recorre un salto diagonal.
+//Solo se calcula si el personaje está en el piso.
+float Character::getJumpDistance() {
+	if ( !this->isTouchingGround(this->positionY) ) return -1;
+	int posY = positionY;
+	float jumpSpeed = jumpVel;
+	float initialPosX = positionX;
+	float currentPosX = positionX;
+
+	do {
+		posY = posY - jumpSpeed;
+		jumpSpeed -= gravity;
+		currentPosX = currentPosX + (JUMPING_X_SPEED * ratioX);
+
+		}
+	 while ( ! this->isTouchingGround(posY));
+
+	return fabs( currentPosX - initialPosX) / ratioX ;
+}
 
 void Character::jumpRight() {
 	isJumpingRight = true;
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowRightLimit()) {
-		positionX = positionX + (4 * ratioX);
+		positionX = positionX + (JUMPING_X_SPEED * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isJumpingRight = false;
@@ -808,7 +828,7 @@ void Character::jumpLeft() {
 	positionY = positionY - jumpVel;
 	jumpVel -= gravity;
 	if (!this->reachedWindowLeftLimit()) {
-		positionX = positionX - (4 * ratioX);
+		positionX = positionX - (JUMPING_X_SPEED * ratioX);
 	}
 	if (this->isTouchingGround(positionY)) {
 		isJumpingLeft = false;
@@ -1507,4 +1527,12 @@ void Character::smoothMovPosX() {
 			this->smoothOffsetX-=15;
 	//	}
 	}
+}
+
+float Character::getPosXBoxUL() {
+	return this->posXBox / this->ratioX;
+}
+
+float Character::getWidthBoxUL() {
+	return this->widthBox / this->ratioX;
 }

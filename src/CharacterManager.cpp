@@ -295,3 +295,10 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 	}
 }
 
+//Distancia en el eje x entre los personajes (en UL)
+//Se toma como distancia el espacio entre el fin de una box y el comienzo de la otra.
+float CharacterManager::getCharacterDistance() {
+	Character* character1 = GameGUI::getInstance()->getCharacters().at(0);
+	Character* character2 = GameGUI::getInstance()->getCharacters().at(1);
+	return fabs( character1->getPosXUL() - character2->getPosXUL() ) - character1->getWidthBoxUL();
+}

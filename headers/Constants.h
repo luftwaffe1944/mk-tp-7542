@@ -16,7 +16,7 @@ const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 //Draw collitionable boxes
-const bool DRAW_COLLITIONABLE_BOXES = false;
+const bool DRAW_COLLITIONABLE_BOXES = true;
 
 //Throwable Speed Object
 #define OBJECT_SPEED 120
@@ -87,6 +87,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define HINT_FLYING_MOVEMENT "hintFlying"
 #define HINT_FLYING_UPPER_MOVEMENT "hintFlyingUpper"
 #define GET_UP_MOVEMENT "getUp"
+#define JUMPING_X_SPEED 4
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
