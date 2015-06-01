@@ -864,3 +864,7 @@ void InputControl::loadDefaultButtons(int joyNum) {
 	setActionButton(joyNum, BLOCK, 4 );
 	setActionButton(joyNum, FIRE, 5 );
 }
+
+void InputControl::setSecondPlayerMove(InputCommand action) {
+	this->secondPlayerMove = action;
+}

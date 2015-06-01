@@ -74,6 +74,7 @@ public:
 
 	InputCommand getFirstPlayerMove();
 	InputCommand getSecondPlayerMove();
+	void setSecondPlayerMove( InputCommand action);
 	InputCommand getControlOption();
 	std::vector<std::vector <bool> > joysticksButtonStates;
 	std::vector<std::pair <int,int> > joystickAxisStates;

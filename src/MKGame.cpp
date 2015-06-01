@@ -232,7 +232,7 @@ void MKGame::handleEvents() {
 
 
 void MKGame::handleAI() {
-	AIMovement::Instance()->setAIMovement();
+	AIMovement::Instance()->solveAIMovement();
 }
 
 void MKGame::quit(){
