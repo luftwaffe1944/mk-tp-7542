@@ -16,19 +16,23 @@
 #include <algorithm>
 #include "TextureManager.h"
 
-class MenuItem : public SDLObjectGUI {
+class MenuItem {
 private:
-	MenuItem* next; /* Lista de Items*/
+
+	SDL_Color text_color;
+	int positionX, positionY;
+	int width, height;
 
 public:
-	MenuItem(const LoaderParams* params);
+	MenuItem* next;
+	MenuItem* previous;
+	std::string text;
+
+	MenuItem(int, int, int, int, std::string);
 	virtual ~MenuItem();
 	bool checkBounds(float posX, float posY);
-
-	virtual bool load(SDL_Renderer* render);
-	virtual void draw();
-	virtual void update();
-	virtual void clean();
+	void setTextColor(int r, int g, int b);
+	void show(SDL_Renderer*);
 };
 
 #endif /* MENUITEM_H_ */

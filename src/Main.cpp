@@ -32,9 +32,11 @@ int main(int argc, char* argv[]) {
 		if (MKGame::Instance()->init(gameGUI)) {
 			std::cout << "game init success" << endl;
 			while ((MKGame::Instance()->running()) && !(MKGame::Instance()->reset()))  {
-				MKGame::Instance()->handleEvents();
-				MKGame::Instance()->update();
-				MKGame::Instance()->render();
+				if (!MKGame::Instance()->menu()) {
+					MKGame::Instance()->handleEvents();
+					MKGame::Instance()->update();
+					MKGame::Instance()->render();
+				}
 				SDL_Delay(5);
 			}
 			if (!(MKGame::Instance()->running())){

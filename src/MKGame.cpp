@@ -64,6 +64,9 @@ bool MKGame::init(GameGUI* gameGui) {
 
 	FILE_LOG(logDEBUG) << "init success";
 	m_bRunning = true;
+	string menuitems[] = { "New Game", "Credits", "Exit" };
+	menuMk = new Menu(3, menuitems, 50, 150, m_pRenderer);
+	showMenu = true;
 	return true;
 }
 
@@ -119,6 +122,20 @@ void MKGame::draw() {
 			i++) {
 		objectList[i]->draw();
 	}
+}
+
+bool MKGame::menu() {
+	if (showMenu) {
+		drawMenu();
+		menuMk->identify_event();
+	}
+	return showMenu;
+}
+
+void MKGame::drawMenu() {
+	SDL_RenderClear(m_pRenderer);
+	menuMk->show(255);
+	SDL_RenderPresent(m_pRenderer);
 }
 
 vector<Collitionable*> convertVector(vector<Character*> oldVec){

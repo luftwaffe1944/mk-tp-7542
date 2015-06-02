@@ -7,8 +7,14 @@
 
 #include "../headers/MenuItem.h"
 
-MenuItem::MenuItem(const LoaderParams* params) : SDLObjectGUI(params) {
+MenuItem::MenuItem(int x, int y, int w, int h, std::string tm) {
+	this->positionX = x;
+	this->positionY = y;
+	this->width = w;
+	this->height = h;
+	this->text = tm;
 	this->next = NULL;
+	this->text_color = { 150, 150, 150 };
 }
 
 MenuItem::~MenuItem() {
@@ -28,26 +34,32 @@ bool MenuItem::checkBounds(float posX, float posY) {
 	return false;
 }
 
-bool MenuItem::load(SDL_Renderer* render) {
-	this->render = render;
-	TTF_Font* font = TTF_OpenFont( "fonts/mk1.ttf", 100 );
-	SDL_Color itemMenuColor = {255, 255, 255};
-	std:string itemText = this->getTextureID();
-	std::transform(itemText.begin(), itemText.end(), itemText.begin(), ::toupper);
-
-	return (TextureManager::Instance()->loadFromRenderedText( this->textureID, itemText, itemMenuColor, font, render));
+void MenuItem::setTextColor(int r, int g, int b) {
+	this->text_color.r = r;
+	this->text_color.g = g;
+	this->text_color.b = b;
 }
 
-void MenuItem::clean() {
-	if (next != 0) {
-		delete next;
-	}
-}
+void MenuItem::show(SDL_Renderer* render) {
+	TTF_Font* font = TTF_OpenFont("fonts/mk1.ttf", 50);
+	//std::transform(text.begin(), text.end(), text.begin(), ::toupper);
+	SDL_Texture* mTexture = NULL;
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), text_color);
+	mTexture = SDL_CreateTextureFromSurface(render, textSurface);
+	SDL_FreeSurface(textSurface);
 
-void MenuItem::draw() {
-	SDLObjectGUI::draw();
-}
+	SDL_Rect srcRect;
+	SDL_Rect destRect;
 
-void MenuItem::update() {
+	srcRect.x = 0;
+	srcRect.y = 0;
+	SDL_QueryTexture(mTexture, NULL, NULL, &srcRect.w, &srcRect.h);
 
+	destRect.w = srcRect.w;
+	destRect.h = height;
+	destRect.x = positionX;
+	destRect.y = positionY;
+
+	SDL_RenderCopyEx(render, mTexture, &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
+	SDL_RenderPresent(render);
 }

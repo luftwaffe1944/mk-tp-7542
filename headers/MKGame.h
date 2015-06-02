@@ -23,6 +23,7 @@
 #include "GameInfo.h"
 #include "SDL_ttf.h"
 #include "CollitionManager.h"
+#include "Menu.h"
 
 //#include "SDL_gamecontroller.h"
 //#include "SDL_joystick.h"
@@ -52,6 +53,8 @@ private:
 	int shakeIntensity;
 
 	float offSetPosY;
+
+	Menu* menuMk;
 
 	MKGame() {
 		m_bRunning = false;
@@ -108,6 +111,9 @@ public:
 	}
 	void setOnReset(){m_bReset=true;}
 	void setOffReset(){m_bReset=false;}
+	void drawMenu();
+	bool showMenu;
+	bool menu();
 };
 
 #endif /* MKGAME_H_ */
