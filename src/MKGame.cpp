@@ -98,13 +98,11 @@ void MKGame::clean() {
 	LayerManager::Instance()->clean();
 	InputControl::Instance()->clean();
 	GameGUI::getInstance()->clean();
+	AIMovement::Instance()->clean();
 
 	TextureManager::Instance()->resetInstance();
 	SDL_DestroyRenderer(this->m_pRenderer);
 	SDL_DestroyWindow(this->m_pWindow);
-
-	//SDL_JoystickClose( this->gGameController );
-	//gGameController = NULL;
 
 	IMG_Quit();
 	TTF_Quit();
@@ -232,6 +230,7 @@ void MKGame::handleEvents() {
 
 
 void MKGame::handleAI() {
+	if ( !AIMovement::Instance()->isInitialized) AIMovement::Instance()->init();
 	AIMovement::Instance()->solveAIMovement();
 }
 

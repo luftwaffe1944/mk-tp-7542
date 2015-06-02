@@ -21,6 +21,8 @@ const bool DRAW_COLLITIONABLE_BOXES = true;
 //Throwable Speed Object
 #define OBJECT_SPEED 120
 
+//IA
+#define IDLE_CHANCE 60
 
 //Joystick
 #define MAX_XAXIS 32000 //max 32767
