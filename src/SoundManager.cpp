@@ -24,7 +24,7 @@ SoundManager* SoundManager::Instance() {
 	}
 }
 
-SoundManager::~SoundManager() {
+void SoundManager::clean() {
 	Mix_CloseAudio();
 }
 

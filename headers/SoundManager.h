@@ -12,6 +12,7 @@
 #include "Constants.h"
 #include "SDL_mixer.h"
 #include <map>
+#include <iostream>
 
 enum sound_type
 {
@@ -29,6 +30,7 @@ public:
 	bool load(std::string fileName, std::string id, sound_type type);
 	void playSound(std::string id, int loop);
 	void playMusic(std::string id, int loop);
+	void clean();
 
 private:
 	SoundManager();

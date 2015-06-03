@@ -99,6 +99,7 @@ void MKGame::clean() {
 	InputControl::Instance()->clean();
 	GameGUI::getInstance()->clean();
 	AIMovement::Instance()->clean();
+	SoundManager::Instance()->clean();
 
 	TextureManager::Instance()->resetInstance();
 	SDL_DestroyRenderer(this->m_pRenderer);
