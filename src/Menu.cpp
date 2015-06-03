@@ -5,6 +5,10 @@ Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, SDL
 {
 	this->render = rd;
 	sound = Mix_LoadWAV("sounds/menu.wav");
+	if (sound == NULL)
+	{
+		printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+	}
 
 	int x = start_x;
 	int y = start_y;

@@ -62,6 +62,11 @@ bool MKGame::init(GameGUI* gameGui) {
     	FILE_LOG(logERROR) << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError();
     }
 
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		FILE_LOG(logERROR) << "SDL_mixer could not initialize! SDL_mixer Error: %s\n" << Mix_GetError();
+	}
+
 	FILE_LOG(logDEBUG) << "init success";
 	m_bRunning = true;
 	string menuitems[] = { "New Game", "Credits", "Exit" };
