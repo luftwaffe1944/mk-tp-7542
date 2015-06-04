@@ -18,7 +18,8 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->initAnimation = true;
 	this->msTime = 100000.0f;
 	this->idTimer = "";
-	timer.start();
+	this->roundCompleted;
+	this->currentRound = 1;
 }
 
 bool GameInfo::load() {
@@ -164,4 +165,14 @@ void GameInfo::draw() {
 	} else HealthBar((this->width - WINDOW_MARGIN - barWidth) * ratioX, 35, barWidth * ratioX, 20, energy, frontColor, bgColor, render, 1);
 }
 
+void GameInfo::timerStart() {
+	this->timer.start();
+}
 
+void GameInfo::timerStop() {
+	this->timer.stop();
+}
+
+void GameInfo::timerPause() {
+	this->timer.pause();
+}

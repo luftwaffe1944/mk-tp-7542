@@ -32,6 +32,11 @@ public:
 	}
 	virtual bool load();
 	virtual bool load(SDL_Renderer* r);
+	void timerStart();
+	void timerStop();
+	void timerPause();
+	bool roundCompleted;
+	int currentRound;
 private:
 	vector<Character*> characters;
 	float barWidth;

@@ -67,15 +67,25 @@ bool MKGame::init(GameGUI* gameGui) {
 		FILE_LOG(logERROR) << "SDL_mixer could not initialize! SDL_mixer Error: %s\n" << Mix_GetError();
 	}
 
+	//agregar menus dentro de este metodo
+	this->menuInit();
+
 	FILE_LOG(logDEBUG) << "init success";
 	m_bRunning = true;
-	string menuitems[] = { "New Game", "Credits", "Exit" };
-	menuMk = new Menu(3, menuitems, 50, 150, m_pRenderer);
-	showMenu = true;
 	return true;
 }
 
-
+void MKGame::menuInit() {
+	// Inicializacion de Menus
+	string menuItemsMK[] = { "New Game", "Credits", "Exit" };
+	string menuItemsNewGame[] = { "P1 vs P2", "P1 VS CPU", "Pratice Mode", "Go Back" };
+	//nro de items, string con items, posX, posY, render
+	menuMk = new Menu(3, menuItemsMK, 50, 150, m_pRenderer);
+	menuMk->setMusicPath("sounds/menu-music.ogg");
+	menuNewGame = new Menu(4, menuItemsNewGame, 50, 150, m_pRenderer);
+	menuPpal = true;
+	menuGame = false;
+}
 
 bool compareSDLObjectGUI(SDLObjectGUI* a, SDLObjectGUI* b) {
 	return (a->getZIndex() < b->getZIndex());
@@ -129,18 +139,45 @@ void MKGame::draw() {
 	}
 }
 
-bool MKGame::menu() {
-	if (showMenu) {
-		drawMenu();
-		menuMk->identify_event();
-	}
-	return showMenu;
+void MKGame::drawMenu(Menu* menu, int opacity) {
+	SDL_RenderClear(m_pRenderer);
+	menu->show(opacity);
+	SDL_RenderPresent(m_pRenderer);
 }
 
-void MKGame::drawMenu() {
-	SDL_RenderClear(m_pRenderer);
-	menuMk->show(255);
-	SDL_RenderPresent(m_pRenderer);
+//Agregar eventos de los menus en este metodo
+void MKGame::menuActions(std::string action) {
+	if (action == "Exit") {
+		this->quit();
+	}
+	if (action == "New Game") {
+		this->menuPpal = false;
+		this->menuGame = true;
+	}
+	if (action == "Go Back") {
+		this->menuPpal = true;
+		this->menuGame = false;
+	}
+	if (action == "P1 vs P2") {
+		this->menuPpal = false;
+		this->menuGame = false;
+	}
+}
+
+bool MKGame::menu() {
+	std::string action = "";
+	if (menuPpal || menuGame) {
+		if (menuPpal) {
+			drawMenu(this->menuMk, 255);
+			action = menuMk->identify_event();
+		}
+		if (menuGame) {
+			drawMenu(this->menuNewGame, 255);
+			action = menuNewGame->identify_event();
+		}
+	}
+	this->menuActions(action);
+	return (menuPpal || menuGame);
 }
 
 vector<Collitionable*> convertVector(vector<Character*> oldVec){

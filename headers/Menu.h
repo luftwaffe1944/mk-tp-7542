@@ -19,12 +19,16 @@ public:
 	virtual ~Menu();
 	std::string clicked(int mouse_x, int mouse_y);
 	SDL_Renderer* render;
+	bool music;
+	void setMusicPath(std::string);
 
 private:
 	MenuItem * start;
 	MenuItem * selected;
 	SDL_Texture * background;
 	Mix_Chunk * sound;
+	Mix_Music * musicMenu;
+	bool musicStarted;
 	void draw(SDL_Texture*);
 };
 

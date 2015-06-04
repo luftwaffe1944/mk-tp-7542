@@ -5,10 +5,8 @@ Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, SDL
 {
 	this->render = rd;
 	sound = Mix_LoadWAV("sounds/menu.wav");
-	if (sound == NULL)
-	{
-		printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-	}
+	this->music = false;
+	this->musicStarted = false;
 
 	int x = start_x;
 	int y = start_y;
@@ -57,7 +55,7 @@ void Menu::draw(SDL_Texture* tx) {
 	destRect.y = 0;
 
 	SDL_RenderCopyEx(render, tx, &srcRect, &destRect, 0, 0,
-		SDL_FLIP_HORIZONTAL);
+		SDL_FLIP_NONE);
 }
 
 void Menu::show(int alpha)
@@ -90,6 +88,11 @@ std::string Menu::clicked(int mouse_x, int mouse_y)
 
 std::string Menu::identify_event()
 {
+	if (music && !musicStarted) {
+		Mix_PlayMusic(musicMenu, -1);
+		musicStarted = true;
+	}
+
 	std::string temp;
 	SDL_Event event;
 	while (1)
@@ -143,4 +146,9 @@ std::string Menu::identify_event()
 Menu::~Menu()
 {
 
+}
+
+void Menu::setMusicPath(std::string path) {
+	this->musicMenu = Mix_LoadMUS(path.c_str());
+	this->music = true;
 }

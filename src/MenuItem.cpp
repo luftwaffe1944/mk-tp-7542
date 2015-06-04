@@ -41,7 +41,7 @@ void MenuItem::setTextColor(int r, int g, int b) {
 }
 
 void MenuItem::show(SDL_Renderer* render) {
-	TTF_Font* font = TTF_OpenFont("fonts/mk1.ttf", 50);
+	TTF_Font* font = TTF_OpenFont("fonts/apple.ttf", 50);
 	//std::transform(text.begin(), text.end(), text.begin(), ::toupper);
 	SDL_Texture* mTexture = NULL;
 	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), text_color);

@@ -55,6 +55,7 @@ private:
 	float offSetPosY;
 
 	Menu* menuMk;
+	Menu* menuNewGame;
 
 	MKGame() {
 		m_bRunning = false;
@@ -111,9 +112,14 @@ public:
 	}
 	void setOnReset(){m_bReset=true;}
 	void setOffReset(){m_bReset=false;}
-	void drawMenu();
-	bool showMenu;
+
+	void menuInit();
+	void drawMenu(Menu* menu, int opacity);
+	void menuActions(std::string action);
 	bool menu();
+
+	bool menuPpal;
+	bool menuGame;
 };
 
 #endif /* MKGAME_H_ */
