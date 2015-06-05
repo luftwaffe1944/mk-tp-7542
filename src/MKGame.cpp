@@ -79,12 +79,26 @@ void MKGame::menuInit() {
 	// Inicializacion de Menus
 	string menuItemsMK[] = { "New Game", "Credits", "Exit" };
 	string menuItemsNewGame[] = { "P1 vs P2", "P1 vs CPU", "Practice Mode", "Go Back" };
-	//nro de items, string con items, posX, posY, render
-	menuMk = new Menu(3, menuItemsMK, 50, 150, 150, 50, m_pRenderer);
+	string menuItemsCharacters[] = {
+		"Subszero", "Scorpion", "Subszero1", "Subszero1",
+		"Subszero1", "Subszero1", "Subszero1", "Subszero1",
+		"Subszero1", "Subszero1", "Subszero1", "Subszero1" };
+
+	//nro de items, string con items, posX, posY, width, height, render
+	//Menu principal
+	menuMk = new Menu(3, menuItemsMK, 50, 150, 150, 50, m_pRenderer, true);
 	menuMk->setMusicPath("sounds/menu-music.ogg");
-	menuNewGame = new Menu(4, menuItemsNewGame, 50, 150, 150, 50, m_pRenderer);
+
+	//Menu seleccion de modo de pelea
+	menuNewGame = new Menu(4, menuItemsNewGame, 50, 150, 150, 50, m_pRenderer, true);
+
+	//Menu seleccion de personaje
+	menuCharacterSelect = new Menu(12, menuItemsCharacters, 200, 100, 80, 80, m_pRenderer, false);
+
+	//Arranco con el menu principal
 	menuPpal = true;
 	menuGame = false;
+	menuCharacter = false;
 }
 
 bool compareSDLObjectGUI(SDLObjectGUI* a, SDLObjectGUI* b) {
@@ -152,21 +166,24 @@ void MKGame::menuActions(std::string action) {
 	}
 	if (action == "New Game") {
 		this->menuPpal = false;
+		this->menuCharacter = false;
 		this->menuGame = true;
 	}
 	if (action == "Go Back") {
 		this->menuPpal = true;
+		this->menuCharacter = false;
 		this->menuGame = false;
 	}
 	if (action == "P1 vs P2") {
 		this->menuPpal = false;
 		this->menuGame = false;
+		this->menuCharacter = true;
 	}
 }
 
 bool MKGame::menu() {
 	std::string action = "";
-	if (menuPpal || menuGame) {
+	if (menuPpal || menuGame || menuCharacter) {
 		if (menuPpal) {
 			drawMenu(this->menuMk, 255);
 			action = menuMk->identify_event();
@@ -175,9 +192,13 @@ bool MKGame::menu() {
 			drawMenu(this->menuNewGame, 255);
 			action = menuNewGame->identify_event();
 		}
+		if (menuCharacter) {
+			drawMenu(this->menuCharacterSelect, 255);
+			action = menuCharacterSelect->identify_event();
+		}
 	}
 	this->menuActions(action);
-	return (menuPpal || menuGame);
+	return (menuPpal || menuGame || menuCharacter);
 }
 
 vector<Collitionable*> convertVector(vector<Character*> oldVec){

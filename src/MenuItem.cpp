@@ -14,7 +14,7 @@ MenuItem::MenuItem(int x, int y, int w, int h, std::string tm) {
 	this->height = h;
 	this->text = tm;
 	this->next = NULL;
-	this->text_color = { 150, 150, 150 };
+	this->color = { 150, 150, 150 };
 }
 
 MenuItem::~MenuItem() {
@@ -34,17 +34,17 @@ bool MenuItem::checkBounds(float posX, float posY) {
 	return false;
 }
 
-void MenuItem::setTextColor(int r, int g, int b) {
-	this->text_color.r = r;
-	this->text_color.g = g;
-	this->text_color.b = b;
+void MenuItem::setColor(int r, int g, int b) {
+	this->color.r = r;
+	this->color.g = g;
+	this->color.b = b;
 }
 
 void MenuItem::show(SDL_Renderer* render) {
 	TTF_Font* font = TTF_OpenFont("fonts/apple.ttf", 50);
 	//std::transform(text.begin(), text.end(), text.begin(), ::toupper);
 	SDL_Texture* mTexture = NULL;
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), text_color);
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
 	mTexture = SDL_CreateTextureFromSurface(render, textSurface);
 	SDL_FreeSurface(textSurface);
 
@@ -61,5 +61,12 @@ void MenuItem::show(SDL_Renderer* render) {
 	destRect.y = positionY;
 
 	SDL_RenderCopyEx(render, mTexture, &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
+	SDL_RenderPresent(render);
+}
+
+void MenuItem::drawBox(SDL_Renderer* render) {
+	SDL_Rect boxCharacter = { positionX, positionY, width, height };
+	SDL_SetRenderDrawColor(render, color.r, color.g, color.b, 0xFF);
+	SDL_RenderDrawRect(render, &boxCharacter);
 	SDL_RenderPresent(render);
 }

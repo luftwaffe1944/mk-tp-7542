@@ -56,6 +56,7 @@ private:
 
 	Menu* menuMk;
 	Menu* menuNewGame;
+	Menu* menuCharacterSelect;
 
 	MKGame() {
 		m_bRunning = false;
@@ -120,6 +121,7 @@ public:
 
 	bool menuPpal;
 	bool menuGame;
+	bool menuCharacter;
 };
 
 #endif /* MKGAME_H_ */

@@ -19,11 +19,11 @@
 class MenuItem {
 private:
 
-	SDL_Color text_color;
-	int positionX, positionY;
-	int width, height;
+	SDL_Color color;
 
 public:
+	int positionX, positionY;
+	int width, height;
 	MenuItem* next;
 	MenuItem* previous;
 	std::string text;
@@ -31,8 +31,9 @@ public:
 	MenuItem(int, int, int, int, std::string);
 	virtual ~MenuItem();
 	bool checkBounds(float posX, float posY);
-	void setTextColor(int r, int g, int b);
+	void setColor(int r, int g, int b);
 	void show(SDL_Renderer*);
+	void drawBox(SDL_Renderer*);
 };
 
 #endif /* MENUITEM_H_ */

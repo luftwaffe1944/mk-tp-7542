@@ -5,32 +5,59 @@ void Menu::initFlag() {
 	//musica desactivada por defecto
 	this->music = false;
 	this->musicStarted = false;
-	//menu de texto por defecto
-	this->textMenu = true;
 }
 
 void Menu::createMenuItemList(int no_of_items, std::string * strings, int x, int y, int width, int height) {
 
 	start = new MenuItem(x, y, width, height, strings[0]);
-	y = y + 50;
+	y = y + height;
 	start->previous = NULL;
 	MenuItem * temp1 = start;
 	MenuItem * temp2 = start;
 
 	int i = 1;
-	while (i<no_of_items)
-	{
-		temp2 = new MenuItem(x, y, 150, 50, strings[i]);
+	while (i < no_of_items) {
+		temp2 = new MenuItem(x, y, width, height, strings[i]);
 		temp1->next = temp2;
 		temp2->previous = temp1;
 		temp1 = temp2;
-		y = y + 50;
+		y = y + height;
 		i++;
 	}
 
 	temp2->next = NULL;
 	selected = start;
-	selected->setTextColor(255, 255, 255);
+	selected->setColor(255, 255, 255);
+}
+
+void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, int y, int width, int height) {
+
+	start = new MenuItem(x, y, width, height, strings[0]);
+	start->previous = NULL;
+	MenuItem * temp1 = start;
+	MenuItem * temp2 = start;
+
+	int i = 1;
+	int j = 2;
+	int auxX = x + width;
+	while (i < no_of_items) {
+		while (j < 4 && i < no_of_items) {
+			temp2 = new MenuItem(auxX, y, width, height, strings[i]);
+			temp1->next = temp2;
+			temp2->previous = temp1;
+			temp1 = temp2;
+			auxX = auxX + width;
+			i++;
+			j++;
+		}
+		y = y + height;
+		auxX = x;
+		j = 1;
+	}
+
+	temp2->next = NULL;
+	selected = start;
+	selected->setColor(255, 255, 255);
 }
 
 void Menu::loadBackgroundImage(std::string path) {
@@ -48,15 +75,18 @@ void Menu::setMusicPath(std::string path) {
 	this->music = true;
 }
 
-Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer* rd)
-{
+Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer* rd, bool tm) {
+	this->textMenu = tm;
 	this->render = rd;
 
 	this->initFlag();
 
 	this->loadSoundEffect("sounds/menu.wav");
 
-	this->createMenuItemList(no_of_items, strings, start_x, start_y, width, height);
+	if (textMenu) 
+		this->createMenuItemList(no_of_items, strings, start_x, start_y, width, height);
+	else 
+		this->createGridCharacters(no_of_items, strings, start_x, start_y, width, height);
 
 	this->loadBackgroundImage("images/mk-bg-menu.jpg");
 }
@@ -79,26 +109,30 @@ void Menu::draw(SDL_Texture* tx) {
 		SDL_FLIP_NONE);
 }
 
-void Menu::show(int alpha)
-{
+void Menu::show(int alpha) {
 	SDL_SetTextureAlphaMod(background, alpha);
 
 	if (alpha != 250)
 		this->draw(background);
 
 	MenuItem * temp = start;
-	while (temp != 0)
-	{
-		temp->show(render);
-		temp = temp->next;
+	while (temp != 0) {
+		if (textMenu) {
+			temp->show(render);
+			temp = temp->next;
+		}
+		else {
+
+			temp->drawBox(render);
+			temp = temp->next;
+		}
+
 	}
 }
 
-std::string Menu::clicked(int mouse_x, int mouse_y)
-{
+std::string Menu::clicked(int mouse_x, int mouse_y) {
 	MenuItem * next = start;
-	while (next != 0)
-	{
+	while (next != 0) {
 		if (next->checkBounds(mouse_x, mouse_y))
 			return next->text;
 		next = next->next;
@@ -106,8 +140,7 @@ std::string Menu::clicked(int mouse_x, int mouse_y)
 	return "None";
 }
 
-std::string Menu::identify_event()
-{
+std::string Menu::identify_event() {
 	if (music && !musicStarted) {
 		Mix_PlayMusic(musicMenu, -1);
 		musicStarted = true;
@@ -124,26 +157,53 @@ std::string Menu::identify_event()
 
 				switch (event.key.keysym.sym) {
 				case SDLK_UP:
-					if (selected->previous != NULL) {
-						Mix_PlayChannel(-1, sound, 0);
-
-						selected->setTextColor(150, 150, 150);
-						selected->show(render);
-						selected = selected->previous;
-						selected->setTextColor(255, 255, 255);
-						selected->show(render);
+					if (textMenu) {
+						if (selected->previous != NULL) {
+							Mix_PlayChannel(-1, sound, 0);
+							selected->setColor(150, 150, 150);
+							selected->show(render);
+							selected = selected->previous;
+							selected->setColor(255, 255, 255);
+							selected->show(render);
+						}
 					}
+					else {
+						if (selected->positionY - selected->height >= start->positionY) {
+							selected->setColor(150, 150, 150);
+							selected->drawBox(render);
+							selected = selected->previous;
+							selected = selected->previous;
+							selected = selected->previous;
+							selected->setColor(255, 255, 255);
+							selected->drawBox(render);
+						}
+					}
+
 					break;
 
 				case SDLK_DOWN:
-					if (selected->next != NULL) {
-						Mix_PlayChannel(-1, sound, 0);
-						selected->setTextColor(150, 150, 150);
-						selected->show(render);
-						selected = selected->next;
-						selected->setTextColor(255, 255, 255);
-						selected->show(render);
+					if (textMenu) {
+						if (selected->next != NULL) {
+							Mix_PlayChannel(-1, sound, 0);
+							selected->setColor(150, 150, 150);
+							selected->show(render);
+							selected = selected->next;
+							selected->setColor(255, 255, 255);
+							selected->show(render);
+						}
 					}
+					else {
+						if (selected->positionY + selected->height < start->positionY + start->height*4) {
+							selected->setColor(150, 150, 150);
+							selected->drawBox(render);
+							selected = selected->next;
+							selected = selected->next;
+							selected = selected->next;
+							selected->setColor(255, 255, 255);
+							selected->drawBox(render);
+						}
+					}
+
 					break;
 
 				case SDLK_RETURN:

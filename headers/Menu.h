@@ -13,7 +13,7 @@
 class Menu
 {
 public:
-	Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer*);
+	Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer*, bool textMenu);
 	void show(int alpha);
 	std::string identify_event();
 	virtual ~Menu();
@@ -21,7 +21,7 @@ public:
 	SDL_Renderer* render;
 	bool music;
 	void setMusicPath(std::string);
-	bool textMenu;
+
 
 private:
 	MenuItem * start;
@@ -32,7 +32,9 @@ private:
 	bool musicStarted;
 	void draw(SDL_Texture*);
 	void initFlag();
+	bool textMenu;
 	void createMenuItemList(int nItems, std::string * strings, int x, int y, int width, int height);
+	void createGridCharacters(int nItems, std::string * strings, int x, int y, int width, int height);
 	void loadBackgroundImage(std::string path);
 	void loadSoundEffect(std::string path);
 };
