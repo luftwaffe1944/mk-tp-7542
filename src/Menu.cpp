@@ -1,17 +1,17 @@
 #include "../headers/Menu.h"
 
 
-Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, SDL_Renderer* rd)
-{
-	this->render = rd;
-	sound = Mix_LoadWAV("sounds/menu.wav");
+void Menu::initFlag() {
+	//musica desactivada por defecto
 	this->music = false;
 	this->musicStarted = false;
+	//menu de texto por defecto
+	this->textMenu = true;
+}
 
-	int x = start_x;
-	int y = start_y;
+void Menu::createMenuItemList(int no_of_items, std::string * strings, int x, int y, int width, int height) {
 
-	start = new MenuItem(x, y, 150, 50, strings[0]);
+	start = new MenuItem(x, y, width, height, strings[0]);
 	y = y + 50;
 	start->previous = NULL;
 	MenuItem * temp1 = start;
@@ -31,13 +31,34 @@ Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, SDL
 	temp2->next = NULL;
 	selected = start;
 	selected->setTextColor(255, 255, 255);
+}
 
-	SDL_Surface* pTempSurface = IMG_Load("images/mk-bg-menu.jpg");
+void Menu::loadBackgroundImage(std::string path) {
+	SDL_Surface* pTempSurface = IMG_Load(path.c_str());
 	background = SDL_CreateTextureFromSurface(this->render, pTempSurface);
 	SDL_FreeSurface(pTempSurface);
+}
 
-//	if (start_x<150)
-//		background = Game::load_image("controls.JPG");
+void Menu::loadSoundEffect(std::string path) {
+	sound = Mix_LoadWAV(path.c_str());
+}
+
+void Menu::setMusicPath(std::string path) {
+	this->musicMenu = Mix_LoadMUS(path.c_str());
+	this->music = true;
+}
+
+Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer* rd)
+{
+	this->render = rd;
+
+	this->initFlag();
+
+	this->loadSoundEffect("sounds/menu.wav");
+
+	this->createMenuItemList(no_of_items, strings, start_x, start_y, width, height);
+
+	this->loadBackgroundImage("images/mk-bg-menu.jpg");
 }
 
 void Menu::draw(SDL_Texture* tx) {
@@ -83,7 +104,6 @@ std::string Menu::clicked(int mouse_x, int mouse_y)
 		next = next->next;
 	}
 	return "None";
-
 }
 
 std::string Menu::identify_event()
@@ -95,21 +115,16 @@ std::string Menu::identify_event()
 
 	std::string temp;
 	SDL_Event event;
-	while (1)
-	{
-		while (SDL_PollEvent(&event))
-		{
+	while (1) {
+		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT)
 				return "Exit";
 
-			if (event.type == SDL_KEYDOWN)
-			{
+			if (event.type == SDL_KEYDOWN) {
 
-				switch (event.key.keysym.sym)
-				{
+				switch (event.key.keysym.sym) {
 				case SDLK_UP:
-					if (selected->previous != NULL)
-					{
+					if (selected->previous != NULL) {
 						Mix_PlayChannel(-1, sound, 0);
 
 						selected->setTextColor(150, 150, 150);
@@ -121,8 +136,7 @@ std::string Menu::identify_event()
 					break;
 
 				case SDLK_DOWN:
-					if (selected->next != NULL)
-					{
+					if (selected->next != NULL) {
 						Mix_PlayChannel(-1, sound, 0);
 						selected->setTextColor(150, 150, 150);
 						selected->show(render);
@@ -143,12 +157,6 @@ std::string Menu::identify_event()
 	}
 }
 
-Menu::~Menu()
-{
-
-}
-
-void Menu::setMusicPath(std::string path) {
-	this->musicMenu = Mix_LoadMUS(path.c_str());
-	this->music = true;
+Menu::~Menu() {
+	delete this->start;
 }
