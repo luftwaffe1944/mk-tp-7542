@@ -36,7 +36,7 @@ bool MenuItem::checkBounds(float posX, float posY) {
 	return false;
 }
 
-void MenuItem::setColor(int r, int g, int b) {
+void MenuItem::setColor(int r, int g, int b, int a) {
 	this->color.r = r;
 	this->color.g = g;
 	this->color.b = b;
@@ -89,6 +89,7 @@ void MenuItem::drawBg(SDL_Texture* tx, SDL_Renderer* render) {
 
 	SDL_RenderCopyEx(render, tx, &srcRect, &destRect, 0, 0,
 		SDL_FLIP_NONE);
+	SDL_SetTextureAlphaMod(tx, color.a);
 }
 
 

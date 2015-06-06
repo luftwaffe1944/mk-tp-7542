@@ -27,7 +27,7 @@ void Menu::createMenuItemList(int no_of_items, std::string * strings, int x, int
 
 	temp2->next = NULL;
 	selected = start;
-	selected->setColor(255, 255, 255);
+	selected->setColor(255, 255, 255, 255);
 }
 
 void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, int y, int width, int height) {
@@ -57,7 +57,7 @@ void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, i
 
 	temp2->next = NULL;
 	selected = start;
-	selected->setColor(0, 255, 0);
+	selected->setColor(0, 255, 0, 255);
 }
 
 void Menu::loadBackgroundImage(std::string path) {
@@ -92,20 +92,14 @@ Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int
 }
 
 void Menu::draw(SDL_Texture* tx) {
-	SDL_Rect srcRect;
 	SDL_Rect destRect;
-
-	srcRect.x = 0;
-	srcRect.y = 0;
-	srcRect.w = 1920;
-	srcRect.h = 1080;
 
 	destRect.w = GameGUI::getInstance()->getWindow()->getWidthPx();
 	destRect.h = GameGUI::getInstance()->getWindow()->getHeightPx();
 	destRect.x = 0;
 	destRect.y = 0;
 
-	SDL_RenderCopyEx(render, tx, &srcRect, &destRect, 0, 0,
+	SDL_RenderCopyEx(render, tx, NULL, &destRect, 0, 0,
 		SDL_FLIP_NONE);
 }
 
@@ -130,7 +124,7 @@ void Menu::drawCharacterStance(SDL_Renderer* render) {
 	destRect.h = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.60;
 	destRect.x = 0;
 	destRect.y = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.35;
-
+	resetCharacterRender(render);
 	SDL_RenderCopyEx(render, loadImgCharacter(render), &srcRect, &destRect, 0, 0,
 		SDL_FLIP_NONE);
 }
@@ -165,6 +159,47 @@ std::string Menu::clicked(int mouse_x, int mouse_y) {
 	return "None";
 }
 
+void Menu::resetCharacterRender(SDL_Renderer* render) {
+	int windowsWidthPx = GameGUI::getInstance()->getWindow()->getWidthPx();
+	int windowsHeightPx = GameGUI::getInstance()->getWindow()->getHeightPx();
+	SDL_Texture* target_texture = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, windowsWidthPx, windowsHeightPx);
+	SDL_SetRenderTarget(render, target_texture);
+
+	SDL_Rect dst;
+	dst.x = 0;
+	dst.y = 0;
+	dst.w = windowsWidthPx;
+	dst.h = windowsHeightPx;
+
+	SDL_RenderCopy(render, background, NULL, &dst);
+	SDL_RenderPresent(render);
+	SDL_SetRenderTarget(render, NULL);
+	SDL_Rect src;
+	src.x = 0;
+	src.y = 0;
+	src.w = windowsWidthPx / 6;
+	src.h = windowsHeightPx;
+	this->columCharacterOne.x = 0;
+	this->columCharacterOne.y = 0;
+	this->columCharacterOne.w = windowsWidthPx /6;
+	this->columCharacterOne.h = windowsHeightPx;
+
+	this->columCharacterTwo.x = windowsWidthPx * 5 / 6;
+	this->columCharacterTwo.y = 0;
+	this->columCharacterTwo.w = windowsWidthPx / 6;
+	this->columCharacterTwo.h = windowsHeightPx;
+
+	SDL_RenderCopyEx(render, target_texture, &src, &columCharacterOne, 0, 0,
+		SDL_FLIP_NONE);
+	src.x = windowsWidthPx * 5 / 6;
+	src.y = 0;
+	src.w = windowsWidthPx / 6;
+	src.h = windowsHeightPx;
+	SDL_RenderCopyEx(render, target_texture, &src, &columCharacterTwo, 0, 0,
+		SDL_FLIP_NONE);
+	SDL_DestroyTexture(target_texture);
+}
+
 std::string Menu::identify_event() {
 	if (music && !musicStarted) {
 		Mix_PlayMusic(musicMenu, -1);
@@ -185,22 +220,23 @@ std::string Menu::identify_event() {
 					if (textMenu) {
 						if (selected->previous != NULL) {
 							Mix_PlayChannel(-1, sound, 0);
-							selected->setColor(150, 150, 150);
+							selected->setColor(150, 150, 150,255);
 							selected->show(render);
 							selected = selected->previous;
-							selected->setColor(255, 255, 255);
+							selected->setColor(255, 255, 255,255);
 							selected->show(render);
 						}
 					}
 					else {
 						if (selected->positionY - selected->height >= start->positionY) {
-							selected->setColor(150, 150, 150);
+							selected->setColor(150, 150, 150,0);
 							selected->drawBox(render);
 							selected = selected->previous;
 							selected = selected->previous;
 							selected = selected->previous;
 							selected = selected->previous;
-							selected->setColor(0, 255, 0);
+							selected->setColor(0, 255, 0,255);
+							this->drawCharacterStance(render);
 							selected->drawBox(render);
 						}
 					}
@@ -211,22 +247,23 @@ std::string Menu::identify_event() {
 					if (textMenu) {
 						if (selected->next != NULL) {
 							Mix_PlayChannel(-1, sound, 0);
-							selected->setColor(150, 150, 150);
+							selected->setColor(150, 150, 150,255);
 							selected->show(render);
 							selected = selected->next;
-							selected->setColor(255, 255, 255);
+							selected->setColor(255, 255, 255,255);
 							selected->show(render);
 						}
 					}
 					else {
 						if (selected->positionY + selected->height < start->positionY + start->height*3) {
-							selected->setColor(150, 150, 150);
+							selected->setColor(150, 150, 150,0);
 							selected->drawBox(render);
 							selected = selected->next;
 							selected = selected->next;
 							selected = selected->next;
 							selected = selected->next;
-							selected->setColor(0, 255, 0);
+							selected->setColor(0, 255, 0,255);
+							this->drawCharacterStance(render);
 							selected->drawBox(render);
 						}
 					}
@@ -236,10 +273,11 @@ std::string Menu::identify_event() {
 				case SDLK_LEFT:
 					if (!textMenu) {
 						if (selected->positionX - selected->width >= start->positionX) {
-							selected->setColor(150, 150, 150);
+							selected->setColor(150, 150, 150,255);
 							selected->drawBox(render);
 							selected = selected->previous;
-							selected->setColor(0, 255, 0);
+							selected->setColor(0, 255, 0,255);
+							this->drawCharacterStance(render);
 							selected->drawBox(render);
 						}
 					}
@@ -248,10 +286,11 @@ std::string Menu::identify_event() {
 				case SDLK_RIGHT:
 					if (!textMenu) {
 						if (selected->positionX + selected->width < start->positionX + start->width * 4) {
-							selected->setColor(150, 150, 150);
+							selected->setColor(150, 150, 150,0);
 							selected->drawBox(render);
 							selected = selected->next;
-							selected->setColor(0, 255, 0);
+							selected->setColor(0, 255, 0,255);
+							this->drawCharacterStance(render);
 							selected->drawBox(render);
 						}
 					}

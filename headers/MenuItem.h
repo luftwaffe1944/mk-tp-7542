@@ -33,7 +33,7 @@ public:
 	MenuItem(int, int, int, int, std::string);
 	virtual ~MenuItem();
 	bool checkBounds(float posX, float posY);
-	void setColor(int r, int g, int b);
+	void setColor(int r, int g, int b, int a);
 	void setImageBG(std::string);
 	void show(SDL_Renderer*);
 	void drawBg(SDL_Texture*, SDL_Renderer*);

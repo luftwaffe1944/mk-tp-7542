@@ -34,6 +34,8 @@ private:
 	SDL_Texture * background;
 	Mix_Chunk * sound;
 	Mix_Music * musicMenu;
+	SDL_Rect columCharacterOne;
+	SDL_Rect columCharacterTwo;
 	bool musicStarted;
 	void draw(SDL_Texture*);
 	void initFlag();
@@ -43,6 +45,7 @@ private:
 	void loadBackgroundImage(std::string path);
 	void loadSoundEffect(std::string path);
 	void drawCharacterStance(SDL_Renderer*);
+	void resetCharacterRender(SDL_Renderer*);
 	SDL_Texture* loadImgCharacter(SDL_Renderer*);
 };
 
