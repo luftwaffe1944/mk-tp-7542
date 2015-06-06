@@ -1,6 +1,10 @@
 #ifndef MENU_H
 #define MENU_H
 
+#define RATIOBOX 81
+#define WIDTHBOX 48
+#define HEIGHTBOX 59
+
 #include "MenuItem.h"
 #include "SDL.h"
 #include "SDL_mixer.h"
@@ -8,6 +12,7 @@
 #include "SDL_ttf.h"
 #include "TextureManager.h"
 #include "GameGUI.h"
+#include "Constants.h"
 
 
 class Menu
@@ -37,6 +42,8 @@ private:
 	void createGridCharacters(int nItems, std::string * strings, int x, int y, int width, int height);
 	void loadBackgroundImage(std::string path);
 	void loadSoundEffect(std::string path);
+	void drawCharacterStance(SDL_Renderer*);
+	SDL_Texture* loadImgCharacter(SDL_Renderer*);
 };
 
 #endif // MENU_H

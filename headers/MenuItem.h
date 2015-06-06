@@ -7,6 +7,7 @@
 
 #ifndef MENUITEM_H_
 #define MENUITEM_H_
+
 #include "SDLObjectGUI.h"
 #include "LoaderParams.h"
 #include <iostream>
@@ -18,8 +19,9 @@
 
 class MenuItem {
 private:
-
 	SDL_Color color;
+	SDL_Texture* background;
+	std::string pathBg;
 
 public:
 	int positionX, positionY;
@@ -32,8 +34,12 @@ public:
 	virtual ~MenuItem();
 	bool checkBounds(float posX, float posY);
 	void setColor(int r, int g, int b);
+	void setImageBG(std::string);
 	void show(SDL_Renderer*);
+	void drawBg(SDL_Texture*, SDL_Renderer*);
 	void drawBox(SDL_Renderer*);
+	void loadBackgroundImage(SDL_Renderer*);
+
 };
 
 #endif /* MENUITEM_H_ */

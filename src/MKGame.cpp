@@ -80,9 +80,9 @@ void MKGame::menuInit() {
 	string menuItemsMK[] = { "New Game", "Credits", "Exit" };
 	string menuItemsNewGame[] = { "P1 vs P2", "P1 vs CPU", "Practice Mode", "Go Back" };
 	string menuItemsCharacters[] = {
-		"Subszero", "Scorpion", "Subszero1", "Subszero1",
-		"Subszero1", "Subszero1", "Subszero1", "Subszero1",
-		"Subszero1", "Subszero1", "Subszero1", "Subszero1" };
+		"subzero", "cyrax", "jax", "kabal",
+		"kano", "kunglao", "liukang", "motaro",
+		"nightwolf", "sektor", "sheeva", "sonya" };
 
 	//nro de items, string con items, posX, posY, width, height, render
 	//Menu principal
@@ -93,7 +93,11 @@ void MKGame::menuInit() {
 	menuNewGame = new Menu(4, menuItemsNewGame, 50, 150, 150, 50, m_pRenderer, true);
 
 	//Menu seleccion de personaje
-	menuCharacterSelect = new Menu(12, menuItemsCharacters, 200, 100, 80, 80, m_pRenderer, false);
+	int widthSelectBox = GameGUI::getInstance()->getWindow()->getWidthPx() / 6;
+	float heightSelectBox = widthSelectBox * 59 / 48;
+	int posX = widthSelectBox;
+	int posY = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.15;
+	menuCharacterSelect = new Menu(12, menuItemsCharacters, posX, posY, widthSelectBox, (int)heightSelectBox, m_pRenderer, false);
 
 	//Arranco con el menu principal
 	menuPpal = true;

@@ -15,6 +15,8 @@ MenuItem::MenuItem(int x, int y, int w, int h, std::string tm) {
 	this->text = tm;
 	this->next = NULL;
 	this->color = { 150, 150, 150 };
+	this->pathBg = "";
+	this->background = NULL;
 }
 
 MenuItem::~MenuItem() {
@@ -64,9 +66,47 @@ void MenuItem::show(SDL_Renderer* render) {
 	SDL_RenderPresent(render);
 }
 
+void MenuItem::loadBackgroundImage(SDL_Renderer* render) {
+	pathBg = "images/menu/" + text + ".gif";
+	SDL_Surface* pTempSurface = IMG_Load(pathBg.c_str());
+	background = SDL_CreateTextureFromSurface(render, pTempSurface);
+	SDL_FreeSurface(pTempSurface);
+}
+
+void MenuItem::drawBg(SDL_Texture* tx, SDL_Renderer* render) {
+	SDL_Rect srcRect;
+	SDL_Rect destRect;
+
+	srcRect.x = 0;
+	srcRect.y = 0;
+	srcRect.w = 48;
+	srcRect.h = 59;
+
+	destRect.w = width;
+	destRect.h = height;
+	destRect.x = positionX;
+	destRect.y = positionY;
+
+	SDL_RenderCopyEx(render, tx, &srcRect, &destRect, 0, 0,
+		SDL_FLIP_NONE);
+}
+
+
 void MenuItem::drawBox(SDL_Renderer* render) {
+	loadBackgroundImage(render);
+	drawBg(background, render);
+
+	//rectangulo color
 	SDL_Rect boxCharacter = { positionX, positionY, width, height };
+	SDL_Rect boxCharacter1 = { positionX + 1, positionY + 1, width - 1, height - 1 };
+	SDL_Rect boxCharacter2 = { positionX + 2, positionY + 2, width - 2, height - 2 };
 	SDL_SetRenderDrawColor(render, color.r, color.g, color.b, 0xFF);
 	SDL_RenderDrawRect(render, &boxCharacter);
+	SDL_RenderDrawRect(render, &boxCharacter1);
+	SDL_RenderDrawRect(render, &boxCharacter2);
 	SDL_RenderPresent(render);
+}
+
+void MenuItem::setImageBG(std::string path){
+	pathBg = path;
 }

@@ -41,7 +41,7 @@ void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, i
 	int j = 2;
 	int auxX = x + width;
 	while (i < no_of_items) {
-		while (j < 4 && i < no_of_items) {
+		while (j < 5 && i < no_of_items) {
 			temp2 = new MenuItem(auxX, y, width, height, strings[i]);
 			temp1->next = temp2;
 			temp2->previous = temp1;
@@ -57,7 +57,7 @@ void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, i
 
 	temp2->next = NULL;
 	selected = start;
-	selected->setColor(255, 255, 255);
+	selected->setColor(0, 255, 0);
 }
 
 void Menu::loadBackgroundImage(std::string path) {
@@ -109,6 +109,32 @@ void Menu::draw(SDL_Texture* tx) {
 		SDL_FLIP_NONE);
 }
 
+SDL_Texture* Menu::loadImgCharacter(SDL_Renderer* render) {
+	std::string path = "images/" + selected->text + "/stance.png";
+	SDL_Surface* pTempSurface = IMG_Load(path.c_str());
+	SDL_Texture* cTexture;
+	cTexture = SDL_CreateTextureFromSurface(this->render, pTempSurface);
+	SDL_FreeSurface(pTempSurface);
+	return cTexture;
+}
+
+void Menu::drawCharacterStance(SDL_Renderer* render) {
+	SDL_Rect srcRect;
+	SDL_Rect destRect;
+	srcRect.x = SPRITE_WIDTH / 3;
+	srcRect.y = 0;
+	srcRect.w = SPRITE_WIDTH / 3;
+	srcRect.h = SPRITE_HEIGHT;
+
+	destRect.w = GameGUI::getInstance()->getWindow()->getWidthPx() / 6 * 0.90;
+	destRect.h = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.60;
+	destRect.x = 0;
+	destRect.y = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.35;
+
+	SDL_RenderCopyEx(render, loadImgCharacter(render), &srcRect, &destRect, 0, 0,
+		SDL_FLIP_NONE);
+}
+
 void Menu::show(int alpha) {
 	SDL_SetTextureAlphaMod(background, alpha);
 
@@ -122,11 +148,10 @@ void Menu::show(int alpha) {
 			temp = temp->next;
 		}
 		else {
-
+			this->drawCharacterStance(render);
 			temp->drawBox(render);
 			temp = temp->next;
 		}
-
 	}
 }
 
@@ -174,7 +199,8 @@ std::string Menu::identify_event() {
 							selected = selected->previous;
 							selected = selected->previous;
 							selected = selected->previous;
-							selected->setColor(255, 255, 255);
+							selected = selected->previous;
+							selected->setColor(0, 255, 0);
 							selected->drawBox(render);
 						}
 					}
@@ -193,13 +219,39 @@ std::string Menu::identify_event() {
 						}
 					}
 					else {
-						if (selected->positionY + selected->height < start->positionY + start->height*4) {
+						if (selected->positionY + selected->height < start->positionY + start->height*3) {
 							selected->setColor(150, 150, 150);
 							selected->drawBox(render);
 							selected = selected->next;
 							selected = selected->next;
 							selected = selected->next;
-							selected->setColor(255, 255, 255);
+							selected = selected->next;
+							selected->setColor(0, 255, 0);
+							selected->drawBox(render);
+						}
+					}
+
+					break;
+
+				case SDLK_LEFT:
+					if (!textMenu) {
+						if (selected->positionX - selected->width >= start->positionX) {
+							selected->setColor(150, 150, 150);
+							selected->drawBox(render);
+							selected = selected->previous;
+							selected->setColor(0, 255, 0);
+							selected->drawBox(render);
+						}
+					}
+
+					break;
+				case SDLK_RIGHT:
+					if (!textMenu) {
+						if (selected->positionX + selected->width < start->positionX + start->width * 4) {
+							selected->setColor(150, 150, 150);
+							selected->drawBox(render);
+							selected = selected->next;
+							selected->setColor(0, 255, 0);
 							selected->drawBox(render);
 						}
 					}
