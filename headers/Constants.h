@@ -22,7 +22,10 @@ const bool DRAW_COLLITIONABLE_BOXES = true;
 #define OBJECT_SPEED 120
 
 //IA
-#define IDLE_CHANCE 0
+#define IDLE_CHANCE 100
+
+//Sounds
+#define SFX_JUMP "../sounds/sfx/0897.ogg"
 
 //Joystick
 #define MAX_XAXIS 32000 //max 32767

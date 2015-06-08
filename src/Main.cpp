@@ -24,16 +24,18 @@ int main(int argc, char* argv[]) {
 	}
 
 	bool runApp = true;
+
 	do{
 		GameGUIBuilder gameGUIBuilder(configFilePath);
 		GameGUI* gameGUI = gameGUIBuilder.create();
 		LayerManager::Instance()->init();
+		SoundManager::Instance()->init();
 
 		if (MKGame::Instance()->init(gameGUI)) {
 			std::cout << "game init success" << endl;
 			while ((MKGame::Instance()->running()) && !(MKGame::Instance()->reset()))  {
 				MKGame::Instance()->handleEvents();
-				MKGame::Instance()->handleAI();
+				//MKGame::Instance()->handleAI();
 				MKGame::Instance()->update();
 				MKGame::Instance()->render();
 				SDL_Delay(5);
