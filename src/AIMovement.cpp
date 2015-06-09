@@ -39,7 +39,9 @@ void AIMovement::solveAIMovement() {
 
 	float distance = CharacterManager::Instance()->getCharacterDistance();
 	float jumpDistance = character->getJumpDistance(); // Distancia en X de un salto en diagonal
-	float hitDistance = (character->getWidth() ) / 3; // Ancho de la hitbox de under_kick (es la de mayor alcance)
+	float underKickDistance = (character->getWidth() ) / 3; // Ancho de la hitbox de under_kick (es la de mayor alcance)
+	float kickDistance = (character->getWidth() ) / 4;
+	float punchDistance = (character->getWidth() ) / 8;
 	string opponentMovement = opponent->getMovement();
 
 
@@ -48,7 +50,7 @@ void AIMovement::solveAIMovement() {
 	}
 
 	// Si estaba lejos y saltó hacia adelante, repito el movimiento hasta llegar al oponente
-	else if ( distance > hitDistance && ( lastAction == FIRST_PLAYER_AIR_PUNCH_R || lastAction == FIRST_PLAYER_AIR_LOW_kICK_R)) {
+	else if ( distance > kickDistance && ( lastAction == FIRST_PLAYER_AIR_PUNCH_R || lastAction == FIRST_PLAYER_AIR_LOW_kICK_R)) {
 		this->setMovementBySituation("closingUp");
 	}
 
@@ -58,16 +60,20 @@ void AIMovement::solveAIMovement() {
 	}
 
 	//Distancia media
-	else if( distance >= hitDistance) {
+	else if( distance >= underKickDistance) {
 		this->setMovementBySituation("mediumDistance");
 	}
 
 	//Cerca
-	else if (distance < hitDistance && opponentMovement == "block") {
+	else if (distance < underKickDistance && opponentMovement == "block") {
 		this->setMovementBySituation("closeDistanceBlocking");
 		//this->setMovementBySituation("none");
-	} else if (distance < hitDistance) {
-		this->setMovementBySituation("closeDistance");
+	} else if (distance >= kickDistance) {
+		this->setMovementBySituation("underKickDistance");
+	} else if (distance >= punchDistance) {
+		this->setMovementBySituation("kickDistance");
+	} else if (distance < punchDistance) {
+		this->setMovementBySituation("punchDistance");
 	}
 
 }
@@ -100,6 +106,8 @@ InputCommand AIMovement::fixMovementOrientation(InputCommand movement) {
 		fixedMovement = FIRST_PLAYER_AIR_LOW_kICK_L;
 	} else if ( movement == FIRST_PLAYER_AIR_PUNCH_R && !character->getIsRightOriented()) {
 		fixedMovement = FIRST_PLAYER_AIR_PUNCH_L;
+	} else if (movement == FIRST_PLAYER_MOVE_RIGHT && !character->getIsRightOriented()) {
+		fixedMovement == FIRST_PLAYER_MOVE_LEFT;
 	}
 	return fixedMovement;
 }
