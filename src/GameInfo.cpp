@@ -122,9 +122,9 @@ void GameInfo::update() {
 			SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
 		} else {
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
-			SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
+			SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
 		}
-		SDL_Delay(2000);
+		SDL_Delay(2000); //Freezea la pantalla para que se escuche el anuncio del ganador
 		MKGame::Instance()->setOnReset();
 	}
 }
