@@ -348,6 +348,7 @@ void Character::update() {
 	}
 	else if (isJumping && playerCommand == FIRST_PLAYER_FIRE && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
 		fire = true;
+		SoundManager::Instance()->playSoundByAction("fire",0);
 		jump();
 	}
 	else if (isJumping && !someKickInputCommand(playerCommand) && !somePunchInputCommand(playerCommand)) {
@@ -587,12 +588,14 @@ void Character::update() {
 			break;
 		case FIRST_PLAYER_FIRE:
 			this->fire = true;
+			SoundManager::Instance()->playSoundByAction("fire",0);
 			break;
 		case FIRST_PLAYER_DUCK_FIRE:
 			this->setMovement(DUCKING_MOVEMENT);
 			setCurrentSprite();
 			this->isDucking = true;
 			this->fire = true;
+			SoundManager::Instance()->playSoundByAction("fire",0);
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);

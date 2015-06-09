@@ -42,6 +42,8 @@ private:
 	static SoundManager* cm_pInstance;
 	std::map<std::string, Mix_Chunk*> m_sfxs;
 	std::map<std::string, Mix_Music*> m_music;
+	//Esta estructura tiene los sonidos pertenecientes a cada acción.
+	//Toma los archivos de la carpeta sound/sfx con extension .ogg
 	std::map<std::string, std::vector<std::string> >  situationalSounds =
 	{
 		{"punchHit",
@@ -67,6 +69,19 @@ private:
 				{
 						"highKick1",
 						"highKick2"
+				}
+		},
+		{"fire",
+				{
+						"fire1",
+						//"fire2"
+				}
+
+		},
+		{"fireHit",
+				{
+						"fireHit1",
+						"fireHit3"
 				}
 		},
 		{"jump",

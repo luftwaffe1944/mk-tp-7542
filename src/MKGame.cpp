@@ -221,8 +221,8 @@ void MKGame::handleEvents() {
 	//InputControl::Instance()->refreshInputs();
 
 	//Para jugar 2 con teclado usar estos 2
-	InputControl::Instance()->refreshInputs1();
-	InputControl::Instance()->refreshInputs2();
+//	InputControl::Instance()->refreshInputs1();
+//	InputControl::Instance()->refreshInputs2();
 
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
