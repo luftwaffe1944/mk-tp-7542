@@ -119,9 +119,12 @@ void GameInfo::update() {
 	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f) {
 		if (this->characters[0]->getEnergy() <= 0.0f) {
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
+			SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
 		} else {
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
+			SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
 		}
+		SDL_Delay(2000);
 		MKGame::Instance()->setOnReset();
 	}
 }

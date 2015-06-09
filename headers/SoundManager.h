@@ -104,6 +104,16 @@ private:
 				{
 						"fatalityDeath"
 				}
+		},
+		{"gong",
+				{
+						"gong"
+				}
+		},
+		{"fight",
+				{
+						"fight"
+				}
 		}
 	};
 };
