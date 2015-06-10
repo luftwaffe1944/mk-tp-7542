@@ -120,7 +120,7 @@ void MKGame::render() {
 		(*it)->setPositionY((*it)->getPositionY() - this->offSetPosY);
 	}
 
-
+	SecuenceInputManager::Instance()->draw();
 	SDL_RenderPresent(m_pRenderer);
 }
 
@@ -156,7 +156,6 @@ void MKGame::draw() {
 			i++) {
 		objectList[i]->draw();
 	}
-	SecuenceInputManager::Instance()->draw();
 }
 
 void MKGame::drawMenu(Menu* menu, int opacity) {
@@ -264,6 +263,7 @@ void MKGame::update() {
 	//addVector(throObjects, &collObjects);
 
 	CollitionManager::Instance()->solveCollitions(this->getGameGUI()->vCollitionable);
+	SecuenceInputManager::Instance()->update();
 
 }
 

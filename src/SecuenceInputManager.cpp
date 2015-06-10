@@ -58,5 +58,10 @@ void SecuenceInputManager::draw() {
 	y = window->heightPx* 0.3;
 	height = 15;
 	TextureManager::Instance()->draw( id, x, y, width, height, render);
+}
 
+void SecuenceInputManager::update() {
+	TextureManager::Instance()->unload(this->textureID + "secuencia1");
+	TextureManager::Instance()->unload(this->textureID + "secuencia2");
+	this->load();
 }
