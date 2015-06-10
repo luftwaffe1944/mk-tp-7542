@@ -81,9 +81,9 @@ void MKGame::menuInit() {
 	string menuItemsMK[] = { "New Game", "Credits", "Exit" };
 	string menuItemsNewGame[] = { "P1 vs P2", "P1 vs CPU", "Practice Mode", "Go Back" };
 	string menuItemsCharacters[] = {
-		"subzero", "cyrax", "jax", "kabal",
-		"kano", "kunglao", "liukang", "motaro",
-		"nightwolf", "sektor", "sheeva", "sonya" };
+		"subzero", "subzero", "subzero", "subzero",
+		"scorpion", "scorpion", "subzero", "subzero",
+		"scorpion", "subzero", "scorpion", "subzero" };
 
 	//nro de items, string con items, posX, posY, width, height, render
 	//Menu principal
@@ -184,6 +184,24 @@ void MKGame::menuActions(std::string action) {
 		this->menuPpal = false;
 		this->menuGame = false;
 		this->menuCharacter = true;
+	}
+
+	std::size_t found = action.find("selected:");
+	if (found != std::string::npos) {
+		this->menuPpal = false;
+		this->menuGame = false;
+		this->menuCharacter = false;
+
+		vector<string> characters;
+		std::istringstream iss(action);
+		std::string token;
+		while (std::getline(iss, token, ' '))
+		{
+			characters.push_back( token);
+		}
+		std::cout << characters[1] << endl;
+		std::cout << characters[2] << endl;
+		//TODO: usar characters[1] y characters[2] en fight
 	}
 }
 
