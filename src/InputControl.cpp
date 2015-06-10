@@ -887,9 +887,13 @@ void InputControl::loadSpecialSecuence(int joystick){
 
 	std::string secuencia = "";
 
-	if (isAxisLeft(joystick)){
+	if ((isAxisLeft(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1LeftPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2LeftPressOnce)))){
 		left = "L";
-	}else if (isAxisRight(joystick)){
+	}else if (!isAxisLeft(joystick)){
+
+	}
+
+	if (isAxisRight(joystick)){
 		right = "R";
 	}else if (isAxisUp(joystick)){
 		up = "U";

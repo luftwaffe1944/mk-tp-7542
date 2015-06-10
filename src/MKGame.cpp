@@ -332,6 +332,8 @@ void MKGame::handleEvents() {
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
+
+
 }
 
 void MKGame::quit(){

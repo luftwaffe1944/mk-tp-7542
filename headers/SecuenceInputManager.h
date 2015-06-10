@@ -12,10 +12,12 @@
 #include <map>
 #include <vector>
 #include "SDL.h"
+#include "Timer.h"
 #include "TextureManager.h"
 #include "MKGame.h"
 #include "GameGUI.h"
 #include "Window.h"
+#include "Constants.h"
 
 using namespace std;
 
@@ -33,11 +35,28 @@ public:
 	void clean();
 	void init();
 	void refresh();
+	void reset(int secNum);
 
 	std::string specialSecuenceOne;
+	std::string specialSecuenceOnePreview;
 	std::string specialSecuenceTwo;
+	std::string specialSecuenceTwoPreview;
 	bool specialSecuenceOneActive;
 	bool specialSecuenceTwoActive;
+
+	Timer timerOne;
+	Timer timerTwo;
+	float elapsedTimeOne;
+	float elapsedTimeTwo;
+
+	bool joy1DownPressOnce;
+	bool joy1UpPressOnce;
+	bool joy1LeftPressOnce;
+	bool joy1RightPressOnce;
+	bool joy2DownPressOnce;
+	bool joy2UpPressOnce;
+	bool joy2LeftPressOnce;
+	bool joy2RightPressOnce;
 
 private:
 	static SecuenceInputManager* dm_pInstance;
