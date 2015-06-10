@@ -13,6 +13,7 @@
 #include "../headers/InputControl.h"
 #include "SDL.h"
 #include "../headers/MKGame.h"
+#include "../headers/SecuenceInputManager.h"
 #include <stddef.h>
 
 bool somePunchButtonPressed(const Uint8* keyBoard);
@@ -886,9 +887,6 @@ void InputControl::loadSpecialSecuence(int joystick){
 
 	std::string secuencia = "";
 
-
-
-
 	if (isAxisLeft(joystick)){
 		left = "L";
 	}else if (isAxisRight(joystick)){
@@ -914,15 +912,15 @@ void InputControl::loadSpecialSecuence(int joystick){
 
 	if (secuencia.length() > 0){
 		if (joystick == 0){
-			if (!this->specialSecuenceOneActive){
-				this->specialSecuenceOneActive=true;
+			if (!SecuenceInputManager::Instance()->specialSecuenceOneActive){
+				SecuenceInputManager::Instance()->specialSecuenceOneActive=true;
 			}
-			this->specialSecuenceOne += secuencia;
+			SecuenceInputManager::Instance()->specialSecuenceOne += secuencia;
 		}else if (joystick == 1){
-			if (!this->specialSecuenceTwoActive){
-				this->specialSecuenceTwoActive=true;
+			if (!SecuenceInputManager::Instance()->specialSecuenceTwoActive){
+				SecuenceInputManager::Instance()->specialSecuenceTwoActive=true;
 			}
-			this->specialSecuenceTwo += secuencia;
+			SecuenceInputManager::Instance()->specialSecuenceTwo += secuencia;
 		}
 	}
 }

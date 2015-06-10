@@ -70,11 +70,6 @@ private:
 	InputCommand controlOption;
 	std::vector<InputCommand> playerMove;
 	std::vector<std::string> specialMoves;
-	std::vector<std::string> currentSpecialSecuences;
-	std::string specialSecuenceOne = "";
-	std::string specialSecuenceTwo = "";
-	bool specialSecuenceOneActive = false;
-	bool specialSecuenceTwoActive = false;
 
 
 	void validateButtonsRange(int joyNum, int joyButtonCount);

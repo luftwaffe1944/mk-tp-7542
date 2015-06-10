@@ -6,6 +6,7 @@
  */
 
 #include "../headers/MKGame.h"
+#include "../headers/SecuenceInputManager.h"
 
 using namespace std;
 
@@ -155,6 +156,7 @@ void MKGame::draw() {
 			i++) {
 		objectList[i]->draw();
 	}
+	SecuenceInputManager::Instance()->draw();
 }
 
 void MKGame::drawMenu(Menu* menu, int opacity) {
