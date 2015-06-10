@@ -50,12 +50,32 @@ enum InputCommand {
 
 };
 
+enum SpecialMove {
+	SPECIAL_MOVE_0,
+	SPECIAL_MOVE_1,
+	SPECIAL_MOVE_2,
+	SPECIAL_MOVE_3,
+	SPECIAL_MOVE_4,
+	SPECIAL_MOVE_5,
+	SPECIAL_MOVE_6,
+	SPECIAL_MOVE_7,
+	SPECIAL_MOVE_8,
+	SPECIAL_MOVE_9,
+};
+
 class InputControl {
 private:
 	InputCommand firstPlayerMove;
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
 	std::vector<InputCommand> playerMove;
+	std::vector<std::string> specialMoves;
+	std::vector<std::string> currentSpecialSecuences;
+	std::string specialSecuenceOne = "";
+	std::string specialSecuenceTwo = "";
+	bool specialSecuenceOneActive = false;
+	bool specialSecuenceTwoActive = false;
+
 
 	void validateButtonsRange(int joyNum, int joyButtonCount);
 	bool someJoyKickButtonPressed(int joy);
@@ -91,6 +111,8 @@ public:
 	InputCommand getPlayerMove(int joy);
 	void setPlayerMove(int joy, InputCommand action);
 	void loadDefaultButtons(int joyNum);
+	void loadSpecialSecuence(int joyNum);
+	void detectSpecialMove(int joyNum);
 };
 
 #endif /* INPUTCONTROL_H_ */

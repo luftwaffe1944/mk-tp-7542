@@ -481,6 +481,9 @@ void InputControl::refreshJoystickInputs() {
 	} else {
 		for (int joystick = 0; joystick < SDL_NumJoysticks() ; joystick ++) {
 
+			loadSpecialSecuence(joystick);
+			detectSpecialMove(joystick);
+
 			if (isAxisUp(joystick)) {
 
 				if (!(isAxisDown(joystick))
@@ -678,6 +681,8 @@ void InputControl::refreshJoystickInputs() {
 		}
 	}
 
+
+
 }
 
 
@@ -838,6 +843,7 @@ bool someKickButtonPressed2(const Uint8* keyBoard) {
 bool somePunchButtonPressed2(const Uint8* keyBoard) {
 	return (keyBoard[SDL_SCANCODE_J]) || (keyBoard[SDL_SCANCODE_K]);
 }
+
 bool InputControl::someJoyKickButtonPressed(int joy) {
 	return (getActionButtonState(joy, LOW_KICK)) || (getActionButtonState(joy, HIGH_KICK) ) ;
 }
@@ -863,4 +869,67 @@ void InputControl::loadDefaultButtons(int joyNum) {
 	setActionButton(joyNum, HIGH_KICK, 3 );
 	setActionButton(joyNum, BLOCK, 4 );
 	setActionButton(joyNum, FIRE, 5 );
+}
+
+void InputControl::loadSpecialSecuence(int joystick){
+	std::string up = "";
+	std::string down = "";
+	std::string left = "";
+	std::string right = "";
+
+	std::string block = "";
+	std::string fire = "";
+	std::string kickHigh = "";
+	std::string kickLow = "";
+	std::string puckHigh = "";
+	std::string punchLow = "";
+
+	std::string secuencia = "";
+
+
+
+
+	if (isAxisLeft(joystick)){
+		left = "L";
+	}else if (isAxisRight(joystick)){
+		right = "R";
+	}else if (isAxisUp(joystick)){
+		up = "U";
+	}else if (isAxisDown(joystick)){
+		down = "D";
+	} else if (getActionButtonState(joystick,HIGH_PUNCH)) {
+		puckHigh = "P";
+	} else if (getActionButtonState(joystick,LOW_PUNCH)) {
+		punchLow = "G";
+	} else if (getActionButtonState(joystick,HIGH_KICK)) {
+		kickHigh = "K";
+	}else if (getActionButtonState(joystick,LOW_KICK)) {
+		kickLow = "H";
+	}else if (getActionButtonState( joystick, FIRE)) {
+		fire = "F";
+	} else if (getActionButtonState(joystick,BLOCK)) {
+		block = "B";
+	}
+	secuencia += up+down+left+right+block+fire+kickHigh+kickLow+puckHigh+punchLow;
+
+	if (secuencia.length() > 0){
+		if (joystick == 0){
+			if (!this->specialSecuenceOneActive){
+				this->specialSecuenceOneActive=true;
+			}
+			this->specialSecuenceOne += secuencia;
+		}else if (joystick == 1){
+			if (!this->specialSecuenceTwoActive){
+				this->specialSecuenceTwoActive=true;
+			}
+			this->specialSecuenceTwo += secuencia;
+		}
+	}
+}
+
+void InputControl::detectSpecialMove(int joyNum){
+//ver si secuencia es igual a alguna secuencia de movimiento teniendo en cuenta el error
+
+//si existe secuencia setear movimiento del personaje
+
 }

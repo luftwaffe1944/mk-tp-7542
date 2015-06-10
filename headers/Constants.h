@@ -15,6 +15,10 @@ using namespace std;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
+//Parameters for Special Moves
+#define TIME_TOLERANCE_SPECIAL_MOVES 10; //seconds
+#define ERROR_TOLERANCE_SPECIAL_MOVES 1; //quantity
+
 //Draw collitionable boxes
 const bool DRAW_COLLITIONABLE_BOXES = false;
 
