@@ -381,7 +381,7 @@ std::string Menu::identify_event() {
 				case SDLK_RETURN:
 					this->playerOneSelected = true;
 					if (this->playerOneSelected && playerTwoSelected) {
-						return selected->text + " " + selectedTwo->text;
+						return "selected: " + selected->text + " " + selectedTwo->text;
 					}
 					if (textMenu) return selected->text;
 					break;
@@ -389,7 +389,7 @@ std::string Menu::identify_event() {
 				case SDLK_g:
 					this->playerTwoSelected = true;
 					if (this->playerOneSelected && playerTwoSelected) {
-						return selected->text + " " + selectedTwo->text;
+						return "selected: " + selected->text + " " + selectedTwo->text;
 					}
 
 					break;
