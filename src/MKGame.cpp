@@ -183,6 +183,18 @@ void MKGame::menuActions(std::string action) {
 		this->menuGame = false;
 		this->menuCharacter = true;
 	}
+	if (action == "scorpion subzero") {
+		this->menuPpal = false;
+		this->menuGame = false;
+		this->menuCharacter = false;
+		//TODO: llamar a fight y setear los personajes
+	}
+	if (action == "subzero scorpion") {
+		this->menuPpal = false;
+		this->menuGame = false;
+		this->menuCharacter = false;
+		//TODO: llamar a fight y setear los personajes
+	}
 }
 
 bool MKGame::menu() {
