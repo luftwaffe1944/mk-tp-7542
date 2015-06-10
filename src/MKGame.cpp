@@ -80,9 +80,9 @@ void MKGame::menuInit() {
 	string menuItemsMK[] = { "New Game", "Credits", "Exit" };
 	string menuItemsNewGame[] = { "P1 vs P2", "P1 vs CPU", "Practice Mode", "Go Back" };
 	string menuItemsCharacters[] = {
-		"subzero", "cyrax", "jax", "kabal",
-		"kano", "kunglao", "liukang", "motaro",
-		"nightwolf", "sektor", "sheeva", "sonya" };
+		"subzero", "subzero", "subzero", "subzero",
+		"scorpion", "scorpion", "subzero", "subzero",
+		"scorpion", "subzero", "scorpion", "subzero" };
 
 	//nro de items, string con items, posX, posY, width, height, render
 	//Menu principal

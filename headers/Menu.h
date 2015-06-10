@@ -31,6 +31,7 @@ public:
 private:
 	MenuItem * start;
 	MenuItem * selected;
+	MenuItem * selectedTwo;
 	SDL_Texture * background;
 	Mix_Chunk * sound;
 	Mix_Music * musicMenu;
@@ -46,7 +47,10 @@ private:
 	void loadSoundEffect(std::string path);
 	void drawCharacterStance(SDL_Renderer*);
 	void resetCharacterRender(SDL_Renderer*);
-	SDL_Texture* loadImgCharacter(SDL_Renderer*);
+	SDL_Texture* loadImgCharacterOne(SDL_Renderer*);
+	SDL_Texture* loadImgCharacterTwo(SDL_Renderer*);
+	bool playerOneSelected;
+	bool playerTwoSelected;
 };
 
 #endif // MENU_H

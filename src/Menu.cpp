@@ -57,7 +57,11 @@ void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, i
 
 	temp2->next = NULL;
 	selected = start;
+	selectedTwo = start->next;
+	selectedTwo = start->next;
+	selectedTwo = start->next;
 	selected->setColor(0, 255, 0, 255);
+	selectedTwo->setColor(0, 255, 0, 255);
 }
 
 void Menu::loadBackgroundImage(std::string path) {
@@ -76,6 +80,8 @@ void Menu::setMusicPath(std::string path) {
 }
 
 Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer* rd, bool tm) {
+	this->playerOneSelected = false;
+	this->playerTwoSelected = false;
 	this->textMenu = tm;
 	this->render = rd;
 
@@ -103,8 +109,17 @@ void Menu::draw(SDL_Texture* tx) {
 		SDL_FLIP_NONE);
 }
 
-SDL_Texture* Menu::loadImgCharacter(SDL_Renderer* render) {
+SDL_Texture* Menu::loadImgCharacterOne(SDL_Renderer* render) {
 	std::string path = "images/" + selected->text + "/stance.png";
+	SDL_Surface* pTempSurface = IMG_Load(path.c_str());
+	SDL_Texture* cTexture;
+	cTexture = SDL_CreateTextureFromSurface(this->render, pTempSurface);
+	SDL_FreeSurface(pTempSurface);
+	return cTexture;
+}
+
+SDL_Texture* Menu::loadImgCharacterTwo(SDL_Renderer* render) {
+	std::string path = "images/" + selectedTwo->text + "/stance.png";
 	SDL_Surface* pTempSurface = IMG_Load(path.c_str());
 	SDL_Texture* cTexture;
 	cTexture = SDL_CreateTextureFromSurface(this->render, pTempSurface);
@@ -125,8 +140,13 @@ void Menu::drawCharacterStance(SDL_Renderer* render) {
 	destRect.x = 0;
 	destRect.y = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.35;
 	resetCharacterRender(render);
-	SDL_RenderCopyEx(render, loadImgCharacter(render), &srcRect, &destRect, 0, 0,
+	SDL_RenderCopyEx(render, loadImgCharacterOne(render), &srcRect, &destRect, 0, 0,
 		SDL_FLIP_NONE);
+	destRect.x = GameGUI::getInstance()->getWindow()->getWidthPx() - destRect.w;
+	SDL_RenderCopyEx(render, loadImgCharacterTwo(render), &srcRect, &destRect, 0, 0,
+		SDL_FLIP_HORIZONTAL);
+
+
 }
 
 void Menu::show(int alpha) {
@@ -243,6 +263,23 @@ std::string Menu::identify_event() {
 
 					break;
 
+				case SDLK_w:
+					if (!textMenu) {
+						if (selectedTwo->positionY - selectedTwo->height >= start->positionY) {
+							selectedTwo->setColor(150, 150, 150, 0);
+							selectedTwo->drawBox(render);
+							selectedTwo = selectedTwo->previous;
+							selectedTwo = selectedTwo->previous;
+							selectedTwo = selectedTwo->previous;
+							selectedTwo = selectedTwo->previous;
+							selectedTwo->setColor(255, 0, 0, 255);
+							this->drawCharacterStance(render);
+							selectedTwo->drawBox(render);
+						}
+					}
+
+					break;
+
 				case SDLK_DOWN:
 					if (textMenu) {
 						if (selected->next != NULL) {
@@ -265,6 +302,23 @@ std::string Menu::identify_event() {
 							selected->setColor(0, 255, 0,255);
 							this->drawCharacterStance(render);
 							selected->drawBox(render);
+						}
+					}
+
+					break;
+
+				case SDLK_s:
+					if (!textMenu) {
+						if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
+							selectedTwo->setColor(150, 150, 150, 0);
+							selectedTwo->drawBox(render);
+							selectedTwo = selectedTwo->next;
+							selectedTwo = selectedTwo->next;
+							selectedTwo = selectedTwo->next;
+							selectedTwo = selectedTwo->next;
+							selectedTwo->setColor(255, 0, 0, 255);
+							this->drawCharacterStance(render);
+							selectedTwo->drawBox(render);
 						}
 					}
 
@@ -297,9 +351,48 @@ std::string Menu::identify_event() {
 
 					break;
 
-				case SDLK_RETURN:
-					return selected->text;
+				case SDLK_a:
+					if (!textMenu) {
+						if (selectedTwo->positionX - selectedTwo->width >= start->positionX) {
+							selectedTwo->setColor(150, 150, 150, 255);
+							selectedTwo->drawBox(render);
+							selectedTwo = selectedTwo->previous;
+							selectedTwo->setColor(255, 0, 0, 255);
+							this->drawCharacterStance(render);
+							selectedTwo->drawBox(render);
+						}
+					}
 
+					break;
+				case SDLK_d:
+					if (!textMenu) {
+						if (selectedTwo->positionX + selectedTwo->width < start->positionX + start->width * 4) {
+							selectedTwo->setColor(150, 150, 150, 0);
+							selectedTwo->drawBox(render);
+							selectedTwo = selectedTwo->next;
+							selectedTwo->setColor(255, 0, 0, 255);
+							this->drawCharacterStance(render);
+							selectedTwo->drawBox(render);
+						}
+					}
+
+					break;
+
+				case SDLK_RETURN:
+					this->playerOneSelected = true;
+					if (this->playerOneSelected && playerTwoSelected) {
+						return selected->text + " " + selectedTwo->text;
+					}
+					if (textMenu) return selected->text;
+					break;
+
+				case SDLK_g:
+					this->playerTwoSelected = true;
+					if (this->playerOneSelected && playerTwoSelected) {
+						return selected->text + " " + selectedTwo->text;
+					}
+
+					break;
 				default:
 					break;
 				}
