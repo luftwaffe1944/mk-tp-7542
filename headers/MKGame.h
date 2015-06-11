@@ -96,6 +96,7 @@ public:
 
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
 	vector<SDLObjectGUI*>& getObjectList();
+	void configureFight(std::string fighterOneName, std::string fighterTwoName);
 	void draw();
 	void render();
 	void update();

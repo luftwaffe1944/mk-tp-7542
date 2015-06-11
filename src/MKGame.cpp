@@ -41,10 +41,10 @@ bool MKGame::init(GameGUI* gameGui) {
 			if (m_pRenderer != 0) {
 				FILE_LOG(logDEBUG) << "renderer creation success";
 
-				vector<SDLObjectGUI*> objects = getObjectList();
+				/*vector<SDLObjectGUI*> objects = getObjectList();
 				for (unsigned int i = 0; i < objects.size(); i++) {
 					objects[i]->load(m_pRenderer);
-				}
+				}*/
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
 				return false;
@@ -163,6 +163,95 @@ void MKGame::drawMenu(Menu* menu, int opacity) {
 	SDL_RenderPresent(m_pRenderer);
 }
 
+void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
+	float windowWidth = window->getWidth();
+	float windowHeight = window->getHeightPx();
+	/*
+	vector<string> playerName;
+	for(unsigned int i = 0; i < characters.size(); ++i ) {
+		playerName.push_back(characters[i]->getName());
+	}*/
+	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
+	GameInfo* info = new GameInfo(params, characters);
+	MKGame::Instance()->getObjectList().push_back(info);
+}
+
+void createThrowableObject(vector<Character*> characters, Window* window, float ratioX, float ratioY) {
+	float windowWidth = window->getWidth();
+	float throwableHeight1 = characters[0]->getHeight();
+	float throwableHeight2 = characters[1]->getHeight();
+
+	LoaderParams* params1 = new LoaderParams(100, 100, throwableHeight1 * 0.1,  throwableHeight1 * 0.1 , characters[0]->getZIndex(), ratioX, ratioY, "throwable1");
+	LoaderParams* params2 = new LoaderParams(100, 100, throwableHeight2 * 0.1,  throwableHeight2 * 0.1 , characters[1]->getZIndex(), ratioX, ratioY, "throwable2");
+	ThrowableObject* tObject1 = new ThrowableObject(params1, windowWidth);
+	ThrowableObject* tObject2 = new ThrowableObject(params2, windowWidth);
+
+	tObject1->setReleaser(characters[0]);
+	tObject1->setReceiver(characters[1]);
+	tObject1->setImagePath("images/subzero/throwable.gif");
+	MKGame::Instance()->getObjectList().push_back(tObject1);
+
+
+	tObject2->setReleaser(characters[1]);
+	tObject2->setReceiver(characters[0]);
+	tObject2->setImagePath("images/subzero/throwable.gif");
+	MKGame::Instance()->getObjectList().push_back(tObject2);
+
+
+	GameGUI::getInstance()->vCollitionable.push_back(characters[0]);
+	GameGUI::getInstance()->vCollitionable.push_back(characters[1]);
+	GameGUI::getInstance()->vCollitionable.push_back(tObject1);
+	GameGUI::getInstance()->vCollitionable.push_back(tObject2);
+}
+
+void MKGame::configureFight(std::string fighterOneName, std::string fighterTwoName) {
+	Character* fighterOne;
+	Character* fighterTwo;
+	vector<Character*> characters = GameGUI::getInstance()->getCharacters();
+	Fight* fight = new Fight();
+
+	for (unsigned int index=0; index<characters.size(); index++) {
+		Character* character = characters[index];
+		if (character->getName() == fighterOneName) {
+			fighterOne = character->getCopyInstance();
+		}
+		if (character->getName() == fighterTwoName) {
+			fighterTwo = character->getCopyInstance();
+		}
+	}
+
+	fighterOne->setPlayerNumber("1");
+	fighterOne->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - fighterOne->getWidth() * fighterOne->getRatioX()/2);
+	fight->setFighterOne(fighterOne);
+	fighterTwo->setPlayerNumber("2");
+	fighterTwo->setPositionX((GameGUI::getInstance()->getWindow()->widthPx / 4)*3 -  fighterTwo->getWidth() * fighterTwo->getRatioX()/2);
+	fight->setFighterTwo(fighterTwo);
+
+	GameGUI::getInstance()->setFight(fight);
+	if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
+		fight->getFighterTwo()->setIsAlternativePlayer(true);
+	}
+	fight->getFighterOne()->setIsRightOriented(true);
+	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
+	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
+
+
+	vector<Character*> fightingCharacters;
+	fightingCharacters.push_back(fight->getFighterOne());
+	fightingCharacters.push_back(fight->getFighterTwo());
+	GameGUI::getInstance()->setCharacters(fightingCharacters);
+	createGameInfo(GameGUI::getInstance()->getWindow(), fightingCharacters,
+			TextureManager::Instance()->ratioWidth, TextureManager::Instance()->ratioHeight);
+	createThrowableObject(fightingCharacters, GameGUI::getInstance()->getWindow(),
+			TextureManager::Instance()->ratioWidth, TextureManager::Instance()->ratioHeight);
+
+	vector<SDLObjectGUI*> objects = getObjectList();
+	for (unsigned int i = 0; i < objects.size(); i++) {
+		objects[i]->load(m_pRenderer);
+	}
+	//MKGame::Instance()->init(GameGUI::getInstance());
+}
+
 //Agregar eventos de los menus en este metodo
 void MKGame::menuActions(std::string action) {
 	if (action == "Exit") {
@@ -199,6 +288,7 @@ void MKGame::menuActions(std::string action) {
 		}
 		std::cout << characters[1] << endl;
 		std::cout << characters[2] << endl;
+		this->configureFight(characters[1], characters[2]);
 		//TODO: usar characters[1] y characters[2] en fight
 	}
 }

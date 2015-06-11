@@ -475,7 +475,7 @@ void jsonGetJoysticks(Json::Value root) {
 	return;
 }
 
-void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
+/*void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
 	float windowWidth = window->getWidth();
 	float windowHeight = window->getHeightPx();
 	/*
@@ -483,12 +483,12 @@ void createGameInfo(Window* window, vector<Character*> characters, float ratioX,
 	for(unsigned int i = 0; i < characters.size(); ++i ) {
 		playerName.push_back(characters[i]->getName());
 	}*/
-	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
+/*	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
 	GameInfo* info = new GameInfo(params, characters);
 	MKGame::Instance()->getObjectList().push_back(info);
-}
+}*/
 
-void createThrowableObject(vector<Character*> characters, Window* window, float ratioX, float ratioY) {
+/*void createThrowableObject(vector<Character*> characters, Window* window, float ratioX, float ratioY) {
 	float windowWidth = window->getWidth();
 	float throwableHeight1 = characters[0]->getHeight();
 	float throwableHeight2 = characters[1]->getHeight();
@@ -514,7 +514,7 @@ void createThrowableObject(vector<Character*> characters, Window* window, float 
 	GameGUI::getInstance()->vCollitionable.push_back(characters[1]);
 	GameGUI::getInstance()->vCollitionable.push_back(tObject1);
 	GameGUI::getInstance()->vCollitionable.push_back(tObject2);
-}
+}*/
 
 GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "CONFIGURATION INITIALIZED";
@@ -566,22 +566,26 @@ GameGUI* GameGUIBuilder::create() {
 
 	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY, stage);
 	gameGUI->setCharacters(characters);
-	Fight* fight = jsonGetFight(root);
+
+	//The fight is now being triggered by the MENU
+	/*Fight* fight = jsonGetFight(root);
 	gameGUI->setFight(fight);
 	if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
 		fight->getFighterTwo()->setIsAlternativePlayer(true);
 	}
 	fight->getFighterOne()->setIsRightOriented(true);
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
-	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
+	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());*/
+
 	gameGUI->setLayers(layers);
 
-	vector<Character*> fightingCharacters;
-	fightingCharacters.push_back(fight->getFighterOne());
-	fightingCharacters.push_back(fight->getFighterTwo());
-	gameGUI->setCharacters(fightingCharacters);
+	//The fight is now being triggered by the MENU
+	//vector<Character*> fightingCharacters;
+	//fightingCharacters.push_back(fight->getFighterOne());
+	//fightingCharacters.push_back(fight->getFighterTwo());
+	/*gameGUI->setCharacters(fightingCharacters);
 	createGameInfo(window, fightingCharacters, ratioX, ratioY);
-	createThrowableObject(fightingCharacters, window, ratioX, ratioY);
+	createThrowableObject(fightingCharacters, window, ratioX, ratioY);*/
 
 
 	jsonGetJoysticks(root);
@@ -662,9 +666,9 @@ GameGUI* GameGUIBuilder::createDefault() {
 	//Add layers to the game loop
 	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));
 
-	createGameInfo(ptrWindow, characters, ratioX, ratioY);
+	//createGameInfo(ptrWindow, characters, ratioX, ratioY);
 
-	createThrowableObject(characters, ptrWindow, ratioX, ratioY);
+	//createThrowableObject(characters, ptrWindow, ratioX, ratioY);
 
 	InputControl::Instance()->loadDefaultButtons(0);
 	InputControl::Instance()->loadDefaultButtons(1);
