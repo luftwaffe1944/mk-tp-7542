@@ -36,6 +36,7 @@ public:
 	void init();
 	void refresh();
 	void reset(int secNum);
+	int detectSpecialSecuence(int playerNum);
 
 	std::string specialSecuenceOne;
 	std::string specialSecuenceOnePreview;
@@ -62,8 +63,10 @@ private:
 	static SecuenceInputManager* dm_pInstance;
 	SecuenceInputManager();
 	std::string getCleanSecuence();
+	void loadSpecialMoves();
 
-	std::vector<std::string> currentSpecialSecuences;
+
+	std::vector<std::string> specialMoves;
 	std::string textureID;
 
 };

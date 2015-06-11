@@ -1,7 +1,5 @@
 #include "../headers/SecuenceInputManager.h"
 
-
-
 SecuenceInputManager* SecuenceInputManager::dm_pInstance = NULL;
 
 SecuenceInputManager* SecuenceInputManager::Instance() {
@@ -12,6 +10,7 @@ SecuenceInputManager* SecuenceInputManager::Instance() {
 		return dm_pInstance;
 	}
 }
+
 SecuenceInputManager::SecuenceInputManager(){
 	this->specialSecuenceOne = getCleanSecuence();
 	this->specialSecuenceTwo = getCleanSecuence();
@@ -29,6 +28,8 @@ SecuenceInputManager::SecuenceInputManager(){
 	 this->joy2UpPressOnce=false;
 	 this->joy2LeftPressOnce=false;
 	 this->joy2RightPressOnce=false;
+
+	 loadSpecialMoves();
 }
 
 bool SecuenceInputManager::load() {
@@ -101,14 +102,14 @@ void SecuenceInputManager::update() {
 	if (this->timerOne.isStarted()  && (this->specialSecuenceOneActive)){
 		this->elapsedTimeOne += (this->timerOne.getTicks()-this->elapsedTimeOne);
 		if ((int)(this->elapsedTimeOne/1000.0f) > TIME_TOLERANCE_SPECIAL_MOVES){
-			this->timerOne.stop();
+			//this->timerOne.stop();
 			this->reset(1);
 		}
 	}
 	if (this->timerTwo.isStarted()  && (this->specialSecuenceTwoActive)){
 		this->elapsedTimeTwo += (this->timerOne.getTicks()-this->elapsedTimeTwo);
 		if ((int)(this->elapsedTimeTwo/1000.0f) > TIME_TOLERANCE_SPECIAL_MOVES){
-			this->timerTwo.stop();
+			//this->timerTwo.stop();
 			this->reset(2);
 		}
 	}
@@ -122,6 +123,7 @@ void SecuenceInputManager::reset(int secNum) {
 		this->specialSecuenceOne += getCleanSecuence();
 		this->specialSecuenceOneActive = false;
 		this->elapsedTimeOne=0;
+		this->timerOne.stop();
 	}else if (secNum==2){
 		if (this->specialSecuenceTwo.length()>100){
 			this->specialSecuenceTwo.erase(0,100-SIMBOLS_TO_SHOW_SPECIAL_MOVES);
@@ -129,7 +131,9 @@ void SecuenceInputManager::reset(int secNum) {
 		this->specialSecuenceTwo += getCleanSecuence();
 		this->specialSecuenceTwoActive = false;
 		this->elapsedTimeTwo=0;
+		this->timerTwo.stop();
 	}
+
 }
 
 std::string SecuenceInputManager::getCleanSecuence() {
@@ -138,4 +142,30 @@ std::string SecuenceInputManager::getCleanSecuence() {
 		cleanSecuence += "-";
 	}
 	return cleanSecuence;
+}
+
+void SecuenceInputManager::loadSpecialMoves() {
+		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_0);
+		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_1);
+		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_2);
+}
+
+int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
+	int specialMoveNumber = -1;
+	//logica para detectar movimientos especiales
+
+	for (int i=0; i<this->specialMoves.size(); i++){
+		if ((playerNum==0) && (this->specialSecuenceOneActive)){
+			std::string currentSecuenceToCompare = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
+			if (this->specialMoves[i] == currentSecuenceToCompare){
+				specialMoveNumber = i;
+			}
+		}else if ((playerNum==1) && (this->specialSecuenceTwoActive)){
+			std::string currentSecuenceToCompare = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
+			if (this->specialMoves[i] == currentSecuenceToCompare){
+				specialMoveNumber = i;
+			}
+		}
+	}
+	return specialMoveNumber;
 }

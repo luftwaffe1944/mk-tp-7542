@@ -888,7 +888,7 @@ void InputControl::loadSpecialSecuence(int joystick){
 	std::string secuencia = "";
 
 	if ((isAxisLeft(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1LeftPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2LeftPressOnce)))){
-		left = "L";
+		left = CHARACTER_FOR_SPECIAL_MOVE_LEFT;
 		if (joystick==0){
 			SecuenceInputManager::Instance()->joy1LeftPressOnce=true;
 		}else if (joystick==1){
@@ -902,7 +902,7 @@ void InputControl::loadSpecialSecuence(int joystick){
 		}
 	}
 	if ((isAxisRight(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1RightPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2RightPressOnce)))){
-		left = "R";
+		left = CHARACTER_FOR_SPECIAL_MOVE_RIGHT;
 		if (joystick==0){
 			SecuenceInputManager::Instance()->joy1RightPressOnce=true;
 		}else if (joystick==1){
@@ -916,7 +916,7 @@ void InputControl::loadSpecialSecuence(int joystick){
 		}
 	}
 	if ((isAxisUp(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1UpPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2UpPressOnce)))){
-		left = "U";
+		left = CHARACTER_FOR_SPECIAL_MOVE_UP;
 		if (joystick==0){
 			SecuenceInputManager::Instance()->joy1UpPressOnce=true;
 		}else if (joystick==1){
@@ -930,7 +930,7 @@ void InputControl::loadSpecialSecuence(int joystick){
 		}
 	}
 	if ((isAxisDown(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1DownPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2DownPressOnce)))){
-		left = "D";
+		left = CHARACTER_FOR_SPECIAL_MOVE_DOWN;
 		if (joystick==0){
 			SecuenceInputManager::Instance()->joy1DownPressOnce=true;
 		}else if (joystick==1){
@@ -945,17 +945,17 @@ void InputControl::loadSpecialSecuence(int joystick){
 	}
 
 	if (getActionButtonState(joystick,HIGH_PUNCH)) {
-		puckHigh = "P";
+		puckHigh = CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH;
 	} else if (getActionButtonState(joystick,LOW_PUNCH)) {
-		punchLow = "G";
+		punchLow = CHARACTER_FOR_SPECIAL_MOVE_PUNCHLOW;
 	} else if (getActionButtonState(joystick,HIGH_KICK)) {
-		kickHigh = "K";
+		kickHigh = CHARACTER_FOR_SPECIAL_MOVE_KICKHIGH;
 	}else if (getActionButtonState(joystick,LOW_KICK)) {
-		kickLow = "H";
+		kickLow = CHARACTER_FOR_SPECIAL_MOVE_KICKLOW;
 	}else if (getActionButtonState( joystick, FIRE)) {
-		fire = "F";
+		fire = CHARACTER_FOR_SPECIAL_MOVE_FIRE;
 	} else if (getActionButtonState(joystick,BLOCK)) {
-		block = "B";
+		block = CHARACTER_FOR_SPECIAL_MOVE_BLOCK;
 	}
 	secuencia += up+down+left+right+block+fire+kickHigh+kickLow+puckHigh+punchLow;
 
@@ -975,7 +975,16 @@ void InputControl::loadSpecialSecuence(int joystick){
 }
 
 void InputControl::detectSpecialMove(int joyNum){
-//ver si secuencia es igual a alguna secuencia de movimiento teniendo en cuenta el error
+
+	int specialMove = SecuenceInputManager::Instance()->detectSpecialSecuence(joyNum);
+
+	if  ((joyNum==0) && !(specialMove==-1)){
+		cout<<"first player - special move: "<< specialMove<<"\n";
+		SecuenceInputManager::Instance()->reset(1);
+	}else if ((joyNum==1) && !(specialMove==-1)){
+		cout<<"second player - special move: "<< specialMove<<"\n";
+		SecuenceInputManager::Instance()->reset(2);
+	}
 
 //si existe secuencia setear movimiento del personaje
 

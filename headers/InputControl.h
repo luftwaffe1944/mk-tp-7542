@@ -12,6 +12,7 @@
 #include <string>
 #include <map>
 #include "SDL.h"
+#include "Constants.h"
 
 
 
@@ -69,8 +70,6 @@ private:
 	InputCommand secondPlayerMove;
 	InputCommand controlOption;
 	std::vector<InputCommand> playerMove;
-	std::vector<std::string> specialMoves;
-
 
 	void validateButtonsRange(int joyNum, int joyButtonCount);
 	bool someJoyKickButtonPressed(int joy);
