@@ -18,6 +18,7 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 //Parameters for Special Moves
 #define TIME_TOLERANCE_SPECIAL_MOVES 3 //seconds
 #define ERROR_TOLERANCE_SPECIAL_MOVES 1 //quantity
+#define SIMBOLS_TO_SHOW_SPECIAL_MOVES 10 //quantity
 
 //Draw collitionable boxes
 const bool DRAW_COLLITIONABLE_BOXES = false;

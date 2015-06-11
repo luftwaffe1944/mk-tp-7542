@@ -889,17 +889,62 @@ void InputControl::loadSpecialSecuence(int joystick){
 
 	if ((isAxisLeft(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1LeftPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2LeftPressOnce)))){
 		left = "L";
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1LeftPressOnce=true;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2LeftPressOnce=true;
+		}
 	}else if (!isAxisLeft(joystick)){
-
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1LeftPressOnce=false;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2LeftPressOnce=false;
+		}
+	}
+	if ((isAxisRight(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1RightPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2RightPressOnce)))){
+		left = "R";
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1RightPressOnce=true;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2RightPressOnce=true;
+		}
+	}else if (!isAxisRight(joystick)){
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1RightPressOnce=false;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2RightPressOnce=false;
+		}
+	}
+	if ((isAxisUp(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1UpPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2UpPressOnce)))){
+		left = "U";
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1UpPressOnce=true;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2UpPressOnce=true;
+		}
+	}else if (!isAxisUp(joystick)){
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1UpPressOnce=false;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2UpPressOnce=false;
+		}
+	}
+	if ((isAxisDown(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1DownPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2DownPressOnce)))){
+		left = "D";
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1DownPressOnce=true;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2DownPressOnce=true;
+		}
+	}else if (!isAxisDown(joystick)){
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1DownPressOnce=false;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2DownPressOnce=false;
+		}
 	}
 
-	if (isAxisRight(joystick)){
-		right = "R";
-	}else if (isAxisUp(joystick)){
-		up = "U";
-	}else if (isAxisDown(joystick)){
-		down = "D";
-	} else if (getActionButtonState(joystick,HIGH_PUNCH)) {
+	if (getActionButtonState(joystick,HIGH_PUNCH)) {
 		puckHigh = "P";
 	} else if (getActionButtonState(joystick,LOW_PUNCH)) {
 		punchLow = "G";

@@ -61,6 +61,7 @@ public:
 private:
 	static SecuenceInputManager* dm_pInstance;
 	SecuenceInputManager();
+	std::string getCleanSecuence();
 
 	std::vector<std::string> currentSpecialSecuences;
 	std::string textureID;

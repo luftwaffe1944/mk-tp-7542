@@ -13,8 +13,8 @@ SecuenceInputManager* SecuenceInputManager::Instance() {
 	}
 }
 SecuenceInputManager::SecuenceInputManager(){
-	this->specialSecuenceOne = "-------";
-	this->specialSecuenceTwo = "-------";
+	this->specialSecuenceOne = getCleanSecuence();
+	this->specialSecuenceTwo = getCleanSecuence();
 	this->specialSecuenceOneActive = false;
 	this->specialSecuenceTwoActive = false;
 	this->textureID = "secuenceManager";
@@ -39,14 +39,14 @@ bool SecuenceInputManager::load() {
 	SDL_Color textColor = {255, 255, 255};
 	//secuencia 1
 	if (this->specialSecuenceOneActive){
-		secuencia = this->specialSecuenceOne.substr(this->specialSecuenceOne.length()-7,7);
+		secuencia = this->specialSecuenceOne.substr(this->specialSecuenceOne.length()-SIMBOLS_TO_SHOW_SPECIAL_MOVES,SIMBOLS_TO_SHOW_SPECIAL_MOVES);
 		this->specialSecuenceOnePreview = secuencia;
 		std::transform(secuencia.begin(), secuencia.end(), secuencia.begin(), ::toupper);
 		TextureManager::Instance()->loadFromRenderedText( this->textureID+"secuencia1", secuencia, textColor, font, render);
 	}
 	//secuencia 2
 	if (this->specialSecuenceTwoActive){
-		secuencia = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length()-7,7);
+		secuencia = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length()-SIMBOLS_TO_SHOW_SPECIAL_MOVES,SIMBOLS_TO_SHOW_SPECIAL_MOVES);
 		this->specialSecuenceTwoPreview = this->specialSecuenceTwo;
 		std::transform(secuencia.begin(), secuencia.end(), secuencia.begin(), ::toupper);
 		TextureManager::Instance()->loadFromRenderedText( this->textureID+"secuencia2", secuencia, textColor, font, render);
@@ -61,7 +61,7 @@ void SecuenceInputManager::draw() {
 
 	//secuencia 1
 	string id = this->textureID + "secuencia1"+this->specialSecuenceOnePreview;
-	int width = WINDOW_MARGIN * 6;
+	int width = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
 	int x = (window->widthPx*0.02);
 	int y = window->heightPx* 0.06;
 	int height = 15;
@@ -70,7 +70,7 @@ void SecuenceInputManager::draw() {
 	}
 	//secuencia 2
 	id = this->textureID + "secuencia2"+this->specialSecuenceTwoPreview;
-	width = WINDOW_MARGIN * 6;
+	width = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
 	x = (window->widthPx*3/4);
 	y = window->heightPx* 0.3;
 	height = 15;
@@ -112,25 +112,30 @@ void SecuenceInputManager::update() {
 			this->reset(2);
 		}
 	}
-
-
-
 }
 
 void SecuenceInputManager::reset(int secNum) {
 	if (secNum==1){
 		if (this->specialSecuenceOne.length()>100){
-			this->specialSecuenceOne.erase(0,90);
+			this->specialSecuenceOne.erase(0,100-SIMBOLS_TO_SHOW_SPECIAL_MOVES);
 		}
-		this->specialSecuenceOne += "-------";
+		this->specialSecuenceOne += getCleanSecuence();
 		this->specialSecuenceOneActive = false;
 		this->elapsedTimeOne=0;
 	}else if (secNum==2){
 		if (this->specialSecuenceTwo.length()>100){
-			this->specialSecuenceTwo.erase(0,90);
+			this->specialSecuenceTwo.erase(0,100-SIMBOLS_TO_SHOW_SPECIAL_MOVES);
 		}
-		this->specialSecuenceTwo += "-------";
+		this->specialSecuenceTwo += getCleanSecuence();
 		this->specialSecuenceTwoActive = false;
 		this->elapsedTimeTwo=0;
 	}
+}
+
+std::string SecuenceInputManager::getCleanSecuence() {
+	std::string cleanSecuence="";
+	for (int i=1; i <= SIMBOLS_TO_SHOW_SPECIAL_MOVES; i++){
+		cleanSecuence += "-";
+	}
+	return cleanSecuence;
 }
