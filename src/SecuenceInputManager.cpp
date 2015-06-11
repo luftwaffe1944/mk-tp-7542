@@ -29,7 +29,6 @@ SecuenceInputManager::SecuenceInputManager(){
 	 this->joy2UpPressOnce=false;
 	 this->joy2LeftPressOnce=false;
 	 this->joy2RightPressOnce=false;
-};
 }
 
 bool SecuenceInputManager::load() {
