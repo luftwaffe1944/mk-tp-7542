@@ -54,10 +54,12 @@ public:
 	bool joy1UpPressOnce;
 	bool joy1LeftPressOnce;
 	bool joy1RightPressOnce;
+	bool joy1BlockPressOnce;
 	bool joy2DownPressOnce;
 	bool joy2UpPressOnce;
 	bool joy2LeftPressOnce;
 	bool joy2RightPressOnce;
+	bool joy2BlockPressOnce;
 
 private:
 	static SecuenceInputManager* dm_pInstance;

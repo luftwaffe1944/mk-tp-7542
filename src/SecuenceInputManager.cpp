@@ -24,10 +24,12 @@ SecuenceInputManager::SecuenceInputManager(){
 	 this->joy1UpPressOnce=false;
 	 this->joy1LeftPressOnce=false;
 	 this->joy1RightPressOnce=false;
+	 this->joy1BlockPressOnce=false;
 	 this->joy2DownPressOnce=false;
 	 this->joy2UpPressOnce=false;
 	 this->joy2LeftPressOnce=false;
 	 this->joy2RightPressOnce=false;
+	 this->joy2BlockPressOnce=false;
 
 	 loadSpecialMoves();
 }
@@ -152,20 +154,60 @@ void SecuenceInputManager::loadSpecialMoves() {
 
 int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 	int specialMoveNumber = -1;
-	//logica para detectar movimientos especiales
+	//logica para detectar movimientos especiales con secuencia exacta
 
-	for (int i=0; i<this->specialMoves.size(); i++){
+	int i = 0;
+	bool isMatch=false;
+
+
+	while ((i<this->specialMoves.size()) && (!isMatch)){
 		if ((playerNum==0) && (this->specialSecuenceOneActive)){
 			std::string currentSecuenceToCompare = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
 			if (this->specialMoves[i] == currentSecuenceToCompare){
 				specialMoveNumber = i;
+				isMatch = true;
 			}
 		}else if ((playerNum==1) && (this->specialSecuenceTwoActive)){
 			std::string currentSecuenceToCompare = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
 			if (this->specialMoves[i] == currentSecuenceToCompare){
 				specialMoveNumber = i;
+				isMatch = true;
 			}
 		}
+		i++;
 	}
+
+	if (!isMatch){
+		i=0;
+		while ((i<this->specialMoves.size()) && (!isMatch)){
+			std::string csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - 1, 1);
+			std::string smChar = this->specialMoves[i].substr(this->specialMoves[i].length()-1, 1);
+			//se evaluan los ultimos caracteres, si son iguales se evalua el resto, sino se corta procesamiento
+			if (csChar==smChar){
+
+				int smIndex = 2;
+				int csIndex = 2;
+				int acuErrores = 0;
+				while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= ERROR_TOLERANCE_SPECIAL_MOVES )){
+					csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - smIndex, 1);
+					smChar = this->specialMoves[i].substr(this->specialMoves[i].length()- csIndex, 1);
+					if (!csChar==smChar){
+						acuErrores++;
+						csIndex++;
+					}else if (csChar==smChar){
+						smIndex++;
+						csIndex++;
+					}
+
+
+
+				}
+			}
+
+		}
+
+	}
+
+
 	return specialMoveNumber;
 }

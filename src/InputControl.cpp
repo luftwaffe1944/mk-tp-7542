@@ -943,6 +943,20 @@ void InputControl::loadSpecialSecuence(int joystick){
 			SecuenceInputManager::Instance()->joy2DownPressOnce=false;
 		}
 	}
+	if ((getActionButtonState(joystick,BLOCK)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1BlockPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2BlockPressOnce)))){
+		block = CHARACTER_FOR_SPECIAL_MOVE_BLOCK;
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1BlockPressOnce=true;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2BlockPressOnce=true;
+		}
+	}else if (!getActionButtonState(joystick,BLOCK)){
+		if (joystick==0){
+			SecuenceInputManager::Instance()->joy1BlockPressOnce=false;
+		}else if (joystick==1){
+			SecuenceInputManager::Instance()->joy2BlockPressOnce=false;
+		}
+	}
 
 	if (getActionButtonState(joystick,HIGH_PUNCH)) {
 		puckHigh = CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH;
@@ -954,9 +968,8 @@ void InputControl::loadSpecialSecuence(int joystick){
 		kickLow = CHARACTER_FOR_SPECIAL_MOVE_KICKLOW;
 	}else if (getActionButtonState( joystick, FIRE)) {
 		fire = CHARACTER_FOR_SPECIAL_MOVE_FIRE;
-	} else if (getActionButtonState(joystick,BLOCK)) {
-		block = CHARACTER_FOR_SPECIAL_MOVE_BLOCK;
 	}
+
 	secuencia += up+down+left+right+block+fire+kickHigh+kickLow+puckHigh+punchLow;
 
 	if (secuencia.length() > 0){
