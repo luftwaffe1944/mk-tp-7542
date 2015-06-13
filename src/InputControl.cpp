@@ -314,6 +314,10 @@ void InputControl::refreshInputs1() {
 		this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
 	}
 
+	else if (currentKeyStates[SDL_SCANCODE_Q]) {
+		this->firstPlayerMove = SUBZERO_SWEEP;
+	}
+
 }
 
 

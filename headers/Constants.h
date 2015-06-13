@@ -22,7 +22,7 @@ const bool DRAW_COLLITIONABLE_BOXES = true;
 #define OBJECT_SPEED 120
 
 //IA
-#define IDLE_CHANCE 70
+#define IDLE_CHANCE 100
 
 //Joystick
 #define MAX_XAXIS 32000 //max 32767
@@ -89,7 +89,9 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define HINT_FLYING_MOVEMENT "hintFlying"
 #define HINT_FLYING_UPPER_MOVEMENT "hintFlyingUpper"
 #define GET_UP_MOVEMENT "getUp"
+#define SWEEP_MOVEMENT "sweep"
 #define JUMPING_X_SPEED 4
+#define SWEEP_X_SPEED 8
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
@@ -117,6 +119,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BEING_HINT_FALLING_UNDER_KICK_SUFFIX "beingHintFallingUnderKick"
 #define HINT_FLYING_SUFFIX "hintFlying"
 #define GET_UP_SUFFIX "getUp"
+#define SWEEP_SUFFIX "sweep"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -148,6 +151,7 @@ const string BEING_HINT_STANCE_DOWN_SPRITE = "/hintStance2.png";
 const string BEING_HINT_FALLING_UNDER_KICK_SPRITE = "/hintFallingUnderKick.png";
 const string HINT_FLYING_SPRITE = "/hintSuperDamage2.png";
 const string GET_UP_SPRITE ="/getUp.png";
+const string SWEEP_SPRITE ="/sweep.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";

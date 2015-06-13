@@ -135,6 +135,8 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9, this->isAltPlayer, this->altColor);
 	Sprite* spriteGetUp = new Sprite(this->name+this->playerNumber+GET_UP_SUFFIX, characterPath+GET_UP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7, this->isAltPlayer, this->altColor);
+	Sprite* spriteSweep = new Sprite(this->name+this->playerNumber+SWEEP_SUFFIX, characterPath+SWEEP_SPRITE,
+				renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -162,6 +164,7 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_FALLING_UNDER_KICK_SUFFIX, spriteBeingHintFallingUnderKick));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HINT_FLYING_SUFFIX, spriteHintFlying));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+GET_UP_SUFFIX, spriteGetUp));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SWEEP_SUFFIX, spriteSweep));
 	return true;
 }
 
@@ -265,12 +268,14 @@ bool Character::reachedWindowRightLimit(){
 void Character::fixOrientation() {
 	Character * p1 = GameGUI::getInstance()->getCharacters()[0];
 	Character * p2 = GameGUI::getInstance()->getCharacters()[1];
-	if ( p1->posXBox < p2->posXBox) {
-		p1->isRightOriented = true;
-		p2->isRightOriented = false;
-	} else {
-		p1->isRightOriented = false;
-		p2->isRightOriented = true;
+	if ((p1->movement != SWEEP_MOVEMENT && p2->movement != SWEEP_MOVEMENT)) {
+		if (p1->posXBox < p2->posXBox) {
+			p1->isRightOriented = true;
+			p2->isRightOriented = false;
+		} else {
+			p1->isRightOriented = false;
+			p2->isRightOriented = true;
+		}
 	}
 }
 
@@ -293,7 +298,12 @@ void Character::update() {
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
-	if (isBeingHintStanceUp){
+
+	if (isSubzeroSweeping){
+		sweepMovement();
+	}
+
+	else if (isBeingHintStanceUp){
 		completeMovement();
 	}
 
@@ -574,6 +584,11 @@ void Character::update() {
 			this->isDucking = true;
 			this->fire = true;
 			break;
+		case SUBZERO_SWEEP:
+			this->setMovement(SWEEP_MOVEMENT);
+			setCurrentSprite();
+			sweepMovement();
+			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
 			setCurrentSprite();
@@ -618,6 +633,7 @@ void Character::clearMovementsFlags(){
 	isHintFlying = false;
 	isGettingUp = false;
 	isHintFlyingUpper = false;
+	isSubzeroSweeping = false;
 	//this->beingPushed = false;
 }
 
@@ -863,6 +879,22 @@ void Character::walkRight() {
 
 }
 
+void Character::sweepMovement() {
+	isSubzeroSweeping = true;
+
+	if (isRightOriented && !this->reachedWindowRightLimit()){
+		positionX = positionX + (SWEEP_X_SPEED * ratioX);
+	}
+	else if (!isRightOriented && !this->reachedWindowLeftLimit()){
+		positionX = positionX - (SWEEP_X_SPEED * ratioX);
+
+	}else {
+		isSubzeroSweeping = false;
+	}
+
+
+}
+
 void Character::walkLeft() {
 	isWalkingLeft = true;
 	if (!this->reachedWindowLeftLimit()){
@@ -1096,7 +1128,11 @@ void Character::setCurrentSprite(){
 		} else if (this->getMovement() == GET_UP_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+GET_UP_SUFFIX];
 
-		} else{
+		} else if (this->getMovement() == SWEEP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+SWEEP_SUFFIX];
+		}
+
+		else{
 			//TODO: review
 		}
 }
@@ -1153,7 +1189,11 @@ void Character::setMoveFlag(bool trueOrFalse){
 	} else if (this->getMovement() == GET_UP_MOVEMENT) {
 		isGettingUp = trueOrFalse;
 
-	} else {
+	} else if (this->getMovement() == SWEEP_MOVEMENT) {
+		isSubzeroSweeping = trueOrFalse;
+
+	}
+	else {
 		//TODO: review
 	}
 
@@ -1472,6 +1512,12 @@ void Character::updateShapesOnStatus(){
 		if (true){secY=(centerY+charHeight/4)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/4)-(heightBox/2)+(heightBox2/2);}
 		posXBox2 = secX - widthBox2/2;
 		posYBox2 = secY - heightBox2/2;
+	} else if (isSubzeroSweeping) {
+		this->updateCShapesPosition(centerX, (centerY + charHeight / 3), charWidht / 1.8, charHeight / 4);
+		posXBox = centerX - widthBox / 2;
+		posYBox = (centerY + charHeight / 3) - heightBox / 2;
+		widthBox = charWidht / 1.8;
+		heightBox = charHeight / 4;
 	}else{
 		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3,charHeight*3/4);
 		posXBox = centerX - widthBox/2;

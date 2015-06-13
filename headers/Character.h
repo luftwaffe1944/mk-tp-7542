@@ -69,6 +69,7 @@ private:
 	bool isGettingUp;
 	bool isHintFlying;
 	bool isHintFlyingUpper;
+	bool isSubzeroSweeping;
 
 
 public:
@@ -108,6 +109,7 @@ public:
 	void flyFallingUpper();
 	void fixPosXStandingCharacter();
 	void setFixPosXStandingCharacter( int orientation);
+	void sweepMovement();
 
 	virtual void getCNextPosition(float* nextPositionX, float* nextPositionY); //redefinir virtual
 
