@@ -35,6 +35,7 @@ public:
 	void timerStart();
 	void timerStop();
 	void timerPause();
+	bool isRoundTriggered();
 	bool roundCompleted;
 	int currentRound;
 private:
@@ -43,7 +44,15 @@ private:
 	SDL_Color frontColor;
 	SDL_Color bgColor;
 	float percent;
+	int fightAnimationTimer;
+	int characterOneWins;
+	int characterTwoWins;
 	bool initAnimation;
+	bool showFightAnimation;
+	bool roundTriggered;
+	bool roundOneCompleted;
+	bool roundTwoCompleted;
+	bool roundThreeCompleted;
 	Timer timer;
 	float msTime;
 	std::string idTimer;

@@ -20,10 +20,10 @@
 #include "LayerManager.h"
 #include <algorithm>
 #include "Log.h"
-#include "GameInfo.h"
 #include "SDL_ttf.h"
 #include "CollitionManager.h"
 #include "Menu.h"
+#include "GameInfo.h"
 
 //#include "SDL_gamecontroller.h"
 //#include "SDL_joystick.h"
@@ -41,6 +41,7 @@ private:
 	static MKGame* mk_pInstance;
 	bool m_bRunning;
 	bool m_bReset;
+	bool allowPlayerMovements;
 	vector<SDLObjectGUI*> objectList;
 	GameGUI* gameGui;
 	InputControl keyboardControl;
@@ -65,6 +66,7 @@ private:
 		m_pRenderer = NULL;
 		gameGui = NULL;
 		shouldBeShaking = false;
+		allowPlayerMovements = false;
 		shakeIntensity = 5;
 		shakeLength = 10;
 		offSetPosY = 0;
@@ -114,6 +116,13 @@ public:
 	}
 	void setOnReset(){m_bReset=true;}
 	void setOffReset(){m_bReset=false;}
+	void setAllowPlayerMovements(bool allowPlayerMovements){
+		this->allowPlayerMovements = allowPlayerMovements;
+	}
+
+	bool getAllowPlayerMovements(){
+		return this->allowPlayerMovements;
+	}
 
 	void menuInit();
 	void drawMenu(Menu* menu, int opacity);
