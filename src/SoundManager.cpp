@@ -7,11 +7,14 @@
 
 #include "../headers/SoundManager.h"
 
-SoundManager* SoundManager::cm_pInstance = 0;
+//SoundManager* SoundManager::cm_pInstance = NULL;
+SoundManager* SoundManager::s_pInstance = 0;
 
 
 void SoundManager::init() {
 	//default: Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
+	//loadBattleSounds();
+	//load("sounds/music/fightMusic64.ogg","fightMusic64",SOUND_MUSIC);
 	Mix_OpenAudio(22050, AUDIO_S16, 2, 128);
 	loadBattleSounds();
 }
@@ -19,8 +22,16 @@ void SoundManager::init() {
 SoundManager::SoundManager() {
 	// TODO Auto-generated constructor stub
 	//Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
+	//init();
+	//Mix_OpenAudio(22050, AUDIO_S16, 2, 128);
+
 }
 
+SoundManager::~SoundManager()
+{
+//	Mix_CloseAudio();
+}
+/*
 SoundManager* SoundManager::Instance() {
 	if (!cm_pInstance) {
 		cm_pInstance = new SoundManager();
@@ -29,9 +40,15 @@ SoundManager* SoundManager::Instance() {
 		return cm_pInstance;
 	}
 }
-
+*/
 void SoundManager::clean() {
+	//
 	Mix_CloseAudio();
+	if (this->s_pInstance) {
+		delete this->s_pInstance;
+		this->s_pInstance = 0;
+
+	}
 }
 
 bool SoundManager::load(std::string fileName, std::string id, sound_type type) {

@@ -99,7 +99,6 @@ void MKGame::clean() {
 	InputControl::Instance()->clean();
 	GameGUI::getInstance()->clean();
 	AIMovement::Instance()->clean();
-	SoundManager::Instance()->clean();
 
 	TextureManager::Instance()->resetInstance();
 	SDL_DestroyRenderer(this->m_pRenderer);
@@ -176,7 +175,6 @@ void MKGame::handleEvents() {
 			reset = true;
 		}
 		if (event.type == SDL_JOYBUTTONDOWN ) {
-			//std::cout << "asd";
 			InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
 		}
 		if (event.type == SDL_JOYBUTTONUP ) {
@@ -221,8 +219,8 @@ void MKGame::handleEvents() {
 	//InputControl::Instance()->refreshInputs();
 
 	//Para jugar 2 con teclado usar estos 2
-	//InputControl::Instance()->refreshInputs1();
-	//InputControl::Instance()->refreshInputs2();
+	InputControl::Instance()->refreshInputs1();
+	InputControl::Instance()->refreshInputs2();
 
 	if (reset == true){
 		MKGame::Instance()->setOnReset();

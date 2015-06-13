@@ -7,7 +7,7 @@
 
 #include "../headers/AIMovement.h"
 
-AIMovement* AIMovement::cm_pInstance = 0;
+AIMovement* AIMovement::cm_pInstance = NULL;
 
 //std::vector<int> AIMovement::sarasa = {1,2,3};
 
@@ -33,6 +33,7 @@ void AIMovement::init() {
 
 void AIMovement::clean() {
 	isInitialized = false;
+//	if (this->cm_pInstance) delete this->cm_pInstance;
 }
 
 void AIMovement::solveAIMovement() {
@@ -107,7 +108,7 @@ InputCommand AIMovement::fixMovementOrientation(InputCommand movement) {
 	} else if ( movement == FIRST_PLAYER_AIR_PUNCH_R && !character->getIsRightOriented()) {
 		fixedMovement = FIRST_PLAYER_AIR_PUNCH_L;
 	} else if (movement == FIRST_PLAYER_MOVE_RIGHT && !character->getIsRightOriented()) {
-		fixedMovement == FIRST_PLAYER_MOVE_LEFT;
+		fixedMovement = FIRST_PLAYER_MOVE_LEFT;
 	}
 	return fixedMovement;
 }

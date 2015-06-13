@@ -15,6 +15,7 @@
 #include <vector>
 #include <iostream>
 
+
 enum sound_type {
 	SOUND_MUSIC = 0,
 	SOUND_SFX = 1
@@ -22,11 +23,17 @@ enum sound_type {
 
 class SoundManager {
 public:
-	static SoundManager* Instance();
-	virtual ~SoundManager() {
+	static SoundManager* Instance() {
+		if(s_pInstance == 0) {
+			s_pInstance = new SoundManager();
+			return s_pInstance;
+		}
+		return s_pInstance;
+	}
+	/*virtual ~SoundManager() {
 		delete(cm_pInstance);
 		cm_pInstance = 0;
-	}
+	}*/
 	bool load(std::string fileName, std::string id, sound_type type);
 	void playSound(std::string id, int loop);
 	void playMusic(std::string id, int loop);
@@ -38,8 +45,12 @@ public:
 	void init();
 
 private:
+	static SoundManager* s_pInstance;
 	SoundManager();
-	static SoundManager* cm_pInstance;
+	~SoundManager();
+	SoundManager(const SoundManager&);
+	SoundManager &operator=(const SoundManager&);
+	//static SoundManager* cm_pInstance;
 	std::map<std::string, Mix_Chunk*> m_sfxs;
 	std::map<std::string, Mix_Music*> m_music;
 	//Esta estructura tiene los sonidos pertenecientes a cada acción.
