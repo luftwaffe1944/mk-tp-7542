@@ -317,6 +317,9 @@ void InputControl::refreshInputs1() {
 	else if (currentKeyStates[SDL_SCANCODE_Q]) {
 		this->firstPlayerMove = SUBZERO_SWEEP;
 	}
+	else if (currentKeyStates[SDL_SCANCODE_E]) {
+		this->firstPlayerMove = FIRST_PLAYER_FIRE;
+	}
 
 }
 

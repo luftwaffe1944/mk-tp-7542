@@ -137,6 +137,8 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7, this->isAltPlayer, this->altColor);
 	Sprite* spriteSweep = new Sprite(this->name+this->playerNumber+SWEEP_SUFFIX, characterPath+SWEEP_SPRITE,
 				renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteFire = new Sprite(this->name+this->playerNumber+FIRE_SUFFIX, characterPath+FIRE_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -165,6 +167,8 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HINT_FLYING_SUFFIX, spriteHintFlying));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+GET_UP_SUFFIX, spriteGetUp));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SWEEP_SUFFIX, spriteSweep));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FIRE_SUFFIX, spriteFire));
+
 	return true;
 }
 
@@ -298,7 +302,9 @@ void Character::update() {
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
-
+	if (isSubzeroFiring) {
+		completeMovement();
+	}
 	if (isSubzeroSweeping){
 		sweepMovement();
 	}
@@ -577,6 +583,9 @@ void Character::update() {
 			break;
 		case FIRST_PLAYER_FIRE:
 			this->fire = true;
+			this->setMovement(FIRE_MOVEMENT);
+			setCurrentSprite();
+			fireMovement();
 			break;
 		case FIRST_PLAYER_DUCK_FIRE:
 			this->setMovement(DUCKING_MOVEMENT);
@@ -891,7 +900,9 @@ void Character::sweepMovement() {
 	}else {
 		isSubzeroSweeping = false;
 	}
+}
 
+void Character::fireMovement() {
 
 }
 
@@ -1130,6 +1141,8 @@ void Character::setCurrentSprite(){
 
 		} else if (this->getMovement() == SWEEP_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+SWEEP_SUFFIX];
+		} else if (this->getMovement() == FIRE_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+FIRE_SUFFIX];
 		}
 
 		else{
@@ -1192,6 +1205,8 @@ void Character::setMoveFlag(bool trueOrFalse){
 	} else if (this->getMovement() == SWEEP_MOVEMENT) {
 		isSubzeroSweeping = trueOrFalse;
 
+	} else if (this->getMovement() == FIRE_MOVEMENT) {
+		isSubzeroSweeping = trueOrFalse;
 	}
 	else {
 		//TODO: review

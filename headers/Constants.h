@@ -90,6 +90,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define HINT_FLYING_UPPER_MOVEMENT "hintFlyingUpper"
 #define GET_UP_MOVEMENT "getUp"
 #define SWEEP_MOVEMENT "sweep"
+#define FIRE_MOVEMENT "fire"
 #define JUMPING_X_SPEED 4
 #define SWEEP_X_SPEED 8
 
@@ -120,6 +121,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define HINT_FLYING_SUFFIX "hintFlying"
 #define GET_UP_SUFFIX "getUp"
 #define SWEEP_SUFFIX "sweep"
+#define FIRE_SUFFIX "fire"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -152,6 +154,7 @@ const string BEING_HINT_FALLING_UNDER_KICK_SPRITE = "/hintFallingUnderKick.png";
 const string HINT_FLYING_SPRITE = "/hintSuperDamage2.png";
 const string GET_UP_SPRITE ="/getUp.png";
 const string SWEEP_SPRITE ="/sweep.png";
+const string FIRE_SPRITE = "/fire.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";
