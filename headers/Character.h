@@ -71,6 +71,8 @@ private:
 	bool isHintFlyingUpper;
 	bool isSubzeroSweeping;
 	bool isSubzeroFiring;
+	bool isBabality;
+	bool isFatality;
 
 
 public:

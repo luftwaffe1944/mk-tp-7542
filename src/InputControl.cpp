@@ -314,12 +314,22 @@ void InputControl::refreshInputs1() {
 		this->firstPlayerMove = FIRST_PLAYER_LOW_KICK;
 	}
 
+	/**
+	 * Special moves, replicar para refreshInput2
+	 */
 	else if (currentKeyStates[SDL_SCANCODE_Q]) {
 		this->firstPlayerMove = SUBZERO_SWEEP;
 	}
 	else if (currentKeyStates[SDL_SCANCODE_E]) {
 		this->firstPlayerMove = FIRST_PLAYER_FIRE;
 	}
+	else if (currentKeyStates[SDL_SCANCODE_T]) {
+		this->firstPlayerMove = BABALITY;
+	}
+	else if (currentKeyStates[SDL_SCANCODE_U]) {
+		this->firstPlayerMove = FATALITY;
+	}
+
 
 }
 

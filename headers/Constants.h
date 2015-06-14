@@ -91,6 +91,9 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define GET_UP_MOVEMENT "getUp"
 #define SWEEP_MOVEMENT "sweep"
 #define FIRE_MOVEMENT "fire"
+#define BABALITY_MOVEMENT "babality"
+#define FATALITY_MOVEMENT "fatality"
+#define HEADLESS_MOVEMENT "headless"
 #define JUMPING_X_SPEED 4
 #define SWEEP_X_SPEED 8
 
@@ -122,6 +125,9 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define GET_UP_SUFFIX "getUp"
 #define SWEEP_SUFFIX "sweep"
 #define FIRE_SUFFIX "fire"
+#define BABALITY_SUFFIX "babality"
+#define FATALITY_SUFFIX "fatality"
+#define HEADLESS_SUFFIX "headless"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -155,6 +161,9 @@ const string HINT_FLYING_SPRITE = "/hintSuperDamage2.png";
 const string GET_UP_SPRITE ="/getUp.png";
 const string SWEEP_SPRITE ="/sweep.png";
 const string FIRE_SPRITE = "/fire.png";
+const string BABALITY_SPRITE ="/babality.png";
+const string FATALITY_SPRITE ="/fatality.png";
+const string HEADLESS_SPRITE ="/headless.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";

@@ -139,6 +139,12 @@ bool Character::load(SDL_Renderer* render) {
 				renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 	Sprite* spriteFire = new Sprite(this->name+this->playerNumber+FIRE_SUFFIX, characterPath+FIRE_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteBabality = new Sprite(this->name+this->playerNumber+BABALITY_SUFFIX, characterPath+BABALITY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
+	Sprite* spriteFatality = new Sprite(this->name+this->playerNumber+FATALITY_SUFFIX, characterPath+FATALITY_SPRITE,
+			renderer, SPRITE_WIDTH+200, SPRITE_HEIGHT, 18, this->isAltPlayer, this->altColor);
+	Sprite* spriteHeadless = new Sprite(this->name+this->playerNumber+HEADLESS_SUFFIX, characterPath+HEADLESS_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -168,7 +174,9 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+GET_UP_SUFFIX, spriteGetUp));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SWEEP_SUFFIX, spriteSweep));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FIRE_SUFFIX, spriteFire));
-
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BABALITY_SUFFIX, spriteBabality));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FATALITY_SUFFIX, spriteFatality));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_SUFFIX, spriteHeadless));
 	return true;
 }
 
@@ -305,7 +313,15 @@ void Character::update() {
 	if (isSubzeroFiring) {
 		completeMovement();
 	}
-	if (isSubzeroSweeping){
+	else if (isFatality){
+		completeMovement();
+	}
+
+	else if (isBabality){
+		completeMovement();
+	}
+
+	else if (isSubzeroSweeping){
 		sweepMovement();
 	}
 
@@ -598,6 +614,16 @@ void Character::update() {
 			setCurrentSprite();
 			sweepMovement();
 			break;
+		case BABALITY:
+			this->setMovement(BABALITY_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			break;
+		case FATALITY:
+			this->setMovement(FATALITY_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
 			setCurrentSprite();
@@ -643,6 +669,8 @@ void Character::clearMovementsFlags(){
 	isGettingUp = false;
 	isHintFlyingUpper = false;
 	isSubzeroSweeping = false;
+	isBabality = false;
+	isFatality = false;
 	//this->beingPushed = false;
 }
 
@@ -986,7 +1014,6 @@ void Character::completeMovement(){
 	}
 }
 
-
 void Character::incrementCounter(string key){
 	int value = 1;
 	int containKey = movesCounter.count(key);
@@ -997,6 +1024,7 @@ void Character::incrementCounter(string key){
 	}
 	movesCounter.insert({key, value});
 }
+
 
 void Character::resetCounter(string key){
 	movesCounter.erase(key);
@@ -1141,8 +1169,15 @@ void Character::setCurrentSprite(){
 
 		} else if (this->getMovement() == SWEEP_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+SWEEP_SUFFIX];
+
 		} else if (this->getMovement() == FIRE_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+FIRE_SUFFIX];
+
+		} else if (this->getMovement() == BABALITY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ BABALITY_SUFFIX];
+
+		} else if (this->getMovement() == FATALITY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ FATALITY_SUFFIX];
 		}
 
 		else{
@@ -1207,6 +1242,12 @@ void Character::setMoveFlag(bool trueOrFalse){
 
 	} else if (this->getMovement() == FIRE_MOVEMENT) {
 		isSubzeroSweeping = trueOrFalse;
+
+	} else if (this->getMovement() == BABALITY_MOVEMENT) {
+		isBabality = trueOrFalse;
+	}
+	else if (this->getMovement() == FATALITY_MOVEMENT) {
+		isFatality = trueOrFalse;
 	}
 	else {
 		//TODO: review
