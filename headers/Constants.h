@@ -94,6 +94,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BABALITY_MOVEMENT "babality"
 #define FATALITY_MOVEMENT "fatality"
 #define HEADLESS_MOVEMENT "headless"
+#define FRIENDSHIP_MOVEMENT "friendship"
 #define JUMPING_X_SPEED 4
 #define SWEEP_X_SPEED 8
 
@@ -128,6 +129,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BABALITY_SUFFIX "babality"
 #define FATALITY_SUFFIX "fatality"
 #define HEADLESS_SUFFIX "headless"
+#define FRIENDSHIP_SUFFIX "friendship"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -164,6 +166,7 @@ const string FIRE_SPRITE = "/fire.png";
 const string BABALITY_SPRITE ="/babality.png";
 const string FATALITY_SPRITE ="/fatality.png";
 const string HEADLESS_SPRITE ="/headless.png";
+const string FRIENDSHIP_SPRITE ="/friendship.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";

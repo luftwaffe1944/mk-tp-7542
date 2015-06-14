@@ -73,6 +73,8 @@ private:
 	bool isSubzeroFiring;
 	bool isBabality;
 	bool isFatality;
+	bool isHeadless;
+	bool isFriendship;
 
 
 public:

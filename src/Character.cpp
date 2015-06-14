@@ -142,9 +142,11 @@ bool Character::load(SDL_Renderer* render) {
 	Sprite* spriteBabality = new Sprite(this->name+this->playerNumber+BABALITY_SUFFIX, characterPath+BABALITY_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
 	Sprite* spriteFatality = new Sprite(this->name+this->playerNumber+FATALITY_SUFFIX, characterPath+FATALITY_SPRITE,
-			renderer, SPRITE_WIDTH+200, SPRITE_HEIGHT, 18, this->isAltPlayer, this->altColor);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
 	Sprite* spriteHeadless = new Sprite(this->name+this->playerNumber+HEADLESS_SUFFIX, characterPath+HEADLESS_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteFriendship = new Sprite(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, characterPath+FRIENDSHIP_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 15, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -177,6 +179,7 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BABALITY_SUFFIX, spriteBabality));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FATALITY_SUFFIX, spriteFatality));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_SUFFIX, spriteHeadless));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, spriteFriendship));
 	return true;
 }
 
@@ -259,7 +262,8 @@ void Character::draw() {
 bool Character::shouldMoveForward() {
 	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
 			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))
-			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper) {
+			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper || isFatality
+			|| isFriendship) {
 		return true;
 	} else {
 		return false;
@@ -310,10 +314,18 @@ void Character::update() {
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
-	if (isSubzeroFiring) {
+	if (isFriendship) {
+		completeMovement();
+	}
+	else if (isSubzeroFiring) {
 		completeMovement();
 	}
 	else if (isFatality){
+		completeMovement();
+	}
+	else if (isHeadless){
+		setMovement(HEADLESS_MOVEMENT);
+		setCurrentSprite();
 		completeMovement();
 	}
 
@@ -624,6 +636,16 @@ void Character::update() {
 			setCurrentSprite();
 			completeMovement();
 			break;
+		case HEADLESS:
+			this->setMovement(HEADLESS_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			break;
+		case FRIENDSHIP:
+			this->setMovement(FRIENDSHIP_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
 			setCurrentSprite();
@@ -634,7 +656,7 @@ void Character::update() {
 	this->updateShapesOnStatus();
 
 	this->smoothMovPosX();
-	SDL_Delay(25);
+	SDL_Delay(50);
 }
 
 void Character::clearMovementsFlags(){
@@ -671,6 +693,8 @@ void Character::clearMovementsFlags(){
 	isSubzeroSweeping = false;
 	isBabality = false;
 	isFatality = false;
+	isHeadless = false;
+	isFriendship = false;
 	//this->beingPushed = false;
 }
 
@@ -1010,6 +1034,11 @@ void Character::completeMovement(){
 			clearMovementsFlags();
 		}
 		resetCounter(getMovement());
+		if (getMovement() == FATALITY_MOVEMENT){
+
+			Character* char2 = GameGUI::getInstance()->getCharacters()[1];
+			char2->isHeadless = true;
+		}
 		this->movement="";
 	}
 }
@@ -1180,6 +1209,14 @@ void Character::setCurrentSprite(){
 			currentSprite = this->characterSprites[this->name + this->playerNumber+ FATALITY_SUFFIX];
 		}
 
+		else if (this->getMovement() == HEADLESS_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ HEADLESS_SUFFIX];
+		}
+
+		else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ FRIENDSHIP_SUFFIX];
+		}
+
 		else{
 			//TODO: review
 		}
@@ -1248,6 +1285,12 @@ void Character::setMoveFlag(bool trueOrFalse){
 	}
 	else if (this->getMovement() == FATALITY_MOVEMENT) {
 		isFatality = trueOrFalse;
+	}
+	else if (this->getMovement() == HEADLESS_MOVEMENT) {
+		isHeadless = trueOrFalse;
+	}
+	else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
+		isFriendship = trueOrFalse;
 	}
 	else {
 		//TODO: review

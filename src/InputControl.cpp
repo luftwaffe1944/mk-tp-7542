@@ -329,7 +329,9 @@ void InputControl::refreshInputs1() {
 	else if (currentKeyStates[SDL_SCANCODE_U]) {
 		this->firstPlayerMove = FATALITY;
 	}
-
+	else if (currentKeyStates[SDL_SCANCODE_O]) {
+		this->firstPlayerMove = FRIENDSHIP;
+	}
 
 }
 
