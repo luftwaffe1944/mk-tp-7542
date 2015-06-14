@@ -225,7 +225,9 @@ std::string Menu::identify_event() {
 		Mix_PlayMusic(musicMenu, -1);
 		musicStarted = true;
 	}
-
+	MenuItem* aux;
+	int x = 0;
+	int y = 0;
 	std::string temp;
 	SDL_Event event;
 	while (1) {
@@ -393,10 +395,53 @@ std::string Menu::identify_event() {
 					}
 
 					break;
+
 				default:
 					break;
 				}
 			}
+
+			if (event.type == SDL_MOUSEMOTION) {
+				aux = start;
+				SDL_GetMouseState(&x, &y);
+
+				if (textMenu) {
+					for (unsigned int i = 0; i < 12; i++) {
+						if (aux->checkBounds(x, y) && selected != aux) {
+							Mix_PlayChannel(-1, sound, 0);
+							selected->setColor(150, 150, 150, 255);
+							selected->show(render);
+							selected = aux;
+							selected->setColor(255, 255, 255, 255);
+							selected->show(render);
+						}
+						if (aux->next){
+							aux = aux->next;
+						}
+					}
+				}
+			}
+
+			if (event.type == SDL_MOUSEBUTTONDOWN) {
+				aux = start;
+				SDL_GetMouseState(&x, &y);
+
+				if (textMenu && (event.button.button == SDL_BUTTON_LEFT)) {
+					for (unsigned int i = 0; i < 12; i++) {
+						if (aux->checkBounds(x, y)) {
+							std::cout << x << endl;
+							selected = aux;
+							return selected->text;
+						}
+
+						if (aux->next){
+							aux = aux->next;
+						}
+
+					}
+				}
+			}
+
 		}
 	}
 }
