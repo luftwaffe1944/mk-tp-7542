@@ -189,25 +189,26 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 				int csIndex = 2;
 				int acuErrores = 0;
 				while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= ERROR_TOLERANCE_SPECIAL_MOVES )){
-					csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - smIndex, 1);
-					smChar = this->specialMoves[i].substr(this->specialMoves[i].length()- csIndex, 1);
-					if (!csChar==smChar){
+					csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - csIndex, 1);
+					smChar = this->specialMoves[i].substr(this->specialMoves[i].length()- smIndex, 1);
+					if (!(csChar==smChar)){
 						acuErrores++;
 						csIndex++;
-					}else if (csChar==smChar){
+						//if (smIndex = this->specialMoves[i].length(){
+						//	smIndex++;
+						//}
+					}else if ((smIndex == this->specialMoves[i].length()) && ((csChar==smChar))){
+						smIndex++;
+						isMatch = true;
+						specialMoveNumber = i;
+					}else if(csChar==smChar){
 						smIndex++;
 						csIndex++;
 					}
-
-
-
 				}
 			}
-
+			i++;
 		}
-
 	}
-
-
 	return specialMoveNumber;
 }
