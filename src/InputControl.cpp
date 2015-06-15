@@ -905,7 +905,7 @@ void InputControl::loadSpecialSecuence(int joystick){
 				}
 			}
 			if ((isAxisRight(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1RightPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2RightPressOnce)))){
-				left = CHARACTER_FOR_SPECIAL_MOVE_RIGHT;
+				right = CHARACTER_FOR_SPECIAL_MOVE_RIGHT;
 				if (joystick==0){
 					SecuenceInputManager::Instance()->joy1RightPressOnce=true;
 				}else if (joystick==1){
@@ -919,7 +919,7 @@ void InputControl::loadSpecialSecuence(int joystick){
 				}
 			}
 			if ((isAxisUp(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1UpPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2UpPressOnce)))){
-				left = CHARACTER_FOR_SPECIAL_MOVE_UP;
+				up = CHARACTER_FOR_SPECIAL_MOVE_UP;
 				if (joystick==0){
 					SecuenceInputManager::Instance()->joy1UpPressOnce=true;
 				}else if (joystick==1){
@@ -933,7 +933,7 @@ void InputControl::loadSpecialSecuence(int joystick){
 				}
 			}
 			if ((isAxisDown(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1DownPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2DownPressOnce)))){
-				left = CHARACTER_FOR_SPECIAL_MOVE_DOWN;
+				down = CHARACTER_FOR_SPECIAL_MOVE_DOWN;
 				if (joystick==0){
 					SecuenceInputManager::Instance()->joy1DownPressOnce=true;
 				}else if (joystick==1){

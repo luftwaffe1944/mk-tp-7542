@@ -184,7 +184,7 @@ void SecuenceInputManager::update() {
 		this->elapsedTimeTwo += (this->timerTwo.getTicks()-this->elapsedTimeTwo);
 		float timeLimit;
 		if (this->isMatchTwo){
-			timeLimit = this->elapsedTimeToShowMatchOne + 0.1f;
+			timeLimit = this->elapsedTimeToShowMatchTwo + 0.1f;
 		}else{
 			timeLimit = TIME_TOLERANCE_SPECIAL_MOVES;
 			this->elapsedTimeToShowMatchTwo = (this->elapsedTimeTwo/1000.0f);
@@ -238,6 +238,7 @@ void SecuenceInputManager::loadSpecialMoves() {
 		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_0);
 		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_1);
 		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_2);
+		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_3);
 }
 
 int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
