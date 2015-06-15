@@ -128,6 +128,25 @@ void SecuenceInputManager::draw() {
 
 		}
 	}
+	//secuencia 2
+	string id;
+	int width = (WINDOW_MARGIN * 6/7);
+	int anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
+	int x = (window->widthPx/2) + anchoTotal + (window->widthPx*0.02);
+	int y = window->heightPx* 0.06;
+	int height = 15;
+	if (this->specialSecuenceTwoActive){
+		for (int i=1; i<=SIMBOLS_TO_SHOW_SPECIAL_MOVES; i++){
+			std::string charColor = "sec_b";
+			if (this->colorCharTwo[100-i]){
+				charColor = "sec_v";
+			}
+			id = this->textureID + charColor + this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - i,1);
+			x = x - width;
+			TextureManager::Instance()->draw( id, x, y, width, height, render);
+
+		}
+	}
 
 }
 
@@ -162,19 +181,20 @@ void SecuenceInputManager::update() {
 		}
 	}
 	if (this->timerTwo.isStarted()  && (this->specialSecuenceTwoActive)){
-		this->elapsedTimeTwo += (this->timerOne.getTicks()-this->elapsedTimeTwo);
+		this->elapsedTimeTwo += (this->timerTwo.getTicks()-this->elapsedTimeTwo);
 		float timeLimit;
 		if (this->isMatchTwo){
-			timeLimit = this->elapsedTimeToShowMatchTwo + 0.1f;
+			timeLimit = this->elapsedTimeToShowMatchOne + 0.1f;
 		}else{
 			timeLimit = TIME_TOLERANCE_SPECIAL_MOVES;
 			this->elapsedTimeToShowMatchTwo = (this->elapsedTimeTwo/1000.0f);
 		}
-		if ((int)(this->elapsedTimeTwo/1000.0f) > TIME_TOLERANCE_SPECIAL_MOVES){
-			//this->timerTwo.stop();
+		if ((int)(this->elapsedTimeTwo/1000.0f) > timeLimit){
+			//this->timerOne.stop();
 			this->reset(2);
 		}
 	}
+
 }
 
 void SecuenceInputManager::reset(int secNum) {
@@ -198,8 +218,8 @@ void SecuenceInputManager::reset(int secNum) {
 		this->specialSecuenceTwoActive = false;
 		this->elapsedTimeTwo=0;
 		this->timerTwo.stop();
-		this->isMatchTwo=false;
 		this->elapsedTimeToShowMatchTwo = 0;
+		this->isMatchTwo=false;
 		this->isSetMoveTwo=false;
 		this->cleanVectorColorChar(1);
 	}
@@ -238,12 +258,14 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 				this->isSetMoveOne = true;
 				this->setColorPhrase(this->specialMoves[i].length(),playerNum);
 			}
-		}else if ((playerNum==1) && (this->specialSecuenceTwoActive)){
+		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo)){
 			std::string currentSecuenceToCompare = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
 			if (this->specialMoves[i] == currentSecuenceToCompare){
 				specialMoveNumber = i;
 				isMatch = true;
+				this->isMatchTwo = true;
 				this->isSetMoveTwo = true;
+				this->setColorPhrase(this->specialMoves[i].length(),playerNum);
 			}
 		}
 		i++;
@@ -252,7 +274,6 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 	if (!isMatch){
 		if ((playerNum==0) && (this->specialSecuenceOneActive) && (!this->isSetMoveOne)){
 			i=0;
-
 			while ((i<this->specialMoves.size()) && (!isMatch)){
 				int smIndex = 1;
 				int csIndex = 1;
@@ -289,15 +310,18 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					this->cleanVectorColorChar(0);
 				}
 			}
-		}else if ((playerNum==1) && (this->specialSecuenceTwoActive)){
+		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo)){
 			i=0;
 			while ((i<this->specialMoves.size()) && (!isMatch)){
-				std::string csChar = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - 1, 1);
-				std::string smChar = this->specialMoves[i].substr(this->specialMoves[i].length()-1, 1);
+				int smIndex = 1;
+				int csIndex = 1;
+				std::string csChar = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - csIndex, 1);
+				std::string smChar = this->specialMoves[i].substr(this->specialMoves[i].length()-smIndex, 1);
 				//se evaluan los ultimos caracteres, si son iguales se evalua el resto, sino se corta procesamiento
 				if (csChar==smChar){
-					int smIndex = 2;
-					int csIndex = 2;
+					this->setColorChar(csIndex,playerNum);
+					smIndex = 2;
+					csIndex = 2;
 					int acuErrores = 0;
 					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= ERROR_TOLERANCE_SPECIAL_MOVES )){
 						csChar = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - csIndex, 1);
@@ -310,14 +334,19 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 							isMatch = true;
 							this->isMatchTwo = true;
 							this->isSetMoveTwo = true;
+							this->setColorChar(csIndex,playerNum);
 							specialMoveNumber = i;
 						}else if(csChar==smChar){
+							this->setColorChar(csIndex,playerNum);
 							smIndex++;
 							csIndex++;
 						}
 					}
 				}
 				i++;
+				if (!isMatch){
+					this->cleanVectorColorChar(1);
+				}
 			}
 		}
 	}
