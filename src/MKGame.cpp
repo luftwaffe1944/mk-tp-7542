@@ -176,7 +176,6 @@ void MKGame::handleEvents() {
 			reset = true;
 		}
 		if (event.type == SDL_JOYBUTTONDOWN ) {
-			//std::cout << "asd";
 			InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
 		}
 		if (event.type == SDL_JOYBUTTONUP ) {

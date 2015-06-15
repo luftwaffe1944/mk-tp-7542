@@ -24,6 +24,7 @@
 #include "SDL_ttf.h"
 #include "CollitionManager.h"
 #include "AIMovement.h"
+#include "../headers/SoundManager.h"
 
 
 //#include "SDL_gamecontroller.h"

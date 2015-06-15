@@ -10,7 +10,7 @@
 
 #include "GameGUI.h"
 #include "LayerManager.h"
-
+#include "SoundManager.h"
 using namespace std;
 
 class CharacterManager {
@@ -24,10 +24,15 @@ public:
 	void solveMovesBeignHint();
 	void solveMovesBeignHint(DamageObject* actualObj, DamageObject* nextObj);
 	float getCharacterDistance();
+	int hitSoundCounter1 = 0;
+	int hitSoundCounter2 = 0;
+	bool inCollision = false;
 
+	void playSound(std::string action, int repetitions);
 private:
 	CharacterManager();
 	static CharacterManager* cm_pInstance;
+
 };
 
 #endif /* CHARACTERMANAGER_H_ */

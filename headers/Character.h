@@ -172,6 +172,8 @@ public:
 
 	bool beingPushed;
 	float getJumpDistance();
+	std::string previousMovement;
+	void talk(std::string action, int repetitions = 0);
 };
 
 #endif /* CHARACTER_H_ */

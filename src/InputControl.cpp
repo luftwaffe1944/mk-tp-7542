@@ -143,6 +143,7 @@ void InputControl::refreshInputs() {
 				&& !(currentKeyStates[SDL_SCANCODE_LEFT])
 				&& !(currentKeyStates[SDL_SCANCODE_RIGHT])) {
 			this->secondPlayerMove = FIRST_PLAYER_HI_PUNCH;
+
 		}
 		//COMBINATION WITH A
 	} else if (currentKeyStates[SDL_SCANCODE_A]) {
@@ -173,6 +174,7 @@ void InputControl::refreshInputs() {
 void InputControl::refreshInputs1() {
 
 	const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL);
+
 
 	this->firstPlayerMove = NO_INPUT;
 	//this->secondPlayerMove = NO_INPUT;
@@ -288,6 +290,7 @@ void InputControl::refreshInputs1() {
 				&& !(currentKeyStates[SDL_SCANCODE_A])
 				&& !(currentKeyStates[SDL_SCANCODE_D])) {
 			this->firstPlayerMove = FIRST_PLAYER_HI_PUNCH;
+			SoundManager::Instance()->playSound("punch2_1",0);
 		}
 		//COMBINATION WITH A
 	} else if (currentKeyStates[SDL_SCANCODE_F]) {

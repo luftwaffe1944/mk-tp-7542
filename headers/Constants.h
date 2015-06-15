@@ -24,6 +24,9 @@ const bool DRAW_COLLITIONABLE_BOXES = true;
 //IA
 #define IDLE_CHANCE 100
 
+//Sounds
+#define SFX_JUMP "../sounds/sfx/0897.ogg"
+
 //Joystick
 #define MAX_XAXIS 32000 //max 32767
 #define MAX_YAXIS 32000
