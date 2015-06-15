@@ -46,6 +46,7 @@ bool MKGame::init(GameGUI* gameGui) {
 				for (unsigned int i = 0; i < objects.size(); i++) {
 					objects[i]->load(m_pRenderer);
 				}
+				SecuenceInputManager::Instance()->load();
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
 				return false;

@@ -37,6 +37,7 @@ public:
 	void refresh();
 	void reset(int secNum);
 	int detectSpecialSecuence(int playerNum);
+	bool getIsSetMove(int num);
 
 	std::string specialSecuenceOne;
 	std::string specialSecuenceOnePreview;
@@ -66,10 +67,19 @@ private:
 	SecuenceInputManager();
 	std::string getCleanSecuence();
 	void loadSpecialMoves();
+	void cleanVectorColorChar();
 
 
 	std::vector<std::string> specialMoves;
 	std::string textureID;
+
+	bool isMatchOne;
+	bool isMatchTwo;
+	float elapsedTimeToShowMatchOne;
+	float elapsedTimeToShowMatchTwo;
+	bool isSetMoveOne;
+	bool isSetMoveTwo;
+	std::vector<bool> colorChar;
 
 };
 
