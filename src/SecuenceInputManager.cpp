@@ -125,14 +125,14 @@ void SecuenceInputManager::draw() {
 			id = this->textureID + charColor + this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - i,1);
 			x = x - width;
 			TextureManager::Instance()->draw( id, x, y, width, height, render);
-
+			//cout<<"one id ; x ; y ; w ; h :"<<id<<" ; "<<x<<" ; "<<y<<" ; "<<width<<" ; "<<height<<"\n";
 		}
 	}
 	//secuencia 2
 
 	width = (WINDOW_MARGIN * 6/7);
 	anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
-	x = (window->widthPx/2) + anchoTotal + (window->widthPx*0.02);
+	x = (window->widthPx*0.12) + anchoTotal + (window->widthPx*0.02);//(window->widthPx/2) + anchoTotal + (window->widthPx*0.02);
 	y = window->heightPx* 0.06;
 	height = 15;
 	if (this->specialSecuenceTwoActive){
@@ -144,10 +144,9 @@ void SecuenceInputManager::draw() {
 			id = this->textureID + charColor + this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - i,1);
 			x = x - width;
 			TextureManager::Instance()->draw( id, x, y, width, height, render);
-
+			//cout<<"two id ; x ; y ; w ; h :"<<id<<" ; "<<x<<" ; "<<y<<" ; "<<width<<" ; "<<height<<"\n";
 		}
 	}
-
 }
 
 void SecuenceInputManager::update() {
