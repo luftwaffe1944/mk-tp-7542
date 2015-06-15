@@ -67,7 +67,9 @@ private:
 	SecuenceInputManager();
 	std::string getCleanSecuence();
 	void loadSpecialMoves();
-	void cleanVectorColorChar();
+	void cleanVectorColorChar(int num);
+	void setColorChar(int index,int num);
+	void setColorPhrase(int index,int num);
 
 
 	std::vector<std::string> specialMoves;
@@ -79,7 +81,8 @@ private:
 	float elapsedTimeToShowMatchTwo;
 	bool isSetMoveOne;
 	bool isSetMoveTwo;
-	std::vector<bool> colorChar;
+	std::vector<bool> colorCharOne;
+	std::vector<bool> colorCharTwo;
 
 };
 

@@ -40,7 +40,8 @@ SecuenceInputManager::SecuenceInputManager(){
 	 loadSpecialMoves();
 
 	 for (int i=0; i<100; i++){
-		 this->colorChar.push_back(false);
+		 this->colorCharOne.push_back(false);
+		 this->colorCharTwo.push_back(false);
 	 }
 }
 
@@ -75,6 +76,7 @@ bool SecuenceInputManager::load() {
 
 	//letras blancas
 	SDL_Color textColor = {255, 255, 255};
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_UP, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_DOWN, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_LEFT, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_RIGHT, textColor, font, render);
@@ -88,6 +90,7 @@ bool SecuenceInputManager::load() {
 
 	//letras blancas
 	textColor = {0, 255, 0};
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_UP, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_DOWN, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_LEFT, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_RIGHT, textColor, font, render);
@@ -109,14 +112,20 @@ void SecuenceInputManager::draw() {
 	//secuencia 1
 	string id;
 	int width = (WINDOW_MARGIN * 6/7);
-	int x = (window->widthPx*0.02);
+	int anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
+	int x = anchoTotal + (window->widthPx*0.02);
 	int y = window->heightPx* 0.06;
 	int height = 15;
 	if (this->specialSecuenceOneActive){
-		for (int i=1; i==SIMBOLS_TO_SHOW_SPECIAL_MOVES; i++){
-			id = this->textureID + "sec_b" + this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - i,1);
+		for (int i=1; i<=SIMBOLS_TO_SHOW_SPECIAL_MOVES; i++){
+			std::string charColor = "sec_b";
+			if (this->colorCharOne[100-i]){
+				charColor = "sec_v";
+			}
+			id = this->textureID + charColor + this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - i,1);
+			x = x - width;
 			TextureManager::Instance()->draw( id, x, y, width, height, render);
-			x = x + (window->widthPx*0.02);
+
 		}
 	}
 
@@ -180,6 +189,7 @@ void SecuenceInputManager::reset(int secNum) {
 		this->elapsedTimeToShowMatchOne = 0;
 		this->isMatchOne=false;
 		this->isSetMoveOne=false;
+		this->cleanVectorColorChar(0);
 	}else if (secNum==2){
 		if (this->specialSecuenceTwo.length()>100){
 			this->specialSecuenceTwo.erase(0,100-SIMBOLS_TO_SHOW_SPECIAL_MOVES);
@@ -191,6 +201,7 @@ void SecuenceInputManager::reset(int secNum) {
 		this->isMatchTwo=false;
 		this->elapsedTimeToShowMatchTwo = 0;
 		this->isSetMoveTwo=false;
+		this->cleanVectorColorChar(1);
 	}
 
 }
@@ -223,7 +234,9 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 			if (this->specialMoves[i] == currentSecuenceToCompare){
 				specialMoveNumber = i;
 				isMatch = true;
+				this->isMatchOne = true;
 				this->isSetMoveOne = true;
+				this->setColorPhrase(this->specialMoves[i].length(),playerNum);
 			}
 		}else if ((playerNum==1) && (this->specialSecuenceTwoActive)){
 			std::string currentSecuenceToCompare = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
@@ -239,14 +252,17 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 	if (!isMatch){
 		if ((playerNum==0) && (this->specialSecuenceOneActive) && (!this->isSetMoveOne)){
 			i=0;
+
 			while ((i<this->specialMoves.size()) && (!isMatch)){
-				std::string csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - 1, 1);
-				std::string smChar = this->specialMoves[i].substr(this->specialMoves[i].length()-1, 1);
+				int smIndex = 1;
+				int csIndex = 1;
+				std::string csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - csIndex, 1);
+				std::string smChar = this->specialMoves[i].substr(this->specialMoves[i].length()-smIndex, 1);
 				//se evaluan los ultimos caracteres, si son iguales se evalua el resto, sino se corta procesamiento
 				if (csChar==smChar){
-
-					int smIndex = 2;
-					int csIndex = 2;
+					this->setColorChar(csIndex,playerNum);
+					smIndex = 2;
+					csIndex = 2;
 					int acuErrores = 0;
 					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= ERROR_TOLERANCE_SPECIAL_MOVES )){
 						csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - csIndex, 1);
@@ -259,14 +275,19 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 							isMatch = true;
 							this->isMatchOne = true;
 							this->isSetMoveOne = true;
+							this->setColorChar(csIndex,playerNum);
 							specialMoveNumber = i;
 						}else if(csChar==smChar){
+							this->setColorChar(csIndex,playerNum);
 							smIndex++;
 							csIndex++;
 						}
 					}
 				}
 				i++;
+				if (!isMatch){
+					this->cleanVectorColorChar(0);
+				}
 			}
 		}else if ((playerNum==1) && (this->specialSecuenceTwoActive)){
 			i=0;
@@ -311,8 +332,31 @@ bool SecuenceInputManager::getIsSetMove(int num){
 	}
 }
 
-void SecuenceInputManager::cleanVectorColorChar(){
+void SecuenceInputManager::cleanVectorColorChar(int num){
 	 for (int i=0; i<100; i++){
-		 this->colorChar[0] = false;
+		 if (num==0){
+			 this->colorCharOne[i] = false;
+		 }else if(num==1){
+			 this->colorCharTwo[i] = false;
+		 }
 	 }
+}
+
+void SecuenceInputManager::setColorChar(int index,int num){
+	int i = 100 - index;
+	 if (num==0){
+		 this->colorCharOne[i] = true;
+	 }else if(num==1){
+		 this->colorCharTwo[i] = true;
+	 }
+}
+
+void SecuenceInputManager::setColorPhrase(int index,int num){
+	for (int i=1; i<=index; i++){
+		 if (num==0){
+			 this->colorCharOne[100-i]=true;
+		 }else if(num==1){
+			 this->colorCharTwo[100-i] = true;
+		 }
+	}
 }
