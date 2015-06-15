@@ -129,12 +129,12 @@ void SecuenceInputManager::draw() {
 		}
 	}
 	//secuencia 2
-	string id;
-	int width = (WINDOW_MARGIN * 6/7);
-	int anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
-	int x = (window->widthPx/2) + anchoTotal + (window->widthPx*0.02);
-	int y = window->heightPx* 0.06;
-	int height = 15;
+
+	width = (WINDOW_MARGIN * 6/7);
+	anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
+	x = (window->widthPx/2) + anchoTotal + (window->widthPx*0.02);
+	y = window->heightPx* 0.06;
+	height = 15;
 	if (this->specialSecuenceTwoActive){
 		for (int i=1; i<=SIMBOLS_TO_SHOW_SPECIAL_MOVES; i++){
 			std::string charColor = "sec_b";
