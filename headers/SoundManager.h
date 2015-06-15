@@ -34,8 +34,10 @@ public:
 		delete(cm_pInstance);
 		cm_pInstance = 0;
 	}*/
+	std::map<std::string, int >  soundsPlayed;
 	bool load(std::string fileName, std::string id, sound_type type);
 	void playSound(std::string id, int loop);
+	void playSoundOnce(std::string id, int loop);
 	void playMusic(std::string id, int loop);
 	void clean();
 	void loadBattleSounds();
@@ -43,6 +45,7 @@ public:
 	int hitSoundCounter1 = 0;
 	int hitSoundCounter2 = 0;
 	void init();
+	void incrementSound(std::string id);
 
 private:
 	static SoundManager* s_pInstance;
@@ -116,9 +119,9 @@ private:
 						"subzeroWins"
 				}
 		},
-		{"fatality",
+		{"fatality_voice",
 				{
-						"fatality"
+						"fatality_voice"
 				}
 		},
 		{"applause",
@@ -126,9 +129,9 @@ private:
 						"applause"
 				}
 		},
-		{"fatalityDeath",
+		{"scream",
 				{
-						"fatalityDeath"
+						"scream"
 				}
 		},
 		{"gong",
@@ -139,6 +142,21 @@ private:
 		{"fight",
 				{
 						"fight"
+				}
+		},
+		{"friendship",
+				{
+						"friendship"
+				}
+		},
+		{"pre_fatality",
+				{
+						"pre_fatality"
+				}
+		},
+		{"pre_friendship",
+				{
+						"pre_friendship"
 				}
 		}
 	};

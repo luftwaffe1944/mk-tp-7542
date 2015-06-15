@@ -143,10 +143,16 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
 	Sprite* spriteFatality = new Sprite(this->name+this->playerNumber+FATALITY_SUFFIX, characterPath+FATALITY_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
+	Sprite* spriteBurning = new Sprite(this->name+this->playerNumber+BURNING_SUFFIX, characterPath+BURNING_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
 	Sprite* spriteHeadless = new Sprite(this->name+this->playerNumber+HEADLESS_SUFFIX, characterPath+HEADLESS_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 	Sprite* spriteFriendship = new Sprite(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, characterPath+FRIENDSHIP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 15, this->isAltPlayer, this->altColor);
+	Sprite* spriteVictory = new Sprite(this->name+this->playerNumber+VICTORY_SUFFIX, characterPath+VICTORY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteLazy = new Sprite(this->name+this->playerNumber+LAZY_SUFFIX, characterPath+LAZY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -180,6 +186,10 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FATALITY_SUFFIX, spriteFatality));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_SUFFIX, spriteHeadless));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, spriteFriendship));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+VICTORY_SUFFIX, spriteVictory));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+LAZY_SUFFIX, spriteLazy));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BURNING_SUFFIX, spriteBurning));
+
 	return true;
 }
 
@@ -189,7 +199,7 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking) {
+	if(this->isDucking || this->isHeadless || this->isFriendship || this->isVictory || this->isBurning) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
@@ -296,6 +306,7 @@ void Character::fixOrientation() {
 }
 
 void Character::update() {
+
 	this->previousMovement = getMovement();
 	this->beingPushed = false;
 	if (this->orientationPosXFix != 0) { //acomoda la posX si se desplaza la cámara
@@ -314,14 +325,30 @@ void Character::update() {
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
+	if (this->isFinishingMove){
+		doFinisher();
+	}
+
 	if (isFriendship) {
+		isFriendship = true;
+	}
+	else if (isBurning){
+		isBurning = true;
+	}
+	else if (isLazy){
 		completeMovement();
+	}
+	else if (isVictory) {
+		isVictory = true;
 	}
 	else if (isSubzeroFiring) {
 		completeMovement();
 	}
-	else if (isFatality){
+	else if (isFatality && name == "subzero"){
 		completeMovement();
+	}
+	else if (isFatality && name == "scorpion"){
+		isFatality = true;
 	}
 	else if (isHeadless){
 		setMovement(HEADLESS_MOVEMENT);
@@ -655,9 +682,8 @@ void Character::update() {
 			completeMovement();
 			break;
 		case FATALITY:
-			this->setMovement(FATALITY_MOVEMENT);
-			setCurrentSprite();
-			completeMovement();
+			this->finishMove = new Fatality();
+			doFinisher();
 			break;
 		case HEADLESS:
 			this->setMovement(HEADLESS_MOVEMENT);
@@ -666,6 +692,12 @@ void Character::update() {
 			break;
 		case FRIENDSHIP:
 			this->setMovement(FRIENDSHIP_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			SoundManager::Instance()->playSoundByAction("friendship", 0);
+			break;
+		case LAZY:
+			this->setMovement(LAZY_MOVEMENT);
 			setCurrentSprite();
 			completeMovement();
 			break;
@@ -719,6 +751,10 @@ void Character::clearMovementsFlags(){
 	isHeadless = false;
 	isFriendship = false;
 	isSubzeroFiring = false;
+	isVictory = false;
+	isBurning = false;
+	isLazy = false;
+	isFinishingMove = false;
 	//this->beingPushed = false;
 }
 
@@ -1054,9 +1090,9 @@ void Character::completeMovement(){
 	int moveCounter = movesCounter.at(getMovement());
 	int spriteAmount = currentSprite->getFramesAmount();
 	if (moveCounter == spriteAmount) {
-		setMoveFlag(false);
+		if (!isLazy) setMoveFlag(false);
 		if (isTouchingGround(positionY)){
-			clearMovementsFlags();
+			if (!isLazy) clearMovementsFlags();
 		}
 		resetCounter(getMovement());
 		if (getMovement() == FATALITY_MOVEMENT){
@@ -1064,9 +1100,36 @@ void Character::completeMovement(){
 			Character* char2 = GameGUI::getInstance()->getCharacters()[1];
 			char2->isHeadless = true;
 		}
-		this->movement="";
+		if (!isLazy) this->movement="";
 	}
 }
+
+void Character::doFinisher() {
+
+	isFinishingMove = true;
+
+	Character* victim = getVictim();
+
+	if (this->name == "scorpion") {
+
+		if (victim->isLazy) {
+			this->finishMove->onPreFinish(this->name);
+			this->setMovement(VICTORY_MOVEMENT);
+			this->setCurrentSprite();
+			this->isVictory = true;
+
+		} else if (victim->isBurning) {
+			this->finishMove->onFinish(this->name);
+
+		} if (victim->isBurning && victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount()-1) {
+			usleep(3000000);
+			this->finishMove->onPostFinish(this->name);
+		}
+
+	}
+
+}
+
 
 void Character::incrementCounter(string key){
 	int value = 1;
@@ -1242,6 +1305,19 @@ void Character::setCurrentSprite(){
 			currentSprite = this->characterSprites[this->name + this->playerNumber+ FRIENDSHIP_SUFFIX];
 		}
 
+		else if (this->getMovement() == VICTORY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ VICTORY_SUFFIX];
+		}
+
+		else if (this->getMovement() == LAZY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ LAZY_SUFFIX];
+		}
+
+		else if (this->getMovement() == BURNING_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ BURNING_SUFFIX];
+			isLazy = false;
+		}
+
 		else{
 			//TODO: review
 		}
@@ -1316,6 +1392,15 @@ void Character::setMoveFlag(bool trueOrFalse){
 	}
 	else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
 		isFriendship = trueOrFalse;
+	}
+	else if (this->getMovement() == VICTORY_MOVEMENT) {
+		isVictory = trueOrFalse;
+	}
+	else if (this->getMovement() == LAZY_MOVEMENT) {
+		isLazy = trueOrFalse;
+	}
+	else if (this->getMovement() == BURNING_MOVEMENT) {
+		isBurning = trueOrFalse;
 	}
 	else {
 		//TODO: review
@@ -1719,4 +1804,14 @@ void Character::talk(std::string action, int repetitions) {
 	if (this->movement != this->previousMovement) {
 		SoundManager::Instance()->playSoundByAction(action,repetitions);
 	}
+}
+
+Character* Character::getVictim(){
+
+	Character* character = GameGUI::getInstance()->getCharacters()[0];
+	if (character->name == this->name){
+		return GameGUI::getInstance()->getCharacters()[1];
+	}
+	return character;
+
 }

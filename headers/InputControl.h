@@ -51,7 +51,8 @@ enum InputCommand {
 	BABALITY,
 	FATALITY,
 	HEADLESS,
-	FRIENDSHIP
+	FRIENDSHIP,
+	LAZY
 
 };
 

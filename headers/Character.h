@@ -19,11 +19,17 @@
 #include "AlternativeColor.h"
 #include "Collitionable.h"
 #include "DamageObject.h"
+#include "FinishMove.h"
+#include "Fatality.h"
+#include "Babality.h"
+#include "Friendship.h"
+
 using namespace std;
 
 
 class Character : public SDLObjectGUI, public Collitionable {
 private:
+	FinishMove* finishMove;
 	Sprite* currentSprite;
 	int orientationPosXFix = 0;
 	std::string name;
@@ -75,6 +81,11 @@ private:
 	bool isFatality;
 	bool isHeadless;
 	bool isFriendship;
+	bool isVictory;
+	bool isBurning;
+	bool isFinishingMove;
+	bool isLazy;
+
 
 
 public:
@@ -144,6 +155,8 @@ public:
 	float getPosXBox2UL();
 	float getWidthBoxUL();
 	float getWidthBox2UL();
+	void doFinisher();
+	Character* getVictim();
 
 	float posXBox;
 	float posYBox;

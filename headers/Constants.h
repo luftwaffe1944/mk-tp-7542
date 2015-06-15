@@ -16,7 +16,7 @@ const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 //Draw collitionable boxes
-const bool DRAW_COLLITIONABLE_BOXES = true;
+const bool DRAW_COLLITIONABLE_BOXES = false;
 
 //Throwable Speed Object
 #define OBJECT_SPEED 120
@@ -97,7 +97,10 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BABALITY_MOVEMENT "babality"
 #define FATALITY_MOVEMENT "fatality"
 #define HEADLESS_MOVEMENT "headless"
+#define BURNING_MOVEMENT "burning"
+#define LAZY_MOVEMENT "lazy"
 #define FRIENDSHIP_MOVEMENT "friendship"
+#define VICTORY_MOVEMENT "victory"
 #define JUMPING_X_SPEED 4
 #define SWEEP_X_SPEED 8
 
@@ -132,7 +135,10 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BABALITY_SUFFIX "babality"
 #define FATALITY_SUFFIX "fatality"
 #define HEADLESS_SUFFIX "headless"
+#define BURNING_SUFFIX "burning"
 #define FRIENDSHIP_SUFFIX "friendship"
+#define VICTORY_SUFFIX "victory"
+#define LAZY_SUFFIX "lazy"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -168,8 +174,11 @@ const string SWEEP_SPRITE ="/sweep.png";
 const string FIRE_SPRITE = "/fire.png";
 const string BABALITY_SPRITE ="/babality.png";
 const string FATALITY_SPRITE ="/fatality.png";
+const string BURNING_SPRITE ="/burning.png";
 const string HEADLESS_SPRITE ="/headless.png";
 const string FRIENDSHIP_SPRITE ="/friendship.png";
+const string VICTORY_SPRITE ="/victory.png";
+const string LAZY_SPRITE ="/lazy.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";

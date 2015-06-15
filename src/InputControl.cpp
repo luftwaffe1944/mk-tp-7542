@@ -483,6 +483,11 @@ void InputControl::refreshInputs2() {
 		this->secondPlayerMove = FIRST_PLAYER_LOW_KICK;
 	}
 
+	else if (currentKeyStates[SDL_SCANCODE_DELETE]) {
+		this->secondPlayerMove = LAZY;
+	}
+
+
 }
 
 

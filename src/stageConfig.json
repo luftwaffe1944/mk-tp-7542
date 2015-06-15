@@ -48,8 +48,8 @@
 		}
 	],
 	"pelea": {
-		"luchador1": "subzero",
-		"luchador2": "scorpion"
+		"luchador1": "scorpion",
+		"luchador2": "subzero"
 	},
 	"joysticks": [ 
 		{
