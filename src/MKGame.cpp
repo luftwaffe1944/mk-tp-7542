@@ -6,6 +6,7 @@
  */
 
 #include "../headers/MKGame.h"
+#include "../headers/SecuenceInputManager.h"
 
 using namespace std;
 
@@ -45,6 +46,7 @@ bool MKGame::init(GameGUI* gameGui) {
 				for (unsigned int i = 0; i < objects.size(); i++) {
 					objects[i]->load(m_pRenderer);
 				}*/
+				SecuenceInputManager::Instance()->load();
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
 				return false;
@@ -119,7 +121,7 @@ void MKGame::render() {
 		(*it)->setPositionY((*it)->getPositionY() - this->offSetPosY);
 	}
 
-
+	SecuenceInputManager::Instance()->draw();
 	SDL_RenderPresent(m_pRenderer);
 }
 
@@ -352,6 +354,7 @@ void MKGame::update() {
 	//addVector(throObjects, &collObjects);
 
 	CollitionManager::Instance()->solveCollitions(this->getGameGUI()->vCollitionable);
+	SecuenceInputManager::Instance()->update();
 
 }
 
@@ -421,6 +424,8 @@ void MKGame::handleEvents() {
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
+
+
 }
 
 void MKGame::quit(){

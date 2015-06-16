@@ -13,6 +13,7 @@
 #include "../headers/InputControl.h"
 #include "SDL.h"
 #include "../headers/MKGame.h"
+#include "../headers/SecuenceInputManager.h"
 #include <stddef.h>
 
 bool somePunchButtonPressed(const Uint8* keyBoard);
@@ -481,6 +482,9 @@ void InputControl::refreshJoystickInputs() {
 	} else {
 		for (int joystick = 0; joystick < SDL_NumJoysticks() ; joystick ++) {
 
+			loadSpecialSecuence(joystick);
+			detectSpecialMove(joystick);
+
 			if (isAxisUp(joystick)) {
 
 				if (!(isAxisDown(joystick))
@@ -678,6 +682,8 @@ void InputControl::refreshJoystickInputs() {
 		}
 	}
 
+
+
 }
 
 
@@ -838,6 +844,7 @@ bool someKickButtonPressed2(const Uint8* keyBoard) {
 bool somePunchButtonPressed2(const Uint8* keyBoard) {
 	return (keyBoard[SDL_SCANCODE_J]) || (keyBoard[SDL_SCANCODE_K]);
 }
+
 bool InputControl::someJoyKickButtonPressed(int joy) {
 	return (getActionButtonState(joy, LOW_KICK)) || (getActionButtonState(joy, HIGH_KICK) ) ;
 }
@@ -863,4 +870,144 @@ void InputControl::loadDefaultButtons(int joyNum) {
 	setActionButton(joyNum, HIGH_KICK, 3 );
 	setActionButton(joyNum, BLOCK, 4 );
 	setActionButton(joyNum, FIRE, 5 );
+}
+
+void InputControl::loadSpecialSecuence(int joystick){
+	std::string up = "";
+	std::string down = "";
+	std::string left = "";
+	std::string right = "";
+
+	std::string block = "";
+	std::string fire = "";
+	std::string kickHigh = "";
+	std::string kickLow = "";
+	std::string puckHigh = "";
+	std::string punchLow = "";
+
+	std::string secuencia = "";
+
+	bool isSetMove = SecuenceInputManager::Instance()->getIsSetMove(joystick);
+
+	if (!isSetMove){
+		if ((isAxisLeft(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1LeftPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2LeftPressOnce)))){
+				left = CHARACTER_FOR_SPECIAL_MOVE_LEFT;
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1LeftPressOnce=true;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2LeftPressOnce=true;
+				}
+			}else if (!isAxisLeft(joystick)){
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1LeftPressOnce=false;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2LeftPressOnce=false;
+				}
+			}
+			if ((isAxisRight(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1RightPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2RightPressOnce)))){
+				right = CHARACTER_FOR_SPECIAL_MOVE_RIGHT;
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1RightPressOnce=true;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2RightPressOnce=true;
+				}
+			}else if (!isAxisRight(joystick)){
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1RightPressOnce=false;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2RightPressOnce=false;
+				}
+			}
+			if ((isAxisUp(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1UpPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2UpPressOnce)))){
+				up = CHARACTER_FOR_SPECIAL_MOVE_UP;
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1UpPressOnce=true;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2UpPressOnce=true;
+				}
+			}else if (!isAxisUp(joystick)){
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1UpPressOnce=false;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2UpPressOnce=false;
+				}
+			}
+			if ((isAxisDown(joystick)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1DownPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2DownPressOnce)))){
+				down = CHARACTER_FOR_SPECIAL_MOVE_DOWN;
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1DownPressOnce=true;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2DownPressOnce=true;
+				}
+			}else if (!isAxisDown(joystick)){
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1DownPressOnce=false;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2DownPressOnce=false;
+				}
+			}
+			if ((getActionButtonState(joystick,BLOCK)) && (((joystick==0)&&(!SecuenceInputManager::Instance()->joy1BlockPressOnce))||((joystick==1)&&(!SecuenceInputManager::Instance()->joy2BlockPressOnce)))){
+				block = CHARACTER_FOR_SPECIAL_MOVE_BLOCK;
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1BlockPressOnce=true;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2BlockPressOnce=true;
+				}
+			}else if (!getActionButtonState(joystick,BLOCK)){
+				if (joystick==0){
+					SecuenceInputManager::Instance()->joy1BlockPressOnce=false;
+				}else if (joystick==1){
+					SecuenceInputManager::Instance()->joy2BlockPressOnce=false;
+				}
+			}
+
+			if (getActionButtonState(joystick,HIGH_PUNCH)) {
+				puckHigh = CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH;
+			} else if (getActionButtonState(joystick,LOW_PUNCH)) {
+				punchLow = CHARACTER_FOR_SPECIAL_MOVE_PUNCHLOW;
+			} else if (getActionButtonState(joystick,HIGH_KICK)) {
+				kickHigh = CHARACTER_FOR_SPECIAL_MOVE_KICKHIGH;
+			}else if (getActionButtonState(joystick,LOW_KICK)) {
+				kickLow = CHARACTER_FOR_SPECIAL_MOVE_KICKLOW;
+			}else if (getActionButtonState( joystick, FIRE)) {
+				fire = CHARACTER_FOR_SPECIAL_MOVE_FIRE;
+			}
+
+			secuencia += up+down+left+right+block+fire+kickHigh+kickLow+puckHigh+punchLow;
+
+			if (secuencia.length() > 0){
+				if (joystick == 0){
+					if (!SecuenceInputManager::Instance()->specialSecuenceOneActive){
+						SecuenceInputManager::Instance()->specialSecuenceOneActive=true;
+					}
+					SecuenceInputManager::Instance()->specialSecuenceOne += secuencia;
+				}else if (joystick == 1){
+					if (!SecuenceInputManager::Instance()->specialSecuenceTwoActive){
+						SecuenceInputManager::Instance()->specialSecuenceTwoActive=true;
+					}
+					SecuenceInputManager::Instance()->specialSecuenceTwo += secuencia;
+				}
+			}
+	}
+
+}
+
+void InputControl::detectSpecialMove(int joyNum){
+
+	int specialMove = SecuenceInputManager::Instance()->detectSpecialSecuence(joyNum);
+
+	if  ((joyNum==0) && !(specialMove==-1)){
+		if (SecuenceInputManager::Instance()->getIsSetMove(joyNum)){
+			cout<<"first player - special move: "<< specialMove<<"\n";
+		}
+		//SecuenceInputManager::Instance()->reset(1);
+	}else if ((joyNum==1) && !(specialMove==-1)){
+		if (SecuenceInputManager::Instance()->getIsSetMove(joyNum)){
+			cout<<"second player - special move: "<< specialMove<<"\n";
+		}
+		//SecuenceInputManager::Instance()->reset(2);
+	}
+
+//si existe secuencia setear movimiento del personaje
+
 }

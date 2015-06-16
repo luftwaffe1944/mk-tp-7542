@@ -12,6 +12,7 @@
 #include <string>
 #include <map>
 #include "SDL.h"
+#include "Constants.h"
 
 
 
@@ -48,6 +49,19 @@ enum InputCommand {
 	FIRST_PLAYER_AIR_PUNCH_L,
 	FIRST_PLAYER_FIRE
 
+};
+
+enum SpecialMove {
+	SPECIAL_MOVE_0,
+	SPECIAL_MOVE_1,
+	SPECIAL_MOVE_2,
+	SPECIAL_MOVE_3,
+	SPECIAL_MOVE_4,
+	SPECIAL_MOVE_5,
+	SPECIAL_MOVE_6,
+	SPECIAL_MOVE_7,
+	SPECIAL_MOVE_8,
+	SPECIAL_MOVE_9,
 };
 
 class InputControl {
@@ -91,6 +105,8 @@ public:
 	InputCommand getPlayerMove(int joy);
 	void setPlayerMove(int joy, InputCommand action);
 	void loadDefaultButtons(int joyNum);
+	void loadSpecialSecuence(int joyNum);
+	void detectSpecialMove(int joyNum);
 };
 
 #endif /* INPUTCONTROL_H_ */
