@@ -46,7 +46,7 @@ bool MKGame::init(GameGUI* gameGui) {
 				for (unsigned int i = 0; i < objects.size(); i++) {
 					objects[i]->load(m_pRenderer);
 				}*/
-				SecuenceInputManager::Instance()->load();
+				//SecuenceInputManager::Instance()->load();
 			} else {
 				FILE_LOG(logERROR) << "renderer init fail";
 				return false;
@@ -62,6 +62,8 @@ bool MKGame::init(GameGUI* gameGui) {
 
     if( TTF_Init() == -1 ) {
     	FILE_LOG(logERROR) << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError();
+    }else{
+    	SecuenceInputManager::Instance()->load();
     }
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
@@ -416,8 +418,8 @@ void MKGame::handleEvents() {
 			//InputControl::Instance()->refreshInputs();
 
 			//Para jugar 2 con teclado usar estos 2
-			InputControl::Instance()->refreshInputs1();
-			InputControl::Instance()->refreshInputs2();
+			//InputControl::Instance()->refreshInputs1();
+			//InputControl::Instance()->refreshInputs2();
 		}
 	}
 
