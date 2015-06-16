@@ -184,6 +184,8 @@ void GameInfo::prepareNewRound(){
 	this->initAnimation = true;
 	this->showFightAnimation = true;
 	this->roundTriggered=false;
+	this->charOneWon = false;
+	this->charTwoWon = false;
 	this->characters[0]->setEnergy(1.0f);
 	this->characters[1]->setEnergy(1.0f);
 	this->characters[0]->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - this->characters[0]->getWidth() * this->characters[0]->getRatioX()/2);
@@ -313,12 +315,12 @@ void GameInfo::draw() {
 	if (this->charOneWon && this->showWinnerAnimation) {
 		//char 1 wins
 		if ((this->winnerAnimationTimer % 2) == 0) {
-			charOneWins = this->characters[1]->getName() + "  wins";
+			charOneWins = this->characters[0]->getName() + "  wins";
 			std::transform(charOneWins.begin(), charOneWins.end(), charOneWins.begin(), ::toupper);
 			TextureManager::Instance()->draw(this->textureID+"white"+charOneWins, pParams->getWidth()/2 - charWinsWidth/2,
 					GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 4 - charWinsHeight - 10, charWinsWidth, charWinsHeight, render);
 		} else {
-			charOneWins = this->characters[1]->getName() + "  wins";
+			charOneWins = this->characters[0]->getName() + "  wins";
 			std::transform(charOneWins.begin(), charOneWins.end(), charOneWins.begin(), ::toupper);
 			TextureManager::Instance()->draw(this->textureID+"red"+charOneWins, pParams->getWidth()/2 - charWinsWidth/2,
 					GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 4 - charWinsHeight - 10, charWinsWidth, charWinsHeight, render);
