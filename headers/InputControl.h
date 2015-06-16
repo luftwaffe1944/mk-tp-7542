@@ -72,9 +72,10 @@ private:
 	std::vector<InputCommand> playerMove;
 
 	void validateButtonsRange(int joyNum, int joyButtonCount);
-	bool someJoyKickButtonPressed(int joy);
-	bool someJoyPunchButtonPressed(int joy);
+
 public:
+	bool someJoyKickButtonPressed(int joy);
+		bool someJoyPunchButtonPressed(int joy);
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
 		return &t_pInstance;

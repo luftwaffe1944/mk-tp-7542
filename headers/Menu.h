@@ -13,6 +13,7 @@
 #include "TextureManager.h"
 #include "GameGUI.h"
 #include "Constants.h"
+#include "InputControl.h"
 
 
 class Menu
@@ -26,6 +27,14 @@ public:
 	SDL_Renderer* render;
 	bool music;
 	void setMusicPath(std::string);
+	void buttonUp();
+	void buttonDown();
+	void buttonRight();
+	void buttonLeft();
+	void buttonW();
+	void buttonS();
+	void buttonA();
+	void buttonD();
 
 
 private:
@@ -51,6 +60,7 @@ private:
 	SDL_Texture* loadImgCharacterTwo(SDL_Renderer*);
 	bool playerOneSelected;
 	bool playerTwoSelected;
+	void getJoystickInput(SDL_Event event);
 };
 
 #endif // MENU_H

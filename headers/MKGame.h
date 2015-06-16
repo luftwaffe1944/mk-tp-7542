@@ -132,6 +132,8 @@ public:
 	bool menuPpal;
 	bool menuGame;
 	bool menuCharacter;
+
+	void getJoystickInput(SDL_Event event);
 };
 
 #endif /* MKGAME_H_ */
