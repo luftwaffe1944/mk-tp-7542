@@ -29,3 +29,7 @@ void Friendship::onPostFinish(std::string name){
 void Friendship::onFinish(std::string name){
 
 }
+
+int Friendship::getID(){
+	return 2;
+}

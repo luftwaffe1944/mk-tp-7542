@@ -17,6 +17,7 @@ public:
 	virtual void onPreFinish(std::string name);
 	virtual void onFinish(std::string name);
 	virtual void onPostFinish(std::string name);
+	virtual int getID();
 };
 
 #endif /* FRIENDSHIP_H_ */

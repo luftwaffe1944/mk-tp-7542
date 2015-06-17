@@ -10,6 +10,7 @@
 
 #include <string>
 #include <unistd.h>
+#include "Constants.h"
 
 
 class FinishMove {
@@ -21,6 +22,7 @@ public:
 	virtual void onPreFinish(std::string name)=0;
 	virtual void onFinish(std::string name)=0;
 	virtual void onPostFinish(std::string name)=0;
+	virtual int getID()=0;
 };
 
 #endif /* FINISHMOVE_H_ */

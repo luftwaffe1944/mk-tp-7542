@@ -18,6 +18,7 @@ public:
 	virtual void onPreFinish(std::string name);
 	virtual void onFinish(std::string name);
 	virtual void onPostFinish(std::string name);
+	virtual int getID();
 };
 
 #endif /* FATALITY_H_ */

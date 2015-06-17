@@ -158,6 +158,26 @@ private:
 				{
 						"pre_friendship"
 				}
+		},
+		{"pre_babality",
+				{
+						"pre_babality"
+				}
+			},
+		{"baby_cry",
+				{
+						"baby_cry"
+				}
+		},
+		{"babality_voice",
+				{
+						"babality_voice"
+				}
+		},
+		{"headless_blood",
+		{
+				"headless_blood"
+		}
 		}
 	};
 };

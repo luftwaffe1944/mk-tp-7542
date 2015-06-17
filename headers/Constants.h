@@ -97,10 +97,12 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BABALITY_MOVEMENT "babality"
 #define FATALITY_MOVEMENT "fatality"
 #define HEADLESS_MOVEMENT "headless"
+#define HEADLESS_BLOOD_MOVEMENT "headless_blood"
 #define BURNING_MOVEMENT "burning"
 #define LAZY_MOVEMENT "lazy"
 #define FRIENDSHIP_MOVEMENT "friendship"
 #define VICTORY_MOVEMENT "victory"
+#define REPTILE_MOVEMENT "reptile"
 #define JUMPING_X_SPEED 4
 #define SWEEP_X_SPEED 8
 
@@ -135,10 +137,12 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BABALITY_SUFFIX "babality"
 #define FATALITY_SUFFIX "fatality"
 #define HEADLESS_SUFFIX "headless"
+#define HEADLESS_BLOOD_SUFFIX "headless_blood"
 #define BURNING_SUFFIX "burning"
 #define FRIENDSHIP_SUFFIX "friendship"
 #define VICTORY_SUFFIX "victory"
 #define LAZY_SUFFIX "lazy"
+#define REPTILE_SUFFIX "reptile"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -176,9 +180,11 @@ const string BABALITY_SPRITE ="/babality.png";
 const string FATALITY_SPRITE ="/fatality.png";
 const string BURNING_SPRITE ="/burning.png";
 const string HEADLESS_SPRITE ="/headless.png";
+const string HEADLESS_BLOOD_SPRITE ="/headless_blood.png";
 const string FRIENDSHIP_SPRITE ="/friendship.png";
 const string VICTORY_SPRITE ="/victory.png";
 const string LAZY_SPRITE ="/lazy.png";
+const string REPTILE_SPRITE ="/reptile.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string LOW_PUNCH = "low_punch";

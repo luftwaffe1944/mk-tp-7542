@@ -77,18 +77,18 @@ private:
 	bool isHintFlyingUpper;
 	bool isSubzeroSweeping;
 	bool isSubzeroFiring;
-	bool isBabality;
 	bool isFatality;
-	bool isHeadless;
-	bool isFriendship;
-	bool isVictory;
-	bool isBurning;
-	bool isFinishingMove;
-	bool isLazy;
-
-
 
 public:
+	bool isBabality;
+	bool isHeadless;
+	bool isHeadlessBlood;
+	bool isFriendship;
+	bool isBurning;
+	bool isFinishingMove;
+	bool isReptile;
+	bool isVictory;
+	bool isLazy;
 	static std::map<std::string,int> movesCounter;
 	Character();
 	virtual bool load(SDL_Renderer* );
@@ -187,6 +187,7 @@ public:
 	float getJumpDistance();
 	std::string previousMovement;
 	void talk(std::string action, int repetitions = 0);
+
 };
 
 #endif /* CHARACTER_H_ */

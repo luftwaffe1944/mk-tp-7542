@@ -9,6 +9,9 @@
 #define BABALITY_H_
 
 #include "FinishMove.h"
+#include "SoundManager.h"
+#include "Character.h"
+
 
 class Babality :public FinishMove {
 public:
@@ -17,6 +20,7 @@ public:
 	virtual void onPreFinish(std::string name);
 	virtual void onFinish(std::string name);
 	virtual void onPostFinish(std::string name);
+	virtual int getID();
 };
 
 #endif /* BABALITY_H_ */

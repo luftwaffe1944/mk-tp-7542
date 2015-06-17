@@ -141,12 +141,14 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 	Sprite* spriteBabality = new Sprite(this->name+this->playerNumber+BABALITY_SUFFIX, characterPath+BABALITY_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
-	Sprite* spriteFatality = new Sprite(this->name+this->playerNumber+FATALITY_SUFFIX, characterPath+FATALITY_SPRITE,
+	Sprite* spriteReptile = new Sprite(this->name+this->playerNumber+REPTILE_SUFFIX, characterPath+REPTILE_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
 	Sprite* spriteBurning = new Sprite(this->name+this->playerNumber+BURNING_SUFFIX, characterPath+BURNING_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
 	Sprite* spriteHeadless = new Sprite(this->name+this->playerNumber+HEADLESS_SUFFIX, characterPath+HEADLESS_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteHeadlessBlood = new Sprite(this->name+this->playerNumber+HEADLESS_BLOOD_SUFFIX, characterPath+HEADLESS_BLOOD_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 	Sprite* spriteFriendship = new Sprite(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, characterPath+FRIENDSHIP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 15, this->isAltPlayer, this->altColor);
 	Sprite* spriteVictory = new Sprite(this->name+this->playerNumber+VICTORY_SUFFIX, characterPath+VICTORY_SPRITE,
@@ -183,8 +185,9 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SWEEP_SUFFIX, spriteSweep));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FIRE_SUFFIX, spriteFire));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BABALITY_SUFFIX, spriteBabality));
-	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FATALITY_SUFFIX, spriteFatality));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+REPTILE_SUFFIX, spriteReptile));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_SUFFIX, spriteHeadless));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_BLOOD_SUFFIX, spriteHeadlessBlood));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, spriteFriendship));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+VICTORY_SUFFIX, spriteVictory));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+LAZY_SUFFIX, spriteLazy));
@@ -199,11 +202,22 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking || this->isHeadless || this->isFriendship || this->isVictory || this->isBurning) {
+	if(this->isDucking || this->isHeadless || this->isFriendship || this->isVictory || this->isBabality) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
-			currentFrame = currentSprite->getNextForwardingFrame();
+			if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(4, 8, 6);
+			}
+			else if (this->getMovement() == REPTILE_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndShowFrame(3);
+			}
+			else if (this->getMovement() == BURNING_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(4, 9, 5);
+			}
+			else {
+				currentFrame = currentSprite->getNextForwardingFrame();
+			}
 		} else {
 			currentFrame = currentSprite->getNextBackwardingFrame();
 		}
@@ -272,8 +286,8 @@ void Character::draw() {
 bool Character::shouldMoveForward() {
 	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
 			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))
-			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper || isFatality
-			|| isFriendship) {
+			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper || isReptile
+			|| isFriendship || isHeadlessBlood || isBurning) {
 		return true;
 	} else {
 		return false;
@@ -332,8 +346,12 @@ void Character::update() {
 	if (isFriendship) {
 		isFriendship = true;
 	}
+	else if (isReptile){
+		isReptile = true;
+	}
 	else if (isBurning){
-		isBurning = true;
+		setMovement(BURNING_MOVEMENT);
+		setCurrentSprite();
 	}
 	else if (isLazy){
 		completeMovement();
@@ -344,20 +362,18 @@ void Character::update() {
 	else if (isSubzeroFiring) {
 		completeMovement();
 	}
-	else if (isFatality && name == "subzero"){
-		completeMovement();
-	}
-	else if (isFatality && name == "scorpion"){
-		isFatality = true;
-	}
 	else if (isHeadless){
-		setMovement(HEADLESS_MOVEMENT);
+		isHeadless = true;
+	}
+
+	else if (isHeadlessBlood){
+		setMovement(HEADLESS_BLOOD_MOVEMENT);
 		setCurrentSprite();
-		completeMovement();
+//		completeMovement();
 	}
 
 	else if (isBabality){
-		completeMovement();
+		isBabality = true;
 	}
 
 	else if (isSubzeroSweeping){
@@ -677,9 +693,8 @@ void Character::update() {
 			sweepMovement();
 			break;
 		case BABALITY:
-			this->setMovement(BABALITY_MOVEMENT);
-			setCurrentSprite();
-			completeMovement();
+			this->finishMove = new Babality();
+			doFinisher();
 			break;
 		case FATALITY:
 			this->finishMove = new Fatality();
@@ -687,6 +702,11 @@ void Character::update() {
 			break;
 		case HEADLESS:
 			this->setMovement(HEADLESS_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			break;
+		case HEADLESS_BLOOD:
+			this->setMovement(HEADLESS_BLOOD_MOVEMENT);
 			setCurrentSprite();
 			completeMovement();
 			break;
@@ -711,7 +731,7 @@ void Character::update() {
 	this->updateShapesOnStatus();
 
 	this->smoothMovPosX();
-	SDL_Delay(50);
+	SDL_Delay(35);
 }
 
 void Character::clearMovementsFlags(){
@@ -749,12 +769,14 @@ void Character::clearMovementsFlags(){
 	isBabality = false;
 	isFatality = false;
 	isHeadless = false;
+	isHeadlessBlood = false;
 	isFriendship = false;
 	isSubzeroFiring = false;
 	isVictory = false;
 	isBurning = false;
 	isLazy = false;
 	isFinishingMove = false;
+	isReptile = false;
 	//this->beingPushed = false;
 }
 
@@ -1095,14 +1117,11 @@ void Character::completeMovement(){
 			if (!isLazy) clearMovementsFlags();
 		}
 		resetCounter(getMovement());
-		if (getMovement() == FATALITY_MOVEMENT){
-
-			Character* char2 = GameGUI::getInstance()->getCharacters()[1];
-			char2->isHeadless = true;
-		}
 		if (!isLazy) this->movement="";
 	}
 }
+
+void sleepSafe(int limit);
 
 void Character::doFinisher() {
 
@@ -1110,21 +1129,66 @@ void Character::doFinisher() {
 
 	Character* victim = getVictim();
 
-	if (this->name == "scorpion") {
+	//FATALITY
+	if (finishMove->getID() == 0) {
+
+		//Scorpion hace la fatality
+		if (this->name == "scorpion") {
+
+			if (victim->isLazy) {
+				this->finishMove->onPreFinish(this->name);
+
+			} else if (victim->isBurning) {
+				this->finishMove->onFinish(this->name);
+
+			}
+			if (victim->isBurning && victim->currentSprite->isLooped
+					&& victim->currentSprite->getCurrentFrame()
+							== victim->currentSprite->getFramesAmount() - 1) {
+				sleepSafe(90000000);
+				this->finishMove->onPostFinish(this->name);
+			}
+
+			//Subzero hace la fatality
+		} else {
+
+			if (victim->isLazy && this->getMovement() != REPTILE_MOVEMENT) {
+				this->finishMove->onPreFinish(this->name);
+
+			}
+			if (victim->isLazy
+					&& this->currentSprite->getCurrentFrame()
+							== this->currentSprite->getFramesAmount() - 1) {
+				this->finishMove->onFinish(this->name);
+
+			} else if (victim->isHeadlessBlood
+					&& victim->currentSprite->isLooped
+					&& victim->currentSprite->getCurrentFrame()
+							== victim->currentSprite->getFramesAmount() - 1) {
+				this->finishMove->onPostFinish(this->name);
+			}
+
+		}
+	}
+
+
+	//BABALITY
+	if (finishMove->getID() == 1) {
 
 		if (victim->isLazy) {
 			this->finishMove->onPreFinish(this->name);
-			this->setMovement(VICTORY_MOVEMENT);
-			this->setCurrentSprite();
-			this->isVictory = true;
+		}
 
-		} else if (victim->isBurning) {
+		else if (!this->isVictory && victim->isBabality && victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1) {
+
 			this->finishMove->onFinish(this->name);
 
-		} if (victim->isBurning && victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount()-1) {
-			usleep(3000000);
-			this->finishMove->onPostFinish(this->name);
 		}
+
+//		else if(victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1){
+//			this->finishMove->onPostFinish(this->name);
+//
+//		}
 
 	}
 
@@ -1293,12 +1357,16 @@ void Character::setCurrentSprite(){
 		} else if (this->getMovement() == BABALITY_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name + this->playerNumber+ BABALITY_SUFFIX];
 
-		} else if (this->getMovement() == FATALITY_MOVEMENT) {
-			currentSprite = this->characterSprites[this->name + this->playerNumber+ FATALITY_SUFFIX];
+		} else if (this->getMovement() == REPTILE_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ REPTILE_SUFFIX];
 		}
 
 		else if (this->getMovement() == HEADLESS_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name + this->playerNumber+ HEADLESS_SUFFIX];
+		}
+
+		else if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ HEADLESS_BLOOD_SUFFIX];
 		}
 
 		else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
@@ -1384,11 +1452,14 @@ void Character::setMoveFlag(bool trueOrFalse){
 	} else if (this->getMovement() == BABALITY_MOVEMENT) {
 		isBabality = trueOrFalse;
 	}
-	else if (this->getMovement() == FATALITY_MOVEMENT) {
-		isFatality = trueOrFalse;
+	else if (this->getMovement() == REPTILE_MOVEMENT) {
+		isReptile = trueOrFalse;
 	}
 	else if (this->getMovement() == HEADLESS_MOVEMENT) {
 		isHeadless = trueOrFalse;
+	}
+	else if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT) {
+		isHeadlessBlood = trueOrFalse;
 	}
 	else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
 		isFriendship = trueOrFalse;

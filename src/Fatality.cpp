@@ -10,6 +10,7 @@
 #include "../headers/GameGUI.h"
 
 Character* getVictim(std::string name);
+Character* getWinner(std::string name);
 
 Fatality::Fatality(): FinishMove() {
 	// TODO Auto-generated constructor stub
@@ -25,24 +26,21 @@ void Fatality::onPreFinish(std::string name){
 
 	SoundManager::Instance()->playSound("pre_fatality", 0);
 	Character* victim = getVictim(name);
-	cout << "victima: " << victim->getName() << endl;
+	Character* winner = getWinner(name);
 	if (name == "subzero") {
 		victim->setMovement(LAZY_MOVEMENT);
+		winner->setMovement(REPTILE_MOVEMENT);
+		winner->setCurrentSprite();
+		winner->isReptile = true;
 	}
 	else {
-		cout << "burning: " << victim->getName() << endl;
 		victim->setMovement(BURNING_MOVEMENT);
 		victim->setCurrentSprite();
 		victim->completeMovement();
-	}
 
-}
-
-void Fatality::onPostFinish(std::string name){
-
-	Character* victim = getVictim(name);
-	if (name == "scorpion") {
-		SoundManager::Instance()->playSoundOnce("fatality_voice", 0);
+		winner->setMovement(VICTORY_MOVEMENT);
+		winner->setCurrentSprite();
+		winner->isVictory = true;
 	}
 
 }
@@ -52,16 +50,40 @@ void Fatality::onFinish(std::string name){
 	Character* victim = getVictim(name);
 	if (name == "scorpion") {
 		SoundManager::Instance()->playSoundOnce("scream", 0);
+	}else {
+		victim->setMovement(HEADLESS_BLOOD_MOVEMENT);
+		victim->isLazy = false;
+		victim->setCurrentSprite();
+		victim->completeMovement();
+		SoundManager::Instance()->playSoundOnce("headless_blood", 5);
 	}
 
 }
 
-Character* getVictim(std::string name){
+void Fatality::onPostFinish(std::string name){
 
-	Character* character = GameGUI::getInstance()->getCharacters()[0];
-	if (character->getName() == name){
-		return GameGUI::getInstance()->getCharacters()[1];
+	Character* victim = getVictim(name);
+	Character* winner = getWinner(name);
+
+	if (name == "scorpion") {
+		SoundManager::Instance()->playSoundOnce("fatality_voice", 0);
 	}
-	return character;
+
+	else {
+		victim->setMovement(HEADLESS_MOVEMENT);
+		victim->isLazy = false;
+		victim->setCurrentSprite();
+		victim->completeMovement();
+		SoundManager::Instance()->playSoundOnce("fatality_voice", 0);
+		winner->setMovement(VICTORY_MOVEMENT);
+		winner->setCurrentSprite();
+		winner->isVictory = true;
+		victim->isHeadless = true;
+	}
 
 }
+
+int Fatality::getID(){
+	return 0;
+}
+
