@@ -550,7 +550,7 @@ std::string Menu::identify_event() {
 				}
 				if (event.key.keysym.sym == SDLK_RETURN)
 				{
-					renderTextOne = true;
+					renderTextTwo = true;
 					nameTwoSet = true;
 				}
 			}
