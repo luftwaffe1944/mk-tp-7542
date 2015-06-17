@@ -381,6 +381,7 @@ void Menu::showTextBox() {
 	float ratioY = TextureManager::Instance()->ratioHeight;
 	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx() / ratioX;
 	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx() / ratioY;
+	SDL_Rect rs = { 0, 0, 0, 0 };
 
 
 	if (renderTextOne)
@@ -390,9 +391,13 @@ void Menu::showTextBox() {
 		{
 			//Render new text
 			TextureManager::Instance()->loadFromRenderedText("namePlayerOne", playerOneName, fColor, font, render);
+			rs = TextureManager::Instance()->queryTexture("namePlayerOne" + playerOneName);
+			if (rs.w >= windowsWidth * 0.60) {
+				rs.w = windowsWidth * 0.60;
+			}
 		}
-		resetNameInputRender(render, (windowsWidth / 6)*ratioX, (windowsHeight*0.80)*ratioY, (windowsWidth / 6)*ratioX, 20 * ratioY);
-		TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6, windowsHeight*0.80, windowsWidth / 6, 20, render);
+		resetNameInputRender(render, (windowsWidth / 6)*ratioX, (windowsHeight*0.80)*ratioY, windowsWidth * ratioX * 0.60, 10 * ratioY);
+		TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6, windowsHeight*0.80, rs.w, 10, render);
 	}
 
 	if (renderTextTwo)
@@ -402,13 +407,18 @@ void Menu::showTextBox() {
 		{
 			//Render new text
 			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", playerTwoName, fColor, font, render);
+			rs = TextureManager::Instance()->queryTexture("namePlayerTwo" + playerTwoName);
+			if (rs.w >= windowsWidth * 0.60) {
+				rs.w = windowsWidth * 0.60;
+			}
 		}
-		resetNameInputRender(render, (windowsWidth - windowsWidth / 6 * 2)*ratioX, (windowsHeight*0.80)*ratioY, (windowsWidth / 6)*ratioX, 20 * ratioY);
-		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 * 2, windowsHeight*0.80, windowsWidth / 6, 20, render);
+		resetNameInputRender(render, (windowsWidth - windowsWidth / 6 - windowsWidth * 0.60)*ratioX, (windowsHeight*0.90)*ratioY, windowsWidth * ratioX * 0.60, 10 * ratioY);
+		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 - rs.w , windowsHeight*0.90, rs.w, 10, render);
 
 	}
 	
 	SDL_RenderPresent(render);
+	TTF_CloseFont(font);
 }
 
 std::string Menu::identify_event() {
@@ -527,6 +537,7 @@ std::string Menu::identify_event() {
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
 				{
 					//lop off character
+					TextureManager::Instance()->unload("namePlayerOne"+ playerOneName);
 					playerOneName.pop_back();
 					renderTextOne = true;
 				}
@@ -540,6 +551,7 @@ std::string Menu::identify_event() {
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerTwoName.length() > 0)
 				{
 					//lop off character
+					TextureManager::Instance()->unload("namePlayerTwo" + playerTwoName);
 					playerTwoName.pop_back();
 					renderTextTwo = true;
 				}
