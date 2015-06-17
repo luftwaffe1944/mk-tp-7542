@@ -64,23 +64,19 @@ void Fatality::onPostFinish(std::string name){
 
 	Character* victim = getVictim(name);
 	Character* winner = getWinner(name);
+	SoundManager::Instance()->playSoundOnce("fatality_voice", 0);
+	if (name == "subzero") {
 
-	if (name == "scorpion") {
-		SoundManager::Instance()->playSoundOnce("fatality_voice", 0);
-	}
-
-	else {
 		victim->setMovement(HEADLESS_MOVEMENT);
 		victim->isLazy = false;
 		victim->setCurrentSprite();
 		victim->completeMovement();
-		SoundManager::Instance()->playSoundOnce("fatality_voice", 0);
+
 		winner->setMovement(VICTORY_MOVEMENT);
 		winner->setCurrentSprite();
 		winner->isVictory = true;
 		victim->isHeadless = true;
 	}
-
 }
 
 int Fatality::getID(){

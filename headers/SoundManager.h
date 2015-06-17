@@ -129,9 +129,9 @@ private:
 							"applause"
 					}
 			},
-			{"fatalityDeath",
+			{"fatality_voice",
 					{
-							"fatalityDeath"
+							"fatality_voice"
 					}
 			},
 			{"gong",
@@ -184,6 +184,11 @@ private:
 							"friendship"
 					}
 			},
+			{"friendship_voice",
+					{
+							"friendship_voice"
+					}
+			},
 			{"pre_fatality",
 					{
 							"pre_fatality"
@@ -209,6 +214,11 @@ private:
 							"babality_voice"
 					}
 			},
+			{"post_babality",
+					{
+							"post_babality"
+					}
+						},
 			{"headless_blood",
 			{
 					"headless_blood"

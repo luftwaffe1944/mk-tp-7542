@@ -19,6 +19,7 @@
 #include "../headers/Stage.h"
 #include "../headers/TextureManager.h"
 #include "../headers/Window.h"
+#include <cmath>        // std::abs
 
 using namespace std;
 
@@ -150,7 +151,7 @@ bool Character::load(SDL_Renderer* render) {
 	Sprite* spriteHeadlessBlood = new Sprite(this->name+this->playerNumber+HEADLESS_BLOOD_SUFFIX, characterPath+HEADLESS_BLOOD_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 	Sprite* spriteFriendship = new Sprite(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, characterPath+FRIENDSHIP_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 15, this->isAltPlayer, this->altColor);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 19, this->isAltPlayer, this->altColor);
 	Sprite* spriteVictory = new Sprite(this->name+this->playerNumber+VICTORY_SUFFIX, characterPath+VICTORY_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 	Sprite* spriteLazy = new Sprite(this->name+this->playerNumber+LAZY_SUFFIX, characterPath+LAZY_SPRITE,
@@ -202,7 +203,7 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking || this->isHeadless || this->isFriendship || this->isVictory || this->isBabality) {
+	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
@@ -214,6 +215,9 @@ void Character::draw() {
 			}
 			else if (this->getMovement() == BURNING_MOVEMENT){
 				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(4, 9, 5);
+			}
+			else if (this->getMovement() == FRIENDSHIP_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(3, 18, 4);
 			}
 			else {
 				currentFrame = currentSprite->getNextForwardingFrame();
@@ -335,6 +339,7 @@ void Character::update() {
 	} else {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
+
 //	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
@@ -345,6 +350,8 @@ void Character::update() {
 
 	if (isFriendship) {
 		isFriendship = true;
+//		setMovement(FRIENDSHIP_MOVEMENT);
+//		setCurrentSprite();
 	}
 	else if (isReptile){
 		isReptile = true;
@@ -356,9 +363,7 @@ void Character::update() {
 	else if (isLazy){
 		completeMovement();
 	}
-	else if (isVictory) {
-		isVictory = true;
-	}
+
 	else if (isSubzeroFiring) {
 		completeMovement();
 	}
@@ -374,6 +379,10 @@ void Character::update() {
 
 	else if (isBabality){
 		isBabality = true;
+	}
+
+	else if (isVictory) {
+		isVictory = true;
 	}
 
 	else if (isSubzeroSweeping){
@@ -711,10 +720,8 @@ void Character::update() {
 			completeMovement();
 			break;
 		case FRIENDSHIP:
-			this->setMovement(FRIENDSHIP_MOVEMENT);
-			setCurrentSprite();
-			completeMovement();
-			SoundManager::Instance()->playSoundByAction("friendship", 0);
+			this->finishMove = new Friendship();
+			doFinisher();
 			break;
 		case LAZY:
 			this->setMovement(LAZY_MOVEMENT);
@@ -1142,9 +1149,10 @@ void Character::doFinisher() {
 				this->finishMove->onFinish(this->name);
 
 			}
-			if (victim->isBurning && victim->currentSprite->isLooped
-					&& victim->currentSprite->getCurrentFrame()
-							== victim->currentSprite->getFramesAmount() - 1) {
+			Sprite* victimCurrentSprite = victim->currentSprite;
+			int currentFrame = victimCurrentSprite->getCurrentFrame();
+			int framesAmount = victimCurrentSprite->getFramesAmount();
+			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1) {
 				sleepSafe(90000000);
 				this->finishMove->onPostFinish(this->name);
 			}
@@ -1152,20 +1160,26 @@ void Character::doFinisher() {
 			//Subzero hace la fatality
 		} else {
 
-			if (victim->isLazy && this->getMovement() != REPTILE_MOVEMENT) {
-				this->finishMove->onPreFinish(this->name);
+			int distance = std::abs ( (this->getPosX() - victim->getPosX()) );
+			cout << "DISTANCE: " << distance << endl;
+			if (distance <= 140) {
+				if (victim->isLazy && this->getMovement() != REPTILE_MOVEMENT) {
+					this->finishMove->onPreFinish(this->name);
 
-			}
-			if (victim->isLazy
-					&& this->currentSprite->getCurrentFrame()
-							== this->currentSprite->getFramesAmount() - 1) {
-				this->finishMove->onFinish(this->name);
+				}
+				if (victim->isLazy
+						&& this->currentSprite->getCurrentFrame()
+								== this->currentSprite->getFramesAmount() - 1) {
+					this->finishMove->onFinish(this->name);
 
-			} else if (victim->isHeadlessBlood
-					&& victim->currentSprite->isLooped
-					&& victim->currentSprite->getCurrentFrame()
-							== victim->currentSprite->getFramesAmount() - 1) {
-				this->finishMove->onPostFinish(this->name);
+				} else if (victim->isHeadlessBlood
+						&& victim->currentSprite->isLooped
+						&& victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1) {
+					this->finishMove->onPostFinish(this->name);
+				}
+			} else {
+				clearMovementsFlags();
+				victim->isLazy = true;
 			}
 
 		}
@@ -1179,16 +1193,46 @@ void Character::doFinisher() {
 			this->finishMove->onPreFinish(this->name);
 		}
 
-		else if (!this->isVictory && victim->isBabality && victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1) {
+		Sprite* victimCurrentSprite = victim->currentSprite;
+		int currentFrame = victimCurrentSprite->getCurrentFrame();
+		int framesAmount = victimCurrentSprite->getFramesAmount();
 
+		if (this->getMovement() == "stance" && victim->isBabality && currentFrame == framesAmount - 1) {
 			this->finishMove->onFinish(this->name);
 
 		}
 
-//		else if(victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1){
-//			this->finishMove->onPostFinish(this->name);
-//
-//		}
+		else if(this->isVictory && currentFrame == framesAmount - 1){
+			sleepSafe(100000000);
+			this->finishMove->onPostFinish(this->name);
+
+		}
+
+	}
+
+	//FRIENDSHIP
+	else if (finishMove->getID() == 2){
+
+
+		Sprite* winnerCurrentSprite = this->currentSprite;
+		int currentFrame = winnerCurrentSprite->getCurrentFrame();
+		int framesAmount = winnerCurrentSprite->getFramesAmount();
+
+		if (victim->isLazy && !this->isFriendship) {
+			this->finishMove->onPreFinish(this->name);
+		}
+
+		else if (this->isFriendship && victim->isLazy) {
+			this->finishMove->onFinish(this->name);
+
+		}
+
+		if (this->isFriendship && currentFrame == framesAmount - 1) {
+			sleepSafe(90000000);
+			this->finishMove->onPostFinish(this->name);
+			this->isFinishingMove = false;
+		}
+
 
 	}
 
