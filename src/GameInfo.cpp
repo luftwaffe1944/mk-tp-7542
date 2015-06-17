@@ -301,12 +301,14 @@ void GameInfo::update() {
 				this->finishHimAnimationTimer -= 1;
 			} else {
 				this->showFinishHimAnimation = false;
-				this->showFatalityAnimation = true;
+				//this->showFatalityAnimation = true;
 			}
-			if (this->showFatalityAnimation && this->fatalityAnimationTimer > 0) {
+			if (MKGame::Instance()->showFatality && this->fatalityAnimationTimer > 0) {
+				this->showFatalityAnimation = true;
 				this->fatalityAnimationTimer -= 1;
-			} else {
+			} else if (fatalityAnimationTimer == 0){
 				this->showFatalityAnimation = false;
+				MKGame::Instance()->setOnReset();
 			}
 			//finish him logic
 			this->showWinnerAnimation = false; //Cuando este terminada la funcionalidad de finish him quitar esta linea

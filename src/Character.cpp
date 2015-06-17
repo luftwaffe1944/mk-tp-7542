@@ -1155,6 +1155,7 @@ void Character::doFinisher() {
 			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1) {
 				sleepSafe(90000000);
 				this->finishMove->onPostFinish(this->name);
+				MKGame::Instance()->showFatality = true;
 			}
 
 			//Subzero hace la fatality
@@ -1176,6 +1177,7 @@ void Character::doFinisher() {
 						&& victim->currentSprite->isLooped
 						&& victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1) {
 					this->finishMove->onPostFinish(this->name);
+					MKGame::Instance()->showFatality = true;
 				}
 			} else {
 				clearMovementsFlags();
