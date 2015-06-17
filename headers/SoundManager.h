@@ -140,6 +140,21 @@ private:
 				{
 						"fight"
 				}
+		},
+		{"roundOne",
+				{
+						"roundOne"
+				}
+		},
+		{"roundTwo",
+				{
+						"roundTwo"
+				}
+		},
+		{"roundThree",
+				{
+						"roundOne"
+				}
 		}
 	};
 };

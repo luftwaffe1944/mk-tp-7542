@@ -40,6 +40,7 @@ public:
 	void timerPause();
 	bool isRoundTriggered();
 	void prepareNewRound();
+	void triggerSounds();
 	bool roundCompleted;
 	int currentRound;
 private:
@@ -65,6 +66,9 @@ private:
 	bool charTwoWon;
 	bool charOneAlreadyDeath;
 	bool charTwoAlreadyDeath;
+	bool playingRoundSound;
+	bool playingFightSound;
+	bool playingCharacterWinsSound;
 	Timer timer;
 	float msTime;
 	std::string idTimer;

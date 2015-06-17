@@ -36,6 +36,9 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->showFinishHimAnimation = false;
 	this->charOneAlreadyDeath = false;
 	this->charTwoAlreadyDeath = false;
+	this->playingRoundSound = false;
+	this->playingFightSound = false;
+	this->playingCharacterWinsSound = false;
 }
 
 bool GameInfo::load() {
@@ -196,10 +199,32 @@ void GameInfo::prepareNewRound(){
 	this->charTwoWon = false;
 	this->charOneAlreadyDeath = false;
 	this->charTwoAlreadyDeath = false;
+	this->playingRoundSound = false;
+	this->playingFightSound = false;
+	this->playingCharacterWinsSound = false;
 	this->characters[0]->setEnergy(1.0f);
 	this->characters[1]->setEnergy(1.0f);
 	this->characters[0]->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - this->characters[0]->getWidth() * this->characters[0]->getRatioX()/2);
 	this->characters[1]->setPositionX((GameGUI::getInstance()->getWindow()->widthPx / 4)*3 -  this->characters[1]->getWidth() * this->characters[1]->getRatioX()/2);
+}
+
+void GameInfo::triggerSounds() {
+	if (!this->roundOneCompleted && this->initAnimation && !this->playingRoundSound) {
+		SoundManager::Instance()->playSoundByAction("roundOne", 0);
+		this->playingRoundSound = true;
+	}
+	if (!this->roundTwoCompleted && this->initAnimation && !this->playingRoundSound) {
+		SoundManager::Instance()->playSoundByAction("roundTwo", 0);
+		this->playingRoundSound = true;
+	}
+	if (!this->roundThreeCompleted && this->initAnimation && !this->playingRoundSound) {
+		SoundManager::Instance()->playSoundByAction("roundThree", 0);
+		this->playingRoundSound = true;
+	}
+	if (!this->initAnimation && this->showFightAnimation) {
+		SoundManager::Instance()->playSoundByAction("fight", 0);
+		this->playingFightSound = true;
+	}
 }
 
 
@@ -220,7 +245,10 @@ void GameInfo::update() {
 			}
 			this->charOneAlreadyDeath = true;
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
-			SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
+			if (!this->playingCharacterWinsSound) {
+				SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
+				this->playingCharacterWinsSound = true;
+			}
 		} else {
 			if (!this->charTwoAlreadyDeath) {
 				this->characterOneWins += 1;
@@ -229,7 +257,10 @@ void GameInfo::update() {
 			}
 			this->charTwoAlreadyDeath = true;
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
-			SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
+			if (!this->playingCharacterWinsSound) {
+				SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
+				this->playingCharacterWinsSound = true;
+			}
 		}
 		loadTextTimer();
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
@@ -258,6 +289,7 @@ void GameInfo::update() {
 			//MKGame::Instance()->setOnReset();
 		}
 	}
+	triggerSounds();
 }
 
 void GameInfo::clean() {
