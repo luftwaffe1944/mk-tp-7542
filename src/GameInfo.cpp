@@ -185,6 +185,7 @@ void GameInfo::time() {
 }
 
 void GameInfo::prepareNewRound(){
+	time();
 	this->percent = 0.0f;
 	this->fightAnimationTimer = 40;
 	this->winnerAnimationTimer = 50;
@@ -204,10 +205,14 @@ void GameInfo::prepareNewRound(){
 
 void GameInfo::update() {
 	animation();
-	time();
-	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f) {
+	loadTextTimer();
+	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f ||
+			this->timer.getTicks() > 99000.f ) {
+		this->characters[0]->clearMovementsFlags();
+		this->characters[1]->clearMovementsFlags();
 		MKGame::Instance()->setAllowPlayerMovements(false);
-		if (this->characters[0]->getEnergy() <= 0.0f) {
+		if (this->characters[0]->getEnergy() <= 0.0f ||
+				this->characters[0]->getEnergy() <= this->characters[1]->getEnergy() ) {
 			if (!this->charOneAlreadyDeath) {
 				this->characterTwoWins += 1;
 				this->charTwoWon = true;
@@ -226,7 +231,7 @@ void GameInfo::update() {
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
 			SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
 		}
-
+		loadTextTimer();
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
 			//finish him logic
 			this->showFinishHimAnimation = true;
