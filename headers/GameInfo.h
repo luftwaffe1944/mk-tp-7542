@@ -54,6 +54,7 @@ private:
 	int finishHimAnimationTimer;
 	int characterOneWins;
 	int characterTwoWins;
+	bool lazyAnimationAlreadyTriggered;
 	bool initAnimation;
 	bool showFightAnimation;
 	bool showWinnerAnimation;
