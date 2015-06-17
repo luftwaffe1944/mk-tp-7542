@@ -688,18 +688,22 @@ void InputControl::refreshJoystickInputs() {
 
 
 bool InputControl::isAxisRight(int joystick) {
+	if (SDL_NumJoysticks() > joystick)
 	return this->joystickAxisStates[joystick].first > 0;
 }
 
 bool InputControl::isAxisLeft(int joystick) {
+	if (SDL_NumJoysticks() > joystick)
 	return this->joystickAxisStates[joystick].first < 0;
 }
 
 bool InputControl::isAxisUp(int joystick) {
+	if (SDL_NumJoysticks() > joystick)
 	return this->joystickAxisStates[joystick].second < 0;
 }
 
 bool InputControl::isAxisDown(int joystick) {
+	if (SDL_NumJoysticks() > joystick)
 	return this->joystickAxisStates[joystick].second > 0;
 }
 
@@ -846,10 +850,12 @@ bool somePunchButtonPressed2(const Uint8* keyBoard) {
 }
 
 bool InputControl::someJoyKickButtonPressed(int joy) {
+	if (SDL_NumJoysticks() > joy)
 	return (getActionButtonState(joy, LOW_KICK)) || (getActionButtonState(joy, HIGH_KICK) ) ;
 }
 
 bool InputControl::someJoyPunchButtonPressed(int joy) {
+	if (SDL_NumJoysticks() > joy)
 	return (getActionButtonState(joy, LOW_PUNCH)) || (getActionButtonState(joy, HIGH_PUNCH));
 }
 

@@ -75,7 +75,7 @@ private:
 
 public:
 	bool someJoyKickButtonPressed(int joy);
-		bool someJoyPunchButtonPressed(int joy);
+	bool someJoyPunchButtonPressed(int joy);
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
 		return &t_pInstance;
