@@ -421,9 +421,21 @@ void MKGame::handleEvents() {
 			//Para jugar 2 con teclado usar estos 2
 			//InputControl::Instance()->refreshInputs1();
 			//InputControl::Instance()->refreshInputs2();
-		}
-	}
+		} else  {
+			if (int a = SDL_NumJoysticks() > 1) {
+				for (int i = 0 ; i < a; ++i ) {
+					InputControl::Instance()->joystickAxisStates[i].first = 0;
+					InputControl::Instance()->joystickAxisStates[i].second = 0;
+				}
+				InputControl::Instance()->refreshJoystickInputs();
 
+			}
+
+		}
+
+	}
+	bool asd = InputControl::Instance()->isAxisUp(0);
+	std::cout << asd << endl;
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
