@@ -449,7 +449,7 @@ std::string Menu::identify_event() {
 				else if( event.key.keysym.sym == SDLK_DOWN || InputControl::Instance()->isAxisDown(1))
 					buttonDown();
 
-				else if( event.key.keysym.sym ==SDLK_s || InputControl::Instance()->isAxisUp(0))
+				else if( event.key.keysym.sym ==SDLK_s || InputControl::Instance()->isAxisDown(0))
 
 					buttonS();
 
@@ -466,17 +466,17 @@ std::string Menu::identify_event() {
 
 					buttonD();
 
-				else if( event.key.keysym.sym == SDLK_RETURN || InputControl::Instance()->someJoyKickButtonPressed(0)) {
+				else if( event.key.keysym.sym == SDLK_RETURN || InputControl::Instance()->someJoyKickButtonPressed(1)) {
 
 					this->playerOneSelected = true;
 					this->playerOneName = selected->text;
-
 					if (textMenu) return selected->text;
 					break;
 				}
-				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(1)) {
+				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(0)) {
 					this->playerTwoSelected = true;
 					this->playerTwoName = selectedTwo->text;
+					if (textMenu) return selected->text;
 					break;
 				}
 			} 
