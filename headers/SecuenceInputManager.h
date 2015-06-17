@@ -23,6 +23,7 @@ using namespace std;
 
 class SecuenceInputManager {
 public:
+
 	static SecuenceInputManager* Instance();
 	virtual ~SecuenceInputManager() {
 			delete(dm_pInstance);
@@ -61,6 +62,9 @@ public:
 	bool joy2LeftPressOnce;
 	bool joy2RightPressOnce;
 	bool joy2BlockPressOnce;
+	bool fatalityTime;
+	bool drawSecuenceOne;
+	bool drawSecuenceTwo;
 
 private:
 	static SecuenceInputManager* dm_pInstance;
@@ -84,9 +88,7 @@ private:
 	std::vector<bool> colorCharOne;
 	std::vector<bool> colorCharTwo;
 
-	bool fatalityTime;
-	bool drawSecuenceOne;
-	bool drawSecuenceTwo;
+
 
 };
 

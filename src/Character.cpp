@@ -738,7 +738,7 @@ void Character::update() {
 	this->updateShapesOnStatus();
 
 	this->smoothMovPosX();
-	SDL_Delay(35);
+	SDL_Delay(25);
 }
 
 void Character::clearMovementsFlags(){

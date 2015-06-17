@@ -493,8 +493,8 @@ void InputControl::refreshJoystickInputs() {
 			loadSpecialSecuence(joystick);
 			detectSpecialMove(joystick);
 
-			if ((this->firstPlayerMove == NO_INPUT)
-					&& (this->secondPlayerMove == NO_INPUT)) {
+			if ( ( joystick == 0 && this->firstPlayerMove == NO_INPUT) ||
+					( joystick == 1 && this->secondPlayerMove == NO_INPUT)) {
 
 				if (isAxisUp(joystick)) {
 
