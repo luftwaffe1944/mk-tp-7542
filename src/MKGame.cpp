@@ -290,7 +290,9 @@ void MKGame::menuActions(std::string action) {
 		}
 		std::cout << characters[1] << endl;
 		std::cout << characters[2] << endl;
+		this->menuMk->stopMusic();
 		this->configureFight(characters[1], characters[2]);
+
 		//TODO: usar characters[1] y characters[2] en fight
 	}
 }
@@ -312,6 +314,8 @@ bool MKGame::menu() {
 		}
 	}
 	this->menuActions(action);
+	bool isMenuActive = (menuPpal || menuGame || menuCharacter);
+	if (!isMenuActive)
 	return (menuPpal || menuGame || menuCharacter);
 }
 
