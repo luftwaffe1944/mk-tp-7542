@@ -422,6 +422,8 @@ std::string Menu::identify_event() {
 	std::string temp;
 	SDL_Event event;
 	SDL_StartTextInput();
+	bool auxPlayerOne = false;
+	bool auxPlayerTwo = false;
 	while (1) {
 
 		this->renderTextOne = false;
@@ -470,13 +472,14 @@ std::string Menu::identify_event() {
 					this->playerOneName = selected->text;
 
 					if (textMenu) return selected->text;
-
+					break;
 				}
 				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(1)) {
 					this->playerTwoSelected = true;
 					this->playerTwoName = selectedTwo->text;
+					break;
 				}
-			}
+			} 
 
 			if (event.type == SDL_MOUSEMOTION) {
 				aux = start;
@@ -520,7 +523,6 @@ std::string Menu::identify_event() {
 			}
 
 			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
-				cout << "name one" << endl;
 				//Handle backspace
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
 				{
@@ -533,15 +535,7 @@ std::string Menu::identify_event() {
 					renderTextOne = true;
 					nameOneSet = true;
 				}
-			}
-
-			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
-				cout << "name Two" << endl;
-					playerOneName += event.text.text;
-					renderTextOne = true;
-			}
-
-			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet && nameOneSet) {
+			}  else if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet && nameOneSet) {
 				//Handle backspace
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerTwoName.length() > 0)
 				{
@@ -555,18 +549,20 @@ std::string Menu::identify_event() {
 					nameTwoSet = true;
 				}
 			}
-
-			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet && nameOneSet) {
-					playerTwoName += event.text.text;
-					renderTextTwo = true;
+			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
+				playerOneName += event.text.text;
+				renderTextOne = true;
+			} else 	if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet && nameOneSet) {
+				playerTwoName += event.text.text;
+				renderTextTwo = true;
 			}
 
 			this->showTextBox();
 
-//			if (nameOneSet && nameTwoSet) {
-//				SDL_StopTextInput();
-//				return "selected: " + selected->text + " " + selectedTwo->text;
-//			}
+			if (nameOneSet && nameTwoSet) {
+				SDL_StopTextInput();
+				return "selected: " + selected->text + " " + playerOneName + " " + selectedTwo->text + " " + playerTwoName;
+			}
 
 		}
 	}
