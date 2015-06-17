@@ -561,7 +561,7 @@ std::string Menu::identify_event() {
 
 			if (nameOneSet && nameTwoSet) {
 				SDL_StopTextInput();
-				return "selected: " + selected->text + " " + playerOneName + " " + selectedTwo->text + " " + playerTwoName;
+				return "selected: " + selected->text + " " + selectedTwo->text + " " + playerOneName + " " + playerTwoName;
 			}
 
 		}

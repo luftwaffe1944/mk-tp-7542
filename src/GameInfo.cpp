@@ -7,7 +7,7 @@
 
 #include "../headers/GameInfo.h"
 
-GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
+GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters, std::string nameOne, std::string nameTwo) :
 		SDLObjectGUI(pParams) {
 	this->characters = characters;
 	bgColor = {204, 0, 0, 150};
@@ -36,6 +36,8 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->showFinishHimAnimation = false;
 	this->charOneAlreadyDeath = false;
 	this->charTwoAlreadyDeath = false;
+	this->nameOne = nameOne;
+	this->nameTwo = nameTwo;
 }
 
 bool GameInfo::load() {
@@ -86,12 +88,14 @@ bool GameInfo::load(SDL_Renderer* r) {
 	SDL_Color roundColor = {255, 255, 255};
 
 	//jugador 1
-	name = this->characters[0]->getName();
+	//name = this->characters[0]->getName();
+	name = nameOne;
 	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID, name, playerColor, font, render);
 
 	//jugador 2
-	name = this->characters[1]->getName();
+	//name = this->characters[1]->getName();
+	name = nameTwo;
 	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID, name, playerColor, font, render);
 
@@ -116,13 +120,15 @@ bool GameInfo::load(SDL_Renderer* r) {
 	TextureManager::Instance()->load(FINISH_HIM_IMAGE_SPRITE, "finishHimSprite", r);
 
 	//character 1 wins
-	charOneWins = this->characters[0]->getName() + "  wins";
+	//charOneWins = this->characters[0]->getName() + "  wins";
+	charOneWins = nameOne + "  wins";
 	std::transform(charOneWins.begin(), charOneWins.end(), charOneWins.begin(), ::toupper);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"white", charOneWins, charWinsWhiteColor, fontMK3, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"red", charOneWins, charWinsRedColor, fontMK3, render);
 
 	//character 2 wins
-	charTwoWins = this->characters[1]->getName() + "  wins";
+	//charTwoWins = this->characters[1]->getName() + "  wins";
+	charOneWins = nameTwo + "  wins";
 	std::transform(charTwoWins.begin(), charTwoWins.end(), charTwoWins.begin(), ::toupper);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"white", charTwoWins, charWinsWhiteColor, fontMK3, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"red", charTwoWins, charWinsRedColor, fontMK3, render);
@@ -278,7 +284,9 @@ void GameInfo::draw() {
 	float energy = 0.0f;
 
 	//jugador 1
-	name = this->characters[0]->getName();
+	//name = this->characters[0]->getName();
+	name = this->nameOne;
+
 	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
 	TextureManager::Instance()->draw( this->textureID + name, WINDOW_MARGIN, 0, barWidth/2, 10, render );
 	energy = this->characters[0]->getEnergy();
@@ -286,7 +294,8 @@ void GameInfo::draw() {
 	else HealthBar(positionX * ratioX, 35, barWidth * ratioX, 20, energy, frontColor, bgColor, render, 0 );
 
 	//jugador 2
-	name = this->characters[1]->getName();
+	//name = this->characters[1]->getName();
+	name = nameTwo;
 	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
 	TextureManager::Instance()->draw(this->textureID + name, pParams->getWidth() - barWidth/2 - WINDOW_MARGIN,0,barWidth/2, 10, render);
 	energy = this->characters[1]->getEnergy();

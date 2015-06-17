@@ -167,7 +167,7 @@ void MKGame::drawMenu(Menu* menu, int opacity) {
 	SDL_RenderPresent(m_pRenderer);
 }
 
-void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
+void createGameInfo(Window* window, vector<Character*> characters, std::string nameOne, std::string nameTwo, float ratioX, float ratioY) {
 	float windowWidth = window->getWidth();
 	float windowHeight = window->getHeightPx();
 	/*
@@ -176,7 +176,7 @@ void createGameInfo(Window* window, vector<Character*> characters, float ratioX,
 		playerName.push_back(characters[i]->getName());
 	}*/
 	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
-	GameInfo* info = new GameInfo(params, characters);
+	GameInfo* info = new GameInfo(params, characters, nameOne, nameTwo);
 	MKGame::Instance()->getObjectList().push_back(info);
 }
 
@@ -208,7 +208,7 @@ void createThrowableObject(vector<Character*> characters, Window* window, float 
 	GameGUI::getInstance()->vCollitionable.push_back(tObject2);
 }
 
-void MKGame::configureFight(std::string fighterOneName, std::string fighterTwoName) {
+void MKGame::configureFight(std::string fighterOneName, std::string fighterTwoName, std::string nameOne, std::string nameTwo) {
 	Character* fighterOne;
 	Character* fighterTwo;
 	vector<Character*> characters = GameGUI::getInstance()->getCharacters();
@@ -244,7 +244,7 @@ void MKGame::configureFight(std::string fighterOneName, std::string fighterTwoNa
 	fightingCharacters.push_back(fight->getFighterOne());
 	fightingCharacters.push_back(fight->getFighterTwo());
 	GameGUI::getInstance()->setCharacters(fightingCharacters);
-	createGameInfo(GameGUI::getInstance()->getWindow(), fightingCharacters,
+	createGameInfo(GameGUI::getInstance()->getWindow(), fightingCharacters, nameOne, nameTwo,
 			TextureManager::Instance()->ratioWidth, TextureManager::Instance()->ratioHeight);
 	createThrowableObject(fightingCharacters, GameGUI::getInstance()->getWindow(),
 			TextureManager::Instance()->ratioWidth, TextureManager::Instance()->ratioHeight);
@@ -292,7 +292,9 @@ void MKGame::menuActions(std::string action) {
 		}
 		std::cout << characters[1] << endl;
 		std::cout << characters[2] << endl;
-		this->configureFight(characters[1], characters[2]);
+		std::cout << characters[3] << endl;
+		std::cout << characters[4] << endl;
+		this->configureFight(characters[1], characters[2], characters[3], characters[4]);
 		//TODO: usar characters[1] y characters[2] en fight
 	}
 }
