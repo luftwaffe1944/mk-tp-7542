@@ -170,6 +170,9 @@ void InputControl::refreshInputs() {
 	else if (currentKeyStates[SDL_SCANCODE_Z]) {
 		this->secondPlayerMove = FIRST_PLAYER_LOW_KICK;
 	}
+	else if (currentKeyStates[SDL_SCANCODE_DELETE]) {
+		this->secondPlayerMove = LAZY;
+	}
 
 }
 void InputControl::refreshInputs1() {
@@ -512,6 +515,9 @@ void InputControl::refreshJoystickInputs() {
 			loadSpecialSecuence(joystick);
 			detectSpecialMove(joystick);
 
+			if ((this->firstPlayerMove == NO_INPUT) && (this->secondPlayerMove == NO_INPUT)){
+
+
 			if (isAxisUp(joystick)) {
 
 				if (!(isAxisDown(joystick))
@@ -707,6 +713,7 @@ void InputControl::refreshJoystickInputs() {
 			this->setActionButtonStateFalse(joystick,LOW_PUNCH);
 			this->setActionButtonStateFalse(joystick,FIRE);
 		}
+	}
 	}
 
 
