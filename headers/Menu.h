@@ -61,6 +61,13 @@ private:
 	bool playerOneSelected;
 	bool playerTwoSelected;
 	void getJoystickInput(SDL_Event event);
+	void showTextBox();
+	string playerOneName;
+	string playerTwoName;
+	bool renderTextOne;
+	bool renderTextTwo;
+	bool nameOneSet;
+	bool nameTwoSet;
 };
 
 #endif // MENU_H

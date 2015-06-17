@@ -80,8 +80,14 @@ void Menu::setMusicPath(std::string path) {
 }
 
 Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer* rd, bool tm) {
+	this->playerOneName = "";
+	this->playerTwoName = "";
+	this->renderTextOne = false;
+	this->renderTextTwo = false;
 	this->playerOneSelected = false;
 	this->playerTwoSelected = false;
+	this->nameOneSet = false;
+	this->nameTwoSet = false;
 	this->textMenu = tm;
 	this->render = rd;
 
@@ -361,6 +367,49 @@ void Menu::buttonD(){
 
 }
 
+
+void Menu::showTextBox() {
+	SDL_Color fColor = { 155, 155, 155, 100 };
+	TTF_Font* font = TTF_OpenFont("fonts/mk1.ttf", 30);
+	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx();
+	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx();
+	std::string name = "name";
+	std::string text = "hola";
+	std::string aux;
+
+	if (renderTextOne)
+	{
+		//Text is not empty
+		if (playerOneName != "")
+		{
+			//Render new text
+			//TextureManager::Instance()->loadFromRenderedText("namePlayerOne", playerOneName, fColor, font, render);
+			TextureManager::Instance()->loadFromRenderedText(name, text, fColor, font, render);
+			cout << "cargue " << "namePlayerOne" + playerOneName << endl;
+		}
+
+		//TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6 + 15, windowsHeight - 15, windowsWidth / 6, 10, render);
+		aux = name + text;
+		TextureManager::Instance()->draw(aux, 300, 450, windowsWidth / 6, 50, render, SDL_FLIP_NONE);
+		SDL_RenderPresent(render);
+	}
+
+	if (renderTextTwo)
+	{
+		//Text is not empty
+		if (playerOneName != "")
+		{
+			//Render new text
+			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", playerTwoName.c_str(), fColor, font, render);
+		}
+
+		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 * 5, windowsHeight - 15, windowsWidth / 6, 10, render);
+
+	}
+	
+	//SDL_RenderPresent(render);
+}
+
 std::string Menu::identify_event() {
 	if (music && !musicStarted) {
 		Mix_PlayMusic(musicMenu, -1);
@@ -371,13 +420,17 @@ std::string Menu::identify_event() {
 	int y = 0;
 	std::string temp;
 	SDL_Event event;
+	
 	while (1) {
+
+		this->renderTextOne = false;
+		this->renderTextTwo = false;
 		while (SDL_PollEvent(&event)) {
 
 			if (event.type == SDL_QUIT)
 				return "Exit";
 			this->getJoystickInput(event);
-			if (event.type == SDL_KEYDOWN || event.type == SDL_JOYAXISMOTION || event.type == SDL_JOYBUTTONDOWN) {
+			if ((event.type == SDL_KEYDOWN || event.type == SDL_JOYAXISMOTION || event.type == SDL_JOYBUTTONDOWN) && !(this->playerOneSelected && this->playerTwoSelected)) {
 
 				//switch (event.key.keysym.sym) {
 				if( event.key.keysym.sym == SDLK_UP || InputControl::Instance()->isAxisUp(1))
@@ -412,23 +465,26 @@ std::string Menu::identify_event() {
 				else if( event.key.keysym.sym == SDLK_RETURN || InputControl::Instance()->someJoyKickButtonPressed(1)) {
 
 					this->playerOneSelected = true;
-					if (this->playerOneSelected && playerTwoSelected) {
-						return "selected: " + selected->text + " " + selectedTwo->text;
-					}
+					this->playerOneName = selected->text;
+					//if (this->playerOneSelected && playerTwoSelected) {
+					//	return "selected: " + selected->text + " " + selectedTwo->text;
+					//}
 					if (textMenu) return selected->text;
 
 				}
 				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(1)) {
 					this->playerTwoSelected = true;
-					if (this->playerOneSelected && playerTwoSelected) {
-						return "selected: " + selected->text + " " + selectedTwo->text;
-					}
+					this->playerTwoName = selectedTwo->text;
+					//if (this->playerOneSelected && playerTwoSelected) {
+					//	return "selected: " + selected->text + " " + selectedTwo->text;
+					//}
 
 				}
 
 				/*default:
 					break;
 				}*/
+				cout << "asd" << endl;
 			}
 
 			if (event.type == SDL_MOUSEMOTION) {
@@ -472,8 +528,82 @@ std::string Menu::identify_event() {
 				}
 			}
 
+			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected)) {
+				//Handle backspace
+				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
+				{
+					//lop off character
+					playerOneName.pop_back();
+					renderTextOne = true;
+				}
+				//Handle copy
+				else if (event.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL)
+				{
+					SDL_SetClipboardText(playerOneName.c_str());
+				}
+				//Handle paste
+				else if (event.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL)
+				{
+					playerOneName = SDL_GetClipboardText();
+					renderTextOne = true;
+				}
+				else if (event.key.keysym.sym == SDLK_RETURN)
+				{
+					nameOneSet = true;
+				}
+			}
+
+			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected)) {
+				SDL_StartTextInput();
+				//Not copy or pasting
+				if (!((event.text.text[0] == 'c' || event.text.text[0] == 'C') && (event.text.text[0] == 'v' || event.text.text[0] == 'V') && SDL_GetModState() & KMOD_CTRL))
+				{
+					//Append character
+					playerOneName += event.text.text;
+					renderTextOne = true;
+				}
+			}
+
+			if ((event.type == SDL_KEYDOWN) && (this->playerTwoSelected && nameOneSet)) {
+				//Handle backspace
+				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
+				{
+					//lop off character
+					playerTwoName.pop_back();
+					renderTextTwo = true;
+				}
+				//Handle copy
+				else if (event.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL)
+				{
+					SDL_SetClipboardText(playerTwoName.c_str());
+				}
+				//Handle paste
+				else if (event.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL)
+				{
+					playerTwoName = SDL_GetClipboardText();
+					renderTextTwo = true;
+				}
+				else if (event.key.keysym.sym == SDLK_RETURN)
+				{
+					nameTwoSet = true;
+				}
+			}
+
+			if (event.type == SDL_TEXTINPUT && (this->playerTwoSelected && nameOneSet)) {
+				//Not copy or pasting
+				if (!((event.text.text[0] == 'c' || event.text.text[0] == 'C') && (event.text.text[0] == 'v' || event.text.text[0] == 'V') && SDL_GetModState() & KMOD_CTRL))
+				{
+					//Append character
+					playerTwoName += event.text.text;
+					renderTextTwo = true;
+				}
+			}
+
+			this->showTextBox();
+
 		}
 	}
+	
 }
 
 Menu::~Menu() {

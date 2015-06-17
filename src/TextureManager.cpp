@@ -290,6 +290,11 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height,
 	destRect.y = y * this->ratioHeight;
 
 	//flip = SDL_FLIP_HORIZONTAL;
+	std::map<std::string, SDL_Texture*>::iterator it;
+	it = m_textureMap.find(id);
+	if (it != m_textureMap.end()) {
+		cout << "No encuentro el id " << id << endl;
+	}
 	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0,
 			flip);
 }
@@ -361,8 +366,12 @@ bool TextureManager::loadFromRenderedText( std::string id, std::string textureTe
     }
 
 	if (mTexture != 0) {
+		cout << id + textureText << endl;
 		m_textureMap[id + textureText] = mTexture;
 		return true;
+	}
+	else {
+		cout << "error";
 	}
 
 	return false;

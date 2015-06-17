@@ -97,9 +97,9 @@ void MKGame::menuInit() {
 	menuNewGame = new Menu(4, menuItemsNewGame, 50, 150, 150, 50, m_pRenderer, true);
 
 	//Menu seleccion de personaje
-	int widthSelectBox = GameGUI::getInstance()->getWindow()->getWidthPx() / 6;
+	int widthSelectBox = GameGUI::getInstance()->getWindow()->getWidthPx() / 8;
 	float heightSelectBox = widthSelectBox * 59 / 48;
-	int posX = widthSelectBox;
+	int posX = GameGUI::getInstance()->getWindow()->getWidthPx()/2 - widthSelectBox*4/2;
 	int posY = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.15;
 	menuCharacterSelect = new Menu(12, menuItemsCharacters, posX, posY, widthSelectBox, (int)heightSelectBox, m_pRenderer, false);
 
