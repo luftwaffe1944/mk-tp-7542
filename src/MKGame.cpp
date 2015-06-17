@@ -359,7 +359,44 @@ void MKGame::update() {
 	SecuenceInputManager::Instance()->update();
 
 }
+void MKGame::getJoystickInput(SDL_Event event) {
+	if (event.type == SDL_JOYBUTTONDOWN ) {
+		InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
+	}
+	if (event.type == SDL_JOYBUTTONUP ) {
+		InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = false;
+	}
+	if (event.type == SDL_JOYAXISMOTION ){
 
+		int num_joy = event.jaxis.which;
+
+		//derecha e izquierda
+		if (event.jaxis.axis == 0) {
+
+			if (event.jaxis.value > MAX_XAXIS || event.jaxis.value < MIN_XAXIS) {
+				InputControl::Instance()->joystickAxisStates[num_joy].first = event.jaxis.value;
+			} else {
+				InputControl::Instance()->joystickAxisStates[num_joy].first = 0;
+			}
+
+		}
+
+		//arriba y abajo
+		if (event.jaxis.axis == 1) {
+
+			if (event.jaxis.value > MAX_YAXIS || event.jaxis.value < MIN_YAXIS){
+				InputControl::Instance()->joystickAxisStates[num_joy].second = event.jaxis.value;
+			} else {
+				InputControl::Instance()->joystickAxisStates[num_joy].second = 0;
+			}
+
+		}
+
+	}
+	if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0)
+		InputControl::Instance()->refreshJoystickInputs();
+
+}
 
 
 void MKGame::handleEvents() {
@@ -374,43 +411,9 @@ void MKGame::handleEvents() {
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r && event.key.repeat == 0) {
 				reset = true;
 			}
-			if (event.type == SDL_JOYBUTTONDOWN ) {
-				//std::cout << "asd";
-				InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
-			}
-			if (event.type == SDL_JOYBUTTONUP ) {
-				InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = false;
-			}
-			if (event.type == SDL_JOYAXISMOTION ){
 
-				int num_joy = event.jaxis.which;
-
-				//derecha e izquierda
-				if (event.jaxis.axis == 0) {
-
-					if (event.jaxis.value > MAX_XAXIS || event.jaxis.value < MIN_XAXIS) {
-						InputControl::Instance()->joystickAxisStates[num_joy].first = event.jaxis.value;
-					} else {
-						InputControl::Instance()->joystickAxisStates[num_joy].first = 0;
-					}
-
-				}
-
-				//arriba y abajo
-				if (event.jaxis.axis == 1) {
-
-					if (event.jaxis.value > MAX_YAXIS || event.jaxis.value < MIN_YAXIS){
-						InputControl::Instance()->joystickAxisStates[num_joy].second = event.jaxis.value;
-					} else {
-						InputControl::Instance()->joystickAxisStates[num_joy].second = 0;
-					}
-
-				}
-
-			}
-			if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0)
-				InputControl::Instance()->refreshJoystickInputs();
-			//InputControl::Instance()->update();
+			MKGame::getJoystickInput(event);
+	//InputControl::Instance()->update();
 
 			//Para solo jugar con joysticks comentar todos
 

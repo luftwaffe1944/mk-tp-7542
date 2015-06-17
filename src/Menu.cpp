@@ -220,6 +220,147 @@ void Menu::resetCharacterRender(SDL_Renderer* render) {
 	SDL_DestroyTexture(target_texture);
 }
 
+void Menu::buttonUp() {
+	if (textMenu) {
+		if (selected->previous != NULL) {
+			Mix_PlayChannel(-1, sound, 0);
+			selected->setColor(150, 150, 150,255);
+			selected->show(render);
+			selected = selected->previous;
+			selected->setColor(255, 255, 255,255);
+			selected->show(render);
+		}
+	}
+	else {
+		if (selected->positionY - selected->height >= start->positionY) {
+			selected->setColor(150, 150, 150,0);
+			selected->drawBox(render);
+			selected = selected->previous;
+			selected = selected->previous;
+			selected = selected->previous;
+			selected = selected->previous;
+			selected->setColor(0, 255, 0,255);
+			this->drawCharacterStance(render);
+			selected->drawBox(render);
+		}
+	}
+
+}
+
+void Menu::buttonDown() {
+	if (textMenu) {
+							if (selected->next != NULL) {
+								Mix_PlayChannel(-1, sound, 0);
+								selected->setColor(150, 150, 150,255);
+								selected->show(render);
+								selected = selected->next;
+								selected->setColor(255, 255, 255,255);
+								selected->show(render);
+							}
+						}
+						else {
+							if (selected->positionY + selected->height < start->positionY + start->height*3) {
+								selected->setColor(150, 150, 150,0);
+								selected->drawBox(render);
+								selected = selected->next;
+								selected = selected->next;
+								selected = selected->next;
+								selected = selected->next;
+								selected->setColor(0, 255, 0,255);
+								this->drawCharacterStance(render);
+								selected->drawBox(render);
+							}
+						}
+
+}
+
+void Menu::buttonLeft() {
+	if (!textMenu) {
+							if (selected->positionX - selected->width >= start->positionX) {
+								selected->setColor(150, 150, 150,255);
+								selected->drawBox(render);
+								selected = selected->previous;
+								selected->setColor(0, 255, 0,255);
+								this->drawCharacterStance(render);
+								selected->drawBox(render);
+							}
+						}
+
+}
+
+void Menu::buttonRight() {
+	if (!textMenu) {
+		if (selected->positionX + selected->width < start->positionX + start->width * 4) {
+			selected->setColor(150, 150, 150,0);
+			selected->drawBox(render);
+			selected = selected->next;
+			selected->setColor(0, 255, 0,255);
+			this->drawCharacterStance(render);
+			selected->drawBox(render);
+		}
+	}
+
+
+}
+void Menu::buttonW(){
+	if (!textMenu) {
+		if (selectedTwo->positionY - selectedTwo->height >= start->positionY) {
+			selectedTwo->setColor(150, 150, 150, 0);
+			selectedTwo->drawBox(render);
+			selectedTwo = selectedTwo->previous;
+			selectedTwo = selectedTwo->previous;
+			selectedTwo = selectedTwo->previous;
+			selectedTwo = selectedTwo->previous;
+			selectedTwo->setColor(255, 0, 0, 255);
+			this->drawCharacterStance(render);
+			selectedTwo->drawBox(render);
+		}
+	}
+
+}
+void Menu::buttonS(){
+	if (!textMenu) {
+							if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
+								selectedTwo->setColor(150, 150, 150, 0);
+								selectedTwo->drawBox(render);
+								selectedTwo = selectedTwo->next;
+								selectedTwo = selectedTwo->next;
+								selectedTwo = selectedTwo->next;
+								selectedTwo = selectedTwo->next;
+								selectedTwo->setColor(255, 0, 0, 255);
+								this->drawCharacterStance(render);
+								selectedTwo->drawBox(render);
+							}
+						}
+
+}
+void Menu::buttonA(){
+	if (!textMenu) {
+		if (selectedTwo->positionX - selectedTwo->width >= start->positionX) {
+			selectedTwo->setColor(150, 150, 150, 255);
+			selectedTwo->drawBox(render);
+			selectedTwo = selectedTwo->previous;
+			selectedTwo->setColor(255, 0, 0, 255);
+			this->drawCharacterStance(render);
+			selectedTwo->drawBox(render);
+		}
+	}
+
+}
+void Menu::buttonD(){
+	if (!textMenu) {
+		if (selectedTwo->positionX + selectedTwo->width < start->positionX + start->width * 4) {
+			selectedTwo->setColor(150, 150, 150, 0);
+			selectedTwo->drawBox(render);
+			selectedTwo = selectedTwo->next;
+			selectedTwo->setColor(255, 0, 0, 255);
+			this->drawCharacterStance(render);
+			selectedTwo->drawBox(render);
+		}
+	}
+
+}
+
 std::string Menu::identify_event() {
 	if (music && !musicStarted) {
 		Mix_PlayMusic(musicMenu, -1);
@@ -232,173 +373,62 @@ std::string Menu::identify_event() {
 	SDL_Event event;
 	while (1) {
 		while (SDL_PollEvent(&event)) {
+
 			if (event.type == SDL_QUIT)
 				return "Exit";
+			this->getJoystickInput(event);
+			if (event.type == SDL_KEYDOWN || event.type == SDL_JOYAXISMOTION || event.type == SDL_JOYBUTTONDOWN) {
 
-			if (event.type == SDL_KEYDOWN) {
+				//switch (event.key.keysym.sym) {
+				if( event.key.keysym.sym == SDLK_UP || InputControl::Instance()->isAxisUp(1))
 
-				switch (event.key.keysym.sym) {
-				case SDLK_UP:
-					if (textMenu) {
-						if (selected->previous != NULL) {
-							Mix_PlayChannel(-1, sound, 0);
-							selected->setColor(150, 150, 150,255);
-							selected->show(render);
-							selected = selected->previous;
-							selected->setColor(255, 255, 255,255);
-							selected->show(render);
-						}
-					}
-					else {
-						if (selected->positionY - selected->height >= start->positionY) {
-							selected->setColor(150, 150, 150,0);
-							selected->drawBox(render);
-							selected = selected->previous;
-							selected = selected->previous;
-							selected = selected->previous;
-							selected = selected->previous;
-							selected->setColor(0, 255, 0,255);
-							this->drawCharacterStance(render);
-							selected->drawBox(render);
-						}
-					}
+					buttonUp();
 
-					break;
 
-				case SDLK_w:
-					if (!textMenu) {
-						if (selectedTwo->positionY - selectedTwo->height >= start->positionY) {
-							selectedTwo->setColor(150, 150, 150, 0);
-							selectedTwo->drawBox(render);
-							selectedTwo = selectedTwo->previous;
-							selectedTwo = selectedTwo->previous;
-							selectedTwo = selectedTwo->previous;
-							selectedTwo = selectedTwo->previous;
-							selectedTwo->setColor(255, 0, 0, 255);
-							this->drawCharacterStance(render);
-							selectedTwo->drawBox(render);
-						}
-					}
+				else if( event.key.keysym.sym == SDLK_w || InputControl::Instance()->isAxisUp(0))
+					buttonW();
 
-					break;
 
-				case SDLK_DOWN:
-					if (textMenu) {
-						if (selected->next != NULL) {
-							Mix_PlayChannel(-1, sound, 0);
-							selected->setColor(150, 150, 150,255);
-							selected->show(render);
-							selected = selected->next;
-							selected->setColor(255, 255, 255,255);
-							selected->show(render);
-						}
-					}
-					else {
-						if (selected->positionY + selected->height < start->positionY + start->height*3) {
-							selected->setColor(150, 150, 150,0);
-							selected->drawBox(render);
-							selected = selected->next;
-							selected = selected->next;
-							selected = selected->next;
-							selected = selected->next;
-							selected->setColor(0, 255, 0,255);
-							this->drawCharacterStance(render);
-							selected->drawBox(render);
-						}
-					}
+				else if( event.key.keysym.sym == SDLK_DOWN || InputControl::Instance()->isAxisDown(1))
+					buttonDown();
 
-					break;
+				else if( event.key.keysym.sym ==SDLK_s || InputControl::Instance()->isAxisUp(0))
 
-				case SDLK_s:
-					if (!textMenu) {
-						if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
-							selectedTwo->setColor(150, 150, 150, 0);
-							selectedTwo->drawBox(render);
-							selectedTwo = selectedTwo->next;
-							selectedTwo = selectedTwo->next;
-							selectedTwo = selectedTwo->next;
-							selectedTwo = selectedTwo->next;
-							selectedTwo->setColor(255, 0, 0, 255);
-							this->drawCharacterStance(render);
-							selectedTwo->drawBox(render);
-						}
-					}
+					buttonS();
 
-					break;
+				else if( event.key.keysym.sym ==SDLK_LEFT || InputControl::Instance()->isAxisLeft(1))
 
-				case SDLK_LEFT:
-					if (!textMenu) {
-						if (selected->positionX - selected->width >= start->positionX) {
-							selected->setColor(150, 150, 150,255);
-							selected->drawBox(render);
-							selected = selected->previous;
-							selected->setColor(0, 255, 0,255);
-							this->drawCharacterStance(render);
-							selected->drawBox(render);
-						}
-					}
+					buttonLeft();
+				else if( event.key.keysym.sym ==SDLK_RIGHT || InputControl::Instance()->isAxisRight(1) )
+					buttonRight();
 
-					break;
-				case SDLK_RIGHT:
-					if (!textMenu) {
-						if (selected->positionX + selected->width < start->positionX + start->width * 4) {
-							selected->setColor(150, 150, 150,0);
-							selected->drawBox(render);
-							selected = selected->next;
-							selected->setColor(0, 255, 0,255);
-							this->drawCharacterStance(render);
-							selected->drawBox(render);
-						}
-					}
+				else if( event.key.keysym.sym ==SDLK_a || InputControl::Instance()->isAxisLeft(0))
 
-					break;
+					buttonA();
+				else if( event.key.keysym.sym ==SDLK_d || InputControl::Instance()->isAxisRight(0))
 
-				case SDLK_a:
-					if (!textMenu) {
-						if (selectedTwo->positionX - selectedTwo->width >= start->positionX) {
-							selectedTwo->setColor(150, 150, 150, 255);
-							selectedTwo->drawBox(render);
-							selectedTwo = selectedTwo->previous;
-							selectedTwo->setColor(255, 0, 0, 255);
-							this->drawCharacterStance(render);
-							selectedTwo->drawBox(render);
-						}
-					}
+					buttonD();
 
-					break;
-				case SDLK_d:
-					if (!textMenu) {
-						if (selectedTwo->positionX + selectedTwo->width < start->positionX + start->width * 4) {
-							selectedTwo->setColor(150, 150, 150, 0);
-							selectedTwo->drawBox(render);
-							selectedTwo = selectedTwo->next;
-							selectedTwo->setColor(255, 0, 0, 255);
-							this->drawCharacterStance(render);
-							selectedTwo->drawBox(render);
-						}
-					}
+				else if( event.key.keysym.sym == SDLK_RETURN || InputControl::Instance()->someJoyKickButtonPressed(1)) {
 
-					break;
-
-				case SDLK_RETURN:
 					this->playerOneSelected = true;
 					if (this->playerOneSelected && playerTwoSelected) {
 						return "selected: " + selected->text + " " + selectedTwo->text;
 					}
 					if (textMenu) return selected->text;
-					break;
 
-				case SDLK_g:
+				}
+				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(1)) {
 					this->playerTwoSelected = true;
 					if (this->playerOneSelected && playerTwoSelected) {
 						return "selected: " + selected->text + " " + selectedTwo->text;
 					}
 
-					break;
-
-				default:
-					break;
 				}
+
+				/*default:
+					break;
+				}*/
 			}
 
 			if (event.type == SDL_MOUSEMOTION) {
@@ -448,4 +478,45 @@ std::string Menu::identify_event() {
 
 Menu::~Menu() {
 	delete this->start;
+}
+
+
+void Menu::getJoystickInput(SDL_Event event) {
+	if (event.type == SDL_JOYBUTTONDOWN ) {
+		InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
+	}
+	if (event.type == SDL_JOYBUTTONUP ) {
+		InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = false;
+	}
+	if (event.type == SDL_JOYAXISMOTION ){
+
+		int num_joy = event.jaxis.which;
+
+		//derecha e izquierda
+		if (event.jaxis.axis == 0) {
+
+			if (event.jaxis.value > MAX_XAXIS || event.jaxis.value < MIN_XAXIS) {
+				InputControl::Instance()->joystickAxisStates[num_joy].first = event.jaxis.value;
+			} else {
+				InputControl::Instance()->joystickAxisStates[num_joy].first = 0;
+			}
+
+		}
+
+		//arriba y abajo
+		if (event.jaxis.axis == 1) {
+
+			if (event.jaxis.value > MAX_YAXIS || event.jaxis.value < MIN_YAXIS){
+				InputControl::Instance()->joystickAxisStates[num_joy].second = event.jaxis.value;
+			} else {
+				InputControl::Instance()->joystickAxisStates[num_joy].second = 0;
+			}
+
+		}
+
+	}
+	/*
+	if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0)
+		InputControl::Instance()->refreshJoystickInputs();
+*/
 }
