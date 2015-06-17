@@ -88,6 +88,9 @@ void DamageManager::solveDamage(DamageObject* firstObject, DamageObject* secondO
 
 			firstObject->setKill();
 			secondObject->setDamage(0.05f);
+			if (secondObject->isCharacter()) {
+				SoundManager::Instance()->playSoundByAction("fireHit");
+			}
 			//cout << "first" << endl;
 		}
 	}else if ((secondObject->isWeapon)&&(!firstObject->isWeapon)){
@@ -95,6 +98,10 @@ void DamageManager::solveDamage(DamageObject* firstObject, DamageObject* secondO
 			firstObject->setDamage(0.05f);
 			secondObject->setKill();
 			//cout << "second" << endl;
+			if (firstObject->isCharacter()) {
+				SoundManager::Instance()->playSoundByAction("fireHit");
+			}
+
 		}
 	}
 }

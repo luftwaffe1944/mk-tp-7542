@@ -35,7 +35,7 @@ public:
 	void buttonS();
 	void buttonA();
 	void buttonD();
-
+	void stopMusic();
 
 private:
 	MenuItem * start;

@@ -261,42 +261,42 @@ void Menu::buttonUp() {
 
 void Menu::buttonDown() {
 	if (textMenu) {
-							if (selected->next != NULL) {
-								Mix_PlayChannel(-1, sound, 0);
-								selected->setColor(150, 150, 150,255);
-								selected->show(render);
-								selected = selected->next;
-								selected->setColor(255, 255, 255,255);
-								selected->show(render);
-							}
-						}
-						else {
-							if (selected->positionY + selected->height < start->positionY + start->height*3) {
-								selected->setColor(150, 150, 150,0);
-								selected->drawBox(render);
-								selected = selected->next;
-								selected = selected->next;
-								selected = selected->next;
-								selected = selected->next;
-								selected->setColor(0, 255, 0,255);
-								this->drawCharacterStance(render);
-								selected->drawBox(render);
-							}
-						}
+		if (selected->next != NULL) {
+			Mix_PlayChannel(-1, sound, 0);
+			selected->setColor(150, 150, 150,255);
+			selected->show(render);
+			selected = selected->next;
+			selected->setColor(255, 255, 255,255);
+			selected->show(render);
+		}
+	}
+	else {
+		if (selected->positionY + selected->height < start->positionY + start->height*3) {
+			selected->setColor(150, 150, 150,0);
+			selected->drawBox(render);
+			selected = selected->next;
+			selected = selected->next;
+			selected = selected->next;
+			selected = selected->next;
+			selected->setColor(0, 255, 0,255);
+			this->drawCharacterStance(render);
+			selected->drawBox(render);
+		}
+	}
 
 }
 
 void Menu::buttonLeft() {
 	if (!textMenu) {
-							if (selected->positionX - selected->width >= start->positionX) {
-								selected->setColor(150, 150, 150,255);
-								selected->drawBox(render);
-								selected = selected->previous;
-								selected->setColor(0, 255, 0,255);
-								this->drawCharacterStance(render);
-								selected->drawBox(render);
-							}
-						}
+		if (selected->positionX - selected->width >= start->positionX) {
+			selected->setColor(150, 150, 150,255);
+			selected->drawBox(render);
+			selected = selected->previous;
+			selected->setColor(0, 255, 0,255);
+			this->drawCharacterStance(render);
+			selected->drawBox(render);
+		}
+	}
 
 }
 
@@ -332,18 +332,18 @@ void Menu::buttonW(){
 }
 void Menu::buttonS(){
 	if (!textMenu) {
-							if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
-								selectedTwo->setColor(150, 150, 150, 0);
-								selectedTwo->drawBox(render);
-								selectedTwo = selectedTwo->next;
-								selectedTwo = selectedTwo->next;
-								selectedTwo = selectedTwo->next;
-								selectedTwo = selectedTwo->next;
-								selectedTwo->setColor(255, 0, 0, 255);
-								this->drawCharacterStance(render);
-								selectedTwo->drawBox(render);
-							}
-						}
+		if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
+			selectedTwo->setColor(150, 150, 150, 0);
+			selectedTwo->drawBox(render);
+			selectedTwo = selectedTwo->next;
+			selectedTwo = selectedTwo->next;
+			selectedTwo = selectedTwo->next;
+			selectedTwo = selectedTwo->next;
+			selectedTwo->setColor(255, 0, 0, 255);
+			this->drawCharacterStance(render);
+			selectedTwo->drawBox(render);
+		}
+	}
 
 }
 void Menu::buttonA(){
@@ -372,7 +372,6 @@ void Menu::buttonD(){
 	}
 
 }
-
 
 void Menu::showTextBox() {
 	SDL_Color fColor = { 255, 255, 255, 255 };
@@ -419,6 +418,13 @@ void Menu::showTextBox() {
 	
 	SDL_RenderPresent(render);
 	TTF_CloseFont(font);
+}
+
+void Menu::stopMusic() {
+	Mix_FadeOutMusic(2000);
+	//music = t;
+	musicStarted=false;
+
 }
 
 std::string Menu::identify_event() {

@@ -24,16 +24,20 @@ int main(int argc, char* argv[]) {
 	}
 
 	bool runApp = true;
+	SoundManager::Instance()->init();
+
 	do{
 		GameGUIBuilder gameGUIBuilder(configFilePath);
 		GameGUI* gameGUI = gameGUIBuilder.create();
 		LayerManager::Instance()->init();
 
 		if (MKGame::Instance()->init(gameGUI)) {
+			//SoundManager::Instance()->playMusic("fightMusic64",-1);
 			std::cout << "game init success" << endl;
 			while ((MKGame::Instance()->running()) && !(MKGame::Instance()->reset()))  {
 				if (!MKGame::Instance()->menu()) {
 					MKGame::Instance()->handleEvents();
+					MKGame::Instance()->handleAI();
 					MKGame::Instance()->update();
 					MKGame::Instance()->render();
 				}
@@ -49,7 +53,7 @@ int main(int argc, char* argv[]) {
 		std::cout << "game closing..." << endl;
 		MKGame::Instance()->clean();
 	}while(runApp);
-
+	SoundManager::Instance()->clean();
 	return 0;
 
 }

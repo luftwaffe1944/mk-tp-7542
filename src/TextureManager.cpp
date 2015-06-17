@@ -253,8 +253,10 @@ void changeToAltColor(SDL_Surface* pTempSurface, AlternativeColor* altColor) {
 
 bool TextureManager::load(std::string fileName, std::string id,
 		SDL_Renderer* pRenderer, bool isAltPlayer, AlternativeColor* altColor) {
+	cout << fileName.c_str() << endl;
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 	if (pTempSurface == 0) {
+		cout << fileName.c_str() << "ERROR" << endl;
 		return false;
 	}
 	if (isAltPlayer) {

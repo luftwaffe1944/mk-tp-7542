@@ -14,7 +14,10 @@
 #include "SDLObjectGUI.h"
 #include "MKGame.h"
 #include "Timer.h"
+#include "SoundManager.h"
 #include <algorithm>
+//#include "SDL_timer.h"
+//#include "SDL.h"
 using namespace std;
 
 class GameInfo : public SDLObjectGUI {
@@ -37,6 +40,7 @@ public:
 	void timerPause();
 	bool isRoundTriggered();
 	void prepareNewRound();
+	void triggerSounds();
 	bool roundCompleted;
 	int currentRound;
 private:
@@ -48,12 +52,15 @@ private:
 	int fightAnimationTimer;
 	int winnerAnimationTimer;
 	int finishHimAnimationTimer;
+	int fatalityAnimationTimer;
 	int characterOneWins;
 	int characterTwoWins;
+	bool lazyAnimationAlreadyTriggered;
 	bool initAnimation;
 	bool showFightAnimation;
 	bool showWinnerAnimation;
 	bool showFinishHimAnimation;
+	bool showFatalityAnimation;
 	bool roundTriggered;
 	bool roundOneCompleted;
 	bool roundTwoCompleted;
@@ -62,6 +69,10 @@ private:
 	bool charTwoWon;
 	bool charOneAlreadyDeath;
 	bool charTwoAlreadyDeath;
+	bool playingRoundSound;
+	bool playingFightSound;
+	bool playingCharacterWinsSound;
+	bool playingFinishHimSound;
 	Timer timer;
 	float msTime;
 	std::string idTimer;

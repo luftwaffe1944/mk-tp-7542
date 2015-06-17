@@ -66,6 +66,53 @@ int Sprite::getNextFrameWithLimit(){
 	}
 }
 
+int Sprite::getNextFrameWithLimitAndShowFrame(int frameToShow){
+	if (currentFrame < framesAmount-1) {
+		return currentFrame++;
+	} else {
+		return frameToShow;
+	}
+}
+
+int Sprite::getNextFrameWithLimitAndLoop(int loopMovement, int timesLoop){
+
+	if (currentFrame < framesAmount-1) {
+		return currentFrame++;
+	} else {
+		if (!isLooped){
+			currentFrame = currentFrame - loopMovement;
+			timeLooped = timeLooped +1;
+			if (timeLooped == timesLoop){
+				isLooped = true;
+			}
+		}
+		return currentFrame;
+	}
+}
+
+int Sprite::getNextFrameWithLimitAndLoop(int loopMovement, int frameToLoop, int timesLoop){
+
+	if (isLooped) {
+		if (currentFrame < framesAmount - 1) {
+			return currentFrame++;
+		}
+		else return currentFrame;
+	} else {
+		if (currentFrame < frameToLoop - 1) {
+			return currentFrame++;
+		} else {
+			if (!isLooped) {
+				currentFrame = currentFrame - loopMovement;
+				timeLooped = timeLooped + 1;
+				if (timeLooped == timesLoop) {
+					isLooped = true;
+				}
+			}
+			return currentFrame;
+		}
+	}
+}
+
 int Sprite::getNextBackwardingFrame() {
 	return (framesAmount - getNextForwardingFrame()-1);
 }
@@ -84,4 +131,5 @@ int Sprite::getFramesAmount(){
 
 Sprite::~Sprite() {
 }
+
 

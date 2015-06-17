@@ -117,9 +117,7 @@ void LayerManager::refresh() {
 	//int passiveCharacter = -1;
 	int standingCharacter = -1;
 	Character* passiveCharacter;
-
-
-
+	this->characters = GameGUI::getInstance()->getCharacters();
 	for (unsigned int i = 0; i < this->characters.size() ; i++) {
 
 		if ( i == 0) passiveCharacter = this->characters[1];
@@ -130,6 +128,8 @@ void LayerManager::refresh() {
 
 		float ratioX = this->characters[i]->getRatioX();
 		float posXCharacter = this->characters[i]->posXBox;
+		float posX = this->characters[i]->getPositionX();
+
 		int windowWidth = this->window->widthPx;
 		float characterWidth = this->characters[i]->widthBox;
 
