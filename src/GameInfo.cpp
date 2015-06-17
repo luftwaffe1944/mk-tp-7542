@@ -16,6 +16,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->percent = 0.0f;
 	this->fightAnimationTimer = 40;
 	this->winnerAnimationTimer = 50;
+	this->finishHimAnimationTimer = 50;
 	TTF_Init();
 	this->initAnimation = true;
 	this->showFightAnimation = true;
@@ -32,6 +33,9 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->charOneWon = false;
 	this->charOneWon = false;
 	this->showWinnerAnimation = false;
+	this->showFinishHimAnimation = false;
+	this->charOneAlreadyDeath = false;
+	this->charTwoAlreadyDeath = false;
 }
 
 bool GameInfo::load() {
@@ -107,6 +111,9 @@ bool GameInfo::load(SDL_Renderer* r) {
 	TextureManager::Instance()->load(FIGHT_IMAGE_SPRITE, "fightSprite", r);
 	//fightYellow sprite
 	TextureManager::Instance()->load(FIGHT2_IMAGE_SPRITE, "fight2Sprite", r);
+
+	//finish him sprite
+	TextureManager::Instance()->load(FINISH_HIM_IMAGE_SPRITE, "finishHimSprite", r);
 
 	//character 1 wins
 	charOneWins = this->characters[0]->getName() + "  wins";
@@ -186,6 +193,8 @@ void GameInfo::prepareNewRound(){
 	this->roundTriggered=false;
 	this->charOneWon = false;
 	this->charTwoWon = false;
+	this->charOneAlreadyDeath = false;
+	this->charTwoAlreadyDeath = false;
 	this->characters[0]->setEnergy(1.0f);
 	this->characters[1]->setEnergy(1.0f);
 	this->characters[0]->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - this->characters[0]->getWidth() * this->characters[0]->getRatioX()/2);
@@ -199,20 +208,28 @@ void GameInfo::update() {
 	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f) {
 		MKGame::Instance()->setAllowPlayerMovements(false);
 		if (this->characters[0]->getEnergy() <= 0.0f) {
-			this->characterTwoWins += 1;
-			this->charTwoWon = true;
-			this->showWinnerAnimation = true;
+			if (!this->charOneAlreadyDeath) {
+				this->characterTwoWins += 1;
+				this->charTwoWon = true;
+				this->showWinnerAnimation = true;
+			}
+			this->charOneAlreadyDeath = true;
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
 		} else {
-			this->characterOneWins += 1;
-			this->charOneWon = true;
-			this->showWinnerAnimation = true;
+			if (!this->charTwoAlreadyDeath) {
+				this->characterOneWins += 1;
+				this->charOneWon = true;
+				this->showWinnerAnimation = true;
+			}
+			this->charTwoAlreadyDeath = true;
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
 		}
-		/*if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
+		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
 			//finish him logic
-			MKGame::Instance()->setOnReset();
-		}*/
+			this->showFinishHimAnimation = true;
+			//TODO: EL JUGADOR QUE PERDIO DEBE PASAR A ISLAZY
+
+		}
 		//MKGame::Instance()->setOnReset();
 
 		if (this->winnerAnimationTimer > 0) {
@@ -280,7 +297,8 @@ void GameInfo::draw() {
 	//round 1
 	float roundWidth = barWidth/2;
 	float roundHeight = 10;
-	float fightHeight = 15;
+	float fightWidth = 60;
+	float fightHeight = 20;
 
 	if (this->initAnimation) {
 		if (!this->roundOneCompleted) {
@@ -301,11 +319,11 @@ void GameInfo::draw() {
 
 	if (!this->initAnimation && this->showFightAnimation) {
 		if ( (this->fightAnimationTimer % 2) == 0){
-			TextureManager::Instance()->draw("fightSprite", pParams->getWidth()/2 - roundWidth/2,
-							GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fightHeight, roundWidth, fightHeight, render);
+			TextureManager::Instance()->draw("fightSprite", pParams->getWidth()/2 - fightWidth/2,
+							GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fightHeight, fightWidth, fightHeight, render);
 		} else {
-			TextureManager::Instance()->draw("fight2Sprite", pParams->getWidth()/2 - roundWidth/2,
-										GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fightHeight, roundWidth, fightHeight, render);
+			TextureManager::Instance()->draw("fight2Sprite", pParams->getWidth()/2 - fightWidth/2,
+										GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fightHeight, fightWidth, fightHeight, render);
 		}
 
 	}
@@ -339,6 +357,14 @@ void GameInfo::draw() {
 			TextureManager::Instance()->draw(this->textureID+"red"+charTwoWins, pParams->getWidth()/2 - charWinsWidth/2,
 					GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 4 - charWinsHeight - 10, charWinsWidth, charWinsHeight, render);
 		}
+	}
+
+	float finishHimWidth = 100;
+	float finishHimHeight = 25;
+
+	if (this->showFinishHimAnimation) {
+		TextureManager::Instance()->draw("finishHimSprite", pParams->getWidth()/2 - finishHimWidth/2,
+				GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - finishHimHeight, finishHimWidth, finishHimHeight, render);
 	}
 }
 

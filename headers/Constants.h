@@ -171,6 +171,7 @@ const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string FIGHT_IMAGE_SPRITE = "images/fight/fight.png";
 const string FIGHT2_IMAGE_SPRITE = "images/fight/fight2.png";
+const string FINISH_HIM_IMAGE_SPRITE = "images/fight/finishHim.png";
 const string LOW_PUNCH = "low_punch";
 const string HIGH_PUNCH = "high_punch";
 const string LOW_KICK = "low_kick";
