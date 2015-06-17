@@ -40,7 +40,6 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->playingFightSound = false;
 	this->playingCharacterWinsSound = false;
 	this->playingFinishHimSound  = false;
-	this->lazyAnimationAlreadyTriggered = false;
 }
 
 bool GameInfo::load() {
@@ -275,19 +274,17 @@ void GameInfo::update() {
 				SoundManager::Instance()->playSoundByAction("finishHim",0);
 				this->playingFinishHimSound  = true;
 			}
-			if (this->characterOneWins == 2 && !this->lazyAnimationAlreadyTriggered) {
+			if (this->characterOneWins == 2) {
 				//Character One won, char two receives fatality
 				this->characters[1]->setMovement(LAZY_MOVEMENT);
 				this->characters[1]->setCurrentSprite();
 				this->characters[1]->completeMovement();
-				this->lazyAnimationAlreadyTriggered = true;
 			}
-			if (this->characterTwoWins == 2 && !this->lazyAnimationAlreadyTriggered) {
+			if (this->characterTwoWins == 2) {
 				//Character One won, char two receives fatality
 				this->characters[0]->setMovement(LAZY_MOVEMENT);
 				this->characters[0]->setCurrentSprite();
 				this->characters[0]->completeMovement();
-				this->lazyAnimationAlreadyTriggered = true;
 			}
 			//TODO: EL JUGADOR QUE PERDIO DEBE PASAR A ISLAZY
 
