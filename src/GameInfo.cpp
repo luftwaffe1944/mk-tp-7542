@@ -17,6 +17,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->fightAnimationTimer = 40;
 	this->winnerAnimationTimer = 50;
 	this->finishHimAnimationTimer = 30;
+	this->fatalityAnimationTimer = 30;
 	TTF_Init();
 	this->initAnimation = true;
 	this->showFightAnimation = true;
@@ -41,6 +42,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->playingCharacterWinsSound = false;
 	this->playingFinishHimSound  = false;
 	this->lazyAnimationAlreadyTriggered = false;
+	this->showFatalityAnimation = false;
 }
 
 bool GameInfo::load() {
@@ -119,6 +121,9 @@ bool GameInfo::load(SDL_Renderer* r) {
 
 	//finish him sprite
 	TextureManager::Instance()->load(FINISH_HIM_IMAGE_SPRITE, "finishHimSprite", r);
+
+	//fatality sprite
+	TextureManager::Instance()->load(FATALITY_IMAGE_SPRITE, "fatalitySprite", r);
 
 	//character 1 wins
 	charOneWins = this->characters[0]->getName() + "  wins";
@@ -250,7 +255,9 @@ void GameInfo::update() {
 			if (characterTwoWins < 2){
 				this->characters[1]->setMovement(VICTORY_MOVEMENT);
 				this->characters[1]->setCurrentSprite();
-				//this->characters[1]->completeMovement();
+				/*this->characters[0]->setMovement(HINT_FLYING_MOVEMENT);
+				this->characters[0]->setCurrentSprite();*/
+				//this->characters[0]->completeMovement();
 			}
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
 			if (!this->playingCharacterWinsSound && this->characterTwoWins < 2) {
@@ -267,7 +274,9 @@ void GameInfo::update() {
 			if (characterOneWins < 2) {
 				this->characters[0]->setMovement(VICTORY_MOVEMENT);
 				this->characters[0]->setCurrentSprite();
-				//this->characters[0]->completeMovement();
+				/*this->characters[1]->setMovement(HINT_FLYING_MOVEMENT);
+				this->characters[1]->setCurrentSprite();*/
+				//this->characters[1]->completeMovement();
 			}
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
 			if (!this->playingCharacterWinsSound && this->characterOneWins < 2) {
@@ -283,6 +292,12 @@ void GameInfo::update() {
 				this->finishHimAnimationTimer -= 1;
 			} else {
 				this->showFinishHimAnimation = false;
+				this->showFatalityAnimation = true;
+			}
+			if (this->showFatalityAnimation && this->fatalityAnimationTimer > 0) {
+				this->fatalityAnimationTimer -= 1;
+			} else {
+				this->showFatalityAnimation = false;
 			}
 			//finish him logic
 			this->showWinnerAnimation = false; //Cuando este terminada la funcionalidad de finish him quitar esta linea
@@ -444,6 +459,13 @@ void GameInfo::draw() {
 	if (this->showFinishHimAnimation) {
 		TextureManager::Instance()->draw("finishHimSprite", pParams->getWidth()/2 - finishHimWidth/2,
 				GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - finishHimHeight, finishHimWidth, finishHimHeight, render);
+	}
+
+	float fatalityWidth = 60;
+	float fatalityHeight = 20;
+	if (this->showFatalityAnimation) {
+		TextureManager::Instance()->draw("fatalitySprite", pParams->getWidth()/2 - fatalityWidth/2,
+				GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fatalityHeight, fatalityWidth, fatalityHeight, render);
 	}
 }
 
