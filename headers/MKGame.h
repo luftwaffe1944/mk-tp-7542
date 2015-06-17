@@ -136,6 +136,8 @@ public:
 	bool menuGame;
 	bool menuCharacter;
 
+	bool showFatality = false;
+
 	void getJoystickInput(SDL_Event event);
 	void handleAI();
 };

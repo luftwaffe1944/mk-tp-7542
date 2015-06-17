@@ -1155,6 +1155,7 @@ void Character::doFinisher() {
 			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1) {
 				sleepSafe(90000000);
 				this->finishMove->onPostFinish(this->name);
+				MKGame::Instance()->showFatality = true;
 			}
 
 			//Subzero hace la fatality
