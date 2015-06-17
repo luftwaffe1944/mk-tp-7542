@@ -69,6 +69,7 @@ private:
 	bool playingRoundSound;
 	bool playingFightSound;
 	bool playingCharacterWinsSound;
+	bool playingFinishHimSound;
 	Timer timer;
 	float msTime;
 	std::string idTimer;

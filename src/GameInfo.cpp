@@ -39,6 +39,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->playingRoundSound = false;
 	this->playingFightSound = false;
 	this->playingCharacterWinsSound = false;
+	this->playingFinishHimSound  = false;
 }
 
 bool GameInfo::load() {
@@ -202,6 +203,7 @@ void GameInfo::prepareNewRound(){
 	this->playingRoundSound = false;
 	this->playingFightSound = false;
 	this->playingCharacterWinsSound = false;
+	this->playingFinishHimSound  = false;
 	this->characters[0]->setEnergy(1.0f);
 	this->characters[1]->setEnergy(1.0f);
 	this->characters[0]->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - this->characters[0]->getWidth() * this->characters[0]->getRatioX()/2);
@@ -245,7 +247,7 @@ void GameInfo::update() {
 			}
 			this->charOneAlreadyDeath = true;
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
-			if (!this->playingCharacterWinsSound) {
+			if (!this->playingCharacterWinsSound && this->characterTwoWins < 2) {
 				SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
 				this->playingCharacterWinsSound = true;
 			}
@@ -257,7 +259,7 @@ void GameInfo::update() {
 			}
 			this->charTwoAlreadyDeath = true;
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
-			if (!this->playingCharacterWinsSound) {
+			if (!this->playingCharacterWinsSound && this->characterOneWins < 2) {
 				SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
 				this->playingCharacterWinsSound = true;
 			}
@@ -265,28 +267,34 @@ void GameInfo::update() {
 		loadTextTimer();
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
 			//finish him logic
+			this->showWinnerAnimation = false; //Cuando este terminada la funcionalidad de finish him quitar esta linea
 			this->showFinishHimAnimation = true;
+			if (!this->playingFinishHimSound) {
+				SoundManager::Instance()->playSoundByAction("finishHim",0);
+				this->playingFinishHimSound  = true;
+			}
 			//TODO: EL JUGADOR QUE PERDIO DEBE PASAR A ISLAZY
 
-		}
-		//MKGame::Instance()->setOnReset();
-
-		if (this->winnerAnimationTimer > 0) {
-			if (this->showWinnerAnimation) {
-				this->timerPause();
-				this->winnerAnimationTimer -= 1;
-			}
 		} else {
-			this->showWinnerAnimation = false;
-		}
-		if (!this->roundOneCompleted && !this->showWinnerAnimation) {
-			this->roundOneCompleted = true;
-			this->prepareNewRound();
-		} else if (!this->roundTwoCompleted && !this->showWinnerAnimation) {
-			this->roundTwoCompleted = true;
-			this->prepareNewRound();
-		} else if (!this->roundThreeCompleted && !this->showWinnerAnimation) {
 			//MKGame::Instance()->setOnReset();
+
+			if (this->winnerAnimationTimer > 0) {
+				if (this->showWinnerAnimation) {
+					this->timerPause();
+					this->winnerAnimationTimer -= 1;
+				}
+			} else {
+				this->showWinnerAnimation = false;
+			}
+			if (!this->roundOneCompleted && !this->showWinnerAnimation) {
+				this->roundOneCompleted = true;
+				this->prepareNewRound();
+			} else if (!this->roundTwoCompleted && !this->showWinnerAnimation) {
+				this->roundTwoCompleted = true;
+				this->prepareNewRound();
+			} else if (!this->roundThreeCompleted && !this->showWinnerAnimation) {
+				//MKGame::Instance()->setOnReset();
+			}
 		}
 	}
 	triggerSounds();

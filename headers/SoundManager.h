@@ -155,6 +155,11 @@ private:
 				{
 						"roundThree"
 				}
+		},
+		{"finishHim",
+				{
+						"finishHim"
+				}
 		}
 	};
 };
