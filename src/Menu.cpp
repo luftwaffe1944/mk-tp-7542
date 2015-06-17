@@ -383,7 +383,7 @@ void Menu::showTextBox() {
 	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx() / ratioY;
 
 
-	if (renderTextOne && !nameTwoSet)
+	if (renderTextOne)
 	{
 		//Text is not empty
 		if (playerOneName != "")
@@ -395,7 +395,7 @@ void Menu::showTextBox() {
 		TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6, windowsHeight*0.80, windowsWidth / 6, 20, render);
 	}
 
-	if (renderTextTwo && !nameOneSet)
+	if (renderTextTwo)
 	{
 		//Text is not empty
 		if (playerTwoName != "")
@@ -464,7 +464,7 @@ std::string Menu::identify_event() {
 
 					buttonD();
 
-				else if( event.key.keysym.sym == SDLK_RETURN || InputControl::Instance()->someJoyKickButtonPressed(1)) {
+				else if( event.key.keysym.sym == SDLK_RETURN || InputControl::Instance()->someJoyKickButtonPressed(0)) {
 
 					this->playerOneSelected = true;
 					this->playerOneName = selected->text;
@@ -520,7 +520,7 @@ std::string Menu::identify_event() {
 			}
 
 			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
-				
+
 				//Handle backspace
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
 				{
@@ -530,6 +530,7 @@ std::string Menu::identify_event() {
 				}
 				if (event.key.keysym.sym == SDLK_RETURN)
 				{
+					renderTextOne = true;
 					nameOneSet = true;
 				}
 			}
@@ -539,9 +540,9 @@ std::string Menu::identify_event() {
 					renderTextOne = true;
 			}
 
-			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet) {
+			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet && nameOneSet) {
 				//Handle backspace
-				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
+				if (event.key.keysym.sym == SDLK_BACKSPACE && playerTwoName.length() > 0)
 				{
 					//lop off character
 					playerTwoName.pop_back();
@@ -549,11 +550,12 @@ std::string Menu::identify_event() {
 				}
 				if (event.key.keysym.sym == SDLK_RETURN)
 				{
+					renderTextOne = true;
 					nameTwoSet = true;
 				}
 			}
 
-			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet) {
+			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet && nameOneSet) {
 					playerTwoName += event.text.text;
 					renderTextTwo = true;
 			}
@@ -562,7 +564,7 @@ std::string Menu::identify_event() {
 
 			if (nameOneSet && nameTwoSet) {
 				SDL_StopTextInput();
-				return "selected: " + selected->text + " " + selectedTwo->text;
+//				return "selected: " + selected->text + " " + selectedTwo->text;
 			}
 
 		}
