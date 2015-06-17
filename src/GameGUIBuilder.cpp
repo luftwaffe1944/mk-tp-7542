@@ -500,13 +500,13 @@ void jsonGetJoysticks(Json::Value root) {
 
 	tObject1->setReleaser(characters[0]);
 	tObject1->setReceiver(characters[1]);
-	tObject1->setImagePath("images/subzero/throwable.gif");
+	tObject1->setImagePath("images/subzero/throwable.png");
 	MKGame::Instance()->getObjectList().push_back(tObject1);
 
 
 	tObject2->setReleaser(characters[1]);
 	tObject2->setReceiver(characters[0]);
-	tObject2->setImagePath("images/subzero/throwable.gif");
+	tObject2->setImagePath("images/subzero/throwable.png");
 	MKGame::Instance()->getObjectList().push_back(tObject2);
 
 

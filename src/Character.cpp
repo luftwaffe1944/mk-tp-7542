@@ -135,6 +135,26 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9, this->isAltPlayer, this->altColor);
 	Sprite* spriteGetUp = new Sprite(this->name+this->playerNumber+GET_UP_SUFFIX, characterPath+GET_UP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7, this->isAltPlayer, this->altColor);
+	Sprite* spriteSweep = new Sprite(this->name+this->playerNumber+SWEEP_SUFFIX, characterPath+SWEEP_SPRITE,
+				renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteFire = new Sprite(this->name+this->playerNumber+FIRE_SUFFIX, characterPath+FIRE_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteBabality = new Sprite(this->name+this->playerNumber+BABALITY_SUFFIX, characterPath+BABALITY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
+	Sprite* spriteReptile = new Sprite(this->name+this->playerNumber+REPTILE_SUFFIX, characterPath+REPTILE_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
+	Sprite* spriteBurning = new Sprite(this->name+this->playerNumber+BURNING_SUFFIX, characterPath+BURNING_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
+	Sprite* spriteHeadless = new Sprite(this->name+this->playerNumber+HEADLESS_SUFFIX, characterPath+HEADLESS_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteHeadlessBlood = new Sprite(this->name+this->playerNumber+HEADLESS_BLOOD_SUFFIX, characterPath+HEADLESS_BLOOD_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
+	Sprite* spriteFriendship = new Sprite(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, characterPath+FRIENDSHIP_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 15, this->isAltPlayer, this->altColor);
+	Sprite* spriteVictory = new Sprite(this->name+this->playerNumber+VICTORY_SUFFIX, characterPath+VICTORY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteLazy = new Sprite(this->name+this->playerNumber+LAZY_SUFFIX, characterPath+LAZY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -162,6 +182,17 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_FALLING_UNDER_KICK_SUFFIX, spriteBeingHintFallingUnderKick));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HINT_FLYING_SUFFIX, spriteHintFlying));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+GET_UP_SUFFIX, spriteGetUp));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SWEEP_SUFFIX, spriteSweep));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FIRE_SUFFIX, spriteFire));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BABALITY_SUFFIX, spriteBabality));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+REPTILE_SUFFIX, spriteReptile));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_SUFFIX, spriteHeadless));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_BLOOD_SUFFIX, spriteHeadlessBlood));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, spriteFriendship));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+VICTORY_SUFFIX, spriteVictory));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+LAZY_SUFFIX, spriteLazy));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BURNING_SUFFIX, spriteBurning));
+
 	return true;
 }
 
@@ -171,11 +202,22 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking) {
+	if(this->isDucking || this->isHeadless || this->isFriendship || this->isVictory || this->isBabality) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
-			currentFrame = currentSprite->getNextForwardingFrame();
+			if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(4, 8, 6);
+			}
+			else if (this->getMovement() == REPTILE_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndShowFrame(3);
+			}
+			else if (this->getMovement() == BURNING_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(4, 9, 5);
+			}
+			else {
+				currentFrame = currentSprite->getNextForwardingFrame();
+			}
 		} else {
 			currentFrame = currentSprite->getNextBackwardingFrame();
 		}
@@ -244,7 +286,8 @@ void Character::draw() {
 bool Character::shouldMoveForward() {
 	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
 			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))
-			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper) {
+			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper || isReptile
+			|| isFriendship || isHeadlessBlood || isBurning) {
 		return true;
 	} else {
 		return false;
@@ -265,16 +308,19 @@ bool Character::reachedWindowRightLimit(){
 void Character::fixOrientation() {
 	Character * p1 = GameGUI::getInstance()->getCharacters()[0];
 	Character * p2 = GameGUI::getInstance()->getCharacters()[1];
-	if ( p1->posXBox < p2->posXBox) {
-		p1->isRightOriented = true;
-		p2->isRightOriented = false;
-	} else {
-		p1->isRightOriented = false;
-		p2->isRightOriented = true;
+	if ((p1->movement != SWEEP_MOVEMENT && p2->movement != SWEEP_MOVEMENT)) {
+		if (p1->posXBox < p2->posXBox) {
+			p1->isRightOriented = true;
+			p2->isRightOriented = false;
+		} else {
+			p1->isRightOriented = false;
+			p2->isRightOriented = true;
+		}
 	}
 }
 
 void Character::update() {
+
 	this->previousMovement = getMovement();
 	this->beingPushed = false;
 	if (this->orientationPosXFix != 0) { //acomoda la posX si se desplaza la cámara
@@ -293,7 +339,48 @@ void Character::update() {
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
-	if (isBeingHintStanceUp){
+	if (this->isFinishingMove){
+		doFinisher();
+	}
+
+	if (isFriendship) {
+		isFriendship = true;
+	}
+	else if (isReptile){
+		isReptile = true;
+	}
+	else if (isBurning){
+		setMovement(BURNING_MOVEMENT);
+		setCurrentSprite();
+	}
+	else if (isLazy){
+		completeMovement();
+	}
+	else if (isVictory) {
+		isVictory = true;
+	}
+	else if (isSubzeroFiring) {
+		completeMovement();
+	}
+	else if (isHeadless){
+		isHeadless = true;
+	}
+
+	else if (isHeadlessBlood){
+		setMovement(HEADLESS_BLOOD_MOVEMENT);
+		setCurrentSprite();
+//		completeMovement();
+	}
+
+	else if (isBabality){
+		isBabality = true;
+	}
+
+	else if (isSubzeroSweeping){
+		sweepMovement();
+	}
+
+	else if (isBeingHintStanceUp){
 		completeMovement();
 	}
 
@@ -588,6 +675,9 @@ void Character::update() {
 			break;
 		case FIRST_PLAYER_FIRE:
 			this->fire = true;
+			this->setMovement(FIRE_MOVEMENT);
+			setCurrentSprite();
+			fireMovement();
 			SoundManager::Instance()->playSoundByAction("fire",0);
 			break;
 		case FIRST_PLAYER_DUCK_FIRE:
@@ -596,6 +686,40 @@ void Character::update() {
 			this->isDucking = true;
 			this->fire = true;
 			SoundManager::Instance()->playSoundByAction("fire",0);
+			break;
+		case SUBZERO_SWEEP:
+			this->setMovement(SWEEP_MOVEMENT);
+			setCurrentSprite();
+			sweepMovement();
+			break;
+		case BABALITY:
+			this->finishMove = new Babality();
+			doFinisher();
+			break;
+		case FATALITY:
+			this->finishMove = new Fatality();
+			doFinisher();
+			break;
+		case HEADLESS:
+			this->setMovement(HEADLESS_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			break;
+		case HEADLESS_BLOOD:
+			this->setMovement(HEADLESS_BLOOD_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			break;
+		case FRIENDSHIP:
+			this->setMovement(FRIENDSHIP_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			SoundManager::Instance()->playSoundByAction("friendship", 0);
+			break;
+		case LAZY:
+			this->setMovement(LAZY_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
 			break;
 		case NO_INPUT:
 			this->setMovement(STANCE);
@@ -607,7 +731,7 @@ void Character::update() {
 	this->updateShapesOnStatus();
 
 	this->smoothMovPosX();
-	SDL_Delay(25);
+	SDL_Delay(35);
 }
 
 void Character::clearMovementsFlags(){
@@ -641,6 +765,18 @@ void Character::clearMovementsFlags(){
 	isHintFlying = false;
 	isGettingUp = false;
 	isHintFlyingUpper = false;
+	isSubzeroSweeping = false;
+	isBabality = false;
+	isFatality = false;
+	isHeadless = false;
+	isHeadlessBlood = false;
+	isFriendship = false;
+	isSubzeroFiring = false;
+	isVictory = false;
+	isBurning = false;
+	isLazy = false;
+	isFinishingMove = false;
+	isReptile = false;
 	//this->beingPushed = false;
 }
 
@@ -886,6 +1022,24 @@ void Character::walkRight() {
 
 }
 
+void Character::sweepMovement() {
+	isSubzeroSweeping = true;
+
+	if (isRightOriented && !this->reachedWindowRightLimit()){
+		positionX = positionX + (SWEEP_X_SPEED * ratioX);
+	}
+	else if (!isRightOriented && !this->reachedWindowLeftLimit()){
+		positionX = positionX - (SWEEP_X_SPEED * ratioX);
+
+	}else {
+		isSubzeroSweeping = false;
+	}
+}
+
+void Character::fireMovement() {
+
+}
+
 void Character::walkLeft() {
 	isWalkingLeft = true;
 	if (!this->reachedWindowLeftLimit()){
@@ -958,13 +1112,86 @@ void Character::completeMovement(){
 	int moveCounter = movesCounter.at(getMovement());
 	int spriteAmount = currentSprite->getFramesAmount();
 	if (moveCounter == spriteAmount) {
-		setMoveFlag(false);
+		if (!isLazy) setMoveFlag(false);
 		if (isTouchingGround(positionY)){
-			clearMovementsFlags();
+			if (!isLazy) clearMovementsFlags();
 		}
 		resetCounter(getMovement());
-		this->movement="";
+		if (!isLazy) this->movement="";
 	}
+}
+
+void sleepSafe(int limit);
+
+void Character::doFinisher() {
+
+	isFinishingMove = true;
+
+	Character* victim = getVictim();
+
+	//FATALITY
+	if (finishMove->getID() == 0) {
+
+		//Scorpion hace la fatality
+		if (this->name == "scorpion") {
+
+			if (victim->isLazy) {
+				this->finishMove->onPreFinish(this->name);
+
+			} else if (victim->isBurning) {
+				this->finishMove->onFinish(this->name);
+
+			}
+			if (victim->isBurning && victim->currentSprite->isLooped
+					&& victim->currentSprite->getCurrentFrame()
+							== victim->currentSprite->getFramesAmount() - 1) {
+				sleepSafe(90000000);
+				this->finishMove->onPostFinish(this->name);
+			}
+
+			//Subzero hace la fatality
+		} else {
+
+			if (victim->isLazy && this->getMovement() != REPTILE_MOVEMENT) {
+				this->finishMove->onPreFinish(this->name);
+
+			}
+			if (victim->isLazy
+					&& this->currentSprite->getCurrentFrame()
+							== this->currentSprite->getFramesAmount() - 1) {
+				this->finishMove->onFinish(this->name);
+
+			} else if (victim->isHeadlessBlood
+					&& victim->currentSprite->isLooped
+					&& victim->currentSprite->getCurrentFrame()
+							== victim->currentSprite->getFramesAmount() - 1) {
+				this->finishMove->onPostFinish(this->name);
+			}
+
+		}
+	}
+
+
+	//BABALITY
+	if (finishMove->getID() == 1) {
+
+		if (victim->isLazy) {
+			this->finishMove->onPreFinish(this->name);
+		}
+
+		else if (!this->isVictory && victim->isBabality && victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1) {
+
+			this->finishMove->onFinish(this->name);
+
+		}
+
+//		else if(victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1){
+//			this->finishMove->onPostFinish(this->name);
+//
+//		}
+
+	}
+
 }
 
 
@@ -978,6 +1205,7 @@ void Character::incrementCounter(string key){
 	}
 	movesCounter.insert({key, value});
 }
+
 
 void Character::resetCounter(string key){
 	movesCounter.erase(key);
@@ -1120,7 +1348,45 @@ void Character::setCurrentSprite(){
 		} else if (this->getMovement() == GET_UP_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+GET_UP_SUFFIX];
 
-		} else{
+		} else if (this->getMovement() == SWEEP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+SWEEP_SUFFIX];
+
+		} else if (this->getMovement() == FIRE_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+FIRE_SUFFIX];
+
+		} else if (this->getMovement() == BABALITY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ BABALITY_SUFFIX];
+
+		} else if (this->getMovement() == REPTILE_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ REPTILE_SUFFIX];
+		}
+
+		else if (this->getMovement() == HEADLESS_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ HEADLESS_SUFFIX];
+		}
+
+		else if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ HEADLESS_BLOOD_SUFFIX];
+		}
+
+		else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ FRIENDSHIP_SUFFIX];
+		}
+
+		else if (this->getMovement() == VICTORY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ VICTORY_SUFFIX];
+		}
+
+		else if (this->getMovement() == LAZY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ LAZY_SUFFIX];
+		}
+
+		else if (this->getMovement() == BURNING_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ BURNING_SUFFIX];
+			isLazy = false;
+		}
+
+		else{
 			//TODO: review
 		}
 }
@@ -1177,7 +1443,37 @@ void Character::setMoveFlag(bool trueOrFalse){
 	} else if (this->getMovement() == GET_UP_MOVEMENT) {
 		isGettingUp = trueOrFalse;
 
-	} else {
+	} else if (this->getMovement() == SWEEP_MOVEMENT) {
+		isSubzeroSweeping = trueOrFalse;
+
+	} else if (this->getMovement() == FIRE_MOVEMENT) {
+		isSubzeroSweeping = trueOrFalse;
+
+	} else if (this->getMovement() == BABALITY_MOVEMENT) {
+		isBabality = trueOrFalse;
+	}
+	else if (this->getMovement() == REPTILE_MOVEMENT) {
+		isReptile = trueOrFalse;
+	}
+	else if (this->getMovement() == HEADLESS_MOVEMENT) {
+		isHeadless = trueOrFalse;
+	}
+	else if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT) {
+		isHeadlessBlood = trueOrFalse;
+	}
+	else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
+		isFriendship = trueOrFalse;
+	}
+	else if (this->getMovement() == VICTORY_MOVEMENT) {
+		isVictory = trueOrFalse;
+	}
+	else if (this->getMovement() == LAZY_MOVEMENT) {
+		isLazy = trueOrFalse;
+	}
+	else if (this->getMovement() == BURNING_MOVEMENT) {
+		isBurning = trueOrFalse;
+	}
+	else {
 		//TODO: review
 	}
 
@@ -1496,6 +1792,12 @@ void Character::updateShapesOnStatus(){
 		if (true){secY=(centerY+charHeight/4)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/4)-(heightBox/2)+(heightBox2/2);}
 		posXBox2 = secX - widthBox2/2;
 		posYBox2 = secY - heightBox2/2;
+	} else if (isSubzeroSweeping) {
+		this->updateCShapesPosition(centerX, (centerY + charHeight / 3), charWidht / 1.8, charHeight / 4);
+		posXBox = centerX - widthBox / 2;
+		posYBox = (centerY + charHeight / 3) - heightBox / 2;
+		widthBox = charWidht / 1.8;
+		heightBox = charHeight / 4;
 	}else{
 		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3,charHeight*3/4);
 		posXBox = centerX - widthBox/2;
@@ -1573,4 +1875,14 @@ void Character::talk(std::string action, int repetitions) {
 	if (this->movement != this->previousMovement) {
 		SoundManager::Instance()->playSoundByAction(action,repetitions);
 	}
+}
+
+Character* Character::getVictim(){
+
+	Character* character = GameGUI::getInstance()->getCharacters()[0];
+	if (character->name == this->name){
+		return GameGUI::getInstance()->getCharacters()[1];
+	}
+	return character;
+
 }

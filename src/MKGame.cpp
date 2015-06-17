@@ -44,6 +44,7 @@ bool MKGame::init(GameGUI* gameGui) {
 
 				/*vector<SDLObjectGUI*> objects = getObjectList();
 				for (unsigned int i = 0; i < objects.size(); i++) {
+					SDLObjectGUI* object = objects[i];
 					objects[i]->load(m_pRenderer);
 				}*/
 				//SecuenceInputManager::Instance()->load();

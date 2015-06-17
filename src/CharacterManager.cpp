@@ -129,6 +129,11 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 
 		}
 
+		else if (character1->getMovement() == SWEEP_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
+			character2->setMovement(HINT_FLYING_MOVEMENT);
+			character1->clearMovementsFlags();
+		}
+
 		//GOLPES CHARACTER 2
 		if ((character2->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
@@ -165,6 +170,11 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character2->talk("uppercut");
 			int random = rand() % 3;
 			if (random == 1)  character1->talk("toasty");
+		}
+
+		else if (character2->getMovement() == SWEEP_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
+				character1->setMovement(HINT_FLYING_MOVEMENT);
+				character2->clearMovementsFlags();
 		}
 
 		bool rightOrientation = false;

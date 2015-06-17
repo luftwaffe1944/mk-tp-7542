@@ -40,13 +40,13 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 
 //Draw collitionable boxes
-const bool DRAW_COLLITIONABLE_BOXES = true;
+const bool DRAW_COLLITIONABLE_BOXES = false;
 
 //Throwable Speed Object
 #define OBJECT_SPEED 120
 
 //IA
-#define IDLE_CHANCE 40
+#define IDLE_CHANCE 100
 
 //Sounds
 #define SFX_JUMP "../sounds/sfx/0897.ogg"
@@ -116,7 +116,19 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define HINT_FLYING_MOVEMENT "hintFlying"
 #define HINT_FLYING_UPPER_MOVEMENT "hintFlyingUpper"
 #define GET_UP_MOVEMENT "getUp"
+#define SWEEP_MOVEMENT "sweep"
+#define FIRE_MOVEMENT "fire"
+#define BABALITY_MOVEMENT "babality"
+#define FATALITY_MOVEMENT "fatality"
+#define HEADLESS_MOVEMENT "headless"
+#define HEADLESS_BLOOD_MOVEMENT "headless_blood"
+#define BURNING_MOVEMENT "burning"
+#define LAZY_MOVEMENT "lazy"
+#define FRIENDSHIP_MOVEMENT "friendship"
+#define VICTORY_MOVEMENT "victory"
+#define REPTILE_MOVEMENT "reptile"
 #define JUMPING_X_SPEED 4
+#define SWEEP_X_SPEED 8
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
@@ -144,6 +156,17 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BEING_HINT_FALLING_UNDER_KICK_SUFFIX "beingHintFallingUnderKick"
 #define HINT_FLYING_SUFFIX "hintFlying"
 #define GET_UP_SUFFIX "getUp"
+#define SWEEP_SUFFIX "sweep"
+#define FIRE_SUFFIX "fire"
+#define BABALITY_SUFFIX "babality"
+#define FATALITY_SUFFIX "fatality"
+#define HEADLESS_SUFFIX "headless"
+#define HEADLESS_BLOOD_SUFFIX "headless_blood"
+#define BURNING_SUFFIX "burning"
+#define FRIENDSHIP_SUFFIX "friendship"
+#define VICTORY_SUFFIX "victory"
+#define LAZY_SUFFIX "lazy"
+#define REPTILE_SUFFIX "reptile"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -175,6 +198,17 @@ const string BEING_HINT_STANCE_DOWN_SPRITE = "/hintStance2.png";
 const string BEING_HINT_FALLING_UNDER_KICK_SPRITE = "/hintFallingUnderKick.png";
 const string HINT_FLYING_SPRITE = "/hintSuperDamage2.png";
 const string GET_UP_SPRITE ="/getUp.png";
+const string SWEEP_SPRITE ="/sweep.png";
+const string FIRE_SPRITE = "/fire.png";
+const string BABALITY_SPRITE ="/babality.png";
+const string FATALITY_SPRITE ="/fatality.png";
+const string BURNING_SPRITE ="/burning.png";
+const string HEADLESS_SPRITE ="/headless.png";
+const string HEADLESS_BLOOD_SPRITE ="/headless_blood.png";
+const string FRIENDSHIP_SPRITE ="/friendship.png";
+const string VICTORY_SPRITE ="/victory.png";
+const string LAZY_SPRITE ="/lazy.png";
+const string REPTILE_SPRITE ="/reptile.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string FIGHT_IMAGE_SPRITE = "images/fight/fight.png";

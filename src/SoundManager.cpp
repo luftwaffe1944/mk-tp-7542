@@ -84,6 +84,15 @@ void SoundManager::playSound(std::string id, int loop) {
 	Mix_PlayChannel(-1, m_sfxs[id], loop);
 }
 
+void SoundManager::playSoundOnce(std::string id, int loop) {
+	int containKey = soundsPlayed.count(id);
+	if (containKey == 0) {
+		Mix_PlayChannel(-1, m_sfxs[id], loop);
+	}
+	incrementSound(id);
+
+}
+
 
 void SoundManager::loadBattleSounds() {
 	for (std::map<std::string, std::vector<std::string>>::iterator iter = situationalSounds.begin() ; iter  != situationalSounds.end() ; ++iter)
@@ -99,4 +108,15 @@ void SoundManager::playSoundByAction(std::string action, int loop) {
 	int randPos = rand() % situationalSounds.at(action).size();
 	std::string idSound = situationalSounds.at(action)[randPos];
 	playSound(idSound,loop);
+}
+
+void SoundManager::incrementSound(std::string id) {
+	int value = 1;
+	int containKey = soundsPlayed.count(id);
+	if (containKey == 1) {
+		value = soundsPlayed.at(id);
+		soundsPlayed.erase(id);
+		value++;
+	}
+	soundsPlayed.insert( { id, value });
 }

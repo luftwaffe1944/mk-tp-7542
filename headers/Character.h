@@ -19,11 +19,17 @@
 #include "AlternativeColor.h"
 #include "Collitionable.h"
 #include "DamageObject.h"
+#include "FinishMove.h"
+#include "Fatality.h"
+#include "Babality.h"
+#include "Friendship.h"
+
 using namespace std;
 
 
 class Character : public SDLObjectGUI, public Collitionable {
 private:
+	FinishMove* finishMove;
 	Sprite* currentSprite;
 	int orientationPosXFix = 0;
 	std::string name;
@@ -69,9 +75,20 @@ private:
 	bool isGettingUp;
 	bool isHintFlying;
 	bool isHintFlyingUpper;
-
+	bool isSubzeroSweeping;
+	bool isSubzeroFiring;
+	bool isFatality;
 
 public:
+	bool isBabality;
+	bool isHeadless;
+	bool isHeadlessBlood;
+	bool isFriendship;
+	bool isBurning;
+	bool isFinishingMove;
+	bool isReptile;
+	bool isVictory;
+	bool isLazy;
 	static std::map<std::string,int> movesCounter;
 	Character();
 	virtual bool load(SDL_Renderer* );
@@ -108,6 +125,8 @@ public:
 	void flyFallingUpper();
 	void fixPosXStandingCharacter();
 	void setFixPosXStandingCharacter( int orientation);
+	void sweepMovement();
+	void fireMovement();
 
 	virtual void getCNextPosition(float* nextPositionX, float* nextPositionY); //redefinir virtual
 
@@ -136,6 +155,8 @@ public:
 	float getPosXBox2UL();
 	float getWidthBoxUL();
 	float getWidthBox2UL();
+	void doFinisher();
+	Character* getVictim();
 
 	float posXBox;
 	float posYBox;
@@ -166,6 +187,7 @@ public:
 	float getJumpDistance();
 	std::string previousMovement;
 	void talk(std::string action, int repetitions = 0);
+
 };
 
 #endif /* CHARACTER_H_ */
