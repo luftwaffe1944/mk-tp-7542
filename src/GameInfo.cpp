@@ -208,8 +208,8 @@ void GameInfo::update() {
 	loadTextTimer();
 	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f ||
 			this->timer.getTicks() > 99000.f ) {
-		this->characters[0]->clearMovementsFlags();
-		this->characters[1]->clearMovementsFlags();
+	//	this->characters[0]->clearMovementsFlags();
+//		this->characters[1]->clearMovementsFlags();
 		MKGame::Instance()->setAllowPlayerMovements(false);
 		if (this->characters[0]->getEnergy() <= 0.0f ||
 				this->characters[0]->getEnergy() <= this->characters[1]->getEnergy() ) {
