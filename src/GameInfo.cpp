@@ -266,12 +266,25 @@ void GameInfo::update() {
 		}
 		loadTextTimer();
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
+			MKGame::Instance()->setAllowPlayerMovements(true);
 			//finish him logic
 			this->showWinnerAnimation = false; //Cuando este terminada la funcionalidad de finish him quitar esta linea
 			this->showFinishHimAnimation = true;
 			if (!this->playingFinishHimSound) {
 				SoundManager::Instance()->playSoundByAction("finishHim",0);
 				this->playingFinishHimSound  = true;
+			}
+			if (this->characterOneWins == 2) {
+				//Character One won, char two receives fatality
+				this->characters[1]->setMovement(LAZY_MOVEMENT);
+				this->characters[1]->setCurrentSprite();
+				this->characters[1]->completeMovement();
+			}
+			if (this->characterTwoWins == 2) {
+				//Character One won, char two receives fatality
+				this->characters[0]->setMovement(LAZY_MOVEMENT);
+				this->characters[0]->setCurrentSprite();
+				this->characters[0]->completeMovement();
 			}
 			//TODO: EL JUGADOR QUE PERDIO DEBE PASAR A ISLAZY
 
