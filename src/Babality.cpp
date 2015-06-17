@@ -26,10 +26,11 @@ void sleepSafe(int limit){
 
 void Babality::onPreFinish(std::string name){
 	SoundManager::Instance()->playSoundOnce("pre_babality", 0);
-	sleepSafe(20000000);
+	sleepSafe(90000000);
 	Character* victim = getVictim(name);
+	Character* winner = getWinner(name);
 
-
+	winner->isBabality = true;
 	victim->setMovement(BABALITY_MOVEMENT);
 	victim->isLazy = false;
 	victim->setCurrentSprite();
@@ -38,7 +39,7 @@ void Babality::onPreFinish(std::string name){
 
 void Babality::onFinish(std::string name){
 	Character* winner = getWinner(name);
-	SoundManager::Instance()->playSoundOnce("baby_cry", 1);
+	SoundManager::Instance()->playSoundOnce("baby_cry", 0);
 	winner->setMovement(VICTORY_MOVEMENT);
 	winner->setCurrentSprite();
 	winner->isVictory = true;
@@ -46,7 +47,11 @@ void Babality::onFinish(std::string name){
 }
 
 void Babality::onPostFinish(std::string name){
-	SoundManager::Instance()->playSoundOnce("babality_voice", 1);
+	sleepSafe(90000000);
+	SoundManager::Instance()->playSoundOnce("post_babality", 0);
+	sleepSafe(90000000);
+	SoundManager::Instance()->playSoundOnce("babality_voice", 0);
+
 }
 
 

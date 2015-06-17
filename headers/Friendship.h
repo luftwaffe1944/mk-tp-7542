@@ -9,6 +9,7 @@
 #define FRIENDSHIP_H_
 
 #include "FinishMove.h"
+#include "Character.h"
 
 class Friendship : public FinishMove{
 public:

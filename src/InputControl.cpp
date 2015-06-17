@@ -1042,6 +1042,10 @@ void InputControl::detectSpecialMove(int joyNum){
 			cout<<"first player - special move: "<< specialMove<<"\n";
 			if (specialMove==0){
 				this->firstPlayerMove = FATALITY;
+			}else if(specialMove ==1){
+				this->firstPlayerMove = BABALITY;
+			} else if (specialMove == 2) {
+				this->firstPlayerMove = FRIENDSHIP;
 			}
 		}
 	}else if ((joyNum==1) && !(specialMove==-1)){
