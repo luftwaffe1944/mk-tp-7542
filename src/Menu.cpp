@@ -520,7 +520,7 @@ std::string Menu::identify_event() {
 			}
 
 			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
-
+				cout << "name one" << endl;
 				//Handle backspace
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
 				{
@@ -528,7 +528,7 @@ std::string Menu::identify_event() {
 					playerOneName.pop_back();
 					renderTextOne = true;
 				}
-				if (event.key.keysym.sym == SDLK_RETURN)
+				if (event.key.keysym.sym == SDLK_RETURN && event.key.repeat == 0)
 				{
 					renderTextOne = true;
 					nameOneSet = true;
@@ -536,6 +536,7 @@ std::string Menu::identify_event() {
 			}
 
 			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
+				cout << "name Two" << endl;
 					playerOneName += event.text.text;
 					renderTextOne = true;
 			}
@@ -548,7 +549,7 @@ std::string Menu::identify_event() {
 					playerTwoName.pop_back();
 					renderTextTwo = true;
 				}
-				if (event.key.keysym.sym == SDLK_RETURN)
+				if (event.key.keysym.sym == SDLK_RETURN && event.key.repeat == 0)
 				{
 					renderTextTwo = true;
 					nameTwoSet = true;
@@ -562,10 +563,10 @@ std::string Menu::identify_event() {
 
 			this->showTextBox();
 
-			if (nameOneSet && nameTwoSet) {
-				SDL_StopTextInput();
+//			if (nameOneSet && nameTwoSet) {
+//				SDL_StopTextInput();
 //				return "selected: " + selected->text + " " + selectedTwo->text;
-			}
+//			}
 
 		}
 	}
