@@ -16,7 +16,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters) :
 	this->percent = 0.0f;
 	this->fightAnimationTimer = 40;
 	this->winnerAnimationTimer = 50;
-	this->finishHimAnimationTimer = 50;
+	this->finishHimAnimationTimer = 30;
 	TTF_Init();
 	this->initAnimation = true;
 	this->showFightAnimation = true;
@@ -267,10 +267,15 @@ void GameInfo::update() {
 		}
 		loadTextTimer();
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
+			this->showFinishHimAnimation = true;
 			MKGame::Instance()->setAllowPlayerMovements(true);
+			if (this->finishHimAnimationTimer > 0) {
+				this->finishHimAnimationTimer -= 1;
+			} else {
+				this->showFinishHimAnimation = false;
+			}
 			//finish him logic
 			this->showWinnerAnimation = false; //Cuando este terminada la funcionalidad de finish him quitar esta linea
-			this->showFinishHimAnimation = true;
 			if (!this->playingFinishHimSound) {
 				SoundManager::Instance()->playSoundByAction("finishHim",0);
 				this->playingFinishHimSound  = true;
