@@ -478,15 +478,22 @@ std::string Menu::identify_event() {
 
 				else if( event.key.keysym.sym == SDLK_RETURN || InputControl::Instance()->someJoyKickButtonPressed(1)) {
 
-					this->playerOneSelected = true;
-					this->playerOneName = selected->text;
-					if (textMenu) return selected->text;
+					if (textMenu) {
+						return selected->text;
+					} else {
+						this->playerOneSelected = true;
+						this->playerOneName = selected->text;
+					}
 					break;
 				}
-				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(0)) {
-					this->playerTwoSelected = true;
-					this->playerTwoName = selectedTwo->text;
-					if (textMenu) return selected->text;
+				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(1)) {
+
+					if (textMenu) {
+						return selected->text;
+					} else {
+						this->playerTwoSelected = true;
+						this->playerTwoName = selectedTwo->text;
+					}
 					break;
 				}
 			} 
