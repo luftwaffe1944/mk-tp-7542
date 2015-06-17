@@ -1197,7 +1197,7 @@ void Character::doFinisher() {
 		int currentFrame = victimCurrentSprite->getCurrentFrame();
 		int framesAmount = victimCurrentSprite->getFramesAmount();
 
-		if (this->getMovement() == "stance" && victim->isBabality && currentFrame == framesAmount - 1) {
+		if ((this->getMovement() == "stance" || this->getMovement() == "") && victim->isBabality && currentFrame == framesAmount - 1) {
 			this->finishMove->onFinish(this->name);
 
 		}
