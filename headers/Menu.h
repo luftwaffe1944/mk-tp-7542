@@ -68,6 +68,7 @@ private:
 	bool renderTextTwo;
 	bool nameOneSet;
 	bool nameTwoSet;
+	void resetNameInputRender(SDL_Renderer*, int, int, int, int);
 };
 
 #endif // MENU_H

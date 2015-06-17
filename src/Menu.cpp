@@ -226,6 +226,12 @@ void Menu::resetCharacterRender(SDL_Renderer* render) {
 	SDL_DestroyTexture(target_texture);
 }
 
+void Menu::resetNameInputRender(SDL_Renderer* render, int x, int y, int w, int h) {
+	SDL_Rect fillRect = { x, y, w, h };
+	SDL_SetRenderDrawColor(render, 0x00, 0x00, 0x00, 0xFF);
+	SDL_RenderFillRect(render, &fillRect);
+}
+
 void Menu::buttonUp() {
 	if (textMenu) {
 		if (selected->previous != NULL) {
@@ -371,10 +377,10 @@ void Menu::buttonD(){
 void Menu::showTextBox() {
 	SDL_Color fColor = { 255, 255, 255, 255 };
 	TTF_Font* font = TTF_OpenFont("fonts/mk1.ttf", 20);
-	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx() /
-		TextureManager::Instance()->ratioWidth;
-	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx() /
-		TextureManager::Instance()->ratioHeight;
+	float ratioX = TextureManager::Instance()->ratioWidth;
+	float ratioY = TextureManager::Instance()->ratioHeight;
+	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx() / ratioX;
+	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx() / ratioY;
 
 
 	if (renderTextOne)
@@ -385,7 +391,7 @@ void Menu::showTextBox() {
 			//Render new text
 			TextureManager::Instance()->loadFromRenderedText("namePlayerOne", playerOneName, fColor, font, render);
 		}
-
+		resetNameInputRender(render, (windowsWidth / 6)*ratioX, (windowsHeight*0.80)*ratioY, (windowsWidth / 6)*ratioX, 20 * ratioY);
 		TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6, windowsHeight*0.80, windowsWidth / 6, 20, render);
 	}
 
@@ -415,11 +421,12 @@ std::string Menu::identify_event() {
 	int y = 0;
 	std::string temp;
 	SDL_Event event;
-	
+	SDL_StartTextInput();
 	while (1) {
 
 		this->renderTextOne = false;
 		this->renderTextTwo = false;
+
 		while (SDL_PollEvent(&event)) {
 
 			if (event.type == SDL_QUIT)
@@ -461,19 +468,13 @@ std::string Menu::identify_event() {
 
 					this->playerOneSelected = true;
 					this->playerOneName = selected->text;
-					//if (this->playerOneSelected && playerTwoSelected) {
-					//	return "selected: " + selected->text + " " + selectedTwo->text;
-					//}
+
 					if (textMenu) return selected->text;
 
 				}
 				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(1)) {
 					this->playerTwoSelected = true;
 					this->playerTwoName = selectedTwo->text;
-					//if (this->playerOneSelected && playerTwoSelected) {
-					//	return "selected: " + selected->text + " " + selectedTwo->text;
-					//}
-
 				}
 			}
 
@@ -518,14 +519,22 @@ std::string Menu::identify_event() {
 				}
 			}
 
+			if (nameOneSet && nameTwoSet) {
+				return "selected: " + selected->text + " " + selectedTwo->text;
+			}
+
 			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected)) {
-				SDL_StartTextInput();
+				
 				//Handle backspace
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
 				{
 					//lop off character
 					playerOneName.pop_back();
 					renderTextOne = true;
+				}
+				if (event.key.keysym.sym == SDLK_RETURN)
+				{
+					nameOneSet = true;
 				}
 			}
 
@@ -546,6 +555,10 @@ std::string Menu::identify_event() {
 					//lop off character
 					playerTwoName.pop_back();
 					renderTextTwo = true;
+				}
+				if (event.key.keysym.sym == SDLK_RETURN)
+				{
+					nameTwoSet = true;
 				}
 			}
 
