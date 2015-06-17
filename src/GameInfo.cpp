@@ -221,7 +221,7 @@ void GameInfo::triggerSounds() {
 		SoundManager::Instance()->playSoundByAction("roundThree", 0);
 		this->playingRoundSound = true;
 	}
-	if (!this->initAnimation && this->showFightAnimation) {
+	if (!this->initAnimation && this->showFightAnimation && !this->playingFightSound) {
 		SoundManager::Instance()->playSoundByAction("fight", 0);
 		this->playingFightSound = true;
 	}
