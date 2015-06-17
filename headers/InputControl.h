@@ -107,6 +107,7 @@ public:
 	void loadDefaultButtons(int joyNum);
 	void loadSpecialSecuence(int joyNum);
 	void detectSpecialMove(int joyNum);
+	void setPlayerSpecialMove(int joy, int specialAction);
 };
 
 #endif /* INPUTCONTROL_H_ */

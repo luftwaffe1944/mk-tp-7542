@@ -84,6 +84,10 @@ private:
 	std::vector<bool> colorCharOne;
 	std::vector<bool> colorCharTwo;
 
+	bool fatalityTime;
+	bool drawSecuenceOne;
+	bool drawSecuenceTwo;
+
 };
 
 #endif /* SECUENCEINPUTMANAGER_H_ */
