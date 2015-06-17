@@ -398,7 +398,7 @@ void Menu::showTextBox() {
 	if (renderTextTwo && !nameOneSet)
 	{
 		//Text is not empty
-		if (playerOneName != "")
+		if (playerTwoName != "")
 		{
 			//Render new text
 			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", playerTwoName, fColor, font, render);
@@ -535,13 +535,8 @@ std::string Menu::identify_event() {
 			}
 
 			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
-				//Not copy or pasting
-				if (!((event.text.text[0] == 'c' || event.text.text[0] == 'C') && (event.text.text[0] == 'v' || event.text.text[0] == 'V') && SDL_GetModState() & KMOD_CTRL))
-				{
-					//Append character
 					playerOneName += event.text.text;
 					renderTextOne = true;
-				}
 			}
 
 			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet) {
@@ -559,13 +554,8 @@ std::string Menu::identify_event() {
 			}
 
 			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet) {
-				//Not copy or pasting
-				if (!((event.text.text[0] == 'c' || event.text.text[0] == 'C') && (event.text.text[0] == 'v' || event.text.text[0] == 'V') && SDL_GetModState() & KMOD_CTRL))
-				{
-					//Append character
 					playerTwoName += event.text.text;
 					renderTextTwo = true;
-				}
 			}
 
 			this->showTextBox();
