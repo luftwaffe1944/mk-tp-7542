@@ -369,13 +369,13 @@ void Menu::buttonD(){
 
 
 void Menu::showTextBox() {
-	SDL_Color fColor = { 155, 155, 155, 100 };
-	TTF_Font* font = TTF_OpenFont("fonts/mk1.ttf", 30);
-	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx();
-	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx();
-	std::string name = "name";
-	std::string text = "hola";
-	std::string aux;
+	SDL_Color fColor = { 255, 255, 255, 255 };
+	TTF_Font* font = TTF_OpenFont("fonts/mk1.ttf", 20);
+	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx() /
+		TextureManager::Instance()->ratioWidth;
+	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx() /
+		TextureManager::Instance()->ratioHeight;
+
 
 	if (renderTextOne)
 	{
@@ -383,15 +383,10 @@ void Menu::showTextBox() {
 		if (playerOneName != "")
 		{
 			//Render new text
-			//TextureManager::Instance()->loadFromRenderedText("namePlayerOne", playerOneName, fColor, font, render);
-			TextureManager::Instance()->loadFromRenderedText(name, text, fColor, font, render);
-			cout << "cargue " << "namePlayerOne" + playerOneName << endl;
+			TextureManager::Instance()->loadFromRenderedText("namePlayerOne", playerOneName, fColor, font, render);
 		}
 
-		//TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6 + 15, windowsHeight - 15, windowsWidth / 6, 10, render);
-		aux = name + text;
-		TextureManager::Instance()->draw(aux, 300, 450, windowsWidth / 6, 50, render, SDL_FLIP_NONE);
-		SDL_RenderPresent(render);
+		TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6, windowsHeight*0.80, windowsWidth / 6, 20, render);
 	}
 
 	if (renderTextTwo)
@@ -403,11 +398,11 @@ void Menu::showTextBox() {
 			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", playerTwoName.c_str(), fColor, font, render);
 		}
 
-		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 * 5, windowsHeight - 15, windowsWidth / 6, 10, render);
+		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 * 2, windowsHeight*0.80, windowsWidth / 6, 20, render);
 
 	}
 	
-	//SDL_RenderPresent(render);
+	SDL_RenderPresent(render);
 }
 
 std::string Menu::identify_event() {
@@ -480,11 +475,6 @@ std::string Menu::identify_event() {
 					//}
 
 				}
-
-				/*default:
-					break;
-				}*/
-				cout << "asd" << endl;
 			}
 
 			if (event.type == SDL_MOUSEMOTION) {
@@ -529,6 +519,7 @@ std::string Menu::identify_event() {
 			}
 
 			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected)) {
+				SDL_StartTextInput();
 				//Handle backspace
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
 				{
@@ -536,25 +527,9 @@ std::string Menu::identify_event() {
 					playerOneName.pop_back();
 					renderTextOne = true;
 				}
-				//Handle copy
-				else if (event.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL)
-				{
-					SDL_SetClipboardText(playerOneName.c_str());
-				}
-				//Handle paste
-				else if (event.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL)
-				{
-					playerOneName = SDL_GetClipboardText();
-					renderTextOne = true;
-				}
-				else if (event.key.keysym.sym == SDLK_RETURN)
-				{
-					nameOneSet = true;
-				}
 			}
 
 			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected)) {
-				SDL_StartTextInput();
 				//Not copy or pasting
 				if (!((event.text.text[0] == 'c' || event.text.text[0] == 'C') && (event.text.text[0] == 'v' || event.text.text[0] == 'V') && SDL_GetModState() & KMOD_CTRL))
 				{
@@ -571,21 +546,6 @@ std::string Menu::identify_event() {
 					//lop off character
 					playerTwoName.pop_back();
 					renderTextTwo = true;
-				}
-				//Handle copy
-				else if (event.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL)
-				{
-					SDL_SetClipboardText(playerTwoName.c_str());
-				}
-				//Handle paste
-				else if (event.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL)
-				{
-					playerTwoName = SDL_GetClipboardText();
-					renderTextTwo = true;
-				}
-				else if (event.key.keysym.sym == SDLK_RETURN)
-				{
-					nameTwoSet = true;
 				}
 			}
 
