@@ -383,7 +383,7 @@ void Menu::showTextBox() {
 	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx() / ratioY;
 
 
-	if (renderTextOne)
+	if (renderTextOne && !nameTwoSet)
 	{
 		//Text is not empty
 		if (playerOneName != "")
@@ -395,15 +395,15 @@ void Menu::showTextBox() {
 		TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6, windowsHeight*0.80, windowsWidth / 6, 20, render);
 	}
 
-	if (renderTextTwo)
+	if (renderTextTwo && !nameOneSet)
 	{
 		//Text is not empty
 		if (playerOneName != "")
 		{
 			//Render new text
-			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", playerTwoName.c_str(), fColor, font, render);
+			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", playerTwoName, fColor, font, render);
 		}
-
+		resetNameInputRender(render, (windowsWidth - windowsWidth / 6 * 2)*ratioX, (windowsHeight*0.80)*ratioY, (windowsWidth / 6)*ratioX, 20 * ratioY);
 		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 * 2, windowsHeight*0.80, windowsWidth / 6, 20, render);
 
 	}
@@ -519,11 +519,7 @@ std::string Menu::identify_event() {
 				}
 			}
 
-			if (nameOneSet && nameTwoSet) {
-				return "selected: " + selected->text + " " + selectedTwo->text;
-			}
-
-			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected)) {
+			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
 				
 				//Handle backspace
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
@@ -538,7 +534,7 @@ std::string Menu::identify_event() {
 				}
 			}
 
-			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected)) {
+			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
 				//Not copy or pasting
 				if (!((event.text.text[0] == 'c' || event.text.text[0] == 'C') && (event.text.text[0] == 'v' || event.text.text[0] == 'V') && SDL_GetModState() & KMOD_CTRL))
 				{
@@ -548,7 +544,7 @@ std::string Menu::identify_event() {
 				}
 			}
 
-			if ((event.type == SDL_KEYDOWN) && (this->playerTwoSelected && nameOneSet)) {
+			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet) {
 				//Handle backspace
 				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
 				{
@@ -562,7 +558,7 @@ std::string Menu::identify_event() {
 				}
 			}
 
-			if (event.type == SDL_TEXTINPUT && (this->playerTwoSelected && nameOneSet)) {
+			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet) {
 				//Not copy or pasting
 				if (!((event.text.text[0] == 'c' || event.text.text[0] == 'C') && (event.text.text[0] == 'v' || event.text.text[0] == 'V') && SDL_GetModState() & KMOD_CTRL))
 				{
@@ -573,6 +569,11 @@ std::string Menu::identify_event() {
 			}
 
 			this->showTextBox();
+
+			if (nameOneSet && nameTwoSet) {
+				SDL_StopTextInput();
+				return "selected: " + selected->text + " " + selectedTwo->text;
+			}
 
 		}
 	}
