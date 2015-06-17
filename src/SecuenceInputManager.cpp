@@ -43,6 +43,10 @@ SecuenceInputManager::SecuenceInputManager(){
 		 this->colorCharOne.push_back(false);
 		 this->colorCharTwo.push_back(false);
 	 }
+
+	this->fatalityTime=false;
+	this->drawSecuenceOne=true;
+	this->drawSecuenceTwo=false;
 }
 
 /*
@@ -108,15 +112,20 @@ bool SecuenceInputManager::load() {
 void SecuenceInputManager::draw() {
 	SDL_Renderer* render = MKGame::Instance()->getRenderer();
 	Window* window = GameGUI::getInstance()->getWindow();
-
-	//secuencia 1
 	string id;
-	int width = (WINDOW_MARGIN * 6/7);
-	int anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
-	int x = anchoTotal + (window->widthPx*0.02);
-	int y = window->heightPx* 0.06;
-	int height = 15;
-	if (this->specialSecuenceOneActive){
+	int width;
+	int anchoTotal;
+	int x;
+	int y;
+	int height;
+	//secuencia 1
+
+	if ((this->specialSecuenceOneActive) && (this->drawSecuenceOne)){
+		width = (WINDOW_MARGIN * 6/7);
+		anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
+		x = anchoTotal + (window->widthPx*0.02);
+		y = window->heightPx* 0.06;
+		height = 15;
 		for (int i=1; i<=SIMBOLS_TO_SHOW_SPECIAL_MOVES; i++){
 			std::string charColor = "sec_b";
 			if (this->colorCharOne[100-i]){
@@ -130,12 +139,13 @@ void SecuenceInputManager::draw() {
 	}
 	//secuencia 2
 
-	width = (WINDOW_MARGIN * 6/7);
-	anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
-	x = (window->widthPx*0.12) + anchoTotal + (window->widthPx*0.02);//(window->widthPx/2) + anchoTotal + (window->widthPx*0.02);
-	y = window->heightPx* 0.06;
-	height = 15;
-	if (this->specialSecuenceTwoActive){
+
+	if ((this->specialSecuenceTwoActive) && (this->drawSecuenceTwo)){
+		width = (WINDOW_MARGIN * 6/7);
+		anchoTotal = (WINDOW_MARGIN * 6/7)*SIMBOLS_TO_SHOW_SPECIAL_MOVES;
+		x = (window->widthPx*0.12) + anchoTotal + (window->widthPx*0.02);//(window->widthPx/2) + anchoTotal + (window->widthPx*0.02);
+		y = window->heightPx* 0.06;
+		height = 15;
 		for (int i=1; i<=SIMBOLS_TO_SHOW_SPECIAL_MOVES; i++){
 			std::string charColor = "sec_b";
 			if (this->colorCharTwo[100-i]){
@@ -257,6 +267,13 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 				this->isMatchOne = true;
 				this->isSetMoveOne = true;
 				this->setColorPhrase(this->specialMoves[i].length(),playerNum);
+				if ((specialMoveNumber >= FALATITY_NUMBER_SPECIAL_MOVE) && (!this->fatalityTime)){
+					isMatch = false;
+					this->isMatchOne = false;
+					this->isSetMoveOne = false;
+					specialMoveNumber = -1;
+					this->cleanVectorColorChar(0);
+				}
 			}
 		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo)){
 			std::string currentSecuenceToCompare = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
@@ -266,6 +283,13 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 				this->isMatchTwo = true;
 				this->isSetMoveTwo = true;
 				this->setColorPhrase(this->specialMoves[i].length(),playerNum);
+				if ((specialMoveNumber >= FALATITY_NUMBER_SPECIAL_MOVE) && (!this->fatalityTime)){
+					isMatch = false;
+					this->isMatchTwo = false;
+					this->isSetMoveTwo = false;
+					specialMoveNumber = -1;
+					this->cleanVectorColorChar(1);
+				}
 			}
 		}
 		i++;
@@ -306,6 +330,12 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					}
 				}
 				i++;
+				if ((specialMoveNumber >= FALATITY_NUMBER_SPECIAL_MOVE) && (!this->fatalityTime)){
+					isMatch = false;
+					this->isMatchOne = false;
+					this->isSetMoveOne = false;
+					specialMoveNumber = -1;
+				}
 				if (!isMatch){
 					this->cleanVectorColorChar(0);
 				}
@@ -344,6 +374,12 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					}
 				}
 				i++;
+				if ((specialMoveNumber >= FALATITY_NUMBER_SPECIAL_MOVE) && (!this->fatalityTime)){
+					isMatch = false;
+					this->isMatchTwo = false;
+					this->isSetMoveTwo = false;
+					specialMoveNumber = -1;
+				}
 				if (!isMatch){
 					this->cleanVectorColorChar(1);
 				}

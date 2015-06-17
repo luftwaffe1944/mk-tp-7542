@@ -1006,14 +1006,13 @@ void InputControl::detectSpecialMove(int joyNum){
 		if (SecuenceInputManager::Instance()->getIsSetMove(joyNum)){
 			cout<<"first player - special move: "<< specialMove<<"\n";
 		}
-		//SecuenceInputManager::Instance()->reset(1);
 	}else if ((joyNum==1) && !(specialMove==-1)){
 		if (SecuenceInputManager::Instance()->getIsSetMove(joyNum)){
 			cout<<"second player - special move: "<< specialMove<<"\n";
 		}
-		//SecuenceInputManager::Instance()->reset(2);
 	}
+}
 
-//si existe secuencia setear movimiento del personaje
+void InputControl::setPlayerSpecialMove(int joy, int specialMove) {
 
 }
