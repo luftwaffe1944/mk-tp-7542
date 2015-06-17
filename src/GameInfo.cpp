@@ -215,6 +215,7 @@ void GameInfo::update() {
 			}
 			this->charOneAlreadyDeath = true;
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
+			SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
 		} else {
 			if (!this->charTwoAlreadyDeath) {
 				this->characterOneWins += 1;
@@ -223,7 +224,9 @@ void GameInfo::update() {
 			}
 			this->charTwoAlreadyDeath = true;
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
+			SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
 		}
+
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
 			//finish him logic
 			this->showFinishHimAnimation = true;

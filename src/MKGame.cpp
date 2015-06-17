@@ -138,13 +138,11 @@ void MKGame::clean() {
 	LayerManager::Instance()->clean();
 	InputControl::Instance()->clean();
 	GameGUI::getInstance()->clean();
+	AIMovement::Instance()->clean();
 
 	TextureManager::Instance()->resetInstance();
 	SDL_DestroyRenderer(this->m_pRenderer);
 	SDL_DestroyWindow(this->m_pWindow);
-
-	//SDL_JoystickClose( this->gGameController );
-	//gGameController = NULL;
 
 	IMG_Quit();
 	TTF_Quit();
@@ -321,13 +319,13 @@ vector<Collitionable*> convertVector(vector<Character*> oldVec){
 	vector<Collitionable*> newVec;
 	for (std::vector<Character*>::size_type i = 0; i != oldVec.size(); i++) {
 		newVec.push_back((Collitionable*) oldVec[i]);
-		}
+	}
 	return newVec;
 }
 void addVector(vector<ThrowableObject*> oldVec, vector<Collitionable*> *newVec){
 	for (std::vector<ThrowableObject*>::size_type i = 0; i != oldVec.size(); i++) {
 		newVec->push_back((Collitionable*) oldVec[i]);
-		}
+	}
 }
 
 void MKGame::update() {
@@ -431,6 +429,12 @@ void MKGame::handleEvents() {
 	}
 
 
+}
+
+
+void MKGame::handleAI() {
+	if ( !AIMovement::Instance()->isInitialized) AIMovement::Instance()->init();
+	AIMovement::Instance()->solveAIMovement();
 }
 
 void MKGame::quit(){

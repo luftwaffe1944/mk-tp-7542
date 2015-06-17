@@ -12,6 +12,7 @@
 #include <map>
 #include "Collitionable.h"
 #include "Character.h"
+#include "SoundManager.h"
 using namespace std;
 
 class DamageManager {

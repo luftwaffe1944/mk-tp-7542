@@ -132,7 +132,10 @@ public:
 	Character* getCopyInstance();
 	void updateShapesOnStatus();
 	bool showBoxes = DRAW_COLLITIONABLE_BOXES;
-
+	float getPosXBoxUL();
+	float getPosXBox2UL();
+	float getWidthBoxUL();
+	float getWidthBox2UL();
 
 	float posXBox;
 	float posYBox;
@@ -160,7 +163,9 @@ public:
 	void smoothMovPosX();
 
 	bool beingPushed;
-
+	float getJumpDistance();
+	std::string previousMovement;
+	void talk(std::string action, int repetitions = 0);
 };
 
 #endif /* CHARACTER_H_ */

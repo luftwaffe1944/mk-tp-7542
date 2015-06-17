@@ -14,7 +14,10 @@
 #include "SDLObjectGUI.h"
 #include "MKGame.h"
 #include "Timer.h"
+#include "SoundManager.h"
 #include <algorithm>
+//#include "SDL_timer.h"
+//#include "SDL.h"
 using namespace std;
 
 class GameInfo : public SDLObjectGUI {
