@@ -247,6 +247,11 @@ void GameInfo::update() {
 				this->showWinnerAnimation = true;
 			}
 			this->charOneAlreadyDeath = true;
+			if (characterTwoWins < 2){
+				this->characters[1]->setMovement(VICTORY_MOVEMENT);
+				this->characters[1]->setCurrentSprite();
+				//this->characters[1]->completeMovement();
+			}
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
 			if (!this->playingCharacterWinsSound && this->characterTwoWins < 2) {
 				SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
@@ -259,6 +264,11 @@ void GameInfo::update() {
 				this->showWinnerAnimation = true;
 			}
 			this->charTwoAlreadyDeath = true;
+			if (characterOneWins < 2) {
+				this->characters[0]->setMovement(VICTORY_MOVEMENT);
+				this->characters[0]->setCurrentSprite();
+				//this->characters[0]->completeMovement();
+			}
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
 			if (!this->playingCharacterWinsSound && this->characterOneWins < 2) {
 				SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
