@@ -435,7 +435,6 @@ void MKGame::handleEvents() {
 
 	}
 	bool asd = InputControl::Instance()->isAxisUp(0);
-	std::cout << asd << endl;
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
