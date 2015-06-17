@@ -435,6 +435,10 @@ void MKGame::handleEvents() {
 				for (int i = 0 ; i < a; ++i ) {
 					InputControl::Instance()->joystickAxisStates[i].first = 0;
 					InputControl::Instance()->joystickAxisStates[i].second = 0;
+					for (int j = 0 ; j < 10 ; j++) {
+						InputControl::Instance()->joysticksButtonStates[i][j] = false;
+					}
+
 				}
 				InputControl::Instance()->refreshJoystickInputs();
 
