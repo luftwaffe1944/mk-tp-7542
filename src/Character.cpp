@@ -530,208 +530,212 @@ void Character::update() {
 		}
 
 		this->clearMovementsFlags();
-
-		switch (playerCommand) {
-		case FIRST_PLAYER_MOVE_RIGHT:
-			this->setMovement(WALKING_RIGHT_MOVEMENT);
-			setCurrentSprite();
-			walkRight();
-			break;
-		case FIRST_PLAYER_MOVE_LEFT:
-			this->setMovement(WALKING_LEFT_MOVEMENT);
-			setCurrentSprite();
-			walkLeft();
-			break;
-		case FIRST_PLAYER_MOVE_UP:
-			this->setMovement(JUMPING_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			jump();
-			break;
-		case FIRST_PLAYER_MOVE_DOWN:
-			this->setMovement(DUCKING_MOVEMENT);
-			setCurrentSprite();
-			this->isDucking = true;
-			break;
-		case FIRST_PLAYER_MOVE_DOWN_LEFT:
-			this->setMovement(DUCKING_MOVEMENT);
-			setCurrentSprite();
-			this->isDucking = true;
-			break;
-		case FIRST_PLAYER_MOVE_DOWN_RIGHT:
-			this->setMovement(DUCKING_MOVEMENT);
-			setCurrentSprite();
-			this->isDucking = true;
-			break;
-		case FIRST_PLAYER_MOVE_UP_RIGHT:
-			this->setMovement(JUMPING_RIGHT_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			jumpRight();
-			break;
-		case FIRST_PLAYER_MOVE_UP_LEFT:
-			this->setMovement(JUMPING_LEFT_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			jumpLeft();
-			break;
-		case FIRST_PLAYER_CHANGE_ORIENTATION:
-			isRightOriented = !isRightOriented;
-			break;
-		case FIRST_PLAYER_HI_PUNCH:
-			this->setMovement(PUNCHING_HIGH_MOVEMENT);
-			talk("missPunch",1);
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_LO_PUNCH:
-			this->setMovement(PUNCHING_LOW_MOVEMENT);
-			talk("missPunch",1);
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_DUCK_PUNCH:
-			this->setMovement(PUNCHING_DUCK_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_UPPERCUT:
-			this->setMovement(UPPERCUT_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_LOW_KICK:
-			this->setMovement(LOW_KICK_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_HIGH_KICK:
-			this->setMovement(HIGH_KICK_MOVEMENT);
-			talk("missKick");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_DUCK_LOW_kICK:
-			this->setMovement(DUCK_LOW_KICK_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_DUCK_HIGH_kICK:
-			this->setMovement(DUCK_HIGH_KICK_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_SUPER_kICK:
-			this->setMovement(SUPER_KICK_MOVEMENT);
-			talk("missKick");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_UNDER_KICK:
-			this->setMovement(UNDER_KICK_MOVEMENT);
-			talk("missKick");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_AIR_LOW_kICK_R:
-			this->setMovement(AIR_LOW_kICK_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airLowKickRight();
-			break;
-		case FIRST_PLAYER_AIR_LOW_kICK_L:
-			this->setMovement(AIR_LOW_kICK_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airLowKickLeft();
-			break;
-		case FIRST_PLAYER_AIR_HIGH_kICK:
-			this->setMovement(AIR_HIGH_kICK_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airHighKick();
-			break;
-		case FIRST_PLAYER_BLOCK:
-			this->setMovement(BLOCK_MOVEMENT);
-			setCurrentSprite();
-			break;
-		case FIRST_PLAYER_DUCK_BLOCK:
-			this->setMovement(DUCK_BLOCK_MOVEMENT);
-			setCurrentSprite();
-			break;
-		case FIRST_PLAYER_AIR_PUNCH:
-			this->setMovement(AIR_PUNCH_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airPunch();
-			break;
-		case FIRST_PLAYER_AIR_PUNCH_R:
-			this->setMovement(AIR_PUNCH_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airPunchRight();
-			break;
-		case FIRST_PLAYER_AIR_PUNCH_L:
-			this->setMovement(AIR_PUNCH_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airPunchLeft();
-			break;
-		case FIRST_PLAYER_FIRE:
-			this->fire = true;
-			this->setMovement(FIRE_MOVEMENT);
-			setCurrentSprite();
-			fireMovement();
-			SoundManager::Instance()->playSoundByAction("fire",0);
-			break;
-		case FIRST_PLAYER_DUCK_FIRE:
-			this->setMovement(DUCKING_MOVEMENT);
-			setCurrentSprite();
-			this->isDucking = true;
-			this->fire = true;
-			SoundManager::Instance()->playSoundByAction("fire",0);
-			break;
-		case SUBZERO_SWEEP:
-			this->setMovement(SWEEP_MOVEMENT);
-			setCurrentSprite();
-			sweepMovement();
-			break;
-		case BABALITY:
-			this->finishMove = new Babality();
-			doFinisher();
-			break;
-		case FATALITY:
-			this->finishMove = new Fatality();
-			doFinisher();
-			break;
-		case HEADLESS:
-			this->setMovement(HEADLESS_MOVEMENT);
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case HEADLESS_BLOOD:
-			this->setMovement(HEADLESS_BLOOD_MOVEMENT);
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FRIENDSHIP:
-			this->finishMove = new Friendship();
-			doFinisher();
-			break;
-		case LAZY:
-			this->setMovement(LAZY_MOVEMENT);
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case NO_INPUT:
+		if (MKGame::Instance()->getAllowPlayerMovements()) {
+			switch (playerCommand) {
+			case FIRST_PLAYER_MOVE_RIGHT:
+				this->setMovement(WALKING_RIGHT_MOVEMENT);
+				setCurrentSprite();
+				walkRight();
+				break;
+			case FIRST_PLAYER_MOVE_LEFT:
+				this->setMovement(WALKING_LEFT_MOVEMENT);
+				setCurrentSprite();
+				walkLeft();
+				break;
+			case FIRST_PLAYER_MOVE_UP:
+				this->setMovement(JUMPING_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				jump();
+				break;
+			case FIRST_PLAYER_MOVE_DOWN:
+				this->setMovement(DUCKING_MOVEMENT);
+				setCurrentSprite();
+				this->isDucking = true;
+				break;
+			case FIRST_PLAYER_MOVE_DOWN_LEFT:
+				this->setMovement(DUCKING_MOVEMENT);
+				setCurrentSprite();
+				this->isDucking = true;
+				break;
+			case FIRST_PLAYER_MOVE_DOWN_RIGHT:
+				this->setMovement(DUCKING_MOVEMENT);
+				setCurrentSprite();
+				this->isDucking = true;
+				break;
+			case FIRST_PLAYER_MOVE_UP_RIGHT:
+				this->setMovement(JUMPING_RIGHT_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				jumpRight();
+				break;
+			case FIRST_PLAYER_MOVE_UP_LEFT:
+				this->setMovement(JUMPING_LEFT_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				jumpLeft();
+				break;
+			case FIRST_PLAYER_CHANGE_ORIENTATION:
+				isRightOriented = !isRightOriented;
+				break;
+			case FIRST_PLAYER_HI_PUNCH:
+				this->setMovement(PUNCHING_HIGH_MOVEMENT);
+				talk("missPunch",1);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_LO_PUNCH:
+				this->setMovement(PUNCHING_LOW_MOVEMENT);
+				talk("missPunch",1);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_DUCK_PUNCH:
+				this->setMovement(PUNCHING_DUCK_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_UPPERCUT:
+				this->setMovement(UPPERCUT_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_LOW_KICK:
+				this->setMovement(LOW_KICK_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_HIGH_KICK:
+				this->setMovement(HIGH_KICK_MOVEMENT);
+				talk("missKick");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_DUCK_LOW_kICK:
+				this->setMovement(DUCK_LOW_KICK_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_DUCK_HIGH_kICK:
+				this->setMovement(DUCK_HIGH_KICK_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_SUPER_kICK:
+				this->setMovement(SUPER_KICK_MOVEMENT);
+				talk("missKick");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_UNDER_KICK:
+				this->setMovement(UNDER_KICK_MOVEMENT);
+				talk("missKick");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_AIR_LOW_kICK_R:
+				this->setMovement(AIR_LOW_kICK_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airLowKickRight();
+				break;
+			case FIRST_PLAYER_AIR_LOW_kICK_L:
+				this->setMovement(AIR_LOW_kICK_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airLowKickLeft();
+				break;
+			case FIRST_PLAYER_AIR_HIGH_kICK:
+				this->setMovement(AIR_HIGH_kICK_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airHighKick();
+				break;
+			case FIRST_PLAYER_BLOCK:
+				this->setMovement(BLOCK_MOVEMENT);
+				setCurrentSprite();
+				break;
+			case FIRST_PLAYER_DUCK_BLOCK:
+				this->setMovement(DUCK_BLOCK_MOVEMENT);
+				setCurrentSprite();
+				break;
+			case FIRST_PLAYER_AIR_PUNCH:
+				this->setMovement(AIR_PUNCH_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airPunch();
+				break;
+			case FIRST_PLAYER_AIR_PUNCH_R:
+				this->setMovement(AIR_PUNCH_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airPunchRight();
+				break;
+			case FIRST_PLAYER_AIR_PUNCH_L:
+				this->setMovement(AIR_PUNCH_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airPunchLeft();
+				break;
+			case FIRST_PLAYER_FIRE:
+				this->fire = true;
+				this->setMovement(FIRE_MOVEMENT);
+				setCurrentSprite();
+				fireMovement();
+				SoundManager::Instance()->playSoundByAction("fire",0);
+				break;
+			case FIRST_PLAYER_DUCK_FIRE:
+				this->setMovement(DUCKING_MOVEMENT);
+				setCurrentSprite();
+				this->isDucking = true;
+				this->fire = true;
+				SoundManager::Instance()->playSoundByAction("fire",0);
+				break;
+			case SUBZERO_SWEEP:
+				this->setMovement(SWEEP_MOVEMENT);
+				setCurrentSprite();
+				sweepMovement();
+				break;
+			case BABALITY:
+				this->finishMove = new Babality();
+				doFinisher();
+				break;
+			case FATALITY:
+				this->finishMove = new Fatality();
+				doFinisher();
+				break;
+			case HEADLESS:
+				this->setMovement(HEADLESS_MOVEMENT);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case HEADLESS_BLOOD:
+				this->setMovement(HEADLESS_BLOOD_MOVEMENT);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FRIENDSHIP:
+				this->finishMove = new Friendship();
+				doFinisher();
+				break;
+			case LAZY:
+				this->setMovement(LAZY_MOVEMENT);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case NO_INPUT:
+				this->setMovement(STANCE);
+				setCurrentSprite();
+				break;
+			}
+		} else {
 			this->setMovement(STANCE);
 			setCurrentSprite();
-			break;
 		}
 	}
 	//refresh Collition Shapes positions
