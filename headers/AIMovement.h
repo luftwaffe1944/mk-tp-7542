@@ -38,8 +38,8 @@ private:
 	 * como movimiento hacia adelante y _L como movimiento hacia atrás
 	 */
 
-	std::map<std::string,std::vector<InputCommand>> movementMap;
-	bool createMovementMap(std::map<std::string,std::vector<InputCommand>> &aMovementMap) {
+	std::map<std::string,std::vector<InputCommand> > movementMap;
+	bool createMovementMap(std::map<std::string,std::vector<InputCommand> > &aMovementMap) {
 
 		aMovementMap["farDistance"].push_back(FIRST_PLAYER_AIR_LOW_kICK_L);
 		aMovementMap["farDistance"].push_back(FIRST_PLAYER_AIR_LOW_kICK_R);

@@ -96,7 +96,7 @@ void SoundManager::playSoundOnce(std::string id, int loop) {
 
 
 void SoundManager::loadBattleSounds() {
-	for (std::map<std::string, std::vector<std::string>>::iterator iter = situationalSounds.begin() ; iter  != situationalSounds.end() ; ++iter)
+	for (std::map<std::string, std::vector<std::string> >::iterator iter = situationalSounds.begin() ; iter  != situationalSounds.end() ; ++iter)
 	{
 		std::vector<std::string> situationSounds = iter->second;
 		for (unsigned int i = 0; i < situationSounds.size() ; ++i) {
