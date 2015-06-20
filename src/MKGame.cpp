@@ -67,11 +67,11 @@ bool MKGame::init(GameGUI* gameGui) {
     	SecuenceInputManager::Instance()->load();
     }
 
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	/*if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		FILE_LOG(logERROR) << "SDL_mixer could not initialize! SDL_mixer Error: %s\n" << Mix_GetError();
 	}
-
+*/
 	//agregar menus dentro de este metodo
 	this->menuInit();
 
@@ -140,6 +140,7 @@ void MKGame::clean() {
 	InputControl::Instance()->clean();
 	GameGUI::getInstance()->clean();
 	AIMovement::Instance()->clean();
+	SoundManager::Instance()->clean();
 
 	TextureManager::Instance()->resetInstance();
 	SDL_DestroyRenderer(this->m_pRenderer);
