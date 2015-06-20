@@ -80,6 +80,7 @@ void Menu::setMusicPath(std::string path) {
 }
 
 Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer* rd, bool tm) {
+	state = "";
 	this->playerOneName = "";
 	this->playerTwoName = "";
 	this->renderTextOne = false;
@@ -95,9 +96,9 @@ Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int
 
 	this->loadSoundEffect("sounds/menu.wav");
 
-	if (textMenu) 
+	if (textMenu)
 		this->createMenuItemList(no_of_items, strings, start_x, start_y, width, height);
-	else 
+	else
 		this->createGridCharacters(no_of_items, strings, start_x, start_y, width, height);
 
 	this->loadBackgroundImage("images/mk-bg-menu.jpg");
@@ -207,7 +208,7 @@ void Menu::resetCharacterRender(SDL_Renderer* render) {
 	src.h = windowsHeightPx;
 	this->columCharacterOne.x = 0;
 	this->columCharacterOne.y = 0;
-	this->columCharacterOne.w = windowsWidthPx /6;
+	this->columCharacterOne.w = windowsWidthPx / 6;
 	this->columCharacterOne.h = windowsHeightPx;
 
 	this->columCharacterTwo.x = windowsWidthPx * 5 / 6;
@@ -232,145 +233,177 @@ void Menu::resetNameInputRender(SDL_Renderer* render, int x, int y, int w, int h
 	SDL_RenderFillRect(render, &fillRect);
 }
 
+void Menu::moveSelectedToNext(MenuItem** item, int cant) {
+	for (unsigned int i = 0; i < cant; i++) {
+		*item = (*item)->next;
+	}
+}
+
+void Menu::moveSelectedToPrevious(MenuItem** item, int cant) {
+	for (unsigned int i = 0; i < cant; i++) {
+		*item = (*item)->previous;
+	}
+}
+
 void Menu::buttonUp() {
 	if (textMenu) {
 		if (selected->previous != NULL) {
 			Mix_PlayChannel(-1, sound, 0);
-			selected->setColor(150, 150, 150,255);
+			selected->setColor(150, 150, 150, 255);
 			selected->show(render);
-			selected = selected->previous;
-			selected->setColor(255, 255, 255,255);
+			moveSelectedToPrevious(&selected, 1);
+			selected->setColor(255, 255, 255, 255);
 			selected->show(render);
 		}
 	}
 	else {
 		if (selected->positionY - selected->height >= start->positionY) {
-			selected->setColor(150, 150, 150,0);
+			selected->setColor(150, 150, 150, 0);
 			selected->drawBox(render);
-			selected = selected->previous;
-			selected = selected->previous;
-			selected = selected->previous;
-			selected = selected->previous;
-			selected->setColor(0, 255, 0,255);
+			moveSelectedToPrevious(&selected, COLUMNS);
+			selected->setColor(0, 255, 0, 255);
 			this->drawCharacterStance(render);
 			selected->drawBox(render);
 		}
 	}
-
 }
 
 void Menu::buttonDown() {
 	if (textMenu) {
 		if (selected->next != NULL) {
 			Mix_PlayChannel(-1, sound, 0);
-			selected->setColor(150, 150, 150,255);
+			selected->setColor(150, 150, 150, 255);
 			selected->show(render);
-			selected = selected->next;
-			selected->setColor(255, 255, 255,255);
+			moveSelectedToNext(&selected, 1);
+			selected->setColor(255, 255, 255, 255);
 			selected->show(render);
 		}
 	}
 	else {
-		if (selected->positionY + selected->height < start->positionY + start->height*3) {
-			selected->setColor(150, 150, 150,0);
+		if (selected->positionY + selected->height < start->positionY + start->height * 3) {
+			selected->setColor(150, 150, 150, 0);
 			selected->drawBox(render);
-			selected = selected->next;
-			selected = selected->next;
-			selected = selected->next;
-			selected = selected->next;
-			selected->setColor(0, 255, 0,255);
+			moveSelectedToNext(&selected, COLUMNS);
+			selected->setColor(0, 255, 0, 255);
 			this->drawCharacterStance(render);
 			selected->drawBox(render);
 		}
 	}
-
 }
 
 void Menu::buttonLeft() {
 	if (!textMenu) {
 		if (selected->positionX - selected->width >= start->positionX) {
-			selected->setColor(150, 150, 150,255);
+			selected->setColor(150, 150, 150, 255);
 			selected->drawBox(render);
-			selected = selected->previous;
-			selected->setColor(0, 255, 0,255);
+			moveSelectedToPrevious(&selected, 1);
+			selected->setColor(0, 255, 0, 255);
 			this->drawCharacterStance(render);
 			selected->drawBox(render);
 		}
 	}
-
 }
 
 void Menu::buttonRight() {
 	if (!textMenu) {
 		if (selected->positionX + selected->width < start->positionX + start->width * 4) {
-			selected->setColor(150, 150, 150,0);
+			selected->setColor(150, 150, 150, 0);
 			selected->drawBox(render);
-			selected = selected->next;
-			selected->setColor(0, 255, 0,255);
+			moveSelectedToNext(&selected, 1);
+			selected->setColor(0, 255, 0, 255);
 			this->drawCharacterStance(render);
 			selected->drawBox(render);
 		}
 	}
-
-
 }
 void Menu::buttonW(){
-	if (!textMenu) {
-		if (selectedTwo->positionY - selectedTwo->height >= start->positionY) {
-			selectedTwo->setColor(150, 150, 150, 0);
-			selectedTwo->drawBox(render);
-			selectedTwo = selectedTwo->previous;
-			selectedTwo = selectedTwo->previous;
-			selectedTwo = selectedTwo->previous;
-			selectedTwo = selectedTwo->previous;
-			selectedTwo->setColor(255, 0, 0, 255);
-			this->drawCharacterStance(render);
-			selectedTwo->drawBox(render);
-		}
+	if (selectedTwo->positionY - selectedTwo->height >= start->positionY) {
+		selectedTwo->setColor(150, 150, 150, 0);
+		selectedTwo->drawBox(render);
+		moveSelectedToPrevious(&selectedTwo, COLUMNS);
+		selectedTwo->setColor(255, 0, 0, 255);
+		this->drawCharacterStance(render);
+		selectedTwo->drawBox(render);
 	}
-
 }
 void Menu::buttonS(){
-	if (!textMenu) {
-		if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
-			selectedTwo->setColor(150, 150, 150, 0);
-			selectedTwo->drawBox(render);
-			selectedTwo = selectedTwo->next;
-			selectedTwo = selectedTwo->next;
-			selectedTwo = selectedTwo->next;
-			selectedTwo = selectedTwo->next;
-			selectedTwo->setColor(255, 0, 0, 255);
-			this->drawCharacterStance(render);
-			selectedTwo->drawBox(render);
-		}
+	if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
+		selectedTwo->setColor(150, 150, 150, 0);
+		selectedTwo->drawBox(render);
+		moveSelectedToNext(&selectedTwo, COLUMNS);
+		selectedTwo->setColor(255, 0, 0, 255);
+		this->drawCharacterStance(render);
+		selectedTwo->drawBox(render);
 	}
-
 }
 void Menu::buttonA(){
-	if (!textMenu) {
-		if (selectedTwo->positionX - selectedTwo->width >= start->positionX) {
-			selectedTwo->setColor(150, 150, 150, 255);
-			selectedTwo->drawBox(render);
-			selectedTwo = selectedTwo->previous;
-			selectedTwo->setColor(255, 0, 0, 255);
-			this->drawCharacterStance(render);
-			selectedTwo->drawBox(render);
-		}
+	if (selectedTwo->positionX - selectedTwo->width >= start->positionX) {
+		selectedTwo->setColor(150, 150, 150, 255);
+		selectedTwo->drawBox(render);
+		moveSelectedToPrevious(&selectedTwo, 1);
+		selectedTwo->setColor(255, 0, 0, 255);
+		this->drawCharacterStance(render);
+		selectedTwo->drawBox(render);
 	}
-
 }
 void Menu::buttonD(){
-	if (!textMenu) {
-		if (selectedTwo->positionX + selectedTwo->width < start->positionX + start->width * 4) {
-			selectedTwo->setColor(150, 150, 150, 0);
-			selectedTwo->drawBox(render);
-			selectedTwo = selectedTwo->next;
-			selectedTwo->setColor(255, 0, 0, 255);
-			this->drawCharacterStance(render);
-			selectedTwo->drawBox(render);
+	if (selectedTwo->positionX + selectedTwo->width < start->positionX + start->width * 4) {
+		selectedTwo->setColor(150, 150, 150, 0);
+		selectedTwo->drawBox(render);
+		moveSelectedToNext(&selectedTwo, 1);
+		selectedTwo->setColor(255, 0, 0, 255);
+		this->drawCharacterStance(render);
+		selectedTwo->drawBox(render);
+	}
+}
+
+void Menu::buttonRETURN() {
+	if (textMenu) {
+		state = selected->text;
+	}
+	//Sino finalizo el input del nick
+	else {
+		if (playerOneSelected && !nameOneSet) {
+			nameOneSet = true;
+		}
+		else if (playerTwoSelected && !nameTwoSet && nameOneSet) {
+			nameTwoSet = true;
 		}
 	}
+}
 
+void Menu::buttonG() {
+	if (textMenu) {
+		state = selectedTwo->text;
+	}
+	else {
+		this->playerTwoSelected = true;
+		this->playerTwoName = selectedTwo->text;
+	}
+}
+
+void Menu::buttonJoystickOne() {
+	if (textMenu) {
+	}
+	//Leo nick del jugador 2
+	else {
+		playerTwoSelected = true;
+		renderTextTwo = true;
+		playerTwoName = selectedTwo->text;
+	}
+}
+
+void Menu::buttonJoystickZero() {
+	//Seteo estado con el nombre del menu
+	if (textMenu) {
+		state = selected->text;
+	}
+	//Leo nick del jugador 1
+	else {
+		playerOneSelected = true;
+		renderTextOne = true;
+		playerOneName = selected->text;
+	}
 }
 
 void Menu::showTextBox() {
@@ -396,6 +429,7 @@ void Menu::showTextBox() {
 			}
 		}
 		resetNameInputRender(render, (windowsWidth / 6)*ratioX, (windowsHeight*0.80)*ratioY, windowsWidth * ratioX * 0.60, 10 * ratioY);
+		//cout << "dibujo one" << endl;
 		TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6, windowsHeight*0.80, rs.w, 10, render);
 	}
 
@@ -412,10 +446,11 @@ void Menu::showTextBox() {
 			}
 		}
 		resetNameInputRender(render, (windowsWidth - windowsWidth / 6 - windowsWidth * 0.60)*ratioX, (windowsHeight*0.90)*ratioY, windowsWidth * ratioX * 0.60, 10 * ratioY);
-		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 - rs.w , windowsHeight*0.90, rs.w, 10, render);
+		//cout << "dibujo two" << endl;
+		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 - rs.w, windowsHeight*0.90, rs.w, 10, render);
 
 	}
-	
+
 	SDL_RenderPresent(render);
 	TTF_CloseFont(font);
 }
@@ -423,8 +458,156 @@ void Menu::showTextBox() {
 void Menu::stopMusic() {
 	Mix_FadeOutMusic(2000);
 	//music = t;
-	musicStarted=false;
+	musicStarted = false;
 
+}
+
+bool Menu::isKey(SDL_Event e, int key) {
+	return (e.key.keysym.sym == key);
+}
+
+bool Menu::isType(SDL_Event e, int type) {
+	return (e.type == type);
+}
+
+bool Menu::readKey(SDL_Event e) {
+
+	if (textMenu) {
+		if (isKey(e, SDLK_UP)) {
+			buttonUp();
+		}
+		if (isKey(e, SDLK_w)) {
+			buttonW();
+		}
+		if (isKey(e, SDLK_DOWN)) {
+			buttonDown();
+		}
+		if (isKey(e, SDLK_s)) {
+			buttonS();
+		}
+		if (isKey(e, SDLK_LEFT)) {
+			buttonLeft();
+		}
+		if (isKey(e, SDLK_RIGHT)) {
+			buttonRight();
+		}
+		if (isKey(e, SDLK_a)) {
+			buttonA();
+		}
+		if (isKey(e, SDLK_d)) {
+			buttonD();
+		}
+	}
+
+	if (isKey(e, SDLK_RETURN)) {
+		buttonRETURN();
+		if (textMenu) return true;
+	}
+	if (isKey(e, SDLK_BACKSPACE)) {
+		//Borro un caracter y destruyo la textura anterior
+		if (!textMenu)
+			if (playerOneSelected && playerTwoSelected && !nameOneSet && playerOneName.length() > 0) {
+				TextureManager::Instance()->unload("namePlayerOne" + playerOneName);
+				playerOneName.pop_back();
+				renderTextOne = true;
+			}
+			else if (playerTwoSelected && playerTwoSelected && nameOneSet && !nameTwoSet && playerTwoName.length() > 0) {
+				TextureManager::Instance()->unload("namePlayerTwo" + playerTwoName);
+				playerTwoName.pop_back();
+				renderTextTwo = true;
+			}
+	}
+
+	return false;
+}
+
+bool Menu::readJoystickZero() {
+	//Joystick 0
+	if (InputControl::Instance()->isAxisUp(0)) {
+		buttonUp();
+	}
+	if (InputControl::Instance()->isAxisDown(0)) {
+		buttonDown();
+	}
+	if (InputControl::Instance()->isAxisLeft(0)) {
+		buttonLeft();
+
+	}
+	if (InputControl::Instance()->isAxisRight(0)) {
+		buttonRight();
+	}
+	if (InputControl::Instance()->someJoyKickButtonPressed(0)) {
+		buttonJoystickZero();
+		InputControl::Instance()->setActionButtonStateFalse(0, LOW_KICK);
+		InputControl::Instance()->setActionButtonStateFalse(0, HIGH_KICK);
+		return true;
+	}
+	return false;
+}
+
+bool Menu::readJoystickOne() {
+	//Joystick 1
+	if (InputControl::Instance()->isAxisUp(1)) {
+		buttonW();
+
+	}
+	if (InputControl::Instance()->isAxisDown(1)) {
+		buttonS();
+
+	}
+	if (InputControl::Instance()->isAxisLeft(1)) {
+		buttonA();
+	}
+	if (InputControl::Instance()->isAxisRight(1)) {
+		buttonD();
+	}
+	if (InputControl::Instance()->someJoyKickButtonPressed(1)) {
+		buttonJoystickOne();
+		InputControl::Instance()->setActionButtonStateFalse(1, LOW_KICK);
+		InputControl::Instance()->setActionButtonStateFalse(1, HIGH_KICK);
+		return true;
+	}
+	return false;
+}
+
+void Menu::readMouseMotion() {
+	MenuItem* aux = start;
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	if (textMenu) {
+		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
+			if (aux->checkBounds(x, y) && selected != aux) {
+				Mix_PlayChannel(-1, sound, 0);
+				selected->setColor(150, 150, 150, 255);
+				selected->show(render);
+				selected = aux;
+				selected->setColor(255, 255, 255, 255);
+				selected->show(render);
+			}
+			if (aux->next){
+				aux = aux->next;
+			}
+		}
+	}
+}
+
+void Menu::readMouseButton(SDL_Event event) {
+	MenuItem* aux = start;
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+
+	if (textMenu && (event.button.button == SDL_BUTTON_LEFT)) {
+		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
+			if (aux->checkBounds(x, y)) {
+				selected = aux;
+				state = selected->text;
+			}
+
+			if (aux->next){
+				aux = aux->next;
+			}
+		}
+	}
 }
 
 std::string Menu::identify_event() {
@@ -432,167 +615,84 @@ std::string Menu::identify_event() {
 		Mix_PlayMusic(musicMenu, -1);
 		musicStarted = true;
 	}
-	MenuItem* aux;
-	int x = 0;
-	int y = 0;
-	std::string temp;
+
 	SDL_Event event;
 	SDL_StartTextInput();
-	bool auxPlayerOne = false;
-	bool auxPlayerTwo = false;
 	while (1) {
-
-		this->renderTextOne = false;
-		this->renderTextTwo = false;
-
 		while (SDL_PollEvent(&event)) {
 
-			if (event.type == SDL_QUIT)
+			//Reseteo el input
+
+			//Fin del juego devuelvo el estado EXIT
+			if (isType(event, SDL_QUIT))
 				return "Exit";
-			this->getJoystickInput(event);
-			if ((event.type == SDL_KEYDOWN || event.type == SDL_JOYAXISMOTION || event.type == SDL_JOYBUTTONDOWN) && !(this->playerOneSelected && this->playerTwoSelected)) {
 
-				//switch (event.key.keysym.sym) {
-				if( event.key.keysym.sym == SDLK_UP || InputControl::Instance()->isAxisUp(1))
-
-					buttonUp();
-
-
-				else if( event.key.keysym.sym == SDLK_w || InputControl::Instance()->isAxisUp(0))
-					buttonW();
-
-
-				else if( event.key.keysym.sym == SDLK_DOWN || InputControl::Instance()->isAxisDown(1))
-					buttonDown();
-
-				else if( event.key.keysym.sym ==SDLK_s || InputControl::Instance()->isAxisDown(0))
-
-					buttonS();
-
-				else if( event.key.keysym.sym ==SDLK_LEFT || InputControl::Instance()->isAxisLeft(1))
-
-					buttonLeft();
-				else if( event.key.keysym.sym ==SDLK_RIGHT || InputControl::Instance()->isAxisRight(1) )
-					buttonRight();
-
-				else if( event.key.keysym.sym ==SDLK_a || InputControl::Instance()->isAxisLeft(0))
-
-					buttonA();
-				else if( event.key.keysym.sym ==SDLK_d || InputControl::Instance()->isAxisRight(0))
-
-					buttonD();
-
-				else if( event.key.keysym.sym == SDLK_RETURN || InputControl::Instance()->someJoyKickButtonPressed(1)) {
-
-					if (textMenu) {
-						return selected->text;
-					} else {
-						this->playerOneSelected = true;
-						this->playerOneName = selected->text;
-					}
-					break;
-				}
-				else if( event.key.keysym.sym == SDLK_g || InputControl::Instance()->someJoyPunchButtonPressed(1)) {
-
-					if (textMenu) {
-						return selected->text;
-					} else {
-						this->playerTwoSelected = true;
-						this->playerTwoName = selectedTwo->text;
-					}
-					break;
-				}
-			} 
-
-			if (event.type == SDL_MOUSEMOTION) {
-				aux = start;
-				SDL_GetMouseState(&x, &y);
-
-				if (textMenu) {
-					for (unsigned int i = 0; i < 12; i++) {
-						if (aux->checkBounds(x, y) && selected != aux) {
-							Mix_PlayChannel(-1, sound, 0);
-							selected->setColor(150, 150, 150, 255);
-							selected->show(render);
-							selected = aux;
-							selected->setColor(255, 255, 255, 255);
-							selected->show(render);
-						}
-						if (aux->next){
-							aux = aux->next;
-						}
-					}
-				}
-			}
-
-			if (event.type == SDL_MOUSEBUTTONDOWN) {
-				aux = start;
-				SDL_GetMouseState(&x, &y);
-
-				if (textMenu && (event.button.button == SDL_BUTTON_LEFT)) {
-					for (unsigned int i = 0; i < 12; i++) {
-						if (aux->checkBounds(x, y)) {
-							std::cout << x << endl;
-							selected = aux;
-							return selected->text;
-						}
-
-						if (aux->next){
-							aux = aux->next;
-						}
-
-					}
-				}
-			}
-
-			if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
-				//Handle backspace
-				if (event.key.keysym.sym == SDLK_BACKSPACE && playerOneName.length() > 0)
-				{
-					//lop off character
-					TextureManager::Instance()->unload("namePlayerOne"+ playerOneName);
-					playerOneName.pop_back();
-					renderTextOne = true;
-				}
-				if (event.key.keysym.sym == SDLK_RETURN && event.key.repeat == 0)
-				{
-					renderTextOne = true;
-					nameOneSet = true;
-				}
-			}  else if ((event.type == SDL_KEYDOWN) && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet && nameOneSet) {
-				//Handle backspace
-				if (event.key.keysym.sym == SDLK_BACKSPACE && playerTwoName.length() > 0)
-				{
-					//lop off character
-					TextureManager::Instance()->unload("namePlayerTwo" + playerTwoName);
-					playerTwoName.pop_back();
-					renderTextTwo = true;
-				}
-				if (event.key.keysym.sym == SDLK_RETURN && event.key.repeat == 0)
-				{
-					renderTextTwo = true;
-					nameTwoSet = true;
-				}
-			}
-			if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameOneSet) {
-				playerOneName += event.text.text;
-				renderTextOne = true;
-			} else 	if (event.type == SDL_TEXTINPUT && (this->playerOneSelected && this->playerTwoSelected) && !nameTwoSet && nameOneSet) {
-				playerTwoName += event.text.text;
-				renderTextTwo = true;
-			}
-
-			this->showTextBox();
-
+			//MENU PLAYERS: Si ambos jugadores completaron su nombre devuelvo string con estado: nombres y nikcs de ambos
 			if (nameOneSet && nameTwoSet) {
 				SDL_StopTextInput();
 				return "selected: " + selected->text + " " + selectedTwo->text + " " + playerOneName + " " + playerTwoName;
 			}
 
+			//Leo input jugador 1
+			if (isType(event, SDL_TEXTINPUT) && !nameOneSet && !isKey(event, SDLK_BACKSPACE) && !isKey(event, SDLK_RETURN)
+				&& (playerOneSelected && playerTwoSelected)) {
+				cout << "entre al input one" << endl;
+				TextureManager::Instance()->unload("namePlayerOne" + playerOneName);
+				playerOneName += event.text.text;
+				renderTextOne = true;
+			}
+
+			//Leo input jugador 2, lee una ves que esta seteado el primero input
+			else if (isType(event, SDL_TEXTINPUT) && !nameTwoSet && nameOneSet && !isKey(event, SDLK_BACKSPACE) &&
+				!isKey(event, SDLK_RETURN) && (playerOneSelected && playerTwoSelected)) {
+				cout << "entre al input two" << endl;
+				TextureManager::Instance()->unload("namePlayerTwo" + playerTwoName);
+				playerTwoName += event.text.text;
+				renderTextTwo = true;
+			}
+
+
+			//Leo teclado y devuelvo un string con el estado
+			else if (isType(event, SDL_KEYDOWN)) {
+				if (readKey(event))
+					return state;
+			}
+
+			//Leo movimientos del joystick
+			else if (isType(event, SDL_JOYAXISMOTION) || isType(event, SDL_JOYBUTTONDOWN)) {
+				this->getJoystickInput(event);
+				if (InputControl::Instance()->someJoyKickButtonPressed(1)) {
+					cout << "patada joystick uno" << endl;
+				}
+				if (textMenu) {
+					if (readJoystickZero()) return state;
+				}
+				//Si no, selecciono jugadores
+				else {
+					readJoystickZero();
+					readJoystickOne();
+				}
+
+			}
+
+			//Leo movimientos del mouse
+			else if (isType(event, SDL_MOUSEMOTION)) {
+				readMouseMotion();
+			}
+
+			//Leo boton del mouse
+			else if (isType(event, SDL_MOUSEBUTTONDOWN)) {
+				readMouseButton(event);
+				return state;
+			}
+
+			//Muestro cuadros de texto para el input
+			showTextBox();
+			SDL_Delay(100);
 		}
 	}
-	
 }
+
 
 Menu::~Menu() {
 	delete this->start;
@@ -600,13 +700,13 @@ Menu::~Menu() {
 
 
 void Menu::getJoystickInput(SDL_Event event) {
-	if (event.type == SDL_JOYBUTTONDOWN ) {
+	if (event.type == SDL_JOYBUTTONDOWN) {
 		InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = true;
 	}
-	if (event.type == SDL_JOYBUTTONUP ) {
+	if (event.type == SDL_JOYBUTTONUP) {
 		InputControl::Instance()->joysticksButtonStates[event.jaxis.which][event.jbutton.button] = false;
 	}
-	if (event.type == SDL_JOYAXISMOTION ){
+	if (event.type == SDL_JOYAXISMOTION){
 
 		int num_joy = event.jaxis.which;
 
@@ -615,7 +715,8 @@ void Menu::getJoystickInput(SDL_Event event) {
 
 			if (event.jaxis.value > MAX_XAXIS || event.jaxis.value < MIN_XAXIS) {
 				InputControl::Instance()->joystickAxisStates[num_joy].first = event.jaxis.value;
-			} else {
+			}
+			else {
 				InputControl::Instance()->joystickAxisStates[num_joy].first = 0;
 			}
 
@@ -626,15 +727,12 @@ void Menu::getJoystickInput(SDL_Event event) {
 
 			if (event.jaxis.value > MAX_YAXIS || event.jaxis.value < MIN_YAXIS){
 				InputControl::Instance()->joystickAxisStates[num_joy].second = event.jaxis.value;
-			} else {
+			}
+			else {
 				InputControl::Instance()->joystickAxisStates[num_joy].second = 0;
 			}
 
 		}
 
 	}
-	/*
-	if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0)
-		InputControl::Instance()->refreshJoystickInputs();
-*/
 }

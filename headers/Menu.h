@@ -4,6 +4,8 @@
 #define RATIOBOX 81
 #define WIDTHBOX 48
 #define HEIGHTBOX 59
+#define ROWS 3
+#define COLUMNS 4
 
 #include "MenuItem.h"
 #include "SDL.h"
@@ -35,17 +37,28 @@ public:
 	void buttonS();
 	void buttonA();
 	void buttonD();
+	void buttonRETURN();
+	void buttonG();
+	void buttonJoystickZero();
+	void buttonJoystickOne();
 	void stopMusic();
 
 private:
+	//Estado del Menu, se retorna al detectarse un evento
+	std::string state;
+
+	//Items Menu para ciclar
 	MenuItem * start;
 	MenuItem * selected;
 	MenuItem * selectedTwo;
+
+	//Estructuras auxiliares
 	SDL_Texture * background;
 	Mix_Chunk * sound;
 	Mix_Music * musicMenu;
 	SDL_Rect columCharacterOne;
 	SDL_Rect columCharacterTwo;
+
 	bool musicStarted;
 	void draw(SDL_Texture*);
 	void initFlag();
@@ -69,6 +82,16 @@ private:
 	bool nameOneSet;
 	bool nameTwoSet;
 	void resetNameInputRender(SDL_Renderer*, int, int, int, int);
+	bool isKey(SDL_Event e, int key);
+	bool isType(SDL_Event e, int key);
+	bool readKey(SDL_Event);
+	bool readJoystickZero();
+	bool readJoystickOne();
+	void readMouseMotion();
+	void readMouseButton(SDL_Event);
+	void moveSelectedToNext(MenuItem** item, int cant);
+	void moveSelectedToPrevious(MenuItem** item, int cant);
+
 };
 
 #endif // MENU_H

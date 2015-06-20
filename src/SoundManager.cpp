@@ -12,10 +12,10 @@ SoundManager* SoundManager::s_pInstance = 0;
 
 
 void SoundManager::init() {
-	//default: Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
+	Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
 	//loadBattleSounds();
 	//load("sounds/music/fightMusic64.ogg","fightMusic64",SOUND_MUSIC);
-	Mix_OpenAudio(22050, AUDIO_S16, 2, 128);
+	//Mix_OpenAudio(22050, AUDIO_S16, 2, 128);
 	createSituationalSoundsMap(situationalSounds);
 	loadBattleSounds();
 }
