@@ -24,6 +24,9 @@
 #include "CollitionManager.h"
 #include "Menu.h"
 #include "GameInfo.h"
+#include "AIMovement.h"
+#include "../headers/SoundManager.h"
+
 
 //#include "SDL_gamecontroller.h"
 //#include "SDL_joystick.h"
@@ -133,7 +136,10 @@ public:
 	bool menuGame;
 	bool menuCharacter;
 
+	bool showFatality = false;
+
 	void getJoystickInput(SDL_Event event);
+	void handleAI();
 };
 
 #endif /* MKGAME_H_ */

@@ -47,7 +47,14 @@ enum InputCommand {
 	FIRST_PLAYER_AIR_PUNCH_R,
 	FIRST_PLAYER_AIR_PUNCH,
 	FIRST_PLAYER_AIR_PUNCH_L,
-	FIRST_PLAYER_FIRE
+	FIRST_PLAYER_FIRE,
+	SUBZERO_SWEEP,
+	BABALITY,
+	FATALITY,
+	HEADLESS,
+	HEADLESS_BLOOD,
+	FRIENDSHIP,
+	LAZY
 
 };
 
@@ -89,6 +96,7 @@ public:
 
 	InputCommand getFirstPlayerMove();
 	InputCommand getSecondPlayerMove();
+	void setSecondPlayerMove( InputCommand action);
 	InputCommand getControlOption();
 	std::vector<std::vector <bool> > joysticksButtonStates;
 	std::vector<std::pair <int,int> > joystickAxisStates;

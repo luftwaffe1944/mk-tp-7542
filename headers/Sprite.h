@@ -20,6 +20,8 @@ class Sprite {
 public:
 	Sprite();
 	virtual ~Sprite();
+	bool isLooped = false;
+	int timeLooped = 0;
 	Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount);
 	Sprite(std::string id, std::string spritePath, SDL_Renderer* m_pRenderer, int w, int h, int framesAmount, bool isAltPlayer, AlternativeColor* altColor);
     //void runForward(int firstFrame, int lastFrame, float fpsSpeed);
@@ -30,6 +32,9 @@ public:
     int getNextForwardingFrame();
     int getNextBackwardingFrame();
     int getNextFrameWithLimit();
+    int getNextFrameWithLimitAndLoop(int loopFrame, int timesLoop);
+    int getNextFrameWithLimitAndShowFrame(int frameToShow);
+    int getNextFrameWithLimitAndLoop(int loopMovement, int frameToLoop, int timesLoop);
     void refresh();
     int getCurrentFrame();
     int getFramesAmount();

@@ -44,6 +44,7 @@ bool MKGame::init(GameGUI* gameGui) {
 
 				/*vector<SDLObjectGUI*> objects = getObjectList();
 				for (unsigned int i = 0; i < objects.size(); i++) {
+					SDLObjectGUI* object = objects[i];
 					objects[i]->load(m_pRenderer);
 				}*/
 				//SecuenceInputManager::Instance()->load();
@@ -138,13 +139,11 @@ void MKGame::clean() {
 	LayerManager::Instance()->clean();
 	InputControl::Instance()->clean();
 	GameGUI::getInstance()->clean();
+	AIMovement::Instance()->clean();
 
 	TextureManager::Instance()->resetInstance();
 	SDL_DestroyRenderer(this->m_pRenderer);
 	SDL_DestroyWindow(this->m_pWindow);
-
-	//SDL_JoystickClose( this->gGameController );
-	//gGameController = NULL;
 
 	IMG_Quit();
 	TTF_Quit();
@@ -292,7 +291,9 @@ void MKGame::menuActions(std::string action) {
 		}
 		std::cout << characters[1] << endl;
 		std::cout << characters[2] << endl;
+		this->menuMk->stopMusic();
 		this->configureFight(characters[1], characters[2]);
+
 		//TODO: usar characters[1] y characters[2] en fight
 	}
 }
@@ -314,6 +315,8 @@ bool MKGame::menu() {
 		}
 	}
 	this->menuActions(action);
+	bool isMenuActive = (menuPpal || menuGame || menuCharacter);
+	if (!isMenuActive)
 	return (menuPpal || menuGame || menuCharacter);
 }
 
@@ -321,13 +324,13 @@ vector<Collitionable*> convertVector(vector<Character*> oldVec){
 	vector<Collitionable*> newVec;
 	for (std::vector<Character*>::size_type i = 0; i != oldVec.size(); i++) {
 		newVec.push_back((Collitionable*) oldVec[i]);
-		}
+	}
 	return newVec;
 }
 void addVector(vector<ThrowableObject*> oldVec, vector<Collitionable*> *newVec){
 	for (std::vector<ThrowableObject*>::size_type i = 0; i != oldVec.size(); i++) {
 		newVec->push_back((Collitionable*) oldVec[i]);
-		}
+	}
 }
 
 void MKGame::update() {
@@ -418,19 +421,36 @@ void MKGame::handleEvents() {
 			//Para solo jugar con joysticks comentar todos
 
 			// Para teclado y joystick descomentar el siguiente
-			//InputControl::Instance()->refreshInputs();
+			InputControl::Instance()->refreshInputs();
 
 			//Para jugar 2 con teclado usar estos 2
 			//InputControl::Instance()->refreshInputs1();
 			//InputControl::Instance()->refreshInputs2();
-		}
-	}
+		} else  {
+			if (int a = SDL_NumJoysticks() > 1) {
+				for (int i = 0 ; i < a; ++i ) {
+					InputControl::Instance()->joystickAxisStates[i].first = 0;
+					InputControl::Instance()->joystickAxisStates[i].second = 0;
+				}
+				InputControl::Instance()->refreshJoystickInputs();
 
+			}
+
+		}
+
+	}
+	bool asd = InputControl::Instance()->isAxisUp(0);
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
 
 
+}
+
+
+void MKGame::handleAI() {
+	if ( !AIMovement::Instance()->isInitialized) AIMovement::Instance()->init();
+	AIMovement::Instance()->solveAIMovement();
 }
 
 void MKGame::quit(){
