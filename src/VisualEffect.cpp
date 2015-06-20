@@ -21,6 +21,9 @@ void VisualEffect::draw() {
 	if ( visible ) SDLObjectGUI::draw();
 }
 
+void VisualEffect::animateToasty() {
+	animate();
+}
 void VisualEffect::animate() {
 	visible = true;
 	startTime = SDL_GetTicks();

@@ -123,7 +123,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 
 		else if (character1->getMovement() == UPPERCUT_MOVEMENT && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(HINT_FLYING_UPPER_MOVEMENT);
-			GameGUI::getInstance()->visualEffects[0]->animate();
+			GameGUI::getInstance()->visualEffects[0]->animateToasty();
 			int random = rand() % 3;
 			if (random == 1)  {
 				character1->talk("toasty");
@@ -172,7 +172,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 			character2->talk("uppercut");
 
-			GameGUI::getInstance()->visualEffects[0]->animate();
+			GameGUI::getInstance()->visualEffects[0]->animateToasty();
 			int random = rand() % 3;
 			if (random == 1)  {
 

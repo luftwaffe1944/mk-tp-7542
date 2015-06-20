@@ -19,9 +19,11 @@ public:
 	virtual void update();
 	virtual void clean();
 	void setImagePath(std::string path);
+	void animateToasty();
+private:
 	void animate();
 	void endAnimation();
-private:
+
 	bool visible = false;
 	unsigned int duration = 3000;
 	unsigned int startTime = 0;
