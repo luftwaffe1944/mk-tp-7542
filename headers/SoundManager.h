@@ -24,10 +24,8 @@ enum sound_type {
 class SoundManager {
 public:
 	static SoundManager* Instance() {
-		if(s_pInstance == 0) {
+		if(s_pInstance == NULL)
 			s_pInstance = new SoundManager();
-			return s_pInstance;
-		}
 		return s_pInstance;
 	}
 	/*virtual ~SoundManager() {
@@ -53,7 +51,6 @@ private:
 	~SoundManager();
 	SoundManager(const SoundManager&);
 	SoundManager &operator=(const SoundManager&);
-	//static SoundManager* cm_pInstance;
 	std::map<std::string, Mix_Chunk*> m_sfxs;
 	std::map<std::string, Mix_Music*> m_music;
 	//Esta estructura tiene los sonidos pertenecientes a cada acción.
