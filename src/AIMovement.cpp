@@ -28,6 +28,7 @@ AIMovement* AIMovement::Instance() {
 void AIMovement::init() {
 	character = GameGUI::getInstance()->getCharacters().at(1);
 	opponent = GameGUI::getInstance()->getCharacters().at(0);
+	AIMovement::createMovementMap(movementMap);
 	isInitialized = true;
 }
 
