@@ -24,11 +24,13 @@
 #include "AlternativeColor.h"
 #include "GameInfo.h"
 #include "ThrowableObject.h"
+#include "SecuenceInputManager.h"
 using namespace std;
 
 class GameGUIBuilder {
 private:
 	string configFilePath;
+	vector<std::string> jsonGetSecuences(Json::Value root);
 
 public:
 

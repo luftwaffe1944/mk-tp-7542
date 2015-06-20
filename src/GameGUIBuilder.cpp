@@ -545,6 +545,7 @@ GameGUI* GameGUIBuilder::create() {
 		Json::Value value14 = root[JSON_KEY_VENTANA];
 		Json::Value value5 = root[JSON_KEY_PELEA];
 		Json::Value value6 = root[JSON_KEY_JOYSTICKS];
+		Json::Value value7 = root[JSON_KEY_SECUENCES];
 	}catch(std::exception const & e){
 		FILE_LOG(logDEBUG) << "Corrupt JSON File. Exception: "<<e.what();
 		return createDefault(); //TODO: Validate create default
@@ -589,6 +590,8 @@ GameGUI* GameGUIBuilder::create() {
 
 
 	jsonGetJoysticks(root);
+
+	SecuenceInputManager::Instance()->setSpecialMoves(this->jsonGetSecuences(root));
 
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 
@@ -739,5 +742,29 @@ void GameGUIBuilder::handleError(string msgError) {
 	//TODO log msg in level ERROR
 	cout << msgError << endl;
 
+}
+
+vector<std::string> GameGUIBuilder::jsonGetSecuences(Json::Value root){
+
+		FILE_LOG(logDEBUG) << "SECUNCES CONFIGURATION";
+
+
+		const Json::Value secuencesArray = root.get(JSON_KEY_SECUENCES,0);
+		FILE_LOG(logDEBUG) << "JSON - Number of Secunces to process: " << secuencesArray.size();
+
+		vector<std::string> secuences;
+
+		for (unsigned int index = 0; index < secuencesArray.size(); ++index) {
+			Json::Value secuenceValue = secuencesArray[index];
+			std::string secuence;
+			try {
+				secuence = secuenceValue.get(JSON_KEY_SPECIAL_MOVE, "").asString();
+				secuences.push_back(secuence);
+			}catch(std::exception const & e){
+
+			}
+		}
+
+		return secuences;
 }
 

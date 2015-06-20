@@ -243,6 +243,10 @@ std::string SecuenceInputManager::getCleanSecuence() {
 	return cleanSecuence;
 }
 
+void SecuenceInputManager::setSpecialMoves(vector<std::string> secuences) {
+		this->specialMoves = secuences;
+}
+
 void SecuenceInputManager::loadSpecialMoves() {
 		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_0);
 		this->specialMoves.push_back(SECUENCE_FOR_SPECIAL_MOVE_1);

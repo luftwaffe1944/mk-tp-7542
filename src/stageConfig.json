@@ -68,5 +68,11 @@
 			"bloquear": 4,
 			"disparar": 5
 		}
-	]	
+	],
+	"secuencias": [
+		{ "secuence_for_special_move": "KKKK"	},
+		{ "secuence_for_special_move": "DKP"	},
+		{ "secuence_for_special_move": "UDJ"	},
+		{ "secuence_for_special_move": "PPPP"	}		
+	],	
 }

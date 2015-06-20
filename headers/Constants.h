@@ -258,6 +258,9 @@ const string BLOCK = "block";
 #define JSON_KEY_BLOCK "bloquear"
 #define JSON_KEY_FIRE "disparar"
 
+#define JSON_KEY_SECUENCES "secuencias"
+#define JSON_KEY_SPECIAL_MOVE "secuence_for_special_move"
+
 #define SPRITE_WIDTH 200
 #define SPRITE_HEIGHT 170
 
