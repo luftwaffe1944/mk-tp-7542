@@ -591,7 +591,7 @@ GameGUI* GameGUIBuilder::create() {
 
 	jsonGetJoysticks(root);
 
-	SecuenceInputManager::Instance()->setSpecialMoves(this->jsonGetSecuences(root));
+	jsonGetSecuences(root);
 
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 
@@ -744,7 +744,7 @@ void GameGUIBuilder::handleError(string msgError) {
 
 }
 
-vector<std::string> GameGUIBuilder::jsonGetSecuences(Json::Value root){
+void GameGUIBuilder::jsonGetSecuences(Json::Value root){
 
 		FILE_LOG(logDEBUG) << "SECUNCES CONFIGURATION";
 
@@ -753,7 +753,8 @@ vector<std::string> GameGUIBuilder::jsonGetSecuences(Json::Value root){
 		FILE_LOG(logDEBUG) << "JSON - Number of Secunces to process: " << secuencesArray.size();
 
 		vector<std::string> secuences;
-
+		int secuenceTime;
+		int errorTolerance;
 		for (unsigned int index = 0; index < secuencesArray.size(); ++index) {
 			Json::Value secuenceValue = secuencesArray[index];
 			std::string secuence;
@@ -764,7 +765,19 @@ vector<std::string> GameGUIBuilder::jsonGetSecuences(Json::Value root){
 
 			}
 		}
+		try {
+			secuenceTime = atoi(root.get(JSON_KEY_TIME_SECUENCES, "").asString().c_str());
+		}catch(std::exception const & e){
+			cout<<"error con tiempo secuencia";
+		}
+		try {
+			errorTolerance = atoi(root.get(JSON_KEY_TOLERANCE_SECUENCES, "").asString().c_str());
+		}catch(std::exception const & e){
+			cout<<"error con tolerancia secuencia";
+		}
+		SecuenceInputManager::Instance()->setSpecialMoves(secuences);
+		SecuenceInputManager::Instance()->errorTolerance = errorTolerance;
+		SecuenceInputManager::Instance()->timeForSecuence = secuenceTime;
 
-		return secuences;
 }
 

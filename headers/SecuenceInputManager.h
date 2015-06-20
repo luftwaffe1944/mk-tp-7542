@@ -67,6 +67,9 @@ public:
 	bool drawSecuenceOne;
 	bool drawSecuenceTwo;
 
+	int errorTolerance;
+	int timeForSecuence;
+
 private:
 	static SecuenceInputManager* dm_pInstance;
 	SecuenceInputManager();

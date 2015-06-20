@@ -260,6 +260,8 @@ const string BLOCK = "block";
 
 #define JSON_KEY_SECUENCES "secuencias"
 #define JSON_KEY_SPECIAL_MOVE "secuence_for_special_move"
+#define JSON_KEY_TOLERANCE_SECUENCES "tolerancia_secuencias"
+#define JSON_KEY_TIME_SECUENCES "tiempo_secuencias"
 
 #define SPRITE_WIDTH 200
 #define SPRITE_HEIGHT 170

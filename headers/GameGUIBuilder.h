@@ -30,7 +30,7 @@ using namespace std;
 class GameGUIBuilder {
 private:
 	string configFilePath;
-	vector<std::string> jsonGetSecuences(Json::Value root);
+	void jsonGetSecuences(Json::Value root);
 
 public:
 

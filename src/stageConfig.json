@@ -74,5 +74,7 @@
 		{ "secuence_for_special_move": "DKP"	},
 		{ "secuence_for_special_move": "UDJ"	},
 		{ "secuence_for_special_move": "PPPP"	}		
-	],	
+	],
+	"tiempo_secuencias": 1,
+	"tolerancia_secuencias": 1	
 }

@@ -37,7 +37,7 @@ SecuenceInputManager::SecuenceInputManager(){
 	 this->elapsedTimeToShowMatchTwo = 0;
 	 this->isSetMoveOne=false;
 	 this->isSetMoveTwo=false;
-	 loadSpecialMoves();
+	 //loadSpecialMoves();
 
 	 for (int i=0; i<100; i++){
 		 this->colorCharOne.push_back(false);
@@ -47,6 +47,9 @@ SecuenceInputManager::SecuenceInputManager(){
 	this->fatalityTime=false;
 	this->drawSecuenceOne=true;
 	this->drawSecuenceTwo=false;
+
+	this->errorTolerance = ERROR_TOLERANCE_SPECIAL_MOVES;
+	this->timeForSecuence = TIME_TOLERANCE_SPECIAL_MOVES;
 }
 
 /*
@@ -181,7 +184,7 @@ void SecuenceInputManager::update() {
 		if (this->isMatchOne){
 			timeLimit = this->elapsedTimeToShowMatchOne + 0.1f;
 		}else{
-			timeLimit = TIME_TOLERANCE_SPECIAL_MOVES;
+			timeLimit = this->timeForSecuence;
 			this->elapsedTimeToShowMatchOne = (this->elapsedTimeOne/1000.0f);
 		}
 		if ((int)(this->elapsedTimeOne/1000.0f) > timeLimit){
@@ -195,7 +198,7 @@ void SecuenceInputManager::update() {
 		if (this->isMatchTwo){
 			timeLimit = this->elapsedTimeToShowMatchTwo + 0.1f;
 		}else{
-			timeLimit = TIME_TOLERANCE_SPECIAL_MOVES;
+			timeLimit = this->timeForSecuence;
 			this->elapsedTimeToShowMatchTwo = (this->elapsedTimeTwo/1000.0f);
 		}
 		if ((int)(this->elapsedTimeTwo/1000.0f) > timeLimit){
@@ -313,7 +316,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					smIndex = 2;
 					csIndex = 2;
 					int acuErrores = 0;
-					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= ERROR_TOLERANCE_SPECIAL_MOVES )){
+					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= this->errorTolerance )){
 						csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - csIndex, 1);
 						smChar = this->specialMoves[i].substr(this->specialMoves[i].length()- smIndex, 1);
 						if (!(csChar==smChar)){
@@ -357,7 +360,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					smIndex = 2;
 					csIndex = 2;
 					int acuErrores = 0;
-					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= ERROR_TOLERANCE_SPECIAL_MOVES )){
+					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= this->errorTolerance )){
 						csChar = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - csIndex, 1);
 						smChar = this->specialMoves[i].substr(this->specialMoves[i].length()- smIndex, 1);
 						if (!(csChar==smChar)){
