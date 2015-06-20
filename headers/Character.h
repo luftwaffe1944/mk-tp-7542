@@ -85,6 +85,7 @@ public:
 	bool isHeadlessBlood;
 	bool isFriendship;
 	bool isBurning;
+	bool isFalling;
 	bool isFinishingMove;
 	bool isReptile;
 	bool isVictory;

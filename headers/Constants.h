@@ -128,6 +128,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define FRIENDSHIP_MOVEMENT "friendship"
 #define VICTORY_MOVEMENT "victory"
 #define REPTILE_MOVEMENT "reptile"
+#define FALLING_MOVEMENT "falling"
 #define JUMPING_X_SPEED 4
 #define SWEEP_X_SPEED 8
 
@@ -168,6 +169,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define VICTORY_SUFFIX "victory"
 #define LAZY_SUFFIX "lazy"
 #define REPTILE_SUFFIX "reptile"
+#define FALLING_SUFFIX "falling"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -216,6 +218,7 @@ const string FIGHT_IMAGE_SPRITE = "images/fight/fight.png";
 const string FIGHT2_IMAGE_SPRITE = "images/fight/fight2.png";
 const string FINISH_HIM_IMAGE_SPRITE = "images/fight/finishHim.png";
 const string FATALITY_IMAGE_SPRITE = "images/fight/fatality.png";
+const string FALLING_SPRITE = "/falling.png";
 const string LOW_PUNCH = "low_punch";
 const string HIGH_PUNCH = "high_punch";
 const string LOW_KICK = "low_kick";
