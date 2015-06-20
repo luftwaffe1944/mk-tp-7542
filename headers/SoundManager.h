@@ -71,6 +71,7 @@ private:
 		situationalSounds["uppercut"].push_back("gancho");
 		situationalSounds["missKick"].push_back("highKick1");
 		situationalSounds["missKick"].push_back("highKick2");
+		situationalSounds["fire"].push_back("fire1");
 		situationalSounds["fireHit"].push_back("fireHit1");
 		situationalSounds["fireHit"].push_back("fireHit3");
 		situationalSounds["jump"].push_back("jump1");
