@@ -89,6 +89,7 @@ private:
 		situationalSounds["roundThree"].push_back("roundThree");
 		situationalSounds["scream"].push_back("scream");
 		situationalSounds["friendship"].push_back("friendship");
+		situationalSounds["finishHim"].push_back("finishHim");
 		situationalSounds["friendship_voice"].push_back("friendship_voice");
 		situationalSounds["pre_fatality"].push_back("pre_fatality");
 		situationalSounds["pre_friendship"].push_back("pre_friendship");
