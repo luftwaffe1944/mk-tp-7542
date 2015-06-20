@@ -237,6 +237,7 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 	return layers;
 }
 
+
 vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY, Stage* stage) {
 	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
 	int stage_win_ypiso = stage->getYGround();
@@ -516,6 +517,21 @@ void jsonGetJoysticks(Json::Value root) {
 	GameGUI::getInstance()->vCollitionable.push_back(tObject2);
 }*/
 
+
+vector<VisualEffect*> createVisualEffects(float ratioX, float ratioY, Window* window, Stage* stage){
+
+	vector<VisualEffect*> visualEffects;
+	int width = 100;
+	int zIndex = 100; // bien hardcodeado un numero más que el zindex de los character
+
+	VisualEffect* visualEffect = new VisualEffect(new LoaderParams( 0, 0, width, window->heightPx / ratioY, zIndex, ratioX, ratioY, "toasty")) ;
+	visualEffect->setImagePath(TOASTY_IMAGE_SPRITE );
+	MKGame::Instance()->getObjectList().push_back(visualEffect);
+	visualEffects.push_back( visualEffect );
+
+	return visualEffects;
+}
+
 GameGUI* GameGUIBuilder::create() {
 	FILE_LOG(logDEBUG) << "CONFIGURATION INITIALIZED";
 	GameGUI *gameGUI = GameGUI::getInstance();
@@ -590,10 +606,16 @@ GameGUI* GameGUIBuilder::create() {
 
 	jsonGetJoysticks(root);
 
+	vector<VisualEffect*> visualEffects = createVisualEffects(ratioX, ratioY, window, stage);
+
+	gameGUI->setVisualEffects(visualEffects);
+
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 
 	return gameGUI;
 }
+
+
 
 GameGUI* GameGUIBuilder::createDefault() {
 

@@ -24,6 +24,7 @@
 #include "AlternativeColor.h"
 #include "GameInfo.h"
 #include "ThrowableObject.h"
+#include "VisualEffect.h"
 using namespace std;
 
 class GameGUIBuilder {

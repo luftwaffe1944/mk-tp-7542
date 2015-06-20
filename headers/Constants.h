@@ -216,6 +216,7 @@ const string FIGHT_IMAGE_SPRITE = "images/fight/fight.png";
 const string FIGHT2_IMAGE_SPRITE = "images/fight/fight2.png";
 const string FINISH_HIM_IMAGE_SPRITE = "images/fight/finishHim.png";
 const string FATALITY_IMAGE_SPRITE = "images/fight/fatality.png";
+const string TOASTY_IMAGE_SPRITE = "images/effects/doge.png";
 const string LOW_PUNCH = "low_punch";
 const string HIGH_PUNCH = "high_punch";
 const string LOW_KICK = "low_kick";
