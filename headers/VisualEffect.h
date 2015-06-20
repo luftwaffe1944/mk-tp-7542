@@ -18,9 +18,16 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
+	float speed;
+
+	bool isToasty;
+	int windowHeight;
+	int windowWidth;
 	void setImagePath(std::string path);
 	void animateToasty();
 private:
+	unsigned int startingTick;
+	bool freezed;
 	void animate();
 	void endAnimation();
 
