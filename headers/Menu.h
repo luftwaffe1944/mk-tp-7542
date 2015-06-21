@@ -17,7 +17,7 @@
 #include "GameGUI.h"
 #include "Constants.h"
 #include "InputControl.h"
-#include <vld.h> 
+//#include <vld.h> 
 
 
 class Menu
