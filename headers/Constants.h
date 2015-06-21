@@ -20,12 +20,14 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define ERROR_TOLERANCE_SPECIAL_MOVES 2 //quantity
 #define SIMBOLS_TO_SHOW_SPECIAL_MOVES 10 //quantity
 
+#define CHARACTER_FOR_SPECIAL_MOVE_FORWARD "F"
+#define CHARACTER_FOR_SPECIAL_MOVE_BACKWARD "B"
 #define CHARACTER_FOR_SPECIAL_MOVE_UP "U"
 #define CHARACTER_FOR_SPECIAL_MOVE_DOWN "D"
 #define CHARACTER_FOR_SPECIAL_MOVE_LEFT "L"
 #define CHARACTER_FOR_SPECIAL_MOVE_RIGHT "R"
-#define CHARACTER_FOR_SPECIAL_MOVE_FIRE "F"
-#define CHARACTER_FOR_SPECIAL_MOVE_BLOCK "B"
+#define CHARACTER_FOR_SPECIAL_MOVE_FIRE "W"
+#define CHARACTER_FOR_SPECIAL_MOVE_BLOCK "O"
 #define CHARACTER_FOR_SPECIAL_MOVE_KICKHIGH "K"
 #define CHARACTER_FOR_SPECIAL_MOVE_KICKLOW "H"
 #define CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH "P"
@@ -128,6 +130,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define FRIENDSHIP_MOVEMENT "friendship"
 #define VICTORY_MOVEMENT "victory"
 #define REPTILE_MOVEMENT "reptile"
+#define FALLING_MOVEMENT "falling"
 #define JUMPING_X_SPEED 4
 #define SWEEP_X_SPEED 8
 
@@ -168,6 +171,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define VICTORY_SUFFIX "victory"
 #define LAZY_SUFFIX "lazy"
 #define REPTILE_SUFFIX "reptile"
+#define FALLING_SUFFIX "falling"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -216,6 +220,7 @@ const string FIGHT_IMAGE_SPRITE = "images/fight/fight.png";
 const string FIGHT2_IMAGE_SPRITE = "images/fight/fight2.png";
 const string FINISH_HIM_IMAGE_SPRITE = "images/fight/finishHim.png";
 const string FATALITY_IMAGE_SPRITE = "images/fight/fatality.png";
+const string FALLING_SPRITE = "/falling.png";
 const string LOW_PUNCH = "low_punch";
 const string HIGH_PUNCH = "high_punch";
 const string LOW_KICK = "low_kick";
@@ -257,6 +262,11 @@ const string BLOCK = "block";
 #define JSON_KEY_LOW_KICK "patada_baja"
 #define JSON_KEY_BLOCK "bloquear"
 #define JSON_KEY_FIRE "disparar"
+
+#define JSON_KEY_SECUENCES "secuencias"
+#define JSON_KEY_SPECIAL_MOVE "secuence_for_special_move"
+#define JSON_KEY_TOLERANCE_SECUENCES "tolerancia_secuencias"
+#define JSON_KEY_TIME_SECUENCES "tiempo_secuencias"
 
 #define SPRITE_WIDTH 200
 #define SPRITE_HEIGHT 170

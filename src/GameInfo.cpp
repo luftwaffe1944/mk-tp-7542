@@ -224,6 +224,8 @@ void GameInfo::prepareNewRound(){
 	this->characters[1]->setEnergy(1.0f);
 	this->characters[0]->setPositionX(GameGUI::getInstance()->getWindow()->widthPx / 4 - this->characters[0]->getWidth() * this->characters[0]->getRatioX()/2);
 	this->characters[1]->setPositionX((GameGUI::getInstance()->getWindow()->widthPx / 4)*3 -  this->characters[1]->getWidth() * this->characters[1]->getRatioX()/2);
+	this->characters[0]->clearMovementsFlags();
+	this->characters[1]->clearMovementsFlags();
 }
 
 void GameInfo::triggerSounds() {
@@ -253,7 +255,7 @@ void GameInfo::update() {
 			this->timer.getTicks() > 99000.f ) {
 	//	this->characters[0]->clearMovementsFlags();
 //		this->characters[1]->clearMovementsFlags();
-		MKGame::Instance()->setAllowPlayerMovements(false);
+//		MKGame::Instance()->setAllowPlayerMovements(false);
 		if (this->characters[0]->getEnergy() <= 0.0f ||
 				this->characters[0]->getEnergy() <= this->characters[1]->getEnergy() ) {
 			if (!this->charOneAlreadyDeath) {
@@ -263,11 +265,15 @@ void GameInfo::update() {
 			}
 			this->charOneAlreadyDeath = true;
 			if (characterTwoWins < 2){
-				this->characters[1]->setMovement(VICTORY_MOVEMENT);
-				this->characters[1]->setCurrentSprite();
-				/*this->characters[0]->setMovement(HINT_FLYING_MOVEMENT);
-				this->characters[0]->setCurrentSprite();*/
-				//this->characters[0]->completeMovement();
+				if (this->characters[1]->getMovement() == STANCE) {
+					this->characters[1]->setMovement(VICTORY_MOVEMENT);
+					this->characters[1]->setCurrentSprite();
+				}
+				if (this->characters[0]->isTouchingGround(this->characters[0]->getPositionY())) {
+					this->characters[0]->setMovement(FALLING_MOVEMENT);
+					this->characters[0]->setCurrentSprite();
+					this->characters[0]->isFalling = true;
+				}
 			}
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
 			if (!this->playingCharacterWinsSound && this->characterTwoWins < 2) {
@@ -282,11 +288,15 @@ void GameInfo::update() {
 			}
 			this->charTwoAlreadyDeath = true;
 			if (characterOneWins < 2) {
-				this->characters[0]->setMovement(VICTORY_MOVEMENT);
-				this->characters[0]->setCurrentSprite();
-				/*this->characters[1]->setMovement(HINT_FLYING_MOVEMENT);
-				this->characters[1]->setCurrentSprite();*/
-				//this->characters[1]->completeMovement();
+				if (this->characters[0]->getMovement() == STANCE) {
+					this->characters[0]->setMovement(VICTORY_MOVEMENT);
+					this->characters[0]->setCurrentSprite();
+				}
+				if (this->characters[1]->isTouchingGround(this->characters[1]->getPositionY())){
+					this->characters[1]->setMovement(FALLING_MOVEMENT);
+					this->characters[1]->setCurrentSprite();
+					this->characters[1]->isFalling = true;
+				}
 			}
 			FILE_LOG(logDEBUG) << "############ RESULT: " << this->characters[0]->getName() << " Wins #############";
 			if (!this->playingCharacterWinsSound && this->characterOneWins < 2) {

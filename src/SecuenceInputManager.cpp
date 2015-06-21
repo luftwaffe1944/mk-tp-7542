@@ -37,7 +37,7 @@ SecuenceInputManager::SecuenceInputManager(){
 	 this->elapsedTimeToShowMatchTwo = 0;
 	 this->isSetMoveOne=false;
 	 this->isSetMoveTwo=false;
-	 loadSpecialMoves();
+	 //loadSpecialMoves();
 
 	 for (int i=0; i<100; i++){
 		 this->colorCharOne.push_back(false);
@@ -47,6 +47,12 @@ SecuenceInputManager::SecuenceInputManager(){
 	this->fatalityTime=false;
 	this->drawSecuenceOne=true;
 	this->drawSecuenceTwo=false;
+
+	this->errorTolerance = ERROR_TOLERANCE_SPECIAL_MOVES;
+	this->timeForSecuence = TIME_TOLERANCE_SPECIAL_MOVES;
+
+	this->firstPlayerRightOrientation = true;
+	this->secondPlayerRightOrientation = false;
 }
 
 /*
@@ -90,9 +96,11 @@ bool SecuenceInputManager::load() {
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_KICKLOW, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_PUNCHLOW, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_FORWARD, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_BACKWARD, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", "-", textColor, font, render);
 
-	//letras blancas
+	//letras verdes
 	textColor = {0, 255, 0};
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_UP, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_DOWN, textColor, font, render);
@@ -104,6 +112,8 @@ bool SecuenceInputManager::load() {
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_KICKLOW, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_PUNCHLOW, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_FORWARD, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_BACKWARD, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", "-", textColor, font, render);
 
 	TTF_CloseFont(font);
@@ -181,7 +191,7 @@ void SecuenceInputManager::update() {
 		if (this->isMatchOne){
 			timeLimit = this->elapsedTimeToShowMatchOne + 0.1f;
 		}else{
-			timeLimit = TIME_TOLERANCE_SPECIAL_MOVES;
+			timeLimit = this->timeForSecuence;
 			this->elapsedTimeToShowMatchOne = (this->elapsedTimeOne/1000.0f);
 		}
 		if ((int)(this->elapsedTimeOne/1000.0f) > timeLimit){
@@ -195,7 +205,7 @@ void SecuenceInputManager::update() {
 		if (this->isMatchTwo){
 			timeLimit = this->elapsedTimeToShowMatchTwo + 0.1f;
 		}else{
-			timeLimit = TIME_TOLERANCE_SPECIAL_MOVES;
+			timeLimit = this->timeForSecuence;
 			this->elapsedTimeToShowMatchTwo = (this->elapsedTimeTwo/1000.0f);
 		}
 		if ((int)(this->elapsedTimeTwo/1000.0f) > timeLimit){
@@ -203,6 +213,9 @@ void SecuenceInputManager::update() {
 			this->reset(2);
 		}
 	}
+
+	this->firstPlayerRightOrientation = GameGUI::getInstance()->getFight()->getFighterOne()->getIsRightOriented();
+	this->secondPlayerRightOrientation = GameGUI::getInstance()->getFight()->getFighterTwo()->getIsRightOriented();
 
 }
 
@@ -241,6 +254,10 @@ std::string SecuenceInputManager::getCleanSecuence() {
 		cleanSecuence += "-";
 	}
 	return cleanSecuence;
+}
+
+void SecuenceInputManager::setSpecialMoves(vector<std::string> secuences) {
+		this->specialMoves = secuences;
 }
 
 void SecuenceInputManager::loadSpecialMoves() {
@@ -309,7 +326,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					smIndex = 2;
 					csIndex = 2;
 					int acuErrores = 0;
-					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= ERROR_TOLERANCE_SPECIAL_MOVES )){
+					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= this->errorTolerance )){
 						csChar = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - csIndex, 1);
 						smChar = this->specialMoves[i].substr(this->specialMoves[i].length()- smIndex, 1);
 						if (!(csChar==smChar)){
@@ -353,7 +370,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					smIndex = 2;
 					csIndex = 2;
 					int acuErrores = 0;
-					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= ERROR_TOLERANCE_SPECIAL_MOVES )){
+					while ((smIndex <= this->specialMoves[i].length()) && (acuErrores <= this->errorTolerance )){
 						csChar = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - csIndex, 1);
 						smChar = this->specialMoves[i].substr(this->specialMoves[i].length()- smIndex, 1);
 						if (!(csChar==smChar)){
