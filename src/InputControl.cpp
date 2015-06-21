@@ -900,12 +900,19 @@ void InputControl::loadSpecialSecuence(int joystick) {
 	bool isSetMove = SecuenceInputManager::Instance()->getIsSetMove(joystick);
 
 	if (!isSetMove) {
-		if ((isAxisLeft(joystick))
-				&& (((joystick == 0)
-						&& (!SecuenceInputManager::Instance()->joy1LeftPressOnce))
-						|| ((joystick == 1)
-								&& (!SecuenceInputManager::Instance()->joy2LeftPressOnce)))) {
-			left = CHARACTER_FOR_SPECIAL_MOVE_LEFT;
+		if ((isAxisLeft(joystick)) && (((joystick == 0) && (!SecuenceInputManager::Instance()->joy1LeftPressOnce)) || ((joystick == 1)	&& (!SecuenceInputManager::Instance()->joy2LeftPressOnce)))) {
+
+			if ((joystick == 0) && (!SecuenceInputManager::Instance()->joy1LeftPressOnce) && (SecuenceInputManager::Instance()->firstPlayerRightOrientation)){
+				left = CHARACTER_FOR_SPECIAL_MOVE_BACKWARD;
+			}else if ((joystick == 0) && (!SecuenceInputManager::Instance()->joy1LeftPressOnce) && (!SecuenceInputManager::Instance()->firstPlayerRightOrientation)){
+				left = CHARACTER_FOR_SPECIAL_MOVE_FORWARD;
+			}
+			if ((joystick == 1) && (!SecuenceInputManager::Instance()->joy2LeftPressOnce) && (SecuenceInputManager::Instance()->secondPlayerRightOrientation)){
+				left = CHARACTER_FOR_SPECIAL_MOVE_BACKWARD;
+			}else if ((joystick == 1) && (!SecuenceInputManager::Instance()->joy2LeftPressOnce) && (!SecuenceInputManager::Instance()->secondPlayerRightOrientation)){
+				left = CHARACTER_FOR_SPECIAL_MOVE_FORWARD;
+			}
+
 			if (joystick == 0) {
 				SecuenceInputManager::Instance()->joy1LeftPressOnce = true;
 			} else if (joystick == 1) {
@@ -918,12 +925,19 @@ void InputControl::loadSpecialSecuence(int joystick) {
 				SecuenceInputManager::Instance()->joy2LeftPressOnce = false;
 			}
 		}
-		if ((isAxisRight(joystick))
-				&& (((joystick == 0)
-						&& (!SecuenceInputManager::Instance()->joy1RightPressOnce))
-						|| ((joystick == 1)
-								&& (!SecuenceInputManager::Instance()->joy2RightPressOnce)))) {
-			right = CHARACTER_FOR_SPECIAL_MOVE_RIGHT;
+		if ((isAxisRight(joystick))	&& (((joystick == 0) && (!SecuenceInputManager::Instance()->joy1RightPressOnce)) || ((joystick == 1) && (!SecuenceInputManager::Instance()->joy2RightPressOnce)))) {
+
+			if ((joystick == 0) && (!SecuenceInputManager::Instance()->joy1RightPressOnce) && (SecuenceInputManager::Instance()->firstPlayerRightOrientation)){
+				right = CHARACTER_FOR_SPECIAL_MOVE_FORWARD;
+			}else if ((joystick == 0) && (!SecuenceInputManager::Instance()->joy1RightPressOnce) && (!SecuenceInputManager::Instance()->firstPlayerRightOrientation)){
+				right = CHARACTER_FOR_SPECIAL_MOVE_BACKWARD;
+			}
+			if ((joystick == 1) && (!SecuenceInputManager::Instance()->joy2RightPressOnce) && (SecuenceInputManager::Instance()->secondPlayerRightOrientation)){
+				right = CHARACTER_FOR_SPECIAL_MOVE_FORWARD;
+			}else if ((joystick == 1) && (!SecuenceInputManager::Instance()->joy2RightPressOnce) && (!SecuenceInputManager::Instance()->secondPlayerRightOrientation)){
+				right = CHARACTER_FOR_SPECIAL_MOVE_BACKWARD;
+			}
+
 			if (joystick == 0) {
 				SecuenceInputManager::Instance()->joy1RightPressOnce = true;
 			} else if (joystick == 1) {

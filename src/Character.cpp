@@ -156,6 +156,8 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 	Sprite* spriteLazy = new Sprite(this->name+this->playerNumber+LAZY_SUFFIX, characterPath+LAZY_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
+	Sprite* spriteFalling = new Sprite(this->name+this->playerNumber+FALLING_SUFFIX, characterPath+FALLING_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -193,6 +195,7 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+VICTORY_SUFFIX, spriteVictory));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+LAZY_SUFFIX, spriteLazy));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BURNING_SUFFIX, spriteBurning));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FALLING_SUFFIX, spriteFalling));
 
 	return true;
 }
@@ -203,7 +206,7 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality) {
+	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality || this->isFalling) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
@@ -340,7 +343,7 @@ void Character::update() {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
 
-//	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
+	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
@@ -369,6 +372,9 @@ void Character::update() {
 	}
 	else if (isHeadless){
 		isHeadless = true;
+	}
+	else if (isFalling){
+		isFalling = true;
 	}
 
 	else if (isHeadlessBlood){
@@ -684,7 +690,7 @@ void Character::update() {
 				break;
 			case FIRST_PLAYER_FIRE:
 				this->fire = true;
-				this->setMovement(FIRE_MOVEMENT);
+				//this->setMovement(FIRE_MOVEMENT);
 				setCurrentSprite();
 				fireMovement();
 				SoundManager::Instance()->playSoundByAction("fire",0);
@@ -788,6 +794,7 @@ void Character::clearMovementsFlags(){
 	isLazy = false;
 	isFinishingMove = false;
 	isReptile = false;
+	isFalling = false;
 	//this->beingPushed = false;
 }
 
@@ -1435,6 +1442,10 @@ void Character::setCurrentSprite(){
 			isLazy = false;
 		}
 
+		else if (this->getMovement() == FALLING_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ FALLING_SUFFIX];
+		}
+
 		else{
 			//TODO: review
 		}
@@ -1521,6 +1532,9 @@ void Character::setMoveFlag(bool trueOrFalse){
 	}
 	else if (this->getMovement() == BURNING_MOVEMENT) {
 		isBurning = trueOrFalse;
+	}
+	else if (this->getMovement() == FALLING_MOVEMENT) {
+		isFalling = trueOrFalse;
 	}
 	else {
 		//TODO: review

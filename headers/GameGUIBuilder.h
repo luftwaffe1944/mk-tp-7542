@@ -25,11 +25,13 @@
 #include "GameInfo.h"
 #include "ThrowableObject.h"
 #include "VisualEffect.h"
+#include "SecuenceInputManager.h"
 using namespace std;
 
 class GameGUIBuilder {
 private:
 	string configFilePath;
+	void jsonGetSecuences(Json::Value root);
 
 public:
 

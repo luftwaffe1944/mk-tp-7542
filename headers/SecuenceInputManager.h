@@ -18,6 +18,7 @@
 #include "GameGUI.h"
 #include "Window.h"
 #include "Constants.h"
+//#include "GameGUI.h"
 
 using namespace std;
 
@@ -39,6 +40,7 @@ public:
 	void reset(int secNum);
 	int detectSpecialSecuence(int playerNum);
 	bool getIsSetMove(int num);
+	void setSpecialMoves(vector<std::string> secuences);
 
 	std::string specialSecuenceOne;
 	std::string specialSecuenceOnePreview;
@@ -65,6 +67,12 @@ public:
 	bool fatalityTime;
 	bool drawSecuenceOne;
 	bool drawSecuenceTwo;
+
+	int errorTolerance;
+	int timeForSecuence;
+
+	bool firstPlayerRightOrientation;
+	bool secondPlayerRightOrientation;
 
 private:
 	static SecuenceInputManager* dm_pInstance;
