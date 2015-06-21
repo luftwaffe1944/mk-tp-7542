@@ -343,7 +343,7 @@ void Character::update() {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
 
-	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
+	//cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
@@ -1935,7 +1935,7 @@ float Character::getWidthBox2UL() {
 }
 
 void Character::talk(std::string action, int repetitions) {
-	if (this->movement != this->previousMovement) {
+	if (this->movement != this->previousMovement || action == "toasty") {
 		SoundManager::Instance()->playSoundByAction(action,repetitions);
 	}
 }

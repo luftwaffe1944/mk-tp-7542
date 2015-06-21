@@ -153,7 +153,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 
 			character2->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 			character1->talk("uppercut");
-			int random = rand() % 5;
+			int random = rand() % 10;
 			if (random == 0)  {
 				character1->talk("toasty");
 				GameGUI::getInstance()->visualEffects[0]->animateToasty();
@@ -201,7 +201,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 			character2->talk("uppercut");
 
-			int random = rand() % 5;
+			int random = rand() % 10;
 			if (random == 0)  {
 				GameGUI::getInstance()->visualEffects[0]->animateToasty();
 				character1->talk("toasty");
