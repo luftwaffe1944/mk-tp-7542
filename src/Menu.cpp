@@ -96,7 +96,9 @@ Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int
 
 	this->initFlag();
 
-	this->loadSoundEffect("sounds/menu.wav");
+	this->loadSoundEffect("sounds/menu/menumov.ogg");
+	selectSoundOne = Mix_LoadWAV("sounds/menu/selectPlayerOne.ogg");
+	selectSoundTwo = Mix_LoadWAV("sounds/menu/selectPlayerTwo.ogg");
 
 	if (textMenu)
 		this->createMenuItemList(no_of_items, strings, start_x, start_y, width, height);
@@ -391,6 +393,7 @@ void Menu::buttonJoystickOne() {
 	}
 	//Leo nick del jugador 2
 	else {
+		Mix_PlayChannel(-1, selectSoundOne, 0);
 		playerTwoSelected = true;
 		renderTextTwo = true;
 		playerTwoName = selectedTwo->text;
@@ -404,6 +407,7 @@ void Menu::buttonJoystickZero() {
 	}
 	//Leo nick del jugador 1
 	else {
+		Mix_PlayChannel(-1, selectSoundTwo, 0);
 		playerOneSelected = true;
 		renderTextOne = true;
 		playerOneName = selected->text;
@@ -413,7 +417,8 @@ void Menu::buttonJoystickZero() {
 
 void Menu::showTextBox() {
 	SDL_Color fColor = { 255, 255, 255, 255 };
-	TTF_Font* font = TTF_OpenFont("fonts/MK4.ttf", 40);
+	TTF_Font* font = TTF_OpenFont("fonts/mk3.ttf", 40);
+	TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
 	float ratioX = TextureManager::Instance()->ratioWidth;
 	float ratioY = TextureManager::Instance()->ratioHeight;
 	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx() / ratioX;
@@ -639,6 +644,7 @@ void Menu::readMouseButton(SDL_Event event) {
 std::string Menu::identify_event() {
 	if (music && !musicStarted) {
 		Mix_PlayMusic(musicMenu, -1);
+		Mix_VolumeMusic(MIX_MAX_VOLUME / 3);
 		musicStarted = true;
 	}
 

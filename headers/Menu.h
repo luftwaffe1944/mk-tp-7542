@@ -57,6 +57,8 @@ private:
 	//Estructuras auxiliares
 	SDL_Texture * background;
 	Mix_Chunk * sound;
+	Mix_Chunk * selectSoundOne;
+	Mix_Chunk * selectSoundTwo;
 	Mix_Music * musicMenu;
 	SDL_Rect columCharacterOne;
 	SDL_Rect columCharacterTwo;
