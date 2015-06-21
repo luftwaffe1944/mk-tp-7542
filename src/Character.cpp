@@ -343,7 +343,7 @@ void Character::update() {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
 
-//	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
+	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
