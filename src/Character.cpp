@@ -690,7 +690,7 @@ void Character::update() {
 				break;
 			case FIRST_PLAYER_FIRE:
 				this->fire = true;
-				this->setMovement(FIRE_MOVEMENT);
+				//this->setMovement(FIRE_MOVEMENT);
 				setCurrentSprite();
 				fireMovement();
 				SoundManager::Instance()->playSoundByAction("fire",0);
