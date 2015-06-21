@@ -33,6 +33,7 @@ void Menu::createMenuItemList(int no_of_items, std::string * strings, int x, int
 void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, int y, int width, int height) {
 
 	start = new MenuItem(x, y, width, height, strings[0]);
+	start->setColor(0, 0, 0, 0);
 	start->previous = NULL;
 	MenuItem * temp1 = start;
 	MenuItem * temp2 = start;
@@ -43,6 +44,7 @@ void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, i
 	while (i < no_of_items) {
 		while (j < 5 && i < no_of_items) {
 			temp2 = new MenuItem(auxX, y, width, height, strings[i]);
+			temp2->setColor(0, 0, 0, 150);
 			temp1->next = temp2;
 			temp2->previous = temp1;
 			temp1 = temp2;
@@ -58,8 +60,8 @@ void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, i
 	temp2->next = NULL;
 	selected = start;
 	selectedTwo = start->next;
-	selectedTwo = start->next;
-	selectedTwo = start->next;
+	selectedTwo = selectedTwo->next;
+	selectedTwo = selectedTwo->next;
 	selected->setColor(0, 255, 0, 255);
 	selectedTwo->setColor(0, 255, 0, 255);
 }
@@ -116,22 +118,18 @@ void Menu::draw(SDL_Texture* tx) {
 		SDL_FLIP_NONE);
 }
 
-SDL_Texture* Menu::loadImgCharacterOne(SDL_Renderer* render) {
+void Menu::loadImgCharacterOne(SDL_Renderer* render) {
 	std::string path = "images/" + selected->text + "/stance.png";
 	SDL_Surface* pTempSurface = IMG_Load(path.c_str());
-	SDL_Texture* cTexture;
-	cTexture = SDL_CreateTextureFromSurface(this->render, pTempSurface);
+	characterOneImg = SDL_CreateTextureFromSurface(this->render, pTempSurface);
 	SDL_FreeSurface(pTempSurface);
-	return cTexture;
 }
 
-SDL_Texture* Menu::loadImgCharacterTwo(SDL_Renderer* render) {
+void Menu::loadImgCharacterTwo(SDL_Renderer* render) {
 	std::string path = "images/" + selectedTwo->text + "/stance.png";
 	SDL_Surface* pTempSurface = IMG_Load(path.c_str());
-	SDL_Texture* cTexture;
-	cTexture = SDL_CreateTextureFromSurface(this->render, pTempSurface);
+	characterTwoImg= SDL_CreateTextureFromSurface(this->render, pTempSurface);
 	SDL_FreeSurface(pTempSurface);
-	return cTexture;
 }
 
 void Menu::drawCharacterStance(SDL_Renderer* render) {
@@ -146,14 +144,20 @@ void Menu::drawCharacterStance(SDL_Renderer* render) {
 	destRect.h = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.60;
 	destRect.x = 0;
 	destRect.y = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.35;
+
 	resetCharacterRender(render);
-	SDL_RenderCopyEx(render, loadImgCharacterOne(render), &srcRect, &destRect, 0, 0,
+
+	loadImgCharacterOne(render);
+	SDL_RenderCopyEx(render, characterOneImg , &srcRect, &destRect, 0, 0,
 		SDL_FLIP_NONE);
+	SDL_DestroyTexture(characterOneImg);
+
+	
 	destRect.x = GameGUI::getInstance()->getWindow()->getWidthPx() - destRect.w;
-	SDL_RenderCopyEx(render, loadImgCharacterTwo(render), &srcRect, &destRect, 0, 0,
+	loadImgCharacterTwo(render);
+	SDL_RenderCopyEx(render, characterTwoImg, &srcRect, &destRect, 0, 0,
 		SDL_FLIP_HORIZONTAL);
-
-
+	SDL_DestroyTexture(characterTwoImg);
 }
 
 void Menu::show(int alpha) {
@@ -258,7 +262,7 @@ void Menu::buttonUp() {
 	}
 	else {
 		if (selected->positionY - selected->height >= start->positionY) {
-			selected->setColor(150, 150, 150, 0);
+			selected->setColor(150, 150, 150, 150);
 			selected->drawBox(render);
 			moveSelectedToPrevious(&selected, COLUMNS);
 			selected->setColor(0, 255, 0, 255);
@@ -281,7 +285,7 @@ void Menu::buttonDown() {
 	}
 	else {
 		if (selected->positionY + selected->height < start->positionY + start->height * 3) {
-			selected->setColor(150, 150, 150, 0);
+			selected->setColor(150, 150, 150, 150);
 			selected->drawBox(render);
 			moveSelectedToNext(&selected, COLUMNS);
 			selected->setColor(0, 255, 0, 255);
@@ -294,7 +298,7 @@ void Menu::buttonDown() {
 void Menu::buttonLeft() {
 	if (!textMenu) {
 		if (selected->positionX - selected->width >= start->positionX) {
-			selected->setColor(150, 150, 150, 255);
+			selected->setColor(150, 150, 150, 150);
 			selected->drawBox(render);
 			moveSelectedToPrevious(&selected, 1);
 			selected->setColor(0, 255, 0, 255);
@@ -307,7 +311,7 @@ void Menu::buttonLeft() {
 void Menu::buttonRight() {
 	if (!textMenu) {
 		if (selected->positionX + selected->width < start->positionX + start->width * 4) {
-			selected->setColor(150, 150, 150, 0);
+			selected->setColor(150, 150, 150, 150);
 			selected->drawBox(render);
 			moveSelectedToNext(&selected, 1);
 			selected->setColor(0, 255, 0, 255);
@@ -318,7 +322,7 @@ void Menu::buttonRight() {
 }
 void Menu::buttonW(){
 	if (selectedTwo->positionY - selectedTwo->height >= start->positionY) {
-		selectedTwo->setColor(150, 150, 150, 0);
+		selectedTwo->setColor(150, 150, 150, 150);
 		selectedTwo->drawBox(render);
 		moveSelectedToPrevious(&selectedTwo, COLUMNS);
 		selectedTwo->setColor(255, 0, 0, 255);
@@ -328,7 +332,7 @@ void Menu::buttonW(){
 }
 void Menu::buttonS(){
 	if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
-		selectedTwo->setColor(150, 150, 150, 0);
+		selectedTwo->setColor(150, 150, 150, 150);
 		selectedTwo->drawBox(render);
 		moveSelectedToNext(&selectedTwo, COLUMNS);
 		selectedTwo->setColor(255, 0, 0, 255);
@@ -338,7 +342,7 @@ void Menu::buttonS(){
 }
 void Menu::buttonA(){
 	if (selectedTwo->positionX - selectedTwo->width >= start->positionX) {
-		selectedTwo->setColor(150, 150, 150, 255);
+		selectedTwo->setColor(150, 150, 150, 150);
 		selectedTwo->drawBox(render);
 		moveSelectedToPrevious(&selectedTwo, 1);
 		selectedTwo->setColor(255, 0, 0, 255);
@@ -348,7 +352,7 @@ void Menu::buttonA(){
 }
 void Menu::buttonD(){
 	if (selectedTwo->positionX + selectedTwo->width < start->positionX + start->width * 4) {
-		selectedTwo->setColor(150, 150, 150, 0);
+		selectedTwo->setColor(150, 150, 150, 150);
 		selectedTwo->drawBox(render);
 		moveSelectedToNext(&selectedTwo, 1);
 		selectedTwo->setColor(255, 0, 0, 255);
@@ -635,6 +639,13 @@ std::string Menu::identify_event() {
 		Mix_PlayMusic(musicMenu, -1);
 		musicStarted = true;
 	}
+
+	playerOneSelected = false;
+	playerTwoSelected = false;
+	nameOneSet = false;
+	nameTwoSet = false;
+	renderTextOne = false;
+	renderTextTwo = false;
 
 	SDL_Event event;
 	SDL_StartTextInput();

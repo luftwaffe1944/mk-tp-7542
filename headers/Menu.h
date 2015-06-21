@@ -17,6 +17,7 @@
 #include "GameGUI.h"
 #include "Constants.h"
 #include "InputControl.h"
+#include <vld.h> 
 
 
 class Menu
@@ -59,6 +60,8 @@ private:
 	Mix_Music * musicMenu;
 	SDL_Rect columCharacterOne;
 	SDL_Rect columCharacterTwo;
+	SDL_Texture* characterOneImg;
+	SDL_Texture* characterTwoImg;
 
 	bool musicStarted;
 	void draw(SDL_Texture*);
@@ -70,8 +73,8 @@ private:
 	void loadSoundEffect(std::string path);
 	void drawCharacterStance(SDL_Renderer*);
 	void resetCharacterRender(SDL_Renderer*);
-	SDL_Texture* loadImgCharacterOne(SDL_Renderer*);
-	SDL_Texture* loadImgCharacterTwo(SDL_Renderer*);
+	void loadImgCharacterOne(SDL_Renderer*);
+	void loadImgCharacterTwo(SDL_Renderer*);
 	bool playerOneSelected;
 	bool playerTwoSelected;
 	void getJoystickInput(SDL_Event event);

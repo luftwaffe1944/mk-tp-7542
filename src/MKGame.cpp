@@ -85,9 +85,9 @@ void MKGame::menuInit() {
 	string menuItemsMK[] = { "New Game", "Credits", "Exit" };
 	string menuItemsNewGame[] = { "P1 vs P2", "P1 vs CPU", "Practice Mode", "Go Back" };
 	string menuItemsCharacters[] = {
-		"subzero", "subzero", "subzero", "subzero",
-		"scorpion", "scorpion", "subzero", "subzero",
-		"scorpion", "subzero", "scorpion", "subzero" };
+		"subzero", "liukang", "cyrax", "scorpion",
+		"jax", "kabal", "kano", "kunglao",
+		"scorpion", "motaro", "sektor", "subzero" };
 
 	//nro de items, string con items, posX, posY, width, height, render
 	//Menu principal
@@ -279,9 +279,7 @@ void MKGame::menuActions(std::string action) {
 
 	std::size_t found = action.find("selected:");
 	if (found != std::string::npos) {
-		this->menuPpal = false;
-		this->menuGame = false;
-		this->menuCharacter = false;
+
 
 		vector<string> characters;
 		std::istringstream iss(action);
@@ -290,16 +288,14 @@ void MKGame::menuActions(std::string action) {
 		{
 			characters.push_back( token);
 		}
-		std::cout << characters[1] << endl;
-		std::cout << characters[2] << endl;
 
-		std::cout << characters[3] << endl;
-		std::cout << characters[4] << endl;
-		this->configureFight(characters[1], characters[2], characters[3], characters[4]);
-
-		this->menuMk->stopMusic();
-
-		//TODO: usar characters[1] y characters[2] en fight
+		if ((characters[1] == "scorpion" || characters[1] == "subzero") && (characters[2] == "scorpion" || characters[2] == "subzero")) {
+			this->menuPpal = false;
+			this->menuGame = false;
+			this->menuCharacter = false;
+			this->configureFight(characters[1], characters[2], characters[3], characters[4]);
+			this->menuMk->stopMusic();
+		}
 	}
 
 	if (action == "P1 vs CPU") {
