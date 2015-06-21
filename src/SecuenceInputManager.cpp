@@ -50,6 +50,9 @@ SecuenceInputManager::SecuenceInputManager(){
 
 	this->errorTolerance = ERROR_TOLERANCE_SPECIAL_MOVES;
 	this->timeForSecuence = TIME_TOLERANCE_SPECIAL_MOVES;
+
+	this->firstPlayerRightOrientation = true;
+	this->secondPlayerRightOrientation = false;
 }
 
 /*
@@ -93,9 +96,11 @@ bool SecuenceInputManager::load() {
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_KICKLOW, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_PUNCHLOW, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_FORWARD, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", CHARACTER_FOR_SPECIAL_MOVE_BACKWARD, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_b", "-", textColor, font, render);
 
-	//letras blancas
+	//letras verdes
 	textColor = {0, 255, 0};
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_UP, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_DOWN, textColor, font, render);
@@ -107,6 +112,8 @@ bool SecuenceInputManager::load() {
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_KICKLOW, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_PUNCHLOW, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_FORWARD, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_BACKWARD, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", "-", textColor, font, render);
 
 	TTF_CloseFont(font);
@@ -206,6 +213,9 @@ void SecuenceInputManager::update() {
 			this->reset(2);
 		}
 	}
+
+	this->firstPlayerRightOrientation = GameGUI::getInstance()->getFight()->getFighterOne()->getIsRightOriented();
+	this->secondPlayerRightOrientation = GameGUI::getInstance()->getFight()->getFighterTwo()->getIsRightOriented();
 
 }
 

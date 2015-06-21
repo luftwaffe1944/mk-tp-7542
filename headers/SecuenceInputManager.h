@@ -18,6 +18,7 @@
 #include "GameGUI.h"
 #include "Window.h"
 #include "Constants.h"
+//#include "GameGUI.h"
 
 using namespace std;
 
@@ -69,6 +70,9 @@ public:
 
 	int errorTolerance;
 	int timeForSecuence;
+
+	bool firstPlayerRightOrientation;
+	bool secondPlayerRightOrientation;
 
 private:
 	static SecuenceInputManager* dm_pInstance;

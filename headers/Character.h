@@ -23,6 +23,7 @@
 #include "Fatality.h"
 #include "Babality.h"
 #include "Friendship.h"
+#include "SecuenceInputManager.h"
 
 using namespace std;
 
