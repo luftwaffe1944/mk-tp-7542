@@ -122,13 +122,14 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		}
 
 		else if (character1->getMovement() == UPPERCUT_MOVEMENT && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
+
 			character2->setMovement(HINT_FLYING_UPPER_MOVEMENT);
-			GameGUI::getInstance()->visualEffects[0]->animateToasty();
-			int random = rand() % 1;
+			character1->talk("uppercut");
+			int random = rand() % 5;
 			if (random == 0)  {
 				character1->talk("toasty");
+				GameGUI::getInstance()->visualEffects[0]->animateToasty();
 			}
-			character1->talk("uppercut");
 
 		}
 
@@ -172,12 +173,9 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 			character2->talk("uppercut");
 
-			GameGUI::getInstance()->visualEffects[0]->animateToasty();
-			int random = rand() % 1;
+			int random = rand() % 5;
 			if (random == 0)  {
-
-				//dibujar toasty.png
-				//dibujar sangre.png
+				GameGUI::getInstance()->visualEffects[0]->animateToasty();
 				character1->talk("toasty");
 			}
 		}
