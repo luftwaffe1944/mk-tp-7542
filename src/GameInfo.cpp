@@ -66,7 +66,7 @@ void GameInfo::loadTextTimer() {
 	TextureManager::Instance()->unload(this->textureID + this->idTimer);
 
 	SDL_Renderer* render = MKGame::Instance()->getRenderer();
-	TTF_Font* font = TTF_OpenFont( "fonts/mk1.ttf", 200 );
+	TTF_Font* font = TTF_OpenFont( "fonts/mk4.ttf", 70 );
 
 	//Timer
 	SDL_Color timerColor = {227, 188, 119};
@@ -80,7 +80,8 @@ void GameInfo::loadTextTimer() {
 
 bool GameInfo::load(SDL_Renderer* r) {
 	SDL_Renderer* render = MKGame::Instance()->getRenderer();
-	TTF_Font* font = TTF_OpenFont( "fonts/mk1.ttf", 100 );
+	TTF_Font* font = TTF_OpenFont( "fonts/mk3.ttf", 40 );
+	TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
 	TTF_Font* fontMK3 = TTF_OpenFont( "fonts/MK3.ttf", 100 );
 	string name = "";
 	string round1 = "ROUND 1";
@@ -365,13 +366,14 @@ void GameInfo::clean() {
 
 void GameInfo::draw() {
 	SDL_Renderer* render = MKGame::Instance()->getRenderer();
+	SDL_Rect rc;
 
 	//timer
 	string id = this->textureID + this->idTimer;
 	int width = WINDOW_MARGIN * 3;
 	int x = (pParams->getWidth()/2 - width/2);
 	int y = this->height * 0.1;
-	int height = 15;
+	int height = 70 / ratioY;
 	TextureManager::Instance()->draw( id, x, y, width, height, render);
 
 	string name = "";
@@ -387,7 +389,8 @@ void GameInfo::draw() {
 	name = this->nameOne;
 
 	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-	TextureManager::Instance()->draw( this->textureID + name, WINDOW_MARGIN, 0, barWidth/2, 10, render );
+	rc = TextureManager::Instance()->queryTexture(this->textureID + name);
+	TextureManager::Instance()->draw( this->textureID + name, WINDOW_MARGIN, 0, rc.w / ratioX, 40 / ratioY, render );
 	energy = this->characters[0]->getEnergy();
 	if (this->initAnimation) HealthBar(positionX * ratioX, 35, barWidth * ratioX, 20, percent, frontColor, bgColor, render, 0 );
 	else HealthBar(positionX * ratioX, 35, barWidth * ratioX, 20, energy, frontColor, bgColor, render, 0 );
@@ -396,7 +399,8 @@ void GameInfo::draw() {
 	//name = this->characters[1]->getName();
 	name = nameTwo;
 	std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-	TextureManager::Instance()->draw(this->textureID + name, pParams->getWidth() - barWidth/2 - WINDOW_MARGIN,0,barWidth/2, 10, render);
+	rc = TextureManager::Instance()->queryTexture(this->textureID + name);
+	TextureManager::Instance()->draw(this->textureID + name, pParams->getWidth() - rc.w / ratioX - WINDOW_MARGIN, 0, rc.w / ratioX, 40 / ratioY, render);
 	energy = this->characters[1]->getEnergy();
 	if (this->initAnimation) {
 		HealthBar((this->width - WINDOW_MARGIN - barWidth) * ratioX, 35, barWidth * ratioX, 20, percent, frontColor, bgColor, render, 1);

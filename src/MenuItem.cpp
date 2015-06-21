@@ -64,6 +64,7 @@ void MenuItem::show(SDL_Renderer* render) {
 	destRect.y = positionY;
 
 	SDL_RenderCopyEx(render, mTexture, &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
+	SDL_DestroyTexture(mTexture);
 	SDL_RenderPresent(render);
 }
 

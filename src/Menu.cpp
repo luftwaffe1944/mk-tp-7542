@@ -143,7 +143,7 @@ void Menu::drawCharacterStance(SDL_Renderer* render) {
 	destRect.w = GameGUI::getInstance()->getWindow()->getWidthPx() / 6 * 0.90;
 	destRect.h = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.60;
 	destRect.x = 0;
-	destRect.y = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.35;
+	destRect.y = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.30;
 
 	resetCharacterRender(render);
 
@@ -413,7 +413,7 @@ void Menu::buttonJoystickZero() {
 
 void Menu::showTextBox() {
 	SDL_Color fColor = { 255, 255, 255, 255 };
-	TTF_Font* font = TTF_OpenFont("fonts/mk1.ttf", 20);
+	TTF_Font* font = TTF_OpenFont("fonts/MK4.ttf", 40);
 	float ratioX = TextureManager::Instance()->ratioWidth;
 	float ratioY = TextureManager::Instance()->ratioHeight;
 	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx() / ratioX;
@@ -435,12 +435,13 @@ void Menu::showTextBox() {
 			}
 			TextureManager::Instance()->loadFromRenderedText("namePlayerOne", nameMax, fColor, font, render);
 			rs = TextureManager::Instance()->queryTexture("namePlayerOne" + nameMax);
-			if (rs.w >= windowsWidth * 0.50) {
-				rs.w = windowsWidth * 0.50;
-			}
 		}
-		resetNameInputRender(render, (windowsWidth / 6)*ratioX, (windowsHeight*0.80)*ratioY, windowsWidth * ratioX * 0.50, 10 * ratioY);
-		TextureManager::Instance()->draw("namePlayerOne" + nameMax, windowsWidth / 6, windowsHeight*0.80, rs.w, 10, render);
+		int x = windowsWidth / 6 * 0.10;
+		int y = windowsHeight*0.91;
+		int width = rs.w / ratioX;
+		int height = 40 / ratioY;
+		resetNameInputRender(render, x*ratioX, y*ratioY, windowsWidth * ratioX * 0.35,height * ratioY);
+		TextureManager::Instance()->draw("namePlayerOne" + nameMax, x, y, width, height, render);
 	}
 
 	if (renderTextTwo)
@@ -457,12 +458,13 @@ void Menu::showTextBox() {
 			}
 			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", nameMax, fColor, font, render);
 			rs = TextureManager::Instance()->queryTexture("namePlayerTwo" + nameMax);
-			if (rs.w >= windowsWidth * 0.50) {
-				rs.w = windowsWidth * 0.50;
-			}
 		}
-		resetNameInputRender(render, (windowsWidth - windowsWidth / 6 - windowsWidth * 0.50)*ratioX, (windowsHeight*0.90)*ratioY, windowsWidth * ratioX * 0.50, 10 * ratioY);
-		TextureManager::Instance()->draw("namePlayerTwo" + nameMax, windowsWidth - windowsWidth / 6 - rs.w, windowsHeight*0.90, rs.w, 10, render);
+		int x = (windowsWidth - rs.w/ratioX - (windowsWidth * 0.40)*0.10);
+		int y = windowsHeight*0.91;
+		int width = rs.w / ratioX;
+		int height = 40 / ratioY;
+		resetNameInputRender(render, (windowsWidth - windowsWidth * 0.35 - (windowsWidth * 0.35)*0.10)*ratioX, y*ratioY, windowsWidth * ratioX * 0.35, height * ratioY);
+		TextureManager::Instance()->draw("namePlayerTwo" + nameMax, x, y, width, height, render);
 
 	}
 
