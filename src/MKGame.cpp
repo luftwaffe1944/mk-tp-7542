@@ -108,6 +108,7 @@ void MKGame::menuInit() {
 	menuPpal = true;
 	menuGame = false;
 	menuCharacter = false;
+	menuIA = false;
 }
 
 bool compareSDLObjectGUI(SDLObjectGUI* a, SDLObjectGUI* b) {
@@ -299,6 +300,13 @@ void MKGame::menuActions(std::string action) {
 		this->menuMk->stopMusic();
 
 		//TODO: usar characters[1] y characters[2] en fight
+	}
+
+	if (action == "P1 vs CPU") {
+		this->menuIA = true;
+		this->menuPpal = false;
+		this->menuGame = false;
+		this->menuCharacter = true;
 	}
 }
 

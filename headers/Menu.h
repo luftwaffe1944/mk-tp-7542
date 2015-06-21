@@ -6,6 +6,7 @@
 #define HEIGHTBOX 59
 #define ROWS 3
 #define COLUMNS 4
+#define MAXLENGHTNAME 10
 
 #include "MenuItem.h"
 #include "SDL.h"

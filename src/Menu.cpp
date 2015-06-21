@@ -406,6 +406,7 @@ void Menu::buttonJoystickZero() {
 	}
 }
 
+
 void Menu::showTextBox() {
 	SDL_Color fColor = { 255, 255, 255, 255 };
 	TTF_Font* font = TTF_OpenFont("fonts/mk1.ttf", 20);
@@ -414,7 +415,7 @@ void Menu::showTextBox() {
 	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx() / ratioX;
 	int windowsHeight = GameGUI::getInstance()->getWindow()->getHeightPx() / ratioY;
 	SDL_Rect rs = { 0, 0, 0, 0 };
-
+	std::string nameMax = "";
 
 	if (renderTextOne)
 	{
@@ -422,15 +423,20 @@ void Menu::showTextBox() {
 		if (playerOneName != "")
 		{
 			//Render new text
-			TextureManager::Instance()->loadFromRenderedText("namePlayerOne", playerOneName, fColor, font, render);
-			rs = TextureManager::Instance()->queryTexture("namePlayerOne" + playerOneName);
-			if (rs.w >= windowsWidth * 0.60) {
-				rs.w = windowsWidth * 0.60;
+			if (playerOneName.length() > MAXLENGHTNAME) {
+				nameMax = playerOneName.substr(playerOneName.length() - MAXLENGHTNAME, playerOneName.length());
+			}
+			else {
+				nameMax = playerOneName;
+			}
+			TextureManager::Instance()->loadFromRenderedText("namePlayerOne", nameMax, fColor, font, render);
+			rs = TextureManager::Instance()->queryTexture("namePlayerOne" + nameMax);
+			if (rs.w >= windowsWidth * 0.50) {
+				rs.w = windowsWidth * 0.50;
 			}
 		}
-		resetNameInputRender(render, (windowsWidth / 6)*ratioX, (windowsHeight*0.80)*ratioY, windowsWidth * ratioX * 0.60, 10 * ratioY);
-		//cout << "dibujo one" << endl;
-		TextureManager::Instance()->draw("namePlayerOne" + playerOneName, windowsWidth / 6, windowsHeight*0.80, rs.w, 10, render);
+		resetNameInputRender(render, (windowsWidth / 6)*ratioX, (windowsHeight*0.80)*ratioY, windowsWidth * ratioX * 0.50, 10 * ratioY);
+		TextureManager::Instance()->draw("namePlayerOne" + nameMax, windowsWidth / 6, windowsHeight*0.80, rs.w, 10, render);
 	}
 
 	if (renderTextTwo)
@@ -439,15 +445,20 @@ void Menu::showTextBox() {
 		if (playerTwoName != "")
 		{
 			//Render new text
-			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", playerTwoName, fColor, font, render);
-			rs = TextureManager::Instance()->queryTexture("namePlayerTwo" + playerTwoName);
-			if (rs.w >= windowsWidth * 0.60) {
-				rs.w = windowsWidth * 0.60;
+			if (playerTwoName.length() > MAXLENGHTNAME) {
+				nameMax = playerTwoName.substr(playerTwoName.length() - MAXLENGHTNAME, playerTwoName.length());
+			}
+			else {
+				nameMax = playerTwoName;
+			}
+			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", nameMax, fColor, font, render);
+			rs = TextureManager::Instance()->queryTexture("namePlayerTwo" + nameMax);
+			if (rs.w >= windowsWidth * 0.50) {
+				rs.w = windowsWidth * 0.50;
 			}
 		}
-		resetNameInputRender(render, (windowsWidth - windowsWidth / 6 - windowsWidth * 0.60)*ratioX, (windowsHeight*0.90)*ratioY, windowsWidth * ratioX * 0.60, 10 * ratioY);
-		//cout << "dibujo two" << endl;
-		TextureManager::Instance()->draw("namePlayerTwo" + playerTwoName, windowsWidth - windowsWidth / 6 - rs.w, windowsHeight*0.90, rs.w, 10, render);
+		resetNameInputRender(render, (windowsWidth - windowsWidth / 6 - windowsWidth * 0.50)*ratioX, (windowsHeight*0.90)*ratioY, windowsWidth * ratioX * 0.50, 10 * ratioY);
+		TextureManager::Instance()->draw("namePlayerTwo" + nameMax, windowsWidth - windowsWidth / 6 - rs.w, windowsHeight*0.90, rs.w, 10, render);
 
 	}
 
@@ -471,7 +482,7 @@ bool Menu::isType(SDL_Event e, int type) {
 }
 
 bool Menu::readKey(SDL_Event e) {
-
+	std::string nameMax = "";
 	if (textMenu) {
 		if (isKey(e, SDLK_UP)) {
 			buttonUp();
@@ -507,12 +518,24 @@ bool Menu::readKey(SDL_Event e) {
 		//Borro un caracter y destruyo la textura anterior
 		if (!textMenu)
 			if (playerOneSelected && playerTwoSelected && !nameOneSet && playerOneName.length() > 0) {
-				TextureManager::Instance()->unload("namePlayerOne" + playerOneName);
+				if (playerOneName.length() > MAXLENGHTNAME) {
+					nameMax = playerOneName.substr(playerOneName.length() - MAXLENGHTNAME, playerOneName.length());
+				}
+				else {
+					nameMax = playerOneName;
+				}
+				TextureManager::Instance()->unload("namePlayerOne" + nameMax);
 				playerOneName.pop_back();
 				renderTextOne = true;
 			}
 			else if (playerTwoSelected && playerTwoSelected && nameOneSet && !nameTwoSet && playerTwoName.length() > 0) {
-				TextureManager::Instance()->unload("namePlayerTwo" + playerTwoName);
+				if (playerTwoName.length() > MAXLENGHTNAME) {
+					nameMax = playerTwoName.substr(playerTwoName.length() - MAXLENGHTNAME, playerTwoName.length());
+				}
+				else {
+					nameMax = playerTwoName;
+				}
+				TextureManager::Instance()->unload("namePlayerTwo" + nameMax);
 				playerTwoName.pop_back();
 				renderTextTwo = true;
 			}
@@ -531,7 +554,6 @@ bool Menu::readJoystickZero() {
 	}
 	if (InputControl::Instance()->isAxisLeft(0)) {
 		buttonLeft();
-
 	}
 	if (InputControl::Instance()->isAxisRight(0)) {
 		buttonRight();
@@ -549,11 +571,9 @@ bool Menu::readJoystickOne() {
 	//Joystick 1
 	if (InputControl::Instance()->isAxisUp(1)) {
 		buttonW();
-
 	}
 	if (InputControl::Instance()->isAxisDown(1)) {
 		buttonS();
-
 	}
 	if (InputControl::Instance()->isAxisLeft(1)) {
 		buttonA();
@@ -630,13 +650,14 @@ std::string Menu::identify_event() {
 			//MENU PLAYERS: Si ambos jugadores completaron su nombre devuelvo string con estado: nombres y nikcs de ambos
 			if (nameOneSet && nameTwoSet) {
 				SDL_StopTextInput();
+				if (playerOneName.length() > MAXLENGHTNAME) playerOneName = playerOneName.substr(0, MAXLENGHTNAME);
+				if (playerTwoName.length() > MAXLENGHTNAME) playerTwoName = playerTwoName.substr(0, MAXLENGHTNAME);
 				return "selected: " + selected->text + " " + selectedTwo->text + " " + playerOneName + " " + playerTwoName;
 			}
 
 			//Leo input jugador 1
 			if (isType(event, SDL_TEXTINPUT) && !nameOneSet && !isKey(event, SDLK_BACKSPACE) && !isKey(event, SDLK_RETURN)
 				&& (playerOneSelected && playerTwoSelected)) {
-				cout << "entre al input one" << endl;
 				TextureManager::Instance()->unload("namePlayerOne" + playerOneName);
 				playerOneName += event.text.text;
 				renderTextOne = true;
@@ -645,7 +666,6 @@ std::string Menu::identify_event() {
 			//Leo input jugador 2, lee una ves que esta seteado el primero input
 			else if (isType(event, SDL_TEXTINPUT) && !nameTwoSet && nameOneSet && !isKey(event, SDLK_BACKSPACE) &&
 				!isKey(event, SDLK_RETURN) && (playerOneSelected && playerTwoSelected)) {
-				cout << "entre al input two" << endl;
 				TextureManager::Instance()->unload("namePlayerTwo" + playerTwoName);
 				playerTwoName += event.text.text;
 				renderTextTwo = true;
@@ -662,7 +682,6 @@ std::string Menu::identify_event() {
 			else if (isType(event, SDL_JOYAXISMOTION) || isType(event, SDL_JOYBUTTONDOWN)) {
 				this->getJoystickInput(event);
 				if (InputControl::Instance()->someJoyKickButtonPressed(1)) {
-					cout << "patada joystick uno" << endl;
 				}
 				if (textMenu) {
 					if (readJoystickZero()) return state;
@@ -688,7 +707,6 @@ std::string Menu::identify_event() {
 
 			//Muestro cuadros de texto para el input
 			showTextBox();
-			SDL_Delay(100);
 		}
 	}
 }
