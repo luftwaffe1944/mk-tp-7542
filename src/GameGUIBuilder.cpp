@@ -524,15 +524,22 @@ vector<VisualEffect*> createVisualEffects(float ratioX, float ratioY, Window* wi
 	int width = 50;
 	int height = 50;
 	int zIndex = 100; // bien hardcodeado un numero más que el zindex de los character
-
+/*
+	VisualEffect* visualEffectBlood = new VisualEffect(new LoaderParams( 0, 0, width, height, zIndex, ratioX, ratioY, "blood")) ;
+	visualEffectBlood->setImagePath(BLOOD_IMAGE_SPRITE );
+	visualEffectBlood->windowWidth = GameGUI::getInstance()->getWindow()->getWidthPx();
+	visualEffectBlood->windowHeight = GameGUI::getInstance()->getWindow()->getHeightPx();
+	visualEffectBlood->isToasty = true;
+*/
 	VisualEffect* visualEffect = new VisualEffect(new LoaderParams( 0, 0, width, height, zIndex, ratioX, ratioY, "toasty")) ;
 	visualEffect->setImagePath(TOASTY_IMAGE_SPRITE );
 	visualEffect->windowWidth = GameGUI::getInstance()->getWindow()->getWidthPx();
 	visualEffect->windowHeight = GameGUI::getInstance()->getWindow()->getHeightPx();
 	visualEffect->isToasty = true;
 	MKGame::Instance()->getObjectList().push_back(visualEffect);
+//	MKGame::Instance()->getObjectList().push_back(visualEffectBlood);
 	visualEffects.push_back( visualEffect );
-
+//	visualEffects.push_back( visualEffectBlood );
 	return visualEffects;
 }
 

@@ -117,6 +117,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		else if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 			character1->talk("punchHit",1);
+			//GameGUI::getInstance()->visualEffects[0]->animateToasty();
 		}
 
 		else if ( (character1->getMovement() == HIGH_KICK_MOVEMENT || character1->getMovement() == AIR_PUNCH_MOVEMENT) &&
@@ -170,6 +171,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		if ((character2->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 			character2->talk("punchHit",1);
+			//GameGUI::getInstance()->visualEffects[1]->animateToasty();
 		}
 		else if (( character2->getMovement() == HIGH_KICK_MOVEMENT
 				|| character2->getMovement() == AIR_PUNCH_MOVEMENT) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){

@@ -28,12 +28,13 @@ void VisualEffect::animateToasty() {
 	positionX = windowWidth / ratioX ;
 	positionY = windowHeight / ratioY - height;
 	freezed = false;
+	speed = - TOASTY_SPEED;
+	startTime = SDL_GetTicks();
 }
 
 void VisualEffect::animate() {
 	visible = true;
-	speed = - TOASTY_SPEED;
-	startTime = SDL_GetTicks();
+
 }
 
 void VisualEffect::endAnimation() {
@@ -59,6 +60,13 @@ void VisualEffect::update() {
 		}
 		positionX += speed;
 	}
+}
+
+void VisualEffect::animateBlood() {
+	animate();
+	positionX = 10;
+	positionY = 10;
+
 }
 
 void VisualEffect::setImagePath(std::string path) {

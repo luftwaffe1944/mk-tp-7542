@@ -25,6 +25,7 @@ public:
 	int windowWidth;
 	void setImagePath(std::string path);
 	void animateToasty();
+	void animateBlood();
 private:
 	unsigned int startingTick;
 	bool freezed;
