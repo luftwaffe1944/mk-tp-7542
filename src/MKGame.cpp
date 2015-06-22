@@ -440,7 +440,7 @@ void MKGame::handleEvents() {
 		if (event.type == SDL_QUIT) {
 			MKGame::Instance()->quit();
 		}
-		if (this->allowPlayerMovements) {
+		//if (this->allowPlayerMovements) {
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r && event.key.repeat == 0) {
 				reset = true;
 			}
@@ -456,7 +456,7 @@ void MKGame::handleEvents() {
 			//Para jugar 2 con teclado usar estos 2
 			//InputControl::Instance()->refreshInputs1();
 			//InputControl::Instance()->refreshInputs2();
-		} else  {
+		/*} else  {
 			if (int a = SDL_NumJoysticks() > 1) {
 				for (int i = 0 ; i < a; ++i ) {
 					InputControl::Instance()->joystickAxisStates[i].first = 0;
@@ -470,7 +470,7 @@ void MKGame::handleEvents() {
 
 			}
 
-		}
+		}*/
 
 	}
 	bool asd = InputControl::Instance()->isAxisUp(0);

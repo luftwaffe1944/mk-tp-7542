@@ -24,6 +24,7 @@
 #include "AlternativeColor.h"
 #include "GameInfo.h"
 #include "ThrowableObject.h"
+#include "VisualEffect.h"
 #include "SecuenceInputManager.h"
 using namespace std;
 

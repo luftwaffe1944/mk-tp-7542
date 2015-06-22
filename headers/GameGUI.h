@@ -15,6 +15,7 @@
 #include "ThrowableObject.h"
 #include <vector>
 #include <iostream>
+#include "VisualEffect.h"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ private:
 	}
 
 public:
+	vector<VisualEffect*> visualEffects;
 	vector<Collitionable*> vCollitionable;
 	static GameGUI* getInstance();
 	void clean();
@@ -51,7 +53,7 @@ public:
 	void setFight(Fight* fight);
 	void addCharacter(Character* character);
 	void addLayer(Layer* layer);
-
+	void setVisualEffects(vector<VisualEffect*>);
 	~GameGUI() {
 		if (gameGui != NULL) delete gameGui;
 		gameGui = NULL;

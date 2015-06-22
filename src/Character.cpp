@@ -59,6 +59,7 @@ Character::Character(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
 		this->name = pParams->getTextureID();
 		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height) * ratioY;
+		this->originalPosY =  this->yGround;
 		this->imagePath = ROOT_IMAGE_PATH;
 		this->isAltPlayer = false;
 		//TODO: Review positions according to logic and pixels measures.
@@ -343,7 +344,7 @@ void Character::update() {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
 
-	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
+	//cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
@@ -1936,7 +1937,7 @@ float Character::getWidthBox2UL() {
 }
 
 void Character::talk(std::string action, int repetitions) {
-	if (this->movement != this->previousMovement) {
+	if (this->movement != this->previousMovement || action == "toasty") {
 		SoundManager::Instance()->playSoundByAction(action,repetitions);
 	}
 }

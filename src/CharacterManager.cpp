@@ -117,6 +117,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		else if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 			character1->talk("punchHit",1);
+			//GameGUI::getInstance()->visualEffects[0]->animateToasty();
 		}
 
 		else if ( (character1->getMovement() == HIGH_KICK_MOVEMENT || character1->getMovement() == AIR_PUNCH_MOVEMENT) &&
@@ -150,10 +151,14 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		}
 
 		else if (character1->getMovement() == UPPERCUT_MOVEMENT && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
+
 			character2->setMovement(HINT_FLYING_UPPER_MOVEMENT);
-			int random = rand() % 3;
-			if (random == 1)  character1->talk("toasty");
 			character1->talk("uppercut");
+			int random = rand() % 10;
+			if (random == 0)  {
+				character1->talk("toasty");
+				GameGUI::getInstance()->visualEffects[0]->animateToasty();
+			}
 
 		}
 
@@ -166,6 +171,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		if ((character2->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 			character2->talk("punchHit",1);
+			//GameGUI::getInstance()->visualEffects[1]->animateToasty();
 		}
 		else if (( character2->getMovement() == HIGH_KICK_MOVEMENT
 				|| character2->getMovement() == AIR_PUNCH_MOVEMENT) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
@@ -196,8 +202,12 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		else if (character2->getMovement() == UPPERCUT_MOVEMENT && character1->getMovement() != BLOCK_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 			character2->talk("uppercut");
-			int random = rand() % 3;
-			if (random == 1)  character1->talk("toasty");
+
+			int random = rand() % 10;
+			if (random == 0)  {
+				GameGUI::getInstance()->visualEffects[0]->animateToasty();
+				character1->talk("toasty");
+			}
 		}
 
 		else if (character2->getMovement() == SWEEP_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){

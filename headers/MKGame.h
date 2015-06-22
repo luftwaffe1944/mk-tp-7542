@@ -117,7 +117,10 @@ public:
 	bool reset() {
 			return m_bReset;
 	}
-	void setOnReset(){m_bReset=true;}
+	void setOnReset() {
+		m_bReset=true;
+		this->allowPlayerMovements = false;
+	}
 	void setOffReset(){m_bReset=false;}
 	void setAllowPlayerMovements(bool allowPlayerMovements){
 		this->allowPlayerMovements = allowPlayerMovements;
