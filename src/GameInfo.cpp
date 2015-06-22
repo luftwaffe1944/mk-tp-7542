@@ -241,19 +241,24 @@ void GameInfo::triggerSounds() {
 void GameInfo::update() {
 	animation();
 	loadTextTimer();
+	// CONDICION DE FIN DE ROUND, SI CUALQUIERA DE LOS DOS SE QUEDA SIN VIDA O SI SE ACABA EL TIEMPO
 	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f ||
 			this->timer.getTicks() > 99000.f ) {
-	//	this->characters[0]->clearMovementsFlags();
-//		this->characters[1]->clearMovementsFlags();
+		// TERMINO EL ROUND, NINGUNO DEBE MOVERSE MAS, SETEO ALLOW MOVEMENTS EN FALSE
 		MKGame::Instance()->setAllowPlayerMovements(false);
+
+		// SI EL QUE MURIO O TIENE MENOS VIDA ES EL PLAYER ONE
 		if (this->characters[0]->getEnergy() <= 0.0f ||
 				this->characters[0]->getEnergy() <= this->characters[1]->getEnergy() ) {
+			// PREGUNTO SI NO ESTA YA SETEADO EL FLAG DE QUE MURIO EL PLAYER ONE
 			if (!this->charOneAlreadyDeath) {
+				// SUMO VICTORIA A PLAYER 2 Y SETEO FLAGS DE QUE GANO Y SHOW WINNER ANIMATION
 				this->characterTwoWins += 1;
 				this->charTwoWon = true;
 				this->showWinnerAnimation = true;
 			}
 			this->charOneAlreadyDeath = true;
+			// PREGUNTO POR CONDICION DE QUE NO SEA FIN DE PELEA (NO TENGA DOS VICTORIAS)
 			if (characterTwoWins < 2){
 				if (this->characters[1]->getMovement() == STANCE) {
 					this->characters[1]->setMovement(VICTORY_MOVEMENT);
@@ -266,10 +271,13 @@ void GameInfo::update() {
 				}
 			}
 			FILE_LOG(logDEBUG) <<"############ RESULT: " << this->characters[1]->getName() << "Wins #############";
+			// REPRODUCE SONIDO DEL PLAYER 2 WINS
 			if (!this->playingCharacterWinsSound && this->characterTwoWins < 2) {
 				SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
 				this->playingCharacterWinsSound = true;
 			}
+
+		// MISMA LOGICA QUE ARRIBA PARA EL CASO EN QUE MUERE EL PLAYER TWO
 		} else {
 			if (!this->charTwoAlreadyDeath) {
 				this->characterOneWins += 1;
@@ -295,6 +303,8 @@ void GameInfo::update() {
 			}
 		}
 		loadTextTimer();
+
+		// PARA EL CASO EN QUE ALGUNO DE LOS DOS HAYA GANADO DOS PELEAS SE ACTIVA LOGICA DE FINISH HIM
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
 			this->showFinishHimAnimation = true;
 			MKGame::Instance()->setAllowPlayerMovements(true);
@@ -322,6 +332,7 @@ void GameInfo::update() {
 				this->characters[1]->setMovement(LAZY_MOVEMENT);
 				this->characters[1]->setCurrentSprite();
 				this->characters[1]->completeMovement();
+				this->characters[1]->setPositionY(this->characters[1]->originalPosY);
 				this->lazyAnimationAlreadyTriggered = true;
 			}
 			if (this->characterTwoWins == 2 && !this->lazyAnimationAlreadyTriggered) {
@@ -329,9 +340,9 @@ void GameInfo::update() {
 				this->characters[0]->setMovement(LAZY_MOVEMENT);
 				this->characters[0]->setCurrentSprite();
 				this->characters[0]->completeMovement();
+				this->characters[0]->setPositionY(this->characters[0]->originalPosY);
 				this->lazyAnimationAlreadyTriggered = true;
 			}
-			//TODO: EL JUGADOR QUE PERDIO DEBE PASAR A ISLAZY
 
 		} else {
 			//MKGame::Instance()->setOnReset();

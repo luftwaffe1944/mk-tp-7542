@@ -90,6 +90,7 @@ public:
 	bool isReptile;
 	bool isVictory;
 	bool isLazy;
+	float originalPosY;
 	static std::map<std::string,int> movesCounter;
 	Character();
 	virtual bool load(SDL_Renderer* );

@@ -59,6 +59,7 @@ Character::Character(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
 		this->name = pParams->getTextureID();
 		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height) * ratioY;
+		this->originalPosY =  this->yGround;
 		this->imagePath = ROOT_IMAGE_PATH;
 		this->isAltPlayer = false;
 		//TODO: Review positions according to logic and pixels measures.
