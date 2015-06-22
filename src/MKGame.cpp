@@ -153,6 +153,10 @@ void MKGame::clean() {
 	this->m_bReset = false;
 	this->shouldBeShaking = true;
 	this->offSetPosY = 0;
+	
+	delete(menuMk);
+	delete(menuNewGame);
+	delete(menuCharacterSelect);
 }
 
 void MKGame::draw() {
