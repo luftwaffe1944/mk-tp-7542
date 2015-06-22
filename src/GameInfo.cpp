@@ -190,7 +190,9 @@ void GameInfo::animation() {
 		this->showFightAnimation = false;
 		if (!this->roundTriggered) {
 			this->timerStart();
-			MKGame::Instance()->setAllowPlayerMovements(true);
+			//MKGame::Instance()->setAllowPlayerMovements(true);
+			this->characters[0]->allowMovements = true;
+			this->characters[1]->allowMovements = true;
 			this->roundTriggered=true;
 		}
 	}
@@ -255,7 +257,9 @@ void GameInfo::update() {
 	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f ||
 			this->timer.getTicks() > 99000.f ) {
 		// TERMINO EL ROUND, NINGUNO DEBE MOVERSE MAS, SETEO ALLOW MOVEMENTS EN FALSE
-		MKGame::Instance()->setAllowPlayerMovements(false);
+		//MKGame::Instance()->setAllowPlayerMovements(false);
+		this->characters[0]->allowMovements = false;
+		this->characters[1]->allowMovements = false;
 
 		// SI EL QUE MURIO O TIENE MENOS VIDA ES EL PLAYER ONE
 		if (this->characters[0]->getEnergy() <= 0.0f ||
@@ -317,7 +321,9 @@ void GameInfo::update() {
 		// PARA EL CASO EN QUE ALGUNO DE LOS DOS HAYA GANADO DOS PELEAS SE ACTIVA LOGICA DE FINISH HIM
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
 			this->showFinishHimAnimation = true;
-			MKGame::Instance()->setAllowPlayerMovements(true);
+			//MKGame::Instance()->setAllowPlayerMovements(true);
+			this->characters[0]->allowMovements = true;
+			this->characters[1]->allowMovements = true;
 			if (this->finishHimAnimationTimer > 0) {
 				this->finishHimAnimationTimer -= 1;
 			} else {
@@ -343,6 +349,7 @@ void GameInfo::update() {
 				this->characters[1]->setCurrentSprite();
 				this->characters[1]->completeMovement();
 				this->characters[1]->setPositionY(this->characters[1]->originalPosY);
+				this->characters[1]->allowMovements = false;
 				this->lazyAnimationAlreadyTriggered = true;
 			}
 			if (this->characterTwoWins == 2 && !this->lazyAnimationAlreadyTriggered) {
@@ -351,6 +358,7 @@ void GameInfo::update() {
 				this->characters[0]->setCurrentSprite();
 				this->characters[0]->completeMovement();
 				this->characters[0]->setPositionY(this->characters[0]->originalPosY);
+				this->characters[0]->allowMovements = false;
 				this->lazyAnimationAlreadyTriggered = true;
 			}
 

@@ -90,6 +90,7 @@ public:
 	bool isReptile;
 	bool isVictory;
 	bool isLazy;
+	bool allowMovements;
 	float originalPosY;
 	static std::map<std::string,int> movesCounter;
 	Character();

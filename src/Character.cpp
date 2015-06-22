@@ -53,6 +53,7 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		jumpVel = 60.0f;
 		this->smoothOffsetX = 0;
 		this->beingPushed = false;
+		this->allowMovements = false;
 }
 
 Character::Character(const LoaderParams* pParams) :
@@ -75,6 +76,7 @@ Character::Character(const LoaderParams* pParams) :
 		jumpVel = 60.0f;
 		this->smoothOffsetX = 0;
 		this->beingPushed = false;
+		this->allowMovements = false;
 }
 
 
@@ -537,7 +539,7 @@ void Character::update() {
 		}
 
 		this->clearMovementsFlags();
-		if (MKGame::Instance()->getAllowPlayerMovements()) {
+		if (this->allowMovements) {
 			switch (playerCommand) {
 			case FIRST_PLAYER_MOVE_RIGHT:
 				this->setMovement(WALKING_RIGHT_MOVEMENT);
