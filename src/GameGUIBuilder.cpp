@@ -521,7 +521,7 @@ void jsonGetJoysticks(Json::Value root) {
 vector<VisualEffect*> createVisualEffects(float ratioX, float ratioY, Window* window, Stage* stage){
 
 	vector<VisualEffect*> visualEffects;
-	int width = 50;
+	int width = 25;
 	int height = 50;
 	int zIndex = 100; // bien hardcodeado un numero más que el zindex de los character
 /*
