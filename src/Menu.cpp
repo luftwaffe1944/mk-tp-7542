@@ -417,7 +417,7 @@ void Menu::buttonJoystickZero() {
 
 void Menu::showTextBox() {
 	SDL_Color fColor = { 255, 255, 255, 255 };
-	TTF_Font* font = TTF_OpenFont("fonts/mk3.ttf", 40);
+	TTF_Font* font = TTF_OpenFont("fonts/MK3.ttf", 40);
 	TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
 	float ratioX = TextureManager::Instance()->ratioWidth;
 	float ratioY = TextureManager::Instance()->ratioHeight;

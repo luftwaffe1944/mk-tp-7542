@@ -66,7 +66,7 @@ void GameInfo::loadTextTimer() {
 	TextureManager::Instance()->unload(this->textureID + this->idTimer);
 
 	SDL_Renderer* render = MKGame::Instance()->getRenderer();
-	TTF_Font* font = TTF_OpenFont( "fonts/mk4.ttf", 70 );
+	TTF_Font* font = TTF_OpenFont( "fonts/MK4.TTF", 70 );
 
 	//Timer
 	SDL_Color timerColor = {227, 188, 119};
@@ -80,7 +80,7 @@ void GameInfo::loadTextTimer() {
 
 bool GameInfo::load(SDL_Renderer* r) {
 	SDL_Renderer* render = MKGame::Instance()->getRenderer();
-	TTF_Font* font = TTF_OpenFont( "fonts/mk3.ttf", 40 );
+	TTF_Font* font = TTF_OpenFont( "fonts/MK3.ttf", 40 );
 	TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
 	TTF_Font* fontMK3 = TTF_OpenFont( "fonts/MK3.ttf", 100 );
 	string name = "";
