@@ -317,6 +317,7 @@ void MKGame::menuActions(std::string action) {
 		this->menuCharacter = false;
 		this->menuIA = true;
 		this->configureFight("subzero", "scorpion", "menem", "de la rua");
+		this->menuMk->stopMusic();
 	}
 
 	if (action == "Jugar") {
@@ -325,6 +326,7 @@ void MKGame::menuActions(std::string action) {
 		this->menuCharacter = false;
 		this->menuIA = false;
 		this->configureFight("subzero", "scorpion", "menem", "de la rua");
+		this->menuMk->stopMusic();
 	}
 }
 
