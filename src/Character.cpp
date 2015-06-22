@@ -161,6 +161,8 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 	Sprite* spriteFalling = new Sprite(this->name+this->playerNumber+FALLING_SUFFIX, characterPath+FALLING_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
+	Sprite* spriteSpecial = new Sprite(this->name+this->playerNumber+SPECIAL_SUFFIX, characterPath+SPECIAL_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -199,6 +201,7 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+LAZY_SUFFIX, spriteLazy));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BURNING_SUFFIX, spriteBurning));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FALLING_SUFFIX, spriteFalling));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SPECIAL_SUFFIX, spriteSpecial));
 
 	return true;
 }
@@ -709,6 +712,11 @@ void Character::update() {
 				this->setMovement(SWEEP_MOVEMENT);
 				setCurrentSprite();
 				sweepMovement();
+				break;
+			case SPECIAL:
+				this->setMovement(SPECIAL_MOVEMENT);
+				setCurrentSprite();
+				completeMovement();
 				break;
 			case BABALITY:
 				this->finishMove = new Babality();
@@ -1449,7 +1457,9 @@ void Character::setCurrentSprite(){
 		else if (this->getMovement() == FALLING_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name + this->playerNumber+ FALLING_SUFFIX];
 		}
-
+		else if (this->getMovement() == SPECIAL_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ SPECIAL_SUFFIX];
+		}
 		else{
 			//TODO: review
 		}
@@ -1538,6 +1548,9 @@ void Character::setMoveFlag(bool trueOrFalse){
 		isBurning = trueOrFalse;
 	}
 	else if (this->getMovement() == FALLING_MOVEMENT) {
+		isFalling = trueOrFalse;
+	}
+	else if (this->getMovement() == SPECIAL_MOVEMENT) {
 		isFalling = trueOrFalse;
 	}
 	else {

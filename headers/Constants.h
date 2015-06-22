@@ -131,6 +131,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define VICTORY_MOVEMENT "victory"
 #define REPTILE_MOVEMENT "reptile"
 #define FALLING_MOVEMENT "falling"
+#define SPECIAL_MOVEMENT "special"
 #define JUMPING_X_SPEED 4
 #define SWEEP_X_SPEED 8
 
@@ -172,6 +173,7 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define LAZY_SUFFIX "lazy"
 #define REPTILE_SUFFIX "reptile"
 #define FALLING_SUFFIX "falling"
+#define SPECIAL_SUFFIX "special"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -214,6 +216,7 @@ const string FRIENDSHIP_SPRITE ="/friendship.png";
 const string VICTORY_SPRITE ="/victory.png";
 const string LAZY_SPRITE ="/lazy.png";
 const string REPTILE_SPRITE ="/reptile.png";
+const string SPECIAL_SPRITE = "/special.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
 const string FIGHT_IMAGE_SPRITE = "images/fight/fight.png";
