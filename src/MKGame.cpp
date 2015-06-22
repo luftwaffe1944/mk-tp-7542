@@ -428,8 +428,6 @@ void MKGame::getJoystickInput(SDL_Event event) {
 		}
 
 	}
-	if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0)
-		InputControl::Instance()->refreshJoystickInputs();
 
 }
 
@@ -475,7 +473,8 @@ void MKGame::handleEvents() {
 		}*/
 
 	}
-	bool asd = InputControl::Instance()->isAxisUp(0);
+	if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0)
+		InputControl::Instance()->refreshJoystickInputs();
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
