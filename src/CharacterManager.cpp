@@ -105,12 +105,12 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		//GOLPES CHARACTER 1
 
 		if (character2->getMovement() == LAZY_MOVEMENT && isHitting(character1) ){
-			character2->setMovement(FALLING_MOVEMENT);
+			/*character2->setMovement(FALLING_MOVEMENT);
 			character2->setCurrentSprite();
 			character2->isFalling = true;
 			character1->setMovement(VICTORY_MOVEMENT);
 			character1->setCurrentSprite();
-			character1->isVictory = true;
+			character1->isVictory = true;*/
 		}
 
 
