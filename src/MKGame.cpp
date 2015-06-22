@@ -345,8 +345,8 @@ bool MKGame::menu() {
 		}
 	}
 	this->menuActions(action);
-	bool isMenuActive = (menuPpal || menuGame || menuCharacter);
-	if (!isMenuActive)
+//	bool isMenuActive = (menuPpal || menuGame || menuCharacter);
+//	if (!isMenuActive)
 	return (menuPpal || menuGame || menuCharacter);
 }
 
