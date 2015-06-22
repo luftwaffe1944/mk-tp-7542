@@ -82,25 +82,26 @@ bool MKGame::init(GameGUI* gameGui) {
 
 void MKGame::menuInit() {
 	// Inicializacion de Menus
-	string menuItemsMK[] = { "New Game", "Credits", "Exit" };
+	//string menuItemsMK[] = { "New Game", "Credits", "Exit" };
+	string menuItemsMK[] = { "New Game", "Credits", "Jugar IA", "Jugar", "Exit" };
 	string menuItemsNewGame[] = { "P1 vs P2", "P1 vs CPU", "Practice Mode", "Go Back" };
 	string menuItemsCharacters[] = {
-		"subzero", "subzero", "subzero", "subzero",
-		"scorpion", "scorpion", "subzero", "subzero",
-		"scorpion", "subzero", "scorpion", "subzero" };
+		"subzero", "liukang", "cyrax", "scorpion",
+		"jax", "kabal", "kano", "kunglao",
+		"scorpion", "motaro", "sektor", "subzero" };
 
 	//nro de items, string con items, posX, posY, width, height, render
 	//Menu principal
-	menuMk = new Menu(3, menuItemsMK, 50, 150, 150, 50, m_pRenderer, true);
+	menuMk = new Menu(5, menuItemsMK, 50, 150, 150, 50, m_pRenderer, true);
 	menuMk->setMusicPath("sounds/menu-music.ogg");
 
 	//Menu seleccion de modo de pelea
 	menuNewGame = new Menu(4, menuItemsNewGame, 50, 150, 150, 50, m_pRenderer, true);
 
 	//Menu seleccion de personaje
-	int widthSelectBox = GameGUI::getInstance()->getWindow()->getWidthPx() / 6;
+	int widthSelectBox = GameGUI::getInstance()->getWindow()->getWidthPx() / 8;
 	float heightSelectBox = widthSelectBox * 59 / 48;
-	int posX = widthSelectBox;
+	int posX = GameGUI::getInstance()->getWindow()->getWidthPx()/2 - widthSelectBox*4/2;
 	int posY = GameGUI::getInstance()->getWindow()->getHeightPx() * 0.15;
 	menuCharacterSelect = new Menu(12, menuItemsCharacters, posX, posY, widthSelectBox, (int)heightSelectBox, m_pRenderer, false);
 
@@ -108,6 +109,7 @@ void MKGame::menuInit() {
 	menuPpal = true;
 	menuGame = false;
 	menuCharacter = false;
+	menuIA = false;
 }
 
 bool compareSDLObjectGUI(SDLObjectGUI* a, SDLObjectGUI* b) {
@@ -152,6 +154,10 @@ void MKGame::clean() {
 	this->m_bReset = false;
 	this->shouldBeShaking = true;
 	this->offSetPosY = 0;
+	
+	delete(menuMk);
+	delete(menuNewGame);
+	delete(menuCharacterSelect);
 }
 
 void MKGame::draw() {
@@ -167,7 +173,7 @@ void MKGame::drawMenu(Menu* menu, int opacity) {
 	SDL_RenderPresent(m_pRenderer);
 }
 
-void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
+void createGameInfo(Window* window, vector<Character*> characters, std::string nameOne, std::string nameTwo, float ratioX, float ratioY) {
 	float windowWidth = window->getWidth();
 	float windowHeight = window->getHeightPx();
 	/*
@@ -176,7 +182,7 @@ void createGameInfo(Window* window, vector<Character*> characters, float ratioX,
 		playerName.push_back(characters[i]->getName());
 	}*/
 	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
-	GameInfo* info = new GameInfo(params, characters);
+	GameInfo* info = new GameInfo(params, characters, nameOne, nameTwo);
 	MKGame::Instance()->getObjectList().push_back(info);
 }
 
@@ -208,7 +214,7 @@ void createThrowableObject(vector<Character*> characters, Window* window, float 
 	GameGUI::getInstance()->vCollitionable.push_back(tObject2);
 }
 
-void MKGame::configureFight(std::string fighterOneName, std::string fighterTwoName) {
+void MKGame::configureFight(std::string fighterOneName, std::string fighterTwoName, std::string nameOne, std::string nameTwo) {
 	Character* fighterOne;
 	Character* fighterTwo;
 	vector<Character*> characters = GameGUI::getInstance()->getCharacters();
@@ -244,7 +250,7 @@ void MKGame::configureFight(std::string fighterOneName, std::string fighterTwoNa
 	fightingCharacters.push_back(fight->getFighterOne());
 	fightingCharacters.push_back(fight->getFighterTwo());
 	GameGUI::getInstance()->setCharacters(fightingCharacters);
-	createGameInfo(GameGUI::getInstance()->getWindow(), fightingCharacters,
+	createGameInfo(GameGUI::getInstance()->getWindow(), fightingCharacters, nameOne, nameTwo,
 			TextureManager::Instance()->ratioWidth, TextureManager::Instance()->ratioHeight);
 	createThrowableObject(fightingCharacters, GameGUI::getInstance()->getWindow(),
 			TextureManager::Instance()->ratioWidth, TextureManager::Instance()->ratioHeight);
@@ -279,9 +285,7 @@ void MKGame::menuActions(std::string action) {
 
 	std::size_t found = action.find("selected:");
 	if (found != std::string::npos) {
-		this->menuPpal = false;
-		this->menuGame = false;
-		this->menuCharacter = false;
+
 
 		vector<string> characters;
 		std::istringstream iss(action);
@@ -290,12 +294,37 @@ void MKGame::menuActions(std::string action) {
 		{
 			characters.push_back( token);
 		}
-		std::cout << characters[1] << endl;
-		std::cout << characters[2] << endl;
-		this->menuMk->stopMusic();
-		this->configureFight(characters[1], characters[2]);
 
-		//TODO: usar characters[1] y characters[2] en fight
+		if ((characters[1] == "scorpion" || characters[1] == "subzero") && (characters[2] == "scorpion" || characters[2] == "subzero")) {
+			this->menuPpal = false;
+			this->menuGame = false;
+			this->menuCharacter = false;
+			this->configureFight(characters[1], characters[2], characters[3], characters[4]);
+			this->menuMk->stopMusic();
+		}
+	}
+
+	if (action == "P1 vs CPU") {
+		this->menuIA = true;
+		this->menuPpal = false;
+		this->menuGame = false;
+		this->menuCharacter = true;
+	}
+
+	if (action == "Jugar IA") {
+		this->menuPpal = false;
+		this->menuGame = false;
+		this->menuCharacter = false;
+		this->menuIA = true;
+		this->configureFight("subzero", "scorpion", "menem", "de la rua");
+	}
+
+	if (action == "Jugar") {
+		this->menuPpal = false;
+		this->menuGame = false;
+		this->menuCharacter = false;
+		this->menuIA = false;
+		this->configureFight("subzero", "scorpion", "menem", "de la rua");
 	}
 }
 
@@ -432,6 +461,10 @@ void MKGame::handleEvents() {
 				for (int i = 0 ; i < a; ++i ) {
 					InputControl::Instance()->joystickAxisStates[i].first = 0;
 					InputControl::Instance()->joystickAxisStates[i].second = 0;
+					for (int j = 0 ; j < 10 ; j++) {
+						InputControl::Instance()->joysticksButtonStates[i][j] = false;
+					}
+
 				}
 				InputControl::Instance()->refreshJoystickInputs();
 

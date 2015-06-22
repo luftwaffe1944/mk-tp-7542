@@ -40,6 +40,7 @@ void MenuItem::setColor(int r, int g, int b, int a) {
 	this->color.r = r;
 	this->color.g = g;
 	this->color.b = b;
+	this->color.a = a;
 }
 
 void MenuItem::show(SDL_Renderer* render) {
@@ -63,6 +64,7 @@ void MenuItem::show(SDL_Renderer* render) {
 	destRect.y = positionY;
 
 	SDL_RenderCopyEx(render, mTexture, &srcRect, &destRect, 0, 0, SDL_FLIP_NONE);
+	SDL_DestroyTexture(mTexture);
 	SDL_RenderPresent(render);
 }
 
@@ -87,9 +89,13 @@ void MenuItem::drawBg(SDL_Texture* tx, SDL_Renderer* render) {
 	destRect.x = positionX;
 	destRect.y = positionY;
 
+	SDL_SetRenderDrawColor(render, 0x00, 0x00, 0x00, 0xFF);
+	SDL_RenderFillRect(render, &destRect);
+
+	SDL_SetTextureAlphaMod(tx, color.a);
 	SDL_RenderCopyEx(render, tx, &srcRect, &destRect, 0, 0,
 		SDL_FLIP_NONE);
-	SDL_SetTextureAlphaMod(tx, color.a);
+	SDL_RenderPresent(render);
 }
 
 

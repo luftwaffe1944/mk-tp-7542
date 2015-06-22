@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 			while ((MKGame::Instance()->running()) && !(MKGame::Instance()->reset()))  {
 				if (!MKGame::Instance()->menu()) {
 					MKGame::Instance()->handleEvents();
-					//MKGame::Instance()->handleAI();
+					if (MKGame::Instance()->menuIA)	MKGame::Instance()->handleAI();
 					MKGame::Instance()->update();
 					MKGame::Instance()->render();
 				}

@@ -49,7 +49,7 @@ const bool DRAW_COLLITIONABLE_BOXES = false;
 #define OBJECT_SPEED 120
 
 //IA
-#define IDLE_CHANCE 100
+#define IDLE_CHANCE 90
 
 //Sounds
 #define SFX_JUMP "../sounds/sfx/0897.ogg"

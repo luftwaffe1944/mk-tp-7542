@@ -7,44 +7,49 @@
 
 #include "../headers/SoundManager.h"
 
-SoundManager* SoundManager::s_pInstance = NULL;
+//SoundManager* SoundManager::cm_pInstance = NULL;
+SoundManager* SoundManager::s_pInstance = 0;
 
 
 void SoundManager::init() {
-	Mix_OpenAudio(22050, AUDIO_S16, 2, 4096); //default:
+	Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
+	//loadBattleSounds();
 	//load("sounds/music/fightMusic64.ogg","fightMusic64",SOUND_MUSIC);
+	//Mix_OpenAudio(22050, AUDIO_S16, 2, 128);
+	createSituationalSoundsMap(situationalSounds);
 	loadBattleSounds();
 }
 
 SoundManager::SoundManager() {
 	// TODO Auto-generated constructor stub
 	//Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
+	//init();
+	//Mix_OpenAudio(22050, AUDIO_S16, 2, 128);
+
 }
 
 SoundManager::~SoundManager()
 {
 //	Mix_CloseAudio();
 }
-
+/*
+SoundManager* SoundManager::Instance() {
+	if (!cm_pInstance) {
+		cm_pInstance = new SoundManager();
+		return cm_pInstance;
+	} else {
+		return cm_pInstance;
+	}
+}
+*/
 void SoundManager::clean() {
 	//
-
-	for (std::map<std::string, Mix_Chunk*>::iterator iter=m_sfxs.begin() ; iter != m_sfxs.end() ; ++iter ) {
-		Mix_FreeChunk(iter->second);
-	}
-
-	for (std::map<std::string, Mix_Music*>::iterator iter=m_music.begin() ; iter != m_music.end() ; ++iter ) {
-		Mix_FreeMusic(iter->second);
-	}
-
 	Mix_CloseAudio();
-
 	if (this->s_pInstance) {
 		delete this->s_pInstance;
 		this->s_pInstance = 0;
+
 	}
-
-
 }
 
 bool SoundManager::load(std::string fileName, std::string id, sound_type type) {
@@ -91,7 +96,7 @@ void SoundManager::playSoundOnce(std::string id, int loop) {
 
 
 void SoundManager::loadBattleSounds() {
-	for (std::map<std::string, std::vector<std::string>>::iterator iter = situationalSounds.begin() ; iter  != situationalSounds.end() ; ++iter)
+	for (std::map<std::string, std::vector<std::string> >::iterator iter = situationalSounds.begin() ; iter  != situationalSounds.end() ; ++iter)
 	{
 		std::vector<std::string> situationSounds = iter->second;
 		for (unsigned int i = 0; i < situationSounds.size() ; ++i) {

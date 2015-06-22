@@ -9,7 +9,6 @@
 #define FINISHMOVE_H_
 
 #include <string>
-#include <unistd.h>
 #include "Constants.h"
 
 

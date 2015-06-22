@@ -1188,6 +1188,7 @@ void Character::doFinisher() {
 						&& victim->currentSprite->isLooped
 						&& victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1) {
 					this->finishMove->onPostFinish(this->name);
+					MKGame::Instance()->showFatality = true;
 				}
 			} else {
 				clearMovementsFlags();

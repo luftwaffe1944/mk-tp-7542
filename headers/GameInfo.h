@@ -22,7 +22,7 @@ using namespace std;
 
 class GameInfo : public SDLObjectGUI {
 public:
-	GameInfo(const LoaderParams* pParams, vector<Character*> characters);
+	GameInfo(const LoaderParams* pParams, vector<Character*> characters, std::string, std::string);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
@@ -80,6 +80,8 @@ private:
 	void animation();
 	void time();
 	void loadTextTimer();
+	std::string nameOne;
+	std::string nameTwo;
 
 };
 
