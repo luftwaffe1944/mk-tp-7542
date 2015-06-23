@@ -93,6 +93,7 @@ public:
 	bool isVictory;
 	bool isLazy;
 	bool completeMovementAndChangeVictory = false;
+	bool completeMovementAndChangeLazy = false;
 	bool allowMovements;
 	float originalPosY;
 	static std::map<std::string,int> movesCounter;

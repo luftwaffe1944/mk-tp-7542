@@ -369,11 +369,23 @@ void Character::update() {
 		isFriendship = true;
 //		setMovement(FRIENDSHIP_MOVEMENT);
 //		setCurrentSprite();
+
 	}
 
-	else if (this->completeMovementAndChangeVictory){
-		completeMovemenAndChangeToVictory();
+	if (getMovement() == "stance" && completeMovementAndChangeLazy){
+		this->setMovement(LAZY_MOVEMENT);
+		this->isLazy = true;
+		this->setCurrentSprite();
+		completeMovementAndChangeLazy = false;
 	}
+
+	if (getMovement() == "stance" && completeMovementAndChangeVictory){
+		this->setMovement(VICTORY_MOVEMENT);
+		this->setCurrentSprite();
+		this->isVictory = true;
+		completeMovementAndChangeVictory = false;
+	}
+
 	else if (isReptile){
 		isReptile = true;
 	}
@@ -1190,25 +1202,25 @@ void Character::completeMovement(){
 	}
 }
 
-void Character::completeMovemenAndChangeToVictory(){
-	this->completeMovementAndChangeVictory = true;
-	incrementCounter(getMovement());
-	setMoveFlag(true);
-
-	int moveCounter = movesCounter.at(getMovement());
-	int spriteAmount = currentSprite->getFramesAmount();
-	if (moveCounter == spriteAmount) {
-		setMoveFlag(false);
-		if (isTouchingGround(positionY)) {
-				clearMovementsFlags();
-		}
-		resetCounter(getMovement());
-		this->completeMovementAndChangeVictory = false;
-		this->setMovement(VICTORY_MOVEMENT);
-		this->setCurrentSprite();
-		this->isVictory = true;
-	}
-}
+//void Character::completeMovemenAndChangeToVictory(){
+//	this->completeMovementAndChangeVictory = true;
+//	incrementCounter(getMovement());
+//	setMoveFlag(true);
+//
+//	int moveCounter = movesCounter.at(getMovement());
+//	int spriteAmount = currentSprite->getFramesAmount();
+//	if (moveCounter == spriteAmount) {
+//		setMoveFlag(false);
+//		if (isTouchingGround(positionY)) {
+//				clearMovementsFlags();
+//		}
+//		resetCounter(getMovement());
+//		this->completeMovementAndChangeVictory = false;
+//		this->setMovement(VICTORY_MOVEMENT);
+//		this->setCurrentSprite();
+//		this->isVictory = true;
+//	}
+//}
 
 void sleepSafe(int limit);
 
