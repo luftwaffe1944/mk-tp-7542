@@ -92,6 +92,8 @@ public:
 	bool isReptile;
 	bool isVictory;
 	bool isLazy;
+	bool completeMovementAndChangeVictory = false;
+	bool completeMovementAndChangeLazy = false;
 	bool allowMovements;
 	float originalPosY;
 	static std::map<std::string,int> movesCounter;
@@ -193,6 +195,8 @@ public:
 	float getJumpDistance();
 	std::string previousMovement;
 	void talk(std::string action, int repetitions = 0);
+
+	void completeMovemenAndChangeToVictory();
 
 };
 

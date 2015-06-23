@@ -167,6 +167,7 @@ void LayerManager::refresh() {
 
 	}
 
+
 	if (rightOrientation && leftOrientation) refresh = false; //Si hay un personaje en cada esquina no muevo la cámara
 	for(unsigned int index=0; index < this->layers.size(); ++index) {
 		this->layers[index]->setNeedRefresh(refresh);

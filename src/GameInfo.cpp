@@ -348,10 +348,11 @@ void GameInfo::update() {
 			}
 			if (this->characterOneWins == 2 && !this->lazyAnimationAlreadyTriggered) {
 				//Character One won, char two receives fatality
+				this->characters[1]->completeMovementAndChangeLazy = true;
 				this->characters[0]->clearMovementsFlags();
-				this->characters[1]->setMovement(LAZY_MOVEMENT);
-				this->characters[1]->isLazy = true;
-				this->characters[1]->setCurrentSprite();
+//				this->characters[1]->setMovement(LAZY_MOVEMENT);
+//				this->characters[1]->isLazy = true;
+//				this->characters[1]->setCurrentSprite();
 //				this->characters[1]->completeMovement();
 				this->characters[1]->setPositionY(this->characters[1]->originalPosY);
 				this->characters[1]->allowMovements = false;
@@ -360,9 +361,10 @@ void GameInfo::update() {
 			}
 			if (this->characterTwoWins == 2 && !this->lazyAnimationAlreadyTriggered) {
 				//Character One won, char two receives fatality
-				this->characters[0]->setMovement(LAZY_MOVEMENT);
-				this->characters[0]->isLazy = true;
-				this->characters[0]->setCurrentSprite();
+				this->characters[1]->completeMovementAndChangeLazy = true;
+//				this->characters[0]->setMovement(LAZY_MOVEMENT);
+//				this->characters[0]->isLazy = true;
+//				this->characters[0]->setCurrentSprite();
 //				this->characters[0]->completeMovement();
 				this->characters[0]->setPositionY(this->characters[0]->originalPosY);
 				this->characters[0]->allowMovements = false;
