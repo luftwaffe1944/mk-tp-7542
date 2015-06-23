@@ -216,8 +216,7 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality || this->isFalling ||
-			this->isSpecial_hint) {
+	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality || this->isFalling) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
@@ -232,6 +231,9 @@ void Character::draw() {
 			}
 			else if (this->getMovement() == FRIENDSHIP_MOVEMENT){
 				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(3, 18, 4);
+			}
+			else if (this->getMovement() == SPECIAL_HINT_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndShowFrame(0);
 			}
 			else {
 				currentFrame = currentSprite->getNextForwardingFrame();
@@ -1155,6 +1157,7 @@ bool Character::isMovingLeft(){
 
 void Character::hitWithRoof(){
 
+	this->setEnergy(this->getEnergy() - 0.01f);
 	isSpecial_hint = true;
 	positionY = positionY - jumpVelRoof;
 	jumpVelRoof -= gravity;
