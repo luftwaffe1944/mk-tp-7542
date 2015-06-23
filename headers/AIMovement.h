@@ -26,7 +26,11 @@ public:
 	InputCommand getMovementBySituation(std::string situation);
 	InputCommand fixMovementOrientation(InputCommand movement);
 	void clean();
+
 private:
+	int movementRepetitions;
+	bool isRepeatingMovement;
+	void setRepeatMovement(int repetitions);
 	AIMovement();
 	static AIMovement* cm_pInstance;
 	Character* character;
@@ -41,19 +45,20 @@ private:
 	std::map<std::string,std::vector<InputCommand> > movementMap;
 	bool createMovementMap(std::map<std::string,std::vector<InputCommand> > &aMovementMap) {
 
-		aMovementMap["farDistance"].push_back(FIRST_PLAYER_AIR_LOW_kICK_L);
+
 		aMovementMap["farDistance"].push_back(FIRST_PLAYER_AIR_LOW_kICK_R);
 		aMovementMap["farDistance"].push_back(FIRST_PLAYER_AIR_PUNCH_L);
 		aMovementMap["farDistance"].push_back(FIRST_PLAYER_AIR_PUNCH_R);
 		aMovementMap["farDistance"].push_back(FIRST_PLAYER_FIRE);
+		aMovementMap["farDistance"].push_back(FIRST_PLAYER_MOVE_RIGHT);
 
-		aMovementMap["mediumDistance"].push_back(FIRST_PLAYER_AIR_LOW_kICK_L);
 		aMovementMap["mediumDistance"].push_back(FIRST_PLAYER_AIR_LOW_kICK_R);
 		aMovementMap["mediumDistance"].push_back(FIRST_PLAYER_AIR_PUNCH_L);
 		aMovementMap["mediumDistance"].push_back(FIRST_PLAYER_AIR_PUNCH_R);
 		aMovementMap["mediumDistance"].push_back(FIRST_PLAYER_AIR_PUNCH);
 		aMovementMap["mediumDistance"].push_back(FIRST_PLAYER_AIR_HIGH_kICK);
 		aMovementMap["mediumDistance"].push_back(FIRST_PLAYER_FIRE);
+		aMovementMap["mediumDistance"].push_back(FIRST_PLAYER_MOVE_RIGHT);
 
 		aMovementMap["kickDistance"].push_back(FIRST_PLAYER_BLOCK);
 		aMovementMap["kickDistance"].push_back(FIRST_PLAYER_LOW_KICK);
@@ -66,7 +71,7 @@ private:
 		aMovementMap["kickDistance"].push_back(FIRST_PLAYER_MOVE_RIGHT);
 
 
-
+		aMovementMap["punchDistance"].push_back(FIRST_PLAYER_MOVE_RIGHT);
 		aMovementMap["punchDistance"].push_back(FIRST_PLAYER_DUCK_HIGH_kICK);
 		aMovementMap["punchDistance"].push_back(FIRST_PLAYER_DUCK_LOW_kICK);
 		aMovementMap["punchDistance"].push_back(FIRST_PLAYER_UPPERCUT);
@@ -89,8 +94,12 @@ private:
 		aMovementMap["underKickDistance"].push_back(FIRST_PLAYER_UNDER_KICK);
 
 		aMovementMap["closeDistanceBlocking"].push_back(FIRST_PLAYER_UNDER_KICK);
+		aMovementMap["closeDistanceBlocking"].push_back(FIRST_PLAYER_MOVE_RIGHT);
+
 		aMovementMap["closingUp"].push_back(FIRST_PLAYER_AIR_LOW_kICK_R);
 		aMovementMap["closingUp"].push_back(FIRST_PLAYER_AIR_PUNCH_R);
+		aMovementMap["closingUp"].push_back(FIRST_PLAYER_MOVE_RIGHT);
+
 		aMovementMap["none"].push_back(NO_INPUT);
 
 		return true;
