@@ -58,7 +58,8 @@
 			"patada_alta": 3,
 			"patada_baja": 2,
 			"bloquear": 4,
-			"disparar": 5
+			"disparar": 5,
+			"salir": 6
 		},
 		{
 			"piña_alta": 0,
@@ -66,7 +67,8 @@
 			"patada_alta": 3,
 			"patada_baja": 2,
 			"bloquear": 4,
-			"disparar": 5
+			"disparar": 5,
+			"salir": 6 
 		}
 	],
 	"secuencias": [

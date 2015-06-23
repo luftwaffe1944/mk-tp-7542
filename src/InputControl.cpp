@@ -481,14 +481,13 @@ void InputControl::refreshJoystickInputs() {
 	this->secondPlayerMove = NO_INPUT;
 	this->controlOption = NO_INPUT;
 
-	int character = 0;
-
 	if ((currentKeyStates[SDL_SCANCODE_R])) {
 		this->controlOption = RESET;
 
 		//COMBINATION WITH UP
 	} else {
 		for (int joystick = 0; joystick < SDL_NumJoysticks(); joystick++) {
+
 
 			loadSpecialSecuence(joystick);
 			detectSpecialMove(joystick);
@@ -880,6 +879,8 @@ void InputControl::loadDefaultButtons(int joyNum) {
 	setActionButton(joyNum, HIGH_KICK, 3);
 	setActionButton(joyNum, BLOCK, 4);
 	setActionButton(joyNum, FIRE, 5);
+	setActionButton(joyNum, QUIT, 6);
+
 }
 
 void InputControl::loadSpecialSecuence(int joystick) {

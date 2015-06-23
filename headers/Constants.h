@@ -229,6 +229,7 @@ const string LOW_KICK = "low_kick";
 const string HIGH_KICK = "high_kick";
 const string FIRE = "fire";
 const string BLOCK = "block";
+const string QUIT = "quit";
 
 // Json config constants
 
@@ -264,6 +265,7 @@ const string BLOCK = "block";
 #define JSON_KEY_LOW_KICK "patada_baja"
 #define JSON_KEY_BLOCK "bloquear"
 #define JSON_KEY_FIRE "disparar"
+#define JSON_KEY_QUIT "salir"
 
 #define JSON_KEY_SECUENCES "secuencias"
 #define JSON_KEY_SPECIAL_MOVE "secuence_for_special_move"
