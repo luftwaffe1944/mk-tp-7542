@@ -40,7 +40,7 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define SECUENCE_FOR_SPECIAL_MOVE_4 "DKDK" //fatality
 
 
-#define FALATITY_NUMBER_SPECIAL_MOVE 10
+#define FALATITY_NUMBER_SPECIAL_MOVE 2
 
 
 //Draw collitionable boxes

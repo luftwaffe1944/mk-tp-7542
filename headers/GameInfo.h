@@ -15,6 +15,7 @@
 #include "MKGame.h"
 #include "Timer.h"
 #include "SoundManager.h"
+#include "SecuenceInputManager.h"
 #include <algorithm>
 //#include "SDL_timer.h"
 //#include "SDL.h"

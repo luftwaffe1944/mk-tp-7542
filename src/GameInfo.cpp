@@ -336,6 +336,7 @@ void GameInfo::update() {
 			} else {
 				this->showFinishHimAnimation = false;
 				CollitionManager::Instance()->collitionEnabled = true;
+				SecuenceInputManager::Instance()->fatalityTime = true;
 				//this->showFatalityAnimation = true;
 			}
 			if (MKGame::Instance()->showFatality && this->fatalityAnimationTimer > 0) {
