@@ -142,6 +142,11 @@ public:
 	bool iaActive;
 
 	bool showFatality = false;
+	bool showBabality = false;
+	bool showFriendship = false;
+
+	bool isFinishimMoment = false;
+	bool lazyAnimationAlreadyTriggered = false;
 
 	void getJoystickInput(SDL_Event event);
 	void handleAI();

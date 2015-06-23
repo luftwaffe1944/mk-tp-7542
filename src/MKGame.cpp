@@ -446,7 +446,7 @@ void MKGame::handleEvents() {
 			}
 
 			MKGame::getJoystickInput(event);
-	//InputControl::Instance()->update();
+			//InputControl::Instance()->update();
 
 			//Para solo jugar con joysticks comentar todos
 

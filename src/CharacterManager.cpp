@@ -104,13 +104,13 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 	if ((actualObj->isCharacter()) && (nextObj->isCharacter())){
 		//GOLPES CHARACTER 1
 
-		if (character2->getMovement() == LAZY_MOVEMENT && isHitting(character1) ){
-			/*character2->setMovement(FALLING_MOVEMENT);
+		if (character2->getMovement() == LAZY_MOVEMENT && isHitting(character1) && MKGame::Instance()->isFinishimMoment ){
+			character2->setMovement(FALLING_MOVEMENT);
 			character2->setCurrentSprite();
 			character2->isFalling = true;
 			character1->setMovement(VICTORY_MOVEMENT);
 			character1->setCurrentSprite();
-			character1->isVictory = true;*/
+			character1->isVictory = true;
 		}
 
 
@@ -168,7 +168,18 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		}
 
 		//GOLPES CHARACTER 2
-		if ((character2->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
+
+		if (character1->getMovement() == LAZY_MOVEMENT && isHitting(character2) && MKGame::Instance()->isFinishimMoment ){
+			character1->setMovement(FALLING_MOVEMENT);
+			character1->setCurrentSprite();
+			character1->isFalling = true;
+			character2->setMovement(VICTORY_MOVEMENT);
+			character2->setCurrentSprite();
+			character2->isVictory = true;
+		}
+
+
+		else if ((character2->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 			character2->talk("punchHit",1);
 			//GameGUI::getInstance()->visualEffects[1]->animateToasty();
