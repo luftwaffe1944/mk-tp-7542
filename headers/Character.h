@@ -80,6 +80,8 @@ private:
 	bool isFatality;
 
 public:
+	bool isSpecial_hint;
+	bool isSpecial;
 	bool isBabality;
 	bool isHeadless;
 	bool isHeadlessBlood;

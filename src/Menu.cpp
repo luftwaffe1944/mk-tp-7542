@@ -44,7 +44,7 @@ void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, i
 	while (i < no_of_items) {
 		while (j < 5 && i < no_of_items) {
 			temp2 = new MenuItem(auxX, y, width, height, strings[i]);
-			temp2->setColor(0, 0, 0, 150);
+			temp2->setColor(150, 150, 150, 150);
 			temp1->next = temp2;
 			temp2->previous = temp1;
 			temp1 = temp2;
@@ -63,7 +63,7 @@ void Menu::createGridCharacters(int no_of_items, std::string * strings, int x, i
 	selectedTwo = selectedTwo->next;
 	selectedTwo = selectedTwo->next;
 	selected->setColor(0, 255, 0, 255);
-	selectedTwo->setColor(0, 255, 0, 255);
+	selectedTwo->setColor(255, 0, 0, 255);
 }
 
 void Menu::loadBackgroundImage(std::string path) {
@@ -154,12 +154,15 @@ void Menu::drawCharacterStance(SDL_Renderer* render) {
 		SDL_FLIP_NONE);
 	SDL_DestroyTexture(characterOneImg);
 
-	
-	destRect.x = GameGUI::getInstance()->getWindow()->getWidthPx() - destRect.w;
-	loadImgCharacterTwo(render);
-	SDL_RenderCopyEx(render, characterTwoImg, &srcRect, &destRect, 0, 0,
-		SDL_FLIP_HORIZONTAL);
-	SDL_DestroyTexture(characterTwoImg);
+	if (twoCharacters) {
+		destRect.x = GameGUI::getInstance()->getWindow()->getWidthPx() - destRect.w;
+		loadImgCharacterTwo(render);
+		SDL_RenderCopyEx(render, characterTwoImg, &srcRect, &destRect, 0, 0,
+			SDL_FLIP_HORIZONTAL);
+		SDL_DestroyTexture(characterTwoImg);
+	}
+
+
 }
 
 void Menu::show(int alpha) {
@@ -652,6 +655,11 @@ std::string Menu::identify_event() {
 	playerTwoSelected = false;
 	nameOneSet = false;
 	nameTwoSet = false;
+	if (!twoCharacters) {
+		nameTwoSet = true;
+		selectedTwo->setColor(150, 150, 150, 150);
+		selectedTwo->drawBox(render);
+	}
 	renderTextOne = false;
 	renderTextTwo = false;
 
@@ -671,7 +679,10 @@ std::string Menu::identify_event() {
 				SDL_StopTextInput();
 				if (playerOneName.length() > MAXLENGHTNAME) playerOneName = playerOneName.substr(0, MAXLENGHTNAME);
 				if (playerTwoName.length() > MAXLENGHTNAME) playerTwoName = playerTwoName.substr(0, MAXLENGHTNAME);
-				return "selected: " + selected->text + " " + selectedTwo->text + " " + playerOneName + " " + playerTwoName;
+				if (twoCharacters)
+					return "selected: " + selected->text + " " + selectedTwo->text + " " + playerOneName + " " + playerTwoName;
+				else 
+					return "selected: " + selected->text + " " + "xxxx" + " " + playerOneName + " " + "xxxx";
 			}
 
 			//Leo input jugador 1
@@ -684,7 +695,7 @@ std::string Menu::identify_event() {
 
 			//Leo input jugador 2, lee una ves que esta seteado el primero input
 			else if (isType(event, SDL_TEXTINPUT) && !nameTwoSet && nameOneSet && !isKey(event, SDLK_BACKSPACE) &&
-				!isKey(event, SDLK_RETURN) && (playerOneSelected && playerTwoSelected)) {
+				!isKey(event, SDLK_RETURN) && (playerOneSelected && playerTwoSelected) && twoCharacters) {
 				TextureManager::Instance()->unload("namePlayerTwo" + playerTwoName);
 				playerTwoName += event.text.text;
 				renderTextTwo = true;
@@ -700,15 +711,19 @@ std::string Menu::identify_event() {
 			//Leo movimientos del joystick
 			else if (isType(event, SDL_JOYAXISMOTION) || isType(event, SDL_JOYBUTTONDOWN)) {
 				this->getJoystickInput(event);
-				if (InputControl::Instance()->someJoyKickButtonPressed(1)) {
-				}
 				if (textMenu) {
 					if (readJoystickZero()) return state;
 				}
 				//Si no, selecciono jugadores
 				else {
+					if (twoCharacters) {
 					readJoystickZero();
 					readJoystickOne();
+					}
+					else {
+						readJoystickZero();
+					}
+
 				}
 
 			}

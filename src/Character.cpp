@@ -161,6 +161,10 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
 	Sprite* spriteFalling = new Sprite(this->name+this->playerNumber+FALLING_SUFFIX, characterPath+FALLING_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
+	Sprite* spriteSpecial = new Sprite(this->name+this->playerNumber+SPECIAL_SUFFIX, characterPath+SPECIAL_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
+	Sprite* spriteSpecialHint = new Sprite(this->name+this->playerNumber+SPECIAL_HINT_SUFFIX, characterPath+SPECIAL_HINT_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -199,6 +203,8 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+LAZY_SUFFIX, spriteLazy));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BURNING_SUFFIX, spriteBurning));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FALLING_SUFFIX, spriteFalling));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SPECIAL_SUFFIX, spriteSpecial));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SPECIAL_HINT_SUFFIX, spriteSpecialHint));
 
 	return true;
 }
@@ -209,7 +215,7 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality || this->isFalling) {
+	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality || this->isFalling || this->isSpecial_hint) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
@@ -346,7 +352,8 @@ void Character::update() {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
 
-	//cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
+
+	cout << "plyer: " << this->getName() << " Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
@@ -710,6 +717,11 @@ void Character::update() {
 				setCurrentSprite();
 				sweepMovement();
 				break;
+			case SPECIAL:
+				this->setMovement(SPECIAL_MOVEMENT);
+				setCurrentSprite();
+				completeMovement();
+				break;
 			case BABALITY:
 				this->finishMove = new Babality();
 				doFinisher();
@@ -731,11 +743,6 @@ void Character::update() {
 			case FRIENDSHIP:
 				this->finishMove = new Friendship();
 				doFinisher();
-				break;
-			case LAZY:
-				this->setMovement(LAZY_MOVEMENT);
-				setCurrentSprite();
-				completeMovement();
 				break;
 			case NO_INPUT:
 				this->setMovement(STANCE);
@@ -1221,6 +1228,7 @@ void Character::doFinisher() {
 		else if(this->isVictory && currentFrame == framesAmount - 1){
 			sleepSafe(100000000);
 			this->finishMove->onPostFinish(this->name);
+			MKGame::Instance()->showBabality = true;
 
 		}
 
@@ -1247,6 +1255,7 @@ void Character::doFinisher() {
 			sleepSafe(90000000);
 			this->finishMove->onPostFinish(this->name);
 			this->isFinishingMove = false;
+			MKGame::Instance()->showFriendship = true;
 		}
 
 
@@ -1449,7 +1458,12 @@ void Character::setCurrentSprite(){
 		else if (this->getMovement() == FALLING_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name + this->playerNumber+ FALLING_SUFFIX];
 		}
-
+		else if (this->getMovement() == SPECIAL_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ SPECIAL_SUFFIX];
+		}
+		else if (this->getMovement() == SPECIAL_HINT_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ SPECIAL_HINT_SUFFIX];
+		}
 		else{
 			//TODO: review
 		}
@@ -1538,6 +1552,12 @@ void Character::setMoveFlag(bool trueOrFalse){
 		isBurning = trueOrFalse;
 	}
 	else if (this->getMovement() == FALLING_MOVEMENT) {
+		isFalling = trueOrFalse;
+	}
+	else if (this->getMovement() == SPECIAL_MOVEMENT) {
+		isFalling = trueOrFalse;
+	}
+	else if (this->getMovement() == SPECIAL_HINT_MOVEMENT) {
 		isFalling = trueOrFalse;
 	}
 	else {

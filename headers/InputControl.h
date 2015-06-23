@@ -54,7 +54,8 @@ enum InputCommand {
 	HEADLESS,
 	HEADLESS_BLOOD,
 	FRIENDSHIP,
-	LAZY
+	LAZY,
+	SPECIAL
 
 };
 
