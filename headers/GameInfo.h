@@ -53,6 +53,7 @@ private:
 	int winnerAnimationTimer;
 	int finishHimAnimationTimer;
 	int fatalityAnimationTimer;
+	int babalityAnimationTimer;
 	int characterOneWins;
 	int characterTwoWins;
 	bool lazyAnimationAlreadyTriggered;
@@ -61,6 +62,7 @@ private:
 	bool showWinnerAnimation;
 	bool showFinishHimAnimation;
 	bool showFatalityAnimation;
+	bool showBabalityAnimation;
 	bool roundTriggered;
 	bool roundOneCompleted;
 	bool roundTwoCompleted;

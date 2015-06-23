@@ -18,6 +18,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters, s
 	this->winnerAnimationTimer = 50;
 	this->finishHimAnimationTimer = 30;
 	this->fatalityAnimationTimer = 30;
+	this->babalityAnimationTimer = 50;
 	TTF_Init();
 	this->initAnimation = true;
 	this->showFightAnimation = true;
@@ -47,6 +48,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters, s
 	this->playingFinishHimSound  = false;
 	this->lazyAnimationAlreadyTriggered = false;
 	this->showFatalityAnimation = false;
+	this->showBabalityAnimation = false;
 
 }
 
@@ -132,6 +134,9 @@ bool GameInfo::load(SDL_Renderer* r) {
 
 	//fatality sprite
 	TextureManager::Instance()->load(FATALITY_IMAGE_SPRITE, "fatalitySprite", r);
+
+	//babality sprite
+	TextureManager::Instance()->load(BABALITY_IMAGE_SPRITE, "babalitySprite", r);
 
 	//character 1 wins
 	//charOneWins = this->characters[0]->getName() + "  wins";
@@ -340,6 +345,15 @@ void GameInfo::update() {
 				this->showFatalityAnimation = false;
 				MKGame::Instance()->setOnReset();
 			}
+
+			if (MKGame::Instance()->showBabality && this->babalityAnimationTimer > 0) {
+				this->showBabalityAnimation = true;
+				this->babalityAnimationTimer -= 1;
+			} else if (babalityAnimationTimer == 0){
+				this->showBabalityAnimation = false;
+				MKGame::Instance()->setOnReset();
+			}
+
 			//finish him logic
 			this->showWinnerAnimation = false; //Cuando este terminada la funcionalidad de finish him quitar esta linea
 			if (!this->playingFinishHimSound) {
@@ -526,6 +540,11 @@ void GameInfo::draw() {
 	float fatalityHeight = 20;
 	if (this->showFatalityAnimation) {
 		TextureManager::Instance()->draw("fatalitySprite", pParams->getWidth()/2 - fatalityWidth/2,
+				GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fatalityHeight, fatalityWidth, fatalityHeight, render);
+	}
+
+	if (this->showBabalityAnimation) {
+		TextureManager::Instance()->draw("babalitySprite", pParams->getWidth()/2 - fatalityWidth/2,
 				GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fatalityHeight, fatalityWidth, fatalityHeight, render);
 	}
 }

@@ -1298,8 +1298,9 @@ void Character::doFinisher() {
 		}
 
 		else if(this->isVictory && currentFrame == framesAmount - 1){
-			sleepSafe(100000000);
+			SDL_Delay(2000);
 			this->finishMove->onPostFinish(this->name);
+			this->isVictory = false;
 			MKGame::Instance()->showBabality = true;
 
 		}
