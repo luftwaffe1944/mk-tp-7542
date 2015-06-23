@@ -365,12 +365,6 @@ void Character::update() {
 		doFinisher();
 	}
 
-	if (isFriendship) {
-		isFriendship = true;
-//		setMovement(FRIENDSHIP_MOVEMENT);
-//		setCurrentSprite();
-
-	}
 
 	if (getMovement() == "stance" && completeMovementAndChangeLazy){
 		this->setMovement(LAZY_MOVEMENT);
@@ -419,6 +413,11 @@ void Character::update() {
 
 	else if (isBabality){
 		isBabality = true;
+	}
+
+	else if (isFriendship) {
+		isFriendship = true;
+
 	}
 
 	else if (isVictory) {
