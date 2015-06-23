@@ -106,6 +106,7 @@ Menu::Menu(int no_of_items, std::string * strings, int start_x, int start_y, int
 		this->createGridCharacters(no_of_items, strings, start_x, start_y, width, height);
 
 	this->loadBackgroundImage("images/mk-bg-menu.jpg");
+	this->twoCharacters = true;
 }
 
 void Menu::draw(SDL_Texture* tx) {
