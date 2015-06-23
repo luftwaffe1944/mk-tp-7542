@@ -25,6 +25,7 @@ class Menu
 public:
 	Menu(int no_of_items, std::string * strings, int start_x, int start_y, int width, int height, SDL_Renderer*, bool textMenu);
 	void show(int alpha);
+	//true 2 personajes false 1 personaje
 	std::string identify_event();
 	virtual ~Menu();
 	std::string clicked(int mouse_x, int mouse_y);
@@ -44,6 +45,7 @@ public:
 	void buttonJoystickZero();
 	void buttonJoystickOne();
 	void stopMusic();
+	bool twoCharacters;
 
 private:
 	//Estado del Menu, se retorna al detectarse un evento
@@ -97,6 +99,7 @@ private:
 	void readMouseButton(SDL_Event);
 	void moveSelectedToNext(MenuItem** item, int cant);
 	void moveSelectedToPrevious(MenuItem** item, int cant);
+
 
 };
 

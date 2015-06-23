@@ -110,6 +110,7 @@ void MKGame::menuInit() {
 	menuGame = false;
 	menuCharacter = false;
 	menuIA = false;
+
 }
 
 bool compareSDLObjectGUI(SDLObjectGUI* a, SDLObjectGUI* b) {
@@ -262,6 +263,15 @@ void MKGame::configureFight(std::string fighterOneName, std::string fighterTwoNa
 	//MKGame::Instance()->init(GameGUI::getInstance());
 }
 
+//obtengo un player aleatorio
+std::string MKGame::randomCharacter(vector<string> characters) {
+	std::cout << characters.size();
+	srand(time(NULL));
+	int index = (rand() % characters.size());
+	return characters[index];
+}
+
+
 //Agregar eventos de los menus en este metodo
 void MKGame::menuActions(std::string action) {
 	if (action == "Exit") {
@@ -281,6 +291,9 @@ void MKGame::menuActions(std::string action) {
 		this->menuPpal = false;
 		this->menuGame = false;
 		this->menuCharacter = true;
+		this->menuCharacterSelect->twoCharacters = true;
+		SecuenceInputManager::Instance()->drawSecuenceOne = false;
+		SecuenceInputManager::Instance()->drawSecuenceTwo = false;
 	}
 
 	std::size_t found = action.find("selected:");
@@ -292,15 +305,30 @@ void MKGame::menuActions(std::string action) {
 		std::string token;
 		while (std::getline(iss, token, ' '))
 		{
-			characters.push_back( token);
+			characters.push_back(token);
 		}
+		if (this->menuCharacterSelect->twoCharacters == true) {
+			if ((characters[1] == "scorpion" || characters[1] == "subzero") && (characters[2] == "scorpion" || characters[2] == "subzero")) {
+				this->menuPpal = false;
+				this->menuGame = false;
+				this->menuCharacter = false;
+				this->configureFight(characters[1], characters[2], characters[3], characters[4]);
+				this->menuMk->stopMusic();
+			}
+		}
+		else {
+			vector<string> chDisponibles;
+			chDisponibles.push_back("scorpion");
+			chDisponibles.push_back("subzero");
+			string randCh = randomCharacter(chDisponibles);
+			if (characters[1] == "scorpion" || characters[1] == "subzero") {
+				this->menuPpal = false;
+				this->menuGame = false;
+				this->menuCharacter = false;
+				this->configureFight(characters[1], randCh, characters[3], randCh);
+				this->menuMk->stopMusic();
+			}
 
-		if ((characters[1] == "scorpion" || characters[1] == "subzero") && (characters[2] == "scorpion" || characters[2] == "subzero")) {
-			this->menuPpal = false;
-			this->menuGame = false;
-			this->menuCharacter = false;
-			this->configureFight(characters[1], characters[2], characters[3], characters[4]);
-			this->menuMk->stopMusic();
 		}
 	}
 
@@ -309,6 +337,9 @@ void MKGame::menuActions(std::string action) {
 		this->menuPpal = false;
 		this->menuGame = false;
 		this->menuCharacter = true;
+		this->menuCharacterSelect->twoCharacters = false;
+		SecuenceInputManager::Instance()->drawSecuenceOne = false;
+		SecuenceInputManager::Instance()->drawSecuenceTwo = false;
 	}
 
 	if (action == "Jugar IA") {
@@ -318,6 +349,9 @@ void MKGame::menuActions(std::string action) {
 		this->menuIA = true;
 		this->configureFight("subzero", "scorpion", "menem", "de la rua");
 		this->menuMk->stopMusic();
+		this->menuCharacterSelect->twoCharacters = false;
+		SecuenceInputManager::Instance()->drawSecuenceOne = false;
+		SecuenceInputManager::Instance()->drawSecuenceTwo = false;
 	}
 
 	if (action == "Jugar") {
@@ -327,6 +361,19 @@ void MKGame::menuActions(std::string action) {
 		this->menuIA = false;
 		this->configureFight("subzero", "scorpion", "menem", "de la rua");
 		this->menuMk->stopMusic();
+		this->menuCharacterSelect->twoCharacters = false;
+		SecuenceInputManager::Instance()->drawSecuenceOne = false;
+		SecuenceInputManager::Instance()->drawSecuenceTwo = false;
+	}
+
+	if (action == "Practice Mode") {
+		SecuenceInputManager::Instance()->drawSecuenceOne = true;
+		SecuenceInputManager::Instance()->drawSecuenceTwo = true;
+		this->menuPpal = false;
+		this->menuGame = false;
+		this->menuCharacter = true;
+		this->menuIA = false;
+		this->menuCharacterSelect->twoCharacters = false;
 	}
 }
 

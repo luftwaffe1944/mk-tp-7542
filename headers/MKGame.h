@@ -26,6 +26,7 @@
 #include "GameInfo.h"
 #include "AIMovement.h"
 #include "../headers/SoundManager.h"
+#include <ctime>
 
 
 //#include "SDL_gamecontroller.h"
@@ -75,6 +76,8 @@ private:
 		offSetPosY = 0;
 		//gGameController = NULL;
 	}
+	
+	std::string randomCharacter(vector<string> characters);
 
 public:
 	static MKGame* Instance();
