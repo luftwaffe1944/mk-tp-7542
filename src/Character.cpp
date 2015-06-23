@@ -26,6 +26,7 @@ using namespace std;
 float gravity = 14.0f;
 float jumpVel = 60.0f;
 float jumpVelFalling = 40.0f;
+float jumpVelRoof = 80.0f;
 float jumpVelFallingUpper = 50.0f;
 
 
@@ -162,7 +163,7 @@ bool Character::load(SDL_Renderer* render) {
 	Sprite* spriteFalling = new Sprite(this->name+this->playerNumber+FALLING_SUFFIX, characterPath+FALLING_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
 	Sprite* spriteSpecial = new Sprite(this->name+this->playerNumber+SPECIAL_SUFFIX, characterPath+SPECIAL_SPRITE,
-			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 5, this->isAltPlayer, this->altColor);
 	Sprite* spriteSpecialHint = new Sprite(this->name+this->playerNumber+SPECIAL_HINT_SUFFIX, characterPath+SPECIAL_HINT_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 
@@ -215,7 +216,8 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality || this->isFalling || this->isSpecial_hint) {
+	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality || this->isFalling ||
+			this->isSpecial_hint) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
@@ -303,7 +305,7 @@ bool Character::shouldMoveForward() {
 	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
 			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))
 			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper || isReptile
-			|| isFriendship || isHeadlessBlood || isBurning) {
+			|| isFriendship || isHeadlessBlood || isBurning || isSpecial) {
 		return true;
 	} else {
 		return false;
@@ -377,6 +379,10 @@ void Character::update() {
 		completeMovement();
 	}
 
+	else if (isSpecial){
+		completeMovement();
+	}
+
 	else if (isSubzeroFiring) {
 		completeMovement();
 	}
@@ -403,6 +409,10 @@ void Character::update() {
 
 	else if (isSubzeroSweeping){
 		sweepMovement();
+	}
+
+	else if (isSpecial_hint){
+		hitWithRoof();
 	}
 
 	else if (isBeingHintStanceUp){
@@ -546,6 +556,9 @@ void Character::update() {
 		}
 
 		this->clearMovementsFlags();
+
+		Character* victim = getVictim();
+
 		if (this->allowMovements) {
 			switch (playerCommand) {
 			case FIRST_PLAYER_MOVE_RIGHT:
@@ -721,6 +734,10 @@ void Character::update() {
 				this->setMovement(SPECIAL_MOVEMENT);
 				setCurrentSprite();
 				completeMovement();
+				victim->setMovement(SPECIAL_HINT_MOVEMENT);
+				SoundManager::Instance()->playSound("hit_roof", 0);
+				victim->setCurrentSprite();
+				victim->isSpecial_hint = true;
 				break;
 			case BABALITY:
 				this->finishMove = new Babality();
@@ -805,6 +822,8 @@ void Character::clearMovementsFlags(){
 	isFinishingMove = false;
 	isReptile = false;
 	isFalling = false;
+	isSpecial = false;
+	isSpecial_hint = false;
 	//this->beingPushed = false;
 }
 
@@ -1132,6 +1151,21 @@ bool Character::isMovingLeft(){
 	if (this->isJumpingLeft || this->isWalkingLeft || this->isAirPunchingLeft || this->isKickingAirLowLeft
 			|| this->isHintFlying || this->isHintFlyingUpper || this->beingPushed) return true;
 	return false;
+}
+
+void Character::hitWithRoof(){
+
+	isSpecial_hint = true;
+	positionY = positionY - jumpVelRoof;
+	jumpVelRoof -= gravity;
+	cout << positionY << endl;
+	if (positionY > 120 && positionY < 130) SoundManager::Instance()->playSound("fireHit3", 0);
+	if (this->isTouchingGround(positionY)) {
+		isSpecial_hint = false;
+		jumpVelRoof = 80.0f;
+		this->setMovement(STANCE);
+		this->positionY = yGround;
+	}
 }
 
 void Character::completeMovement(){
@@ -1555,10 +1589,10 @@ void Character::setMoveFlag(bool trueOrFalse){
 		isFalling = trueOrFalse;
 	}
 	else if (this->getMovement() == SPECIAL_MOVEMENT) {
-		isFalling = trueOrFalse;
+		isSpecial = trueOrFalse;
 	}
 	else if (this->getMovement() == SPECIAL_HINT_MOVEMENT) {
-		isFalling = trueOrFalse;
+		isSpecial_hint = trueOrFalse;
 	}
 	else {
 		//TODO: review

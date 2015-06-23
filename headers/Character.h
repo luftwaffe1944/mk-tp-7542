@@ -162,6 +162,7 @@ public:
 	float getWidthBox2UL();
 	void doFinisher();
 	Character* getVictim();
+	void hitWithRoof();
 
 	float posXBox;
 	float posYBox;

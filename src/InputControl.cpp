@@ -1053,11 +1053,13 @@ void InputControl::detectSpecialMove(int joyNum) {
 			if (specialMove == 0) {
 				this->firstPlayerMove = SUBZERO_SWEEP;
 			} else if (specialMove == 1) {
-				this->firstPlayerMove = FATALITY;
+				this->firstPlayerMove = SPECIAL;
 			} else if (specialMove == 2) {
 				this->firstPlayerMove = FRIENDSHIP;
 			} else if (specialMove == 3) {
 				this->firstPlayerMove = BABALITY;
+			} else if (specialMove == 4) {
+				this->firstPlayerMove = FATALITY;
 			}
 		}
 	} else if ((joyNum == 1) && !(specialMove == -1)) {
@@ -1066,11 +1068,13 @@ void InputControl::detectSpecialMove(int joyNum) {
 			if (specialMove == 0) {
 				this->secondPlayerMove = SUBZERO_SWEEP;
 			} else if (specialMove == 1) {
-				this->secondPlayerMove = FATALITY;
+				this->secondPlayerMove = SPECIAL;
 			} else if (specialMove == 2) {
 				this->secondPlayerMove = FRIENDSHIP;
 			} else if (specialMove == 3) {
 				this->secondPlayerMove = BABALITY;
+			} else if (specialMove == 4) {
+				this->firstPlayerMove = FATALITY;
 			}
 		}
 	}

@@ -113,7 +113,6 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->isVictory = true;
 		}
 
-
 		else if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 			character1->talk("punchHit",1);
@@ -165,6 +164,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		else if (character1->getMovement() == SWEEP_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(HINT_FLYING_MOVEMENT);
 			character1->clearMovementsFlags();
+			SoundManager::Instance()->playSound("gancho", 0);
 		}
 
 		//GOLPES CHARACTER 2
@@ -224,6 +224,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		else if (character2->getMovement() == SWEEP_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 				character1->setMovement(HINT_FLYING_MOVEMENT);
 				character2->clearMovementsFlags();
+				SoundManager::Instance()->playSound("gancho", 0);
 		}
 
 		bool rightOrientation = false;

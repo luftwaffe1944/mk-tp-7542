@@ -73,9 +73,10 @@
 	],
 	"secuencias": [
 		{ "secuence_for_special_move": "KKKK"	},
-		{ "secuence_for_special_move": "DKP"	},
-		{ "secuence_for_special_move": "UDJ"	},
-		{ "secuence_for_special_move": "PPPP"	}		
+		{ "secuence_for_special_move": "HHHH"	},
+		{ "secuence_for_special_move": "DJDJ"	},
+		{ "secuence_for_special_move": "DHDH"	},
+		{ "secuence_for_special_move": "DKDK"	}
 	],
 	"tiempo_secuencias": 1,
 	"tolerancia_secuencias": 1	

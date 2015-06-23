@@ -95,6 +95,7 @@ private:
 		situationalSounds["babality_voice"].push_back("babality_voice");
 		situationalSounds["post_babality"].push_back("post_babality");
 		situationalSounds["headless_blood"].push_back("headless_blood");
+		situationalSounds["hit_roof"].push_back("hit_roof");
 		return true;
 	}
 };
