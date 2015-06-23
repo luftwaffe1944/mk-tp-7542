@@ -23,7 +23,7 @@ CollitionManager* CollitionManager::Instance() {
 }
 
 CollitionManager::CollitionManager() {
-
+	this->collitionEnabled = true;
 }
 
 void CollitionManager::solveCollitions(vector<Collitionable*> objects){
@@ -70,9 +70,11 @@ void CollitionManager::solveCollitions(vector<Collitionable*> objects){
 						if (newActualBox->isColliding(newNextBox) ){ //verifica superposicion && !CharacterManager::Instance()->inCollision
 							//resolver evento de colision
 							//FILE_LOG(logDEBUG) << "Collition detected" ;
+							if (this->collitionEnabled){
+								CharacterManager::Instance()->solveMovesBeignHint(actualObject, nextObject);
+								DamageManager::Instance()->solveDamage(actualObject, nextObject);
+							}
 
-							CharacterManager::Instance()->solveMovesBeignHint(actualObject, nextObject);
-							DamageManager::Instance()->solveDamage(actualObject, nextObject);
 						} else {
 
 						}

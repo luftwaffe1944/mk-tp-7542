@@ -320,6 +320,7 @@ void GameInfo::update() {
 
 		// PARA EL CASO EN QUE ALGUNO DE LOS DOS HAYA GANADO DOS PELEAS SE ACTIVA LOGICA DE FINISH HIM
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
+			CollitionManager::Instance()->collitionEnabled = false;
 			this->showFinishHimAnimation = true;
 			MKGame::Instance()->isFinishimMoment = true;
 			//MKGame::Instance()->setAllowPlayerMovements(true);
@@ -329,7 +330,7 @@ void GameInfo::update() {
 				this->finishHimAnimationTimer -= 1;
 			} else {
 				this->showFinishHimAnimation = false;
-
+				CollitionManager::Instance()->collitionEnabled = true;
 				//this->showFatalityAnimation = true;
 			}
 			if (MKGame::Instance()->showFatality && this->fatalityAnimationTimer > 0) {
