@@ -80,6 +80,7 @@ bool isHitting(Character* character){
 			character->getMovement() == AIR_PUNCH_MOVEMENT ||
 			character->getMovement() == PUNCHING_LOW_MOVEMENT ||
 			character->getMovement() == SUPER_KICK_MOVEMENT ||
+			character->getMovement() == FIRE_MOVEMENT ||
 			character->getMovement() == SWEEP_MOVEMENT );
 }
 
@@ -108,9 +109,10 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character2->setMovement(FALLING_MOVEMENT);
 			character2->setCurrentSprite();
 			character2->isFalling = true;
-			character1->setMovement(VICTORY_MOVEMENT);
-			character1->setCurrentSprite();
-			character1->isVictory = true;
+			character1->completeMovemenAndChangeToVictory();
+//			character1->setMovement(VICTORY_MOVEMENT);
+//			character1->setCurrentSprite();
+//			character1->isVictory = true;
 		}
 
 		else if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
@@ -173,9 +175,10 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->setMovement(FALLING_MOVEMENT);
 			character1->setCurrentSprite();
 			character1->isFalling = true;
-			character2->setMovement(VICTORY_MOVEMENT);
-			character2->setCurrentSprite();
-			character2->isVictory = true;
+			character2->completeMovemenAndChangeToVictory();
+//			character2->setMovement(VICTORY_MOVEMENT);
+//			character2->setCurrentSprite();
+//			character2->isVictory = true;
 		}
 
 
