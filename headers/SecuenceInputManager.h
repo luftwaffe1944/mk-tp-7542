@@ -74,6 +74,9 @@ public:
 	bool firstPlayerRightOrientation;
 	bool secondPlayerRightOrientation;
 
+	bool firstPlayerTouchingGroud;
+	bool secondPlayerTouchingGround;
+
 private:
 	static SecuenceInputManager* dm_pInstance;
 	SecuenceInputManager();

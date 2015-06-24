@@ -56,6 +56,9 @@ SecuenceInputManager::SecuenceInputManager(){
 
 	this->drawNameSpecialMove1 = false;
 	this->drawNameSpecialMove2 = false;
+
+	this->firstPlayerTouchingGroud = true;
+	this->secondPlayerTouchingGround = true;
 }
 
 bool SecuenceInputManager::load() {
@@ -220,6 +223,9 @@ void SecuenceInputManager::update() {
 	this->firstPlayerRightOrientation = GameGUI::getInstance()->getFight()->getFighterOne()->getIsRightOriented();
 	this->secondPlayerRightOrientation = GameGUI::getInstance()->getFight()->getFighterTwo()->getIsRightOriented();
 
+	this->firstPlayerTouchingGroud = GameGUI::getInstance()->getFight()->getFighterOne()->isTouchingGround(GameGUI::getInstance()->getFight()->getFighterOne()->getPositionY());
+	this->secondPlayerTouchingGround = GameGUI::getInstance()->getFight()->getFighterTwo()->isTouchingGround(GameGUI::getInstance()->getFight()->getFighterTwo()->getPositionY());
+
 }
 
 void SecuenceInputManager::reset(int secNum) {
@@ -281,7 +287,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 
 
 	while ((i<this->specialMoves.size()) && (!isMatch)){
-		if ((playerNum==0) && (this->specialSecuenceOneActive) && (!this->isSetMoveOne)){
+		if ((playerNum==0) && (this->specialSecuenceOneActive) && (!this->isSetMoveOne) && (this->firstPlayerTouchingGroud)){
 			std::string currentSecuenceToCompare = this->specialSecuenceOne.substr(this->specialSecuenceOne.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
 			if (this->specialMoves[i] == currentSecuenceToCompare){
 				specialMoveNumber = i;
@@ -302,7 +308,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					this->drawNameSpecialMove2 = true;
 				}
 			}
-		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo)){
+		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo) && (this->secondPlayerTouchingGround)){
 			std::string currentSecuenceToCompare = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length() - this->specialMoves[i].length(), this->specialMoves[i].length());
 			if (this->specialMoves[i] == currentSecuenceToCompare){
 				specialMoveNumber = i;
@@ -323,7 +329,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 	}
 
 	if (!isMatch){
-		if ((playerNum==0) && (this->specialSecuenceOneActive) && (!this->isSetMoveOne)){
+		if ((playerNum==0) && (this->specialSecuenceOneActive) && (!this->isSetMoveOne) && (this->firstPlayerTouchingGroud)){
 			i=0;
 			while ((i<this->specialMoves.size()) && (!isMatch)){
 				int smIndex = 1;
@@ -372,7 +378,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					this->drawNameSpecialMove2 = true;
 				}
 			}
-		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo)){
+		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo)  && (this->secondPlayerTouchingGround)){
 			i=0;
 			while ((i<this->specialMoves.size()) && (!isMatch)){
 				int smIndex = 1;
