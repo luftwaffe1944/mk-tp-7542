@@ -380,12 +380,6 @@ void Character::update() {
 	}
 
 
-//	if (playerCommand == SPECIAL){
-//		this->setMovement(SPECIAL_MOVEMENT);
-//		setCurrentSprite();
-//		sweepMovement();
-//	}
-
 	if (this->isFinishingMove){
 		doFinisher();
 	}
@@ -1225,25 +1219,6 @@ void Character::completeMovement(){
 	}
 }
 
-//void Character::completeMovemenAndChangeToVictory(){
-//	this->completeMovementAndChangeVictory = true;
-//	incrementCounter(getMovement());
-//	setMoveFlag(true);
-//
-//	int moveCounter = movesCounter.at(getMovement());
-//	int spriteAmount = currentSprite->getFramesAmount();
-//	if (moveCounter == spriteAmount) {
-//		setMoveFlag(false);
-//		if (isTouchingGround(positionY)) {
-//				clearMovementsFlags();
-//		}
-//		resetCounter(getMovement());
-//		this->completeMovementAndChangeVictory = false;
-//		this->setMovement(VICTORY_MOVEMENT);
-//		this->setCurrentSprite();
-//		this->isVictory = true;
-//	}
-//}
 
 void sleepSafe(int limit);
 
@@ -1269,7 +1244,8 @@ void Character::doFinisher() {
 			Sprite* victimCurrentSprite = victim->currentSprite;
 			int currentFrame = victimCurrentSprite->getCurrentFrame();
 			int framesAmount = victimCurrentSprite->getFramesAmount();
-			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1) {
+			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1 && oneTime) {
+				oneTime = false;
 				SDL_Delay(2000);
 				this->finishMove->onPostFinish(this->name);
 				MKGame::Instance()->showFatality = true;

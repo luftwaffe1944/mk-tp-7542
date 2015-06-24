@@ -1074,7 +1074,7 @@ void InputControl::detectSpecialMove(int joyNum) {
 			} else if (specialMove == 3) {
 				this->secondPlayerMove = BABALITY;
 			} else if (specialMove == 4) {
-				this->firstPlayerMove = FATALITY;
+				this->secondPlayerMove = FATALITY;
 			}
 		}
 	}

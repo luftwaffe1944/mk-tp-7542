@@ -80,6 +80,7 @@ private:
 	bool isFatality;
 
 public:
+	bool oneTime = true;
 	bool isSpecial_hint;
 	bool isSpecial;
 	bool isBabality;
