@@ -242,6 +242,8 @@ const string HIGH_KICK = "high_kick";
 const string FIRE = "fire";
 const string BLOCK = "block";
 const string QUIT = "quit";
+const string RESET_PRACTICE = "reset_practice";
+
 
 // Json config constants
 
@@ -278,6 +280,7 @@ const string QUIT = "quit";
 #define JSON_KEY_BLOCK "bloquear"
 #define JSON_KEY_FIRE "disparar"
 #define JSON_KEY_QUIT "salir"
+#define JSON_KEY_RESET_PRACTICE "reiniciar_practice"
 
 #define JSON_KEY_SECUENCES "secuencias"
 #define JSON_KEY_SPECIAL_MOVE "secuence_for_special_move"

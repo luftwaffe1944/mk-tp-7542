@@ -59,7 +59,8 @@
 			"patada_baja": 2,
 			"bloquear": 4,
 			"disparar": 5,
-			"salir": 6
+			"salir": 6,
+			"reiniciar_practice": 7
 		},
 		{
 			"piña_alta": 0,
@@ -68,15 +69,16 @@
 			"patada_baja": 2,
 			"bloquear": 4,
 			"disparar": 5,
-			"salir": 6 
+			"salir": 6,
+			"reiniciar_practice": 7 
 		}
 	],
 	"secuencias": [
-		{ "secuence_for_special_move": "KKKK"	},
-		{ "secuence_for_special_move": "HHHH"	},
+		{ "secuence_for_special_move": "KKKK"	}, 
+		{ "secuence_for_special_move": "HHHH"	}, 
 		{ "secuence_for_special_move": "DJDJ"	},
 		{ "secuence_for_special_move": "DHDH"	},
-		{ "secuence_for_special_move": "DDDD"	}
+		{ "secuence_for_special_move": "DDDD"	} 
 	],
 	"tiempo_secuencias": 1,
 	"tolerancia_secuencias": 3	

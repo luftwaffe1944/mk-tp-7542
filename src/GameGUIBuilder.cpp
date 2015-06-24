@@ -438,6 +438,7 @@ void jsonGetJoysticks(Json::Value root) {
 		string block = array[joyNum].get(JSON_KEY_BLOCK, "").asString();
 		string fire = array[joyNum].get(JSON_KEY_FIRE, "").asString();
 		string quit = array[joyNum].get(JSON_KEY_QUIT, "").asString();
+		string resetP = array[joyNum].get(JSON_KEY_RESET_PRACTICE, "").asString();
 
 		int intLow_punch = atoi(low_punch.c_str()) ;
 		int intHigh_punch = atoi(high_punch.c_str());
@@ -446,6 +447,7 @@ void jsonGetJoysticks(Json::Value root) {
 		int intBlock = atoi(block.c_str()) ;
 		int intFire = atoi(fire.c_str()) ;
 		int intQuit = atoi(quit.c_str()) ;
+		int intResetP = atoi(resetP.c_str()) ;
 
 		map<int,bool> repeatedButtonsValidator;
 
@@ -456,6 +458,7 @@ void jsonGetJoysticks(Json::Value root) {
 		repeatedButtonsValidator[intBlock];
 		repeatedButtonsValidator[intFire];
 		repeatedButtonsValidator[intQuit];
+		repeatedButtonsValidator[intResetP];
 
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Piña baja: " << intLow_punch;
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Piña alta: " << intHigh_punch;
@@ -464,8 +467,9 @@ void jsonGetJoysticks(Json::Value root) {
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Bloqueo: " << intBlock;
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Disparo: " << intFire;
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Salir: " << intQuit;
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Resetear Practice Mode " << intResetP;
 
-		if ( repeatedButtonsValidator.size() < 7 || intQuit < 0 || intLow_punch < 0 || intHigh_punch < 0 || intHigh_kick < 0 || intLow_kick < 0 || intBlock < 0 || intFire < 0 ) {
+		if ( repeatedButtonsValidator.size() < 8 || intResetP < 0 ||intQuit < 0 || intLow_punch < 0 || intHigh_punch < 0 || intHigh_kick < 0 || intLow_kick < 0 || intBlock < 0 || intFire < 0 ) {
 			FILE_LOG(logERROR) << "Bad buttons configuration in joystick " << joyNum << ", default configuration loaded";
 			InputControl::Instance()->loadDefaultButtons(joyNum);
 		} else {
@@ -476,7 +480,8 @@ void jsonGetJoysticks(Json::Value root) {
 			InputControl::Instance()->setActionButton(joyNum, BLOCK, intBlock );
 			InputControl::Instance()->setActionButton(joyNum, FIRE, intFire );
 			InputControl::Instance()->setActionButton(joyNum, QUIT, intQuit );
-		}
+			InputControl::Instance()->setActionButton(joyNum, RESET_PRACTICE, intResetP );
+			}
 	}
 	return;
 }

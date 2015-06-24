@@ -674,6 +674,7 @@ void InputControl::refreshJoystickInputs() {
 				} else if (getActionButtonState(joystick, FIRE)) {
 					setPlayerMove(joystick, FIRST_PLAYER_FIRE);
 				}
+
 				this->setActionButtonStateFalse(joystick, HIGH_KICK);
 				this->setActionButtonStateFalse(joystick, LOW_KICK);
 				this->setActionButtonStateFalse(joystick, HIGH_PUNCH);
@@ -725,8 +726,10 @@ void InputControl::validateButtonsRange(int joyNum, int butCount) {
 	int hp = joystickActionButton[joyNum][HIGH_PUNCH];
 	int bl = joystickActionButton[joyNum][BLOCK];
 	int fr = joystickActionButton[joyNum][FIRE];
+	int qu = joystickActionButton[joyNum][QUIT];
+	int rp = joystickActionButton[joyNum][RESET_PRACTICE];
 
-	if (lk > butCount || hk > butCount || lp > butCount || hp > butCount
+	if (rp > butCount || qu > butCount || lk > butCount || hk > butCount || lp > butCount || hp > butCount
 			|| bl > butCount || fr > butCount) {
 		FILE_LOG(logERROR) << "Setted button in joystick " << joyNum
 				<< " is higher than buttons in joystick (" << butCount << ")";
@@ -880,7 +883,7 @@ void InputControl::loadDefaultButtons(int joyNum) {
 	setActionButton(joyNum, BLOCK, 4);
 	setActionButton(joyNum, FIRE, 5);
 	setActionButton(joyNum, QUIT, 6);
-
+	setActionButton(joyNum, RESET_PRACTICE, 7);
 }
 
 void InputControl::loadSpecialSecuence(int joystick) {
