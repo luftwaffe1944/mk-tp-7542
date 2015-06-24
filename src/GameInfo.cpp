@@ -466,6 +466,7 @@ void GameInfo::update() {
 
 			if (this->finishHimAnimationTimer > 0) {
 				this->finishHimAnimationTimer -= 1;
+				//no se pueden mover durante el cartel finishim
 				this->characters[0]->allowMovements = false;
 				this->characters[1]->allowMovements = false;
 			} else {
