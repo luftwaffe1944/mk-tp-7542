@@ -25,7 +25,7 @@ void sleepSafe(int limit);
 
 void Friendship::onPreFinish(std::string name){
 	SoundManager::Instance()->playSoundOnce("pre_friendship", 0);
-	sleepSafe(80000000);
+	SDL_Delay(1000);
 	Character* victim = getVictim(name);
 	Character* winner = getWinner(name);
 
@@ -35,10 +35,15 @@ void Friendship::onPreFinish(std::string name){
 }
 
 void Friendship::onFinish(std::string name){
+	Character* victim = getVictim(name);
+	victim->setMovement(FALLING_MOVEMENT);
+	victim->isFalling = true;
+	victim->setCurrentSprite();
 	SoundManager::Instance()->playSoundOnce("friendship", 0);
 }
 
 void Friendship::onPostFinish(std::string name){
+	SDL_Delay(2000);
 	SoundManager::Instance()->playSoundOnce("friendship_voice", 0);
 }
 
