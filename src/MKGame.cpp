@@ -77,6 +77,11 @@ bool MKGame::init(GameGUI* gameGui) {
 
 	FILE_LOG(logDEBUG) << "init success";
 	m_bRunning = true;
+	showFatality = false;
+	showBabality = false;
+	showFriendship = false;
+	isFinishimMoment = false;
+	lazyAnimationAlreadyTriggered = false;
 	return true;
 }
 
