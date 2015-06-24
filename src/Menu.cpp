@@ -268,6 +268,7 @@ void Menu::buttonUp() {
 	}
 	else {
 		if (selected->positionY - selected->height >= start->positionY) {
+			Mix_PlayChannel(-1, sound, 0);
 			selected->setColor(150, 150, 150, 150);
 			selected->drawBox(render);
 			moveSelectedToPrevious(&selected, COLUMNS);
@@ -291,6 +292,7 @@ void Menu::buttonDown() {
 	}
 	else {
 		if (selected->positionY + selected->height < start->positionY + start->height * 3) {
+			Mix_PlayChannel(-1, sound, 0);
 			selected->setColor(150, 150, 150, 150);
 			selected->drawBox(render);
 			moveSelectedToNext(&selected, COLUMNS);
@@ -304,6 +306,7 @@ void Menu::buttonDown() {
 void Menu::buttonLeft() {
 	if (!textMenu) {
 		if (selected->positionX - selected->width >= start->positionX) {
+			Mix_PlayChannel(-1, sound, 0);
 			selected->setColor(150, 150, 150, 150);
 			selected->drawBox(render);
 			moveSelectedToPrevious(&selected, 1);
@@ -317,6 +320,7 @@ void Menu::buttonLeft() {
 void Menu::buttonRight() {
 	if (!textMenu) {
 		if (selected->positionX + selected->width < start->positionX + start->width * 4) {
+			Mix_PlayChannel(-1, sound, 0);
 			selected->setColor(150, 150, 150, 150);
 			selected->drawBox(render);
 			moveSelectedToNext(&selected, 1);
@@ -327,43 +331,55 @@ void Menu::buttonRight() {
 	}
 }
 void Menu::buttonW(){
-	if (selectedTwo->positionY - selectedTwo->height >= start->positionY) {
-		selectedTwo->setColor(150, 150, 150, 150);
-		selectedTwo->drawBox(render);
-		moveSelectedToPrevious(&selectedTwo, COLUMNS);
-		selectedTwo->setColor(255, 0, 0, 255);
-		this->drawCharacterStance(render);
-		selectedTwo->drawBox(render);
+	if (!textMenu) {
+		if (selectedTwo->positionY - selectedTwo->height >= start->positionY) {
+			Mix_PlayChannel(-1, sound, 0);
+			selectedTwo->setColor(150, 150, 150, 150);
+			selectedTwo->drawBox(render);
+			moveSelectedToPrevious(&selectedTwo, COLUMNS);
+			selectedTwo->setColor(255, 0, 0, 255);
+			this->drawCharacterStance(render);
+			selectedTwo->drawBox(render);
+		}
 	}
 }
 void Menu::buttonS(){
-	if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
-		selectedTwo->setColor(150, 150, 150, 150);
-		selectedTwo->drawBox(render);
-		moveSelectedToNext(&selectedTwo, COLUMNS);
-		selectedTwo->setColor(255, 0, 0, 255);
-		this->drawCharacterStance(render);
-		selectedTwo->drawBox(render);
+	if (!textMenu) {
+		if (selectedTwo->positionY + selectedTwo->height < start->positionY + start->height * 3) {
+			Mix_PlayChannel(-1, sound, 0);
+			selectedTwo->setColor(150, 150, 150, 150);
+			selectedTwo->drawBox(render);
+			moveSelectedToNext(&selectedTwo, COLUMNS);
+			selectedTwo->setColor(255, 0, 0, 255);
+			this->drawCharacterStance(render);
+			selectedTwo->drawBox(render);
+		}
 	}
 }
 void Menu::buttonA(){
-	if (selectedTwo->positionX - selectedTwo->width >= start->positionX) {
-		selectedTwo->setColor(150, 150, 150, 150);
-		selectedTwo->drawBox(render);
-		moveSelectedToPrevious(&selectedTwo, 1);
-		selectedTwo->setColor(255, 0, 0, 255);
-		this->drawCharacterStance(render);
-		selectedTwo->drawBox(render);
+	if (!textMenu) {
+		if (selectedTwo->positionX - selectedTwo->width >= start->positionX) {
+			Mix_PlayChannel(-1, sound, 0);
+			selectedTwo->setColor(150, 150, 150, 150);
+			selectedTwo->drawBox(render);
+			moveSelectedToPrevious(&selectedTwo, 1);
+			selectedTwo->setColor(255, 0, 0, 255);
+			this->drawCharacterStance(render);
+			selectedTwo->drawBox(render);
+		}
 	}
 }
 void Menu::buttonD(){
-	if (selectedTwo->positionX + selectedTwo->width < start->positionX + start->width * 4) {
-		selectedTwo->setColor(150, 150, 150, 150);
-		selectedTwo->drawBox(render);
-		moveSelectedToNext(&selectedTwo, 1);
-		selectedTwo->setColor(255, 0, 0, 255);
-		this->drawCharacterStance(render);
-		selectedTwo->drawBox(render);
+	if (!textMenu) {
+		if (selectedTwo->positionX + selectedTwo->width < start->positionX + start->width * 4) {
+			Mix_PlayChannel(-1, sound, 0);
+			selectedTwo->setColor(150, 150, 150, 150);
+			selectedTwo->drawBox(render);
+			moveSelectedToNext(&selectedTwo, 1);
+			selectedTwo->setColor(255, 0, 0, 255);
+			this->drawCharacterStance(render);
+			selectedTwo->drawBox(render);
+		}
 	}
 }
 
@@ -373,10 +389,10 @@ void Menu::buttonRETURN() {
 	}
 	//Sino finalizo el input del nick
 	else {
-		if (playerOneSelected && !nameOneSet) {
+		if (playerOneSelected && !nameOneSet && playerOneName != "") {
 			nameOneSet = true;
 		}
-		else if (playerTwoSelected && !nameTwoSet && nameOneSet) {
+		else if (playerTwoSelected && !nameTwoSet && nameOneSet && playerTwoName != "") {
 			nameTwoSet = true;
 		}
 	}
@@ -421,8 +437,8 @@ void Menu::buttonJoystickZero() {
 
 void Menu::showTextBox() {
 	SDL_Color fColor = { 255, 255, 255, 255 };
-	TTF_Font* font = TTF_OpenFont("fonts/MK3.ttf", 40);
-	TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
+	TTF_Font* font = TTF_OpenFont("fonts/MK3.ttf", 30);
+	//TTF_SetFontStyle(font, TTF_STYLE_ITALIC);
 	float ratioX = TextureManager::Instance()->ratioWidth;
 	float ratioY = TextureManager::Instance()->ratioHeight;
 	int windowsWidth = GameGUI::getInstance()->getWindow()->getWidthPx() / ratioX;
@@ -449,7 +465,10 @@ void Menu::showTextBox() {
 		int y = windowsHeight*0.91;
 		int width = rs.w / ratioX;
 		int height = 40 / ratioY;
-		resetNameInputRender(render, x*ratioX, y*ratioY, windowsWidth * ratioX * 0.35,height * ratioY);
+		resetNameInputRender(render, x*ratioX, y*ratioY, windowsWidth * ratioX * 0.40,height * ratioY);
+		SDL_Rect recuadroColorTexto = { x*ratioX, y*ratioY, windowsWidth * ratioX * 0.40, height * ratioY };
+		SDL_SetRenderDrawColor(render, 0, 255, 0, 0xFF);
+		SDL_RenderDrawRect(render, &recuadroColorTexto);
 		TextureManager::Instance()->draw("namePlayerOne" + nameMax, x, y, width, height, render);
 	}
 
@@ -468,11 +487,14 @@ void Menu::showTextBox() {
 			TextureManager::Instance()->loadFromRenderedText("namePlayerTwo", nameMax, fColor, font, render);
 			rs = TextureManager::Instance()->queryTexture("namePlayerTwo" + nameMax);
 		}
-		int x = (windowsWidth - rs.w/ratioX - (windowsWidth * 0.40)*0.10);
+		int x = (windowsWidth - rs.w/ratioX);
 		int y = windowsHeight*0.91;
 		int width = rs.w / ratioX;
 		int height = 40 / ratioY;
-		resetNameInputRender(render, (windowsWidth - windowsWidth * 0.35 - (windowsWidth * 0.35)*0.10)*ratioX, y*ratioY, windowsWidth * ratioX * 0.35, height * ratioY);
+		resetNameInputRender(render, (windowsWidth - windowsWidth * 0.4)*ratioX, y*ratioY, windowsWidth * ratioX * 0.40, height * ratioY);
+		SDL_Rect recuadroColorTexto = { (windowsWidth - windowsWidth * 0.40)*ratioX, y*ratioY, windowsWidth * ratioX * 0.40, height * ratioY };
+		SDL_SetRenderDrawColor(render, 255, 0, 0, 0xFF);
+		SDL_RenderDrawRect(render, &recuadroColorTexto);
 		TextureManager::Instance()->draw("namePlayerTwo" + nameMax, x, y, width, height, render);
 
 	}
