@@ -401,6 +401,7 @@ void GameInfo::update() {
 
 			//LOGICA PARA TERMINAR PELEA CON GOLPE ORDINARIO DE CHAR 1
 			if (this->characters[0]->isFalling){
+				this->isFinishHimTime = false;
 				this->showWinnerAnimation = true;
 				this->charTwoWon = true;
 				this->characters[1]->allowMovements = false;
@@ -421,6 +422,7 @@ void GameInfo::update() {
 
 			//LOGICA PARA TERMINAR PELEA CON GOLPE ORDINARIO DE CHAR 0
 			if (this->characters[1]->isFalling){
+				this->isFinishHimTime = false;
 				this->showWinnerAnimation = true;
 				this->charOneWon = true;
 				this->characters[0]->allowMovements = false;
@@ -450,6 +452,7 @@ void GameInfo::update() {
 				//this->showFatalityAnimation = true;
 			}
 			if (MKGame::Instance()->showFatality && this->fatalityAnimationTimer > 0) {
+				this->isFinishHimTime = false;
 				this->showFatalityAnimation = true;
 				this->fatalityAnimationTimer -= 1;
 			} else if (fatalityAnimationTimer == 0){
@@ -458,6 +461,7 @@ void GameInfo::update() {
 			}
 
 			if (MKGame::Instance()->showBabality && this->babalityAnimationTimer > 0) {
+				this->isFinishHimTime = false;
 				this->showBabalityAnimation = true;
 				this->babalityAnimationTimer -= 1;
 			} else if (babalityAnimationTimer == 0){
@@ -466,6 +470,7 @@ void GameInfo::update() {
 			}
 
 			if (MKGame::Instance()->showFriendship && this->friendshipAnimationTimer > 0) {
+				this->isFinishHimTime = false;
 				this->showFriendshipAnimation = true;
 				this->friendshipAnimationTimer -= 1;
 			} else if (friendshipAnimationTimer == 0){
