@@ -95,8 +95,8 @@ private:
 	bool readKey(SDL_Event);
 	bool readJoystickZero();
 	bool readJoystickOne();
-	void readMouseMotion();
-	void readMouseButton(SDL_Event);
+	bool readMouseMotion();
+	bool readMouseButton(SDL_Event);
 	void moveSelectedToNext(MenuItem** item, int cant);
 	void moveSelectedToPrevious(MenuItem** item, int cant);
 

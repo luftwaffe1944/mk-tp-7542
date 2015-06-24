@@ -605,7 +605,7 @@ bool Menu::readJoystickOne() {
 	return false;
 }
 
-void Menu::readMouseMotion() {
+bool Menu::readMouseMotion() {
 	MenuItem* aux = start;
 	int x, y;
 	SDL_GetMouseState(&x, &y);
@@ -619,7 +619,7 @@ void Menu::readMouseMotion() {
 				selected->setColor(255, 255, 255, 255);
 				selected->show(render);
 			}
-			if (aux->next){
+			else if (aux->next){
 				aux = aux->next;
 			}
 		}
@@ -632,16 +632,18 @@ void Menu::readMouseMotion() {
 				selected->drawBox(render);
 				selected = aux;
 				selected->setColor(0, 255, 0, 255);
+				this->drawCharacterStance(render);
 				selected->drawBox(render);
+				return true;
 			}
-			
+			else
 			if (aux->next){
 				aux = aux->next;
 			}
-			
 		}
+		return false;
 	}
-	else if (!textMenu && playerOneSelected && playerTwoSelected && twoCharacters) {
+	else if (!textMenu && playerOneSelected && !playerTwoSelected && twoCharacters) {
 		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
 			if (aux->checkBounds(x, y) && selectedTwo != aux) {
 				Mix_PlayChannel(-1, sound, 0);
@@ -649,9 +651,10 @@ void Menu::readMouseMotion() {
 				selectedTwo->drawBox(render);
 				selectedTwo = aux;
 				selectedTwo->setColor(255, 0, 0, 255);
+				this->drawCharacterStance(render);
 				selectedTwo->drawBox(render);
 			}
-			
+			else
 			if (aux->next){
 				aux = aux->next;
 			}
@@ -660,7 +663,7 @@ void Menu::readMouseMotion() {
 	}
 }
 
-void Menu::readMouseButton(SDL_Event event) {
+bool Menu::readMouseButton(SDL_Event event) {
 	MenuItem* aux = start;
 	int x, y;
 	SDL_GetMouseState(&x, &y);
@@ -671,7 +674,7 @@ void Menu::readMouseButton(SDL_Event event) {
 				selected = aux;
 				state = selected->text;
 			}
-
+			else
 			if (aux->next){
 				aux = aux->next;
 			}
@@ -681,29 +684,29 @@ void Menu::readMouseButton(SDL_Event event) {
 		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
 			if (aux->checkBounds(x, y)) {
 				selected = aux;
-				Mix_PlayChannel(-1, selectSoundTwo, 0);
+				Mix_PlayChannel(-1, selectSoundOne, 0);
 				playerOneSelected = true;
 				renderTextOne = true;
 				playerOneName = selected->text;
+				return true;
 			}
-			
+			else
 			if (aux->next){
 				aux = aux->next;
-			}
-			
+			}	
 		}
+		return false;
 	}
 	else if (!textMenu && (event.button.button == SDL_BUTTON_LEFT) && playerOneSelected && !playerTwoSelected && twoCharacters) {
 		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
 			if (aux->checkBounds(x, y)) {
-				selected = aux;
+				selectedTwo = aux;
 				Mix_PlayChannel(-1, selectSoundTwo, 0);
 				playerTwoSelected = true;
 				renderTextTwo = true;
 				playerTwoName = selectedTwo->text;
 			}
-			
-			if (aux->next){
+			else if (aux->next){
 				aux = aux->next;
 			}
 			
