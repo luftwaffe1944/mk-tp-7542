@@ -772,6 +772,8 @@ std::string Menu::identify_event() {
 				SDL_StopTextInput();
 				if (playerOneName.length() > MAXLENGHTNAME) playerOneName = playerOneName.substr(0, MAXLENGHTNAME);
 				if (playerTwoName.length() > MAXLENGHTNAME) playerTwoName = playerTwoName.substr(0, MAXLENGHTNAME);
+				InputControl::Instance()->setActionButtonStateFalse(1, QUIT);
+				InputControl::Instance()->setActionButtonStateFalse(0, QUIT);
 				if (twoCharacters)
 					return "selected: " + selected->text + " " + selectedTwo->text + " " + playerOneName + " " + playerTwoName;
 				else 
