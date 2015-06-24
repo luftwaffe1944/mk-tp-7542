@@ -486,7 +486,13 @@ void InputControl::refreshJoystickInputs() {
 
 		//COMBINATION WITH UP
 	} else {
-		for (int joystick = 0; joystick < SDL_NumJoysticks(); joystick++) {
+		int joys;
+		if (MKGame::Instance()->practiceMode) {
+			joys = 1;
+		} else {
+			joys = SDL_NumJoysticks();
+		}
+		for (int joystick = 0; joystick < joys; joystick++) {
 
 
 			loadSpecialSecuence(joystick);
