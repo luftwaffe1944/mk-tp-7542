@@ -356,10 +356,35 @@ void Character::update() {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
 
+	Character* victim = getVictim();
 
 	cout << "plyer: " << this->getName() << " Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
+
+	if (this->allowMovements){
+		if (playerCommand == SUBZERO_SWEEP){
+			this->setMovement(SWEEP_MOVEMENT);
+			setCurrentSprite();
+			sweepMovement();
+		}
+		if (playerCommand == SPECIAL){
+			setMovement(SPECIAL_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			victim->setMovement(SPECIAL_HINT_MOVEMENT);
+			SoundManager::Instance()->playSound("hit_roof", 0);
+			victim->setCurrentSprite();
+			victim->isSpecial_hint = true;
+		}
+	}
+
+
+//	if (playerCommand == SPECIAL){
+//		this->setMovement(SPECIAL_MOVEMENT);
+//		setCurrentSprite();
+//		sweepMovement();
+//	}
 
 	if (this->isFinishingMove){
 		doFinisher();
@@ -378,6 +403,10 @@ void Character::update() {
 		this->setCurrentSprite();
 		this->isVictory = true;
 		completeMovementAndChangeVictory = false;
+	}
+
+	else if (isSubzeroSweeping){
+		sweepMovement();
 	}
 
 	else if (isReptile){
@@ -422,10 +451,6 @@ void Character::update() {
 
 	else if (isVictory) {
 		isVictory = true;
-	}
-
-	else if (isSubzeroSweeping){
-		sweepMovement();
 	}
 
 	else if (isSpecial_hint){
@@ -574,7 +599,6 @@ void Character::update() {
 
 		this->clearMovementsFlags();
 
-		Character* victim = getVictim();
 
 		if (this->allowMovements) {
 			switch (playerCommand) {
@@ -747,15 +771,15 @@ void Character::update() {
 				setCurrentSprite();
 				sweepMovement();
 				break;
-			case SPECIAL:
-				this->setMovement(SPECIAL_MOVEMENT);
-				setCurrentSprite();
-				completeMovement();
-				victim->setMovement(SPECIAL_HINT_MOVEMENT);
-				SoundManager::Instance()->playSound("hit_roof", 0);
-				victim->setCurrentSprite();
-				victim->isSpecial_hint = true;
-				break;
+//			case SPECIAL:
+//				this->setMovement(SPECIAL_MOVEMENT);
+//				setCurrentSprite();
+//				completeMovement();
+//				victim->setMovement(SPECIAL_HINT_MOVEMENT);
+//				SoundManager::Instance()->playSound("hit_roof", 0);
+//				victim->setCurrentSprite();
+//				victim->isSpecial_hint = true;
+//				break;
 			case BABALITY:
 				this->finishMove = new Babality();
 				doFinisher();

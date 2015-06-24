@@ -389,7 +389,8 @@ void GameInfo::update() {
 			}
 			if (this->characterTwoWins == 2 && !this->lazyAnimationAlreadyTriggered) {
 				//Character One won, char two receives fatality
-				this->characters[1]->completeMovementAndChangeLazy = true;
+				this->characters[0]->completeMovementAndChangeLazy = true;
+				this->characters[1]->clearMovementsFlags();
 //				this->characters[0]->setMovement(LAZY_MOVEMENT);
 //				this->characters[0]->isLazy = true;
 //				this->characters[0]->setCurrentSprite();
