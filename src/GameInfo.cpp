@@ -15,11 +15,12 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters, s
 	barWidth = ((pParams->getWidth() * 0.9) - (WINDOW_MARGIN * 2)) / 2;
 	this->percent = 0.0f;
 	this->fightAnimationTimer = 40;
-	this->winnerAnimationTimer = 50;
+	this->winnerAnimationTimer = 70;
 	this->finishHimAnimationTimer = 30;
 	this->fatalityAnimationTimer = 30;
 	this->babalityAnimationTimer = 50;
 	this->friendshipAnimationTimer = 50;
+	this->finishHimToleranceTimer = 100;
 	TTF_Init();
 	this->initAnimation = true;
 	this->showFightAnimation = true;
@@ -51,6 +52,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters, s
 	this->showFatalityAnimation = false;
 	this->showBabalityAnimation = false;
 	this->showFriendshipAnimation = false;
+	this->isFinishHimTime = false;
 
 }
 
@@ -221,7 +223,7 @@ void GameInfo::prepareNewRound(){
 	loadTextTimer();
 	this->percent = 0.0f;
 	this->fightAnimationTimer = 40;
-	this->winnerAnimationTimer = 50;
+	this->winnerAnimationTimer = 70;
 	this->initAnimation = true;
 	this->showFightAnimation = true;
 	this->roundTriggered=false;
@@ -331,6 +333,7 @@ void GameInfo::update() {
 
 		// PARA EL CASO EN QUE ALGUNO DE LOS DOS HAYA GANADO DOS PELEAS SE ACTIVA LOGICA DE FINISH HIM
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
+			this->showWinnerAnimation = false;
 			this->timerPause();
 			CollitionManager::Instance()->collitionEnabled = false;
 			this->showFinishHimAnimation = true;
@@ -338,6 +341,63 @@ void GameInfo::update() {
 			//MKGame::Instance()->setAllowPlayerMovements(true);
 			this->characters[0]->allowMovements = true;
 			this->characters[1]->allowMovements = true;
+
+			//LOGICA TIMER DE FINISH HIM TIME
+			if (this->isFinishHimTime) {
+				if (this->finishHimToleranceTimer > 0) {
+					this->finishHimToleranceTimer -= 1;
+				} else {
+					if (this->characterOneWins == 2) {
+						this->showWinnerAnimation = true;
+						this->charOneWon = true;
+						this->characters[0]->allowMovements = false;
+						this->characters[0]->setMovement(VICTORY_MOVEMENT);
+						this->characters[0]->setCurrentSprite();
+						this->characters[0]->isVictory = true;
+						this->characters[0]->setPositionY(this->characters[0]->originalPosY);
+						this->characters[1]->setMovement(FALLING_MOVEMENT);
+						this->characters[1]->setCurrentSprite();
+						this->characters[1]->isFalling = true;
+						if (!this->playingCharacterWinsSound) {
+							SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
+							this->playingCharacterWinsSound = true;
+						}
+						if (this->winnerAnimationTimer > 0) {
+							if (this->showWinnerAnimation) {
+								this->timerPause();
+								this->winnerAnimationTimer -= 1;
+							}
+						} else {
+							this->showWinnerAnimation = false;
+							MKGame::Instance()->setOnReset();
+						}
+					} else {
+						this->showWinnerAnimation = true;
+						this->charTwoWon = true;
+						this->characters[1]->allowMovements = false;
+						this->characters[1]->setMovement(VICTORY_MOVEMENT);
+						this->characters[1]->setCurrentSprite();
+						this->characters[1]->isVictory = true;
+						this->characters[1]->setPositionY(this->characters[1]->originalPosY);
+						this->characters[0]->setMovement(FALLING_MOVEMENT);
+						this->characters[0]->setCurrentSprite();
+						this->characters[0]->isFalling = true;
+						if (!this->playingCharacterWinsSound) {
+							SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
+							this->playingCharacterWinsSound = true;
+						}
+						if (this->winnerAnimationTimer > 0) {
+							if (this->showWinnerAnimation) {
+								this->timerPause();
+								this->winnerAnimationTimer -= 1;
+							}
+						} else {
+							this->showWinnerAnimation = false;
+							MKGame::Instance()->setOnReset();
+						}
+					}
+				}
+			}
 
 			//LOGICA PARA TERMINAR PELEA CON GOLPE ORDINARIO DE CHAR 1
 			if (this->characters[0]->isFalling){
@@ -386,6 +446,7 @@ void GameInfo::update() {
 				this->showFinishHimAnimation = false;
 				CollitionManager::Instance()->collitionEnabled = true;
 				SecuenceInputManager::Instance()->fatalityTime = true;
+				this->isFinishHimTime = true;
 				//this->showFatalityAnimation = true;
 			}
 			if (MKGame::Instance()->showFatality && this->fatalityAnimationTimer > 0) {

@@ -56,6 +56,7 @@ private:
 	int fatalityAnimationTimer;
 	int babalityAnimationTimer;
 	int friendshipAnimationTimer;
+	int finishHimToleranceTimer;
 	int characterOneWins;
 	int characterTwoWins;
 	bool lazyAnimationAlreadyTriggered;
@@ -78,6 +79,7 @@ private:
 	bool playingFightSound;
 	bool playingCharacterWinsSound;
 	bool playingFinishHimSound;
+	bool isFinishHimTime;
 	Timer timer;
 	float msTime;
 	std::string idTimer;
