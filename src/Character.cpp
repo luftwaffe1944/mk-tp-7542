@@ -368,14 +368,22 @@ void Character::update() {
 			setCurrentSprite();
 			sweepMovement();
 		}
-		if (playerCommand == SPECIAL){
+		if (playerCommand == SPECIAL && victim->isTouchingGround(victim->getPositionY())){
+
+			if (victim->getMovement() == LAZY_MOVEMENT && MKGame::Instance()->isFinishimMoment){
+				victim->completeMovementAndChangeFalling = true;
+				completeMovementAndChangeVictory = true;
+			}
 			setMovement(SPECIAL_MOVEMENT);
 			setCurrentSprite();
 			completeMovement();
-			victim->setMovement(SPECIAL_HINT_MOVEMENT);
-			SoundManager::Instance()->playSound("hit_roof", 0);
-			victim->setCurrentSprite();
-			victim->isSpecial_hint = true;
+			if (victim->movement != BLOCK_MOVEMENT){
+				victim->setMovement(SPECIAL_HINT_MOVEMENT);
+				SoundManager::Instance()->playSound("hit_roof", 0);
+				victim->setCurrentSprite();
+				victim->clearMovementsFlags();
+				victim->isSpecial_hint = true;
+			}
 		}
 	}
 
@@ -384,6 +392,12 @@ void Character::update() {
 		doFinisher();
 	}
 
+	if (getMovement() == "stance" && completeMovementAndChangeFalling){
+		setMovement(FALLING_MOVEMENT);
+		setCurrentSprite();
+		isFalling = true;
+		completeMovementAndChangeFalling = false;
+	}
 
 	if (getMovement() == "stance" && completeMovementAndChangeLazy){
 		this->setMovement(LAZY_MOVEMENT);

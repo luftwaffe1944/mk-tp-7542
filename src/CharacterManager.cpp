@@ -81,6 +81,7 @@ bool isHitting(Character* character){
 			character->getMovement() == PUNCHING_LOW_MOVEMENT ||
 			character->getMovement() == SUPER_KICK_MOVEMENT ||
 			character->getMovement() == FIRE_MOVEMENT ||
+			character->getMovement() == SPECIAL_MOVEMENT ||
 			character->getMovement() == SWEEP_MOVEMENT );
 }
 
@@ -164,7 +165,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 
 		}
 
-		else if (character1->getMovement() == SWEEP_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
+		else if (character1->getMovement() == SWEEP_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT && character2->getMovement() != SWEEP_MOVEMENT){
 			character2->setMovement(HINT_FLYING_MOVEMENT);
 			character1->clearMovementsFlags();
 			SoundManager::Instance()->playSound("gancho", 0);
@@ -176,6 +177,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			character1->setMovement(FALLING_MOVEMENT);
 			character1->setCurrentSprite();
 			character1->isFalling = true;
+			character1->completeMovementAndChangeVictory = true;
 //			character2->setMovement(VICTORY_MOVEMENT);
 //			character2->setCurrentSprite();
 //			character2->isVictory = true;
@@ -224,7 +226,7 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 			}
 		}
 
-		else if (character2->getMovement() == SWEEP_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
+		else if (character2->getMovement() == SWEEP_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT && character1->getMovement() != SWEEP_MOVEMENT){
 				character1->setMovement(HINT_FLYING_MOVEMENT);
 				character2->clearMovementsFlags();
 				SoundManager::Instance()->playSound("gancho", 0);
