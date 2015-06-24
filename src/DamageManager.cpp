@@ -59,7 +59,7 @@ float DamageManager::getDamageToDo(DamageObject* obj){
     }else if (objectMovement==PUNCHING_DUCK_MOVEMENT){ //piña agachado
       	damage = 0.01;
     }else if (objectMovement==UPPERCUT_MOVEMENT){ //gancho
-       	damage = 0.04;
+       	damage = 0.2;
     }else if (objectMovement == SUPER_KICK_MOVEMENT){ //patada alta giratoria
     	damage = 0.035;
 	}else if (objectMovement == UNDER_KICK_MOVEMENT){ //patada baja giratoria

@@ -18,6 +18,8 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters, s
 	this->winnerAnimationTimer = 50;
 	this->finishHimAnimationTimer = 30;
 	this->fatalityAnimationTimer = 30;
+	this->babalityAnimationTimer = 50;
+	this->friendshipAnimationTimer = 50;
 	TTF_Init();
 	this->initAnimation = true;
 	this->showFightAnimation = true;
@@ -47,6 +49,8 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters, s
 	this->playingFinishHimSound  = false;
 	this->lazyAnimationAlreadyTriggered = false;
 	this->showFatalityAnimation = false;
+	this->showBabalityAnimation = false;
+	this->showFriendshipAnimation = false;
 
 }
 
@@ -132,6 +136,12 @@ bool GameInfo::load(SDL_Renderer* r) {
 
 	//fatality sprite
 	TextureManager::Instance()->load(FATALITY_IMAGE_SPRITE, "fatalitySprite", r);
+
+	//babality sprite
+	TextureManager::Instance()->load(BABALITY_IMAGE_SPRITE, "babalitySprite", r);
+
+	//friendship sprite
+	TextureManager::Instance()->load(FRIENDSHIP_IMAGE_SPRITE, "friendshipSprite", r);
 
 	//character 1 wins
 	//charOneWins = this->characters[0]->getName() + "  wins";
@@ -331,6 +341,7 @@ void GameInfo::update() {
 			} else {
 				this->showFinishHimAnimation = false;
 				CollitionManager::Instance()->collitionEnabled = true;
+				SecuenceInputManager::Instance()->fatalityTime = true;
 				//this->showFatalityAnimation = true;
 			}
 			if (MKGame::Instance()->showFatality && this->fatalityAnimationTimer > 0) {
@@ -340,6 +351,23 @@ void GameInfo::update() {
 				this->showFatalityAnimation = false;
 				MKGame::Instance()->setOnReset();
 			}
+
+			if (MKGame::Instance()->showBabality && this->babalityAnimationTimer > 0) {
+				this->showBabalityAnimation = true;
+				this->babalityAnimationTimer -= 1;
+			} else if (babalityAnimationTimer == 0){
+				this->showBabalityAnimation = false;
+				MKGame::Instance()->setOnReset();
+			}
+
+			if (MKGame::Instance()->showFriendship && this->friendshipAnimationTimer > 0) {
+				this->showFriendshipAnimation = true;
+				this->friendshipAnimationTimer -= 1;
+			} else if (friendshipAnimationTimer == 0){
+				this->showFriendshipAnimation = false;
+				MKGame::Instance()->setOnReset();
+			}
+
 			//finish him logic
 			this->showWinnerAnimation = false; //Cuando este terminada la funcionalidad de finish him quitar esta linea
 			if (!this->playingFinishHimSound) {
@@ -361,7 +389,8 @@ void GameInfo::update() {
 			}
 			if (this->characterTwoWins == 2 && !this->lazyAnimationAlreadyTriggered) {
 				//Character One won, char two receives fatality
-				this->characters[1]->completeMovementAndChangeLazy = true;
+				this->characters[0]->completeMovementAndChangeLazy = true;
+				this->characters[1]->clearMovementsFlags();
 //				this->characters[0]->setMovement(LAZY_MOVEMENT);
 //				this->characters[0]->isLazy = true;
 //				this->characters[0]->setCurrentSprite();
@@ -528,6 +557,17 @@ void GameInfo::draw() {
 		TextureManager::Instance()->draw("fatalitySprite", pParams->getWidth()/2 - fatalityWidth/2,
 				GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fatalityHeight, fatalityWidth, fatalityHeight, render);
 	}
+
+	if (this->showBabalityAnimation) {
+		TextureManager::Instance()->draw("babalitySprite", pParams->getWidth()/2 - fatalityWidth/2,
+				GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fatalityHeight, fatalityWidth, fatalityHeight, render);
+	}
+
+	if (this->showFriendshipAnimation) {
+		TextureManager::Instance()->draw("friendshipSprite", pParams->getWidth()/2 - fatalityWidth/2,
+				GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 2 - fatalityHeight, fatalityWidth, fatalityHeight, render);
+	}
+
 }
 
 void GameInfo::timerStart() {

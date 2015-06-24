@@ -356,21 +356,34 @@ void Character::update() {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
 
+	Character* victim = getVictim();
 
 	cout << "plyer: " << this->getName() << " Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
+	if (this->allowMovements){
+		if (playerCommand == SUBZERO_SWEEP){
+			this->setMovement(SWEEP_MOVEMENT);
+			setCurrentSprite();
+			sweepMovement();
+		}
+		if (playerCommand == SPECIAL){
+			setMovement(SPECIAL_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			victim->setMovement(SPECIAL_HINT_MOVEMENT);
+			SoundManager::Instance()->playSound("hit_roof", 0);
+			victim->setCurrentSprite();
+			victim->isSpecial_hint = true;
+		}
+	}
+
+
 	if (this->isFinishingMove){
 		doFinisher();
 	}
 
-	if (isFriendship) {
-		isFriendship = true;
-//		setMovement(FRIENDSHIP_MOVEMENT);
-//		setCurrentSprite();
-
-	}
 
 	if (getMovement() == "stance" && completeMovementAndChangeLazy){
 		this->setMovement(LAZY_MOVEMENT);
@@ -384,6 +397,10 @@ void Character::update() {
 		this->setCurrentSprite();
 		this->isVictory = true;
 		completeMovementAndChangeVictory = false;
+	}
+
+	else if (isSubzeroSweeping){
+		sweepMovement();
 	}
 
 	else if (isReptile){
@@ -421,12 +438,13 @@ void Character::update() {
 		isBabality = true;
 	}
 
-	else if (isVictory) {
-		isVictory = true;
+	else if (isFriendship) {
+		isFriendship = true;
+
 	}
 
-	else if (isSubzeroSweeping){
-		sweepMovement();
+	else if (isVictory) {
+		isVictory = true;
 	}
 
 	else if (isSpecial_hint){
@@ -575,7 +593,6 @@ void Character::update() {
 
 		this->clearMovementsFlags();
 
-		Character* victim = getVictim();
 
 		if (this->allowMovements) {
 			switch (playerCommand) {
@@ -748,15 +765,15 @@ void Character::update() {
 				setCurrentSprite();
 				sweepMovement();
 				break;
-			case SPECIAL:
-				this->setMovement(SPECIAL_MOVEMENT);
-				setCurrentSprite();
-				completeMovement();
-				victim->setMovement(SPECIAL_HINT_MOVEMENT);
-				SoundManager::Instance()->playSound("hit_roof", 0);
-				victim->setCurrentSprite();
-				victim->isSpecial_hint = true;
-				break;
+//			case SPECIAL:
+//				this->setMovement(SPECIAL_MOVEMENT);
+//				setCurrentSprite();
+//				completeMovement();
+//				victim->setMovement(SPECIAL_HINT_MOVEMENT);
+//				SoundManager::Instance()->playSound("hit_roof", 0);
+//				victim->setCurrentSprite();
+//				victim->isSpecial_hint = true;
+//				break;
 			case BABALITY:
 				this->finishMove = new Babality();
 				doFinisher();
@@ -1192,7 +1209,7 @@ void Character::completeMovement(){
 	setMoveFlag(true);
 	int moveCounter = movesCounter.at(getMovement());
 	int spriteAmount = currentSprite->getFramesAmount();
-	if (moveCounter == spriteAmount) {
+	if (moveCounter > spriteAmount) {
 		if (!isLazy) setMoveFlag(false);
 		if (isTouchingGround(positionY)){
 			if (!isLazy) clearMovementsFlags();
@@ -1202,25 +1219,6 @@ void Character::completeMovement(){
 	}
 }
 
-//void Character::completeMovemenAndChangeToVictory(){
-//	this->completeMovementAndChangeVictory = true;
-//	incrementCounter(getMovement());
-//	setMoveFlag(true);
-//
-//	int moveCounter = movesCounter.at(getMovement());
-//	int spriteAmount = currentSprite->getFramesAmount();
-//	if (moveCounter == spriteAmount) {
-//		setMoveFlag(false);
-//		if (isTouchingGround(positionY)) {
-//				clearMovementsFlags();
-//		}
-//		resetCounter(getMovement());
-//		this->completeMovementAndChangeVictory = false;
-//		this->setMovement(VICTORY_MOVEMENT);
-//		this->setCurrentSprite();
-//		this->isVictory = true;
-//	}
-//}
 
 void sleepSafe(int limit);
 
@@ -1246,8 +1244,9 @@ void Character::doFinisher() {
 			Sprite* victimCurrentSprite = victim->currentSprite;
 			int currentFrame = victimCurrentSprite->getCurrentFrame();
 			int framesAmount = victimCurrentSprite->getFramesAmount();
-			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1) {
-				sleepSafe(90000000);
+			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1 && oneTime) {
+				oneTime = false;
+				SDL_Delay(2000);
 				this->finishMove->onPostFinish(this->name);
 				MKGame::Instance()->showFatality = true;
 			}
@@ -1299,8 +1298,9 @@ void Character::doFinisher() {
 		}
 
 		else if(this->isVictory && currentFrame == framesAmount - 1){
-			sleepSafe(100000000);
+			SDL_Delay(2000);
 			this->finishMove->onPostFinish(this->name);
+			this->isVictory = false;
 			MKGame::Instance()->showBabality = true;
 
 		}
@@ -1325,7 +1325,7 @@ void Character::doFinisher() {
 		}
 
 		if (this->isFriendship && currentFrame == framesAmount - 1) {
-			sleepSafe(90000000);
+			SDL_Delay(500);
 			this->finishMove->onPostFinish(this->name);
 			this->isFinishingMove = false;
 			MKGame::Instance()->showFriendship = true;

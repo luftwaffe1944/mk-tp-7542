@@ -40,7 +40,7 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 #define SECUENCE_FOR_SPECIAL_MOVE_4 "DKDK" //fatality
 
 
-#define FALATITY_NUMBER_SPECIAL_MOVE 10
+#define FALATITY_NUMBER_SPECIAL_MOVE 2
 
 #define NAME_SPECIAL_MOVE_0 "La Krupoviesa Move"
 #define NAME_SPECIAL_MOVE_1 "Copperfield Move"
@@ -230,6 +230,8 @@ const string FIGHT_IMAGE_SPRITE = "images/fight/fight.png";
 const string FIGHT2_IMAGE_SPRITE = "images/fight/fight2.png";
 const string FINISH_HIM_IMAGE_SPRITE = "images/fight/finishHim.png";
 const string FATALITY_IMAGE_SPRITE = "images/fight/fatality.png";
+const string BABALITY_IMAGE_SPRITE = "images/fight/babality.png";
+const string FRIENDSHIP_IMAGE_SPRITE = "images/fight/friendship.png";
 const string TOASTY_IMAGE_SPRITE = "images/effects/toasty.png";
 const string BLOOD_IMAGE_SPRITE = "images/effects/doge2.png";
 const string FALLING_SPRITE = "/falling.png";

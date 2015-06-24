@@ -15,6 +15,7 @@
 #include "MKGame.h"
 #include "Timer.h"
 #include "SoundManager.h"
+#include "SecuenceInputManager.h"
 #include <algorithm>
 //#include "SDL_timer.h"
 //#include "SDL.h"
@@ -53,6 +54,8 @@ private:
 	int winnerAnimationTimer;
 	int finishHimAnimationTimer;
 	int fatalityAnimationTimer;
+	int babalityAnimationTimer;
+	int friendshipAnimationTimer;
 	int characterOneWins;
 	int characterTwoWins;
 	bool lazyAnimationAlreadyTriggered;
@@ -61,6 +64,8 @@ private:
 	bool showWinnerAnimation;
 	bool showFinishHimAnimation;
 	bool showFatalityAnimation;
+	bool showBabalityAnimation;
+	bool showFriendshipAnimation;
 	bool roundTriggered;
 	bool roundOneCompleted;
 	bool roundTwoCompleted;

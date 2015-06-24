@@ -41,6 +41,10 @@ void AIMovement::clean() {
 
 void AIMovement::solveAIMovement() {
 
+	if (character->isLazy) {
+		InputControl::Instance()->setSecondPlayerMove(NO_INPUT);
+		return;
+	}
 	float distance = CharacterManager::Instance()->getCharacterDistance();
 	float jumpDistance = character->getJumpDistance(); // Distancia en X de un salto en diagonal
 	float underKickDistance = (character->getWidth() ) / 3; // Ancho de la hitbox de under_kick (es la de mayor alcance)
