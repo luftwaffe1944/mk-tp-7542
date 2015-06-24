@@ -482,6 +482,7 @@ void MKGame::getJoystickInput(SDL_Event event) {
 
 	}
 
+
 }
 
 
@@ -526,8 +527,19 @@ void MKGame::handleEvents() {
 		}*/
 
 	}
+
+	for ( unsigned int a = 0; a < InputControl::Instance()->joysticks.size() ; ++a) {
+		if (InputControl::Instance()->getActionButtonState(a, QUIT) ) reset = true;
+	}
+
 	if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0)
 		InputControl::Instance()->refreshJoystickInputs();
+
+	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r && event.key.repeat == 0) {
+		reset = true;
+	}
+
+
 	if (reset == true){
 		MKGame::Instance()->setOnReset();
 	}
