@@ -271,6 +271,9 @@ void GameInfo::triggerSounds() {
 
 
 void GameInfo::update() {
+	if (InputControl::Instance()->getActionButtonState(0, RESET_PRACTICE) && MKGame::Instance()->practiceMode) {
+		this->prepareNewRound();
+	}
 	animation();
 	loadTextTimer();
 	// CONDICION DE FIN DE ROUND, SI CUALQUIERA DE LOS DOS SE QUEDA SIN VIDA O SI SE ACABA EL TIEMPO
