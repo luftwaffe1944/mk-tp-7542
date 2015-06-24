@@ -195,18 +195,25 @@ void GameInfo::animation() {
 	} else {
 		this->initAnimation = false;
 	}
-	if (this->fightAnimationTimer > 0 && this->showFightAnimation){
-		this->fightAnimationTimer -= 1;
-	} else {
-		//this->fightAnimationTimer = 40;
-		this->showFightAnimation = false;
-		if (!this->roundTriggered) {
-			this->timerStart();
-			//MKGame::Instance()->setAllowPlayerMovements(true);
-			this->characters[0]->allowMovements = true;
-			this->characters[1]->allowMovements = true;
-			this->roundTriggered=true;
+	if (!MKGame::Instance()->practiceMode) {
+		if (this->fightAnimationTimer > 0 && this->showFightAnimation){
+			this->fightAnimationTimer -= 1;
+		} else {
+			//this->fightAnimationTimer = 40;
+			this->showFightAnimation = false;
+			if (!this->roundTriggered) {
+				this->timerStart();
+				//MKGame::Instance()->setAllowPlayerMovements(true);
+				this->characters[0]->allowMovements = true;
+				this->characters[1]->allowMovements = true;
+				this->roundTriggered=true;
+			}
 		}
+	} else {
+		this->showFightAnimation = false;
+		this->characters[0]->allowMovements = true;
+		this->characters[1]->allowMovements = true;
+		this->roundTriggered=true;
 	}
 }
 
@@ -267,8 +274,8 @@ void GameInfo::update() {
 	animation();
 	loadTextTimer();
 	// CONDICION DE FIN DE ROUND, SI CUALQUIERA DE LOS DOS SE QUEDA SIN VIDA O SI SE ACABA EL TIEMPO
-	if (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f ||
-			this->timer.getTicks() > 99000.f ) {
+	if ( (this->characters[0]->getEnergy() <= 0.0f || this->characters[1]->getEnergy() <= 0.0f ||
+			this->timer.getTicks() > 99000.f) && !MKGame::Instance()->practiceMode ) {
 		// TERMINO EL ROUND, NINGUNO DEBE MOVERSE MAS, SETEO ALLOW MOVEMENTS EN FALSE
 		//MKGame::Instance()->setAllowPlayerMovements(false);
 		this->characters[0]->allowMovements = false;
@@ -532,7 +539,9 @@ void GameInfo::update() {
 			}
 		}
 	}
-	triggerSounds();
+	if (!MKGame::Instance()->practiceMode) {
+		triggerSounds();
+	}
 }
 
 void GameInfo::clean() {
@@ -589,7 +598,7 @@ void GameInfo::draw() {
 	float fightWidth = 60;
 	float fightHeight = 20;
 
-	if (this->initAnimation) {
+	if (this->initAnimation && !MKGame::Instance()->practiceMode) {
 		if (!this->roundOneCompleted) {
 			std::transform(round1.begin(), round1.end(), round1.begin(), ::toupper);
 			TextureManager::Instance()->draw(this->textureID + round1, pParams->getWidth()/2 - roundWidth/2,
