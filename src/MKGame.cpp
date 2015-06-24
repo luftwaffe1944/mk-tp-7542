@@ -82,6 +82,7 @@ bool MKGame::init(GameGUI* gameGui) {
 	showFriendship = false;
 	isFinishimMoment = false;
 	lazyAnimationAlreadyTriggered = false;
+	SecuenceInputManager::Instance()->fatalityTime = false;
 	return true;
 }
 
