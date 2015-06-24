@@ -466,6 +466,8 @@ void GameInfo::update() {
 
 			if (this->finishHimAnimationTimer > 0) {
 				this->finishHimAnimationTimer -= 1;
+				this->characters[0]->allowMovements = false;
+				this->characters[1]->allowMovements = false;
 			} else {
 				this->showFinishHimAnimation = false;
 				CollitionManager::Instance()->collitionEnabled = true;
