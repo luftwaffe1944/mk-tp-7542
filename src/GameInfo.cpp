@@ -217,7 +217,8 @@ void GameInfo::time() {
 }
 
 void GameInfo::prepareNewRound(){
-	time();
+	this->timer.stop();
+	loadTextTimer();
 	this->percent = 0.0f;
 	this->fightAnimationTimer = 40;
 	this->winnerAnimationTimer = 50;
@@ -330,12 +331,55 @@ void GameInfo::update() {
 
 		// PARA EL CASO EN QUE ALGUNO DE LOS DOS HAYA GANADO DOS PELEAS SE ACTIVA LOGICA DE FINISH HIM
 		if (this->characterOneWins == 2 || this->characterTwoWins == 2) {
+			this->timerPause();
 			CollitionManager::Instance()->collitionEnabled = false;
 			this->showFinishHimAnimation = true;
 			MKGame::Instance()->isFinishimMoment = true;
 			//MKGame::Instance()->setAllowPlayerMovements(true);
 			this->characters[0]->allowMovements = true;
 			this->characters[1]->allowMovements = true;
+
+			//LOGICA PARA TERMINAR PELEA CON GOLPE ORDINARIO DE CHAR 1
+			if (this->characters[0]->isFalling){
+				this->showWinnerAnimation = true;
+				this->charTwoWon = true;
+				this->characters[1]->allowMovements = false;
+				if (!this->playingCharacterWinsSound) {
+					SoundManager::Instance()->playSoundByAction(characters[1]->getName() + "Wins",0);
+					this->playingCharacterWinsSound = true;
+				}
+				if (this->winnerAnimationTimer > 0) {
+					if (this->showWinnerAnimation) {
+						this->timerPause();
+						this->winnerAnimationTimer -= 1;
+					}
+				} else {
+					this->showWinnerAnimation = false;
+					MKGame::Instance()->setOnReset();
+				}
+			}
+
+			//LOGICA PARA TERMINAR PELEA CON GOLPE ORDINARIO DE CHAR 0
+			if (this->characters[1]->isFalling){
+				this->showWinnerAnimation = true;
+				this->charOneWon = true;
+				this->characters[0]->allowMovements = false;
+				if (!this->playingCharacterWinsSound) {
+					SoundManager::Instance()->playSoundByAction(characters[0]->getName() + "Wins",0);
+					this->playingCharacterWinsSound = true;
+				}
+				if (this->winnerAnimationTimer > 0) {
+					if (this->showWinnerAnimation) {
+						this->timerPause();
+						this->winnerAnimationTimer -= 1;
+					}
+				} else {
+					this->showWinnerAnimation = false;
+					MKGame::Instance()->setOnReset();
+				}
+			}
+
+
 			if (this->finishHimAnimationTimer > 0) {
 				this->finishHimAnimationTimer -= 1;
 			} else {
@@ -369,7 +413,6 @@ void GameInfo::update() {
 			}
 
 			//finish him logic
-			this->showWinnerAnimation = false; //Cuando este terminada la funcionalidad de finish him quitar esta linea
 			if (!this->playingFinishHimSound) {
 				SoundManager::Instance()->playSoundByAction("finishHim",0);
 				this->playingFinishHimSound  = true;
