@@ -271,9 +271,21 @@ void GameInfo::triggerSounds() {
 
 
 void GameInfo::update() {
-	if (InputControl::Instance()->getActionButtonState(0, RESET_PRACTICE) && MKGame::Instance()->practiceMode) {
-		this->prepareNewRound();
+
+	if (InputControl::Instance()->joysticks.size() > 0 && SDL_NumJoysticks() > 0) {
+		//AL MENOS 1 JOYS CONECTADO
+		if (InputControl::Instance()->joysticks[0] != NULL){
+			if (InputControl::Instance()->getActionButtonState(0, RESET_PRACTICE) && MKGame::Instance()->practiceMode) {
+				this->prepareNewRound();
+			}
+		}
+		if (InputControl::Instance()->joysticks[1] != NULL){
+			if (InputControl::Instance()->getActionButtonState(1, RESET_PRACTICE) && MKGame::Instance()->practiceMode) {
+				this->prepareNewRound();
+			}
+		}
 	}
+
 	animation();
 	loadTextTimer();
 	// CONDICION DE FIN DE ROUND, SI CUALQUIERA DE LOS DOS SE QUEDA SIN VIDA O SI SE ACABA EL TIEMPO
