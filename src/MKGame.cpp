@@ -382,6 +382,7 @@ void MKGame::menuActions(std::string action) {
 		this->menuIA = false;
 		this->menuCharacterSelect->twoCharacters = false;
 		this->practiceMode = true;
+
 	}
 }
 
