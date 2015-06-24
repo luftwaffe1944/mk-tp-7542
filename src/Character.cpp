@@ -1246,7 +1246,7 @@ void Character::doFinisher() {
 			int currentFrame = victimCurrentSprite->getCurrentFrame();
 			int framesAmount = victimCurrentSprite->getFramesAmount();
 			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1) {
-				sleepSafe(90000000);
+				SDL_Delay(2000);
 				this->finishMove->onPostFinish(this->name);
 				MKGame::Instance()->showFatality = true;
 			}
