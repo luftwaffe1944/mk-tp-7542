@@ -1191,7 +1191,7 @@ void Character::completeMovement(){
 	setMoveFlag(true);
 	int moveCounter = movesCounter.at(getMovement());
 	int spriteAmount = currentSprite->getFramesAmount();
-	if (moveCounter == spriteAmount) {
+	if (moveCounter > spriteAmount) {
 		if (!isLazy) setMoveFlag(false);
 		if (isTouchingGround(positionY)){
 			if (!isLazy) clearMovementsFlags();

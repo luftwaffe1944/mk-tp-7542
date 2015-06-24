@@ -30,9 +30,9 @@
 			"alto": 70,
 			"zindex": 99,
 			"color-alternativo": {
-				"h-inicial": 180,
-				"h-final": 300,
-				"desplazamiento": 0.01
+				"h-inicial": 0,
+				"h-final": 360,
+				"desplazamiento": 180
 			}
 		},
 		{
@@ -41,8 +41,8 @@
 			"alto": 70,
 			"zindex": 99,
 			"color-alternativo": {
-				"h-inicial": 180,
-				"h-final": 300,
+				"h-inicial": 0,
+				"h-final": 360,
 				"desplazamiento": 180
 			}
 		}
