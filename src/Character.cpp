@@ -358,17 +358,21 @@ void Character::update() {
 
 	Character* victim = getVictim();
 
-	cout << "plyer: " << this->getName() << " Move: " << getMovement() << endl;
+	//cout << "plyer: " << this->getName() << " Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
 	if (this->allowMovements){
-		if (playerCommand == SUBZERO_SWEEP){
+		//BUG: sweep elavado
+		//if (playerCommand == SUBZERO_SWEEP){
+		if (playerCommand == SUBZERO_SWEEP && this->isTouchingGround(this->getPositionY())){
 			this->setMovement(SWEEP_MOVEMENT);
 			setCurrentSprite();
 			sweepMovement();
 		}
-		if (playerCommand == SPECIAL && victim->isTouchingGround(victim->getPositionY())){
+		//bug fix copperfield saltando, si el que la hace esta saltando no realiza
+		//BUG: if (playerCommand == SPECIAL && victim->isTouchingGround(victim->getPositionY())){
+		if (playerCommand == SPECIAL && victim->isTouchingGround(victim->getPositionY()) && this->isTouchingGround(this->getPositionY())){
 
 			if (victim->getMovement() == LAZY_MOVEMENT && MKGame::Instance()->isFinishimMoment){
 				victim->completeMovementAndChangeFalling = true;
