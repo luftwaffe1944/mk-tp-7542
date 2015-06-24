@@ -89,7 +89,7 @@ bool MKGame::init(GameGUI* gameGui) {
 void MKGame::menuInit() {
 	// Inicializacion de Menus
 	//string menuItemsMK[] = { "New Game", "Credits", "Exit" };
-	string menuItemsMK[] = { "New Game", "Credits", "Jugar IA", "Jugar", "Exit" };
+	string menuItemsMK[] = { "New Game", "Exit" };
 	string menuItemsNewGame[] = { "P1 vs P2", "P1 vs CPU", "Practice Mode", "Go Back" };
 	string menuItemsCharacters[] = {
 		"subzero", "liukang", "cyrax", "scorpion",
@@ -98,7 +98,7 @@ void MKGame::menuInit() {
 
 	//nro de items, string con items, posX, posY, width, height, render
 	//Menu principal
-	menuMk = new Menu(5, menuItemsMK, 50, 150, 150, 50, m_pRenderer, true);
+	menuMk = new Menu(2, menuItemsMK, 50, 150, 150, 50, m_pRenderer, true);
 	menuMk->setMusicPath("sounds/menu-music.ogg");
 
 	//Menu seleccion de modo de pelea
