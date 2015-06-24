@@ -44,6 +44,14 @@ SoundManager* SoundManager::Instance() {
 */
 void SoundManager::clean() {
 	//
+	for (std::map<std::string, Mix_Chunk*>::iterator iter=m_sfxs.begin() ; iter != m_sfxs.end() ; ++iter) {
+		Mix_FreeChunk(iter->second);
+	}
+	/*
+	for (std::map<std::string, Mix_Chunk*>::iterator iter=m_sfxs.begin() ; iter != m_sfxs.end() ; ++iter) {
+		Mix_FreeChunk(iter->second);
+	}*/
+
 	Mix_CloseAudio();
 	if (this->s_pInstance) {
 		delete this->s_pInstance;
