@@ -93,12 +93,19 @@ bool SecuenceInputManager::load() {
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_FORWARD, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_BACKWARD, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", "-", textColor, font, render);
-
-	//nombres movimientos
-	TextureManager::Instance()->loadFromRenderedText( this->textureID, NAME_SPECIAL_MOVE_0, textColor, font, render);
-	TextureManager::Instance()->loadFromRenderedText( this->textureID, NAME_SPECIAL_MOVE_1, textColor, font, render);
-
 	TTF_CloseFont(font);
+
+	//textColor = {227, 188, 119}; //dorado
+	//textColor = {255, 0, 0};
+	//textColor = {0, 0, 255};
+	textColor = {0, 255, 255};
+	TTF_Font* font2 = TTF_OpenFont( "fonts/MK3.ttf", 40 );
+	TTF_SetFontStyle(font2, TTF_STYLE_ITALIC);
+	//nombres movimientos
+	TextureManager::Instance()->loadFromRenderedText( this->textureID, NAME_SPECIAL_MOVE_0, textColor, font2, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID, NAME_SPECIAL_MOVE_1, textColor, font2, render);
+	TTF_CloseFont(font2);
+
 	return true;
 }
 void SecuenceInputManager::draw() {
