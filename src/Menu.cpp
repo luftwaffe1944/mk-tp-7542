@@ -624,6 +624,40 @@ void Menu::readMouseMotion() {
 			}
 		}
 	}
+	else if (!textMenu && !playerOneSelected) {
+		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
+			if (aux->checkBounds(x, y) && selected != aux) {
+				Mix_PlayChannel(-1, sound, 0);
+				selected->setColor(150, 150, 150, 150);
+				selected->drawBox(render);
+				selected = aux;
+				selected->setColor(0, 255, 0, 255);
+				selected->drawBox(render);
+			}
+			
+			if (aux->next){
+				aux = aux->next;
+			}
+			
+		}
+	}
+	else if (!textMenu && playerOneSelected && playerTwoSelected && twoCharacters) {
+		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
+			if (aux->checkBounds(x, y) && selectedTwo != aux) {
+				Mix_PlayChannel(-1, sound, 0);
+				selectedTwo->setColor(150, 150, 150, 150);
+				selectedTwo->drawBox(render);
+				selectedTwo = aux;
+				selectedTwo->setColor(255, 0, 0, 255);
+				selectedTwo->drawBox(render);
+			}
+			
+			if (aux->next){
+				aux = aux->next;
+			}
+			
+		}
+	}
 }
 
 void Menu::readMouseButton(SDL_Event event) {
@@ -641,6 +675,38 @@ void Menu::readMouseButton(SDL_Event event) {
 			if (aux->next){
 				aux = aux->next;
 			}
+		}
+	}
+	else if (!textMenu && (event.button.button == SDL_BUTTON_LEFT) && !playerOneSelected) {
+		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
+			if (aux->checkBounds(x, y)) {
+				selected = aux;
+				Mix_PlayChannel(-1, selectSoundTwo, 0);
+				playerOneSelected = true;
+				renderTextOne = true;
+				playerOneName = selected->text;
+			}
+			
+			if (aux->next){
+				aux = aux->next;
+			}
+			
+		}
+	}
+	else if (!textMenu && (event.button.button == SDL_BUTTON_LEFT) && playerOneSelected && !playerTwoSelected && twoCharacters) {
+		for (unsigned int i = 0; i < ROWS * COLUMNS; i++) {
+			if (aux->checkBounds(x, y)) {
+				selected = aux;
+				Mix_PlayChannel(-1, selectSoundTwo, 0);
+				playerTwoSelected = true;
+				renderTextTwo = true;
+				playerTwoName = selectedTwo->text;
+			}
+			
+			if (aux->next){
+				aux = aux->next;
+			}
+			
 		}
 	}
 }
@@ -738,7 +804,9 @@ std::string Menu::identify_event() {
 			//Leo boton del mouse
 			else if (isType(event, SDL_MOUSEBUTTONDOWN)) {
 				readMouseButton(event);
-				return state;
+				if (textMenu) {
+					return state;
+				}
 			}
 
 			//Muestro cuadros de texto para el input

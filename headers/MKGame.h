@@ -153,6 +153,7 @@ public:
 
 	void getJoystickInput(SDL_Event event);
 	void handleAI();
+	bool practiceMode;
 };
 
 #endif /* MKGAME_H_ */

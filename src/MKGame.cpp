@@ -116,6 +116,7 @@ void MKGame::menuInit() {
 	menuGame = false;
 	menuCharacter = false;
 	menuIA = false;
+	practiceMode = false;
 
 }
 
@@ -380,6 +381,7 @@ void MKGame::menuActions(std::string action) {
 		this->menuCharacter = true;
 		this->menuIA = false;
 		this->menuCharacterSelect->twoCharacters = false;
+		this->practiceMode = true;
 	}
 }
 
