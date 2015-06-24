@@ -53,7 +53,7 @@ GameInfo::GameInfo(const LoaderParams* pParams, vector<Character*> characters, s
 	this->showBabalityAnimation = false;
 	this->showFriendshipAnimation = false;
 	this->isFinishHimTime = false;
-
+	this->gameDraw = false;
 }
 
 bool GameInfo::load() {
@@ -158,6 +158,12 @@ bool GameInfo::load(SDL_Renderer* r) {
 	std::transform(charTwoWins.begin(), charTwoWins.end(), charTwoWins.begin(), ::toupper);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"white", charTwoWins, charWinsWhiteColor, fontMK3, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"red", charTwoWins, charWinsRedColor, fontMK3, render);
+
+	//empate
+	//charTwoWins = this->characters[1]->getName() + "  wins";
+	std::transform(charTwoWins.begin(), charTwoWins.end(), charTwoWins.begin(), ::toupper);
+	TextureManager::Instance()->loadFromRenderedText(this->textureID + "white", "Game Over", charWinsWhiteColor, fontMK3, render);
+	TextureManager::Instance()->loadFromRenderedText(this->textureID + "red", "Game Over", charWinsRedColor, fontMK3, render);
 
 	TTF_CloseFont(font);
 	TTF_CloseFont(fontMK3);
@@ -267,6 +273,10 @@ void GameInfo::triggerSounds() {
 		SoundManager::Instance()->playSoundByAction("fight", 0);
 		this->playingFightSound = true;
 	}
+	if (this->gameDraw) {
+		SoundManager::Instance()->playSoundByAction("applause", 0);
+		this->playingRoundSound = true;
+	}
 }
 
 
@@ -296,9 +306,15 @@ void GameInfo::update() {
 		this->characters[0]->allowMovements = false;
 		this->characters[1]->allowMovements = false;
 
+		// Si Empataron
+		if (this->characters[0]->getEnergy() == this->characters[1]->getEnergy()) {
+			this->gameDraw = true;
+			this->showWinnerAnimation = true;
+		}
+
 		// SI EL QUE MURIO O TIENE MENOS VIDA ES EL PLAYER ONE
-		if (this->characters[0]->getEnergy() <= 0.0f ||
-				this->characters[0]->getEnergy() <= this->characters[1]->getEnergy() ) {
+		if (!gameDraw && (this->characters[0]->getEnergy() <= 0.0f ||
+				this->characters[0]->getEnergy() <= this->characters[1]->getEnergy())) {
 			// PREGUNTO SI NO ESTA YA SETEADO EL FLAG DE QUE MURIO EL PLAYER ONE
 			if (!this->charOneAlreadyDeath) {
 				// SUMO VICTORIA A PLAYER 2 Y SETEO FLAGS DE QUE GANO Y SHOW WINNER ANIMATION
@@ -327,7 +343,9 @@ void GameInfo::update() {
 			}
 
 		// MISMA LOGICA QUE ARRIBA PARA EL CASO EN QUE MUERE EL PLAYER TWO
-		} else {
+		}
+		else if (!gameDraw && (this->characters[1]->getEnergy() <= 0.0f ||
+			this->characters[1]->getEnergy() <= this->characters[0]->getEnergy())){
 			if (!this->charTwoAlreadyDeath) {
 				this->characterOneWins += 1;
 				this->charOneWon = true;
@@ -546,7 +564,11 @@ void GameInfo::update() {
 			} else {
 				this->showWinnerAnimation = false;
 			}
-			if (!this->roundOneCompleted && !this->showWinnerAnimation) {
+			if (gameDraw) {
+				if (this->winnerAnimationTimer <= 0) {
+					MKGame::Instance()->setOnReset();
+				}
+			}else if (!this->roundOneCompleted && !this->showWinnerAnimation) {
 				this->roundOneCompleted = true;
 				this->prepareNewRound();
 			} else if (!this->roundTwoCompleted && !this->showWinnerAnimation) {
@@ -646,7 +668,7 @@ void GameInfo::draw() {
 
 	float charWinsHeight = 10;
 	float charWinsWidth = barWidth;
-	if (this->charOneWon && this->showWinnerAnimation) {
+	if (this->charOneWon && this->showWinnerAnimation && !gameDraw) {
 		//char 1 wins
 		if ((this->winnerAnimationTimer % 2) == 0) {
 			charOneWins = nameOne + "  wins";
@@ -662,7 +684,7 @@ void GameInfo::draw() {
 					GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 4 - charWinsHeight - 10, charWinsWidth, charWinsHeight, render);
 		}
 
-	} else if (this->charTwoWon && this->showWinnerAnimation) {
+	} else if (this->charTwoWon && this->showWinnerAnimation && !gameDraw) {
 		//char 2 wins
 		if ((this->winnerAnimationTimer % 2) == 0) {
 			charTwoWins = nameTwo + "  wins";
@@ -676,6 +698,21 @@ void GameInfo::draw() {
 			std::transform(charTwoWins.begin(), charTwoWins.end(), charTwoWins.begin(), ::toupper);
 			TextureManager::Instance()->draw(this->textureID+"red"+charTwoWins, pParams->getWidth()/2 - charWinsWidth/2,
 					GameGUI::getInstance()->getWindow()->getHeightPx()/ratioY/ 4 - charWinsHeight - 10, charWinsWidth, charWinsHeight, render);
+		}
+	}
+	else if (this->gameDraw && this->showWinnerAnimation) {
+		//char 2 wins
+		if ((this->winnerAnimationTimer % 2) == 0) {
+			//charTwoWins = this->characters[1]->getName() + "  wins";
+			std::transform(charTwoWins.begin(), charTwoWins.end(), charTwoWins.begin(), ::toupper);
+			TextureManager::Instance()->draw(this->textureID + "white" + "Game Over", pParams->getWidth() / 2 - charWinsWidth / 2,
+				GameGUI::getInstance()->getWindow()->getHeightPx() / ratioY / 4 - charWinsHeight - 10, charWinsWidth, charWinsHeight, render);
+		}
+		else {
+			//charTwoWins = this->characters[1]->getName() + "  wins";
+			std::transform(charTwoWins.begin(), charTwoWins.end(), charTwoWins.begin(), ::toupper);
+			TextureManager::Instance()->draw(this->textureID + "red" + "Game Over", pParams->getWidth() / 2 - charWinsWidth / 2,
+				GameGUI::getInstance()->getWindow()->getHeightPx() / ratioY / 4 - charWinsHeight - 10, charWinsWidth, charWinsHeight, render);
 		}
 	}
 

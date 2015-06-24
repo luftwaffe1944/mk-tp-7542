@@ -90,6 +90,8 @@ private:
 	std::string nameOne;
 	std::string nameTwo;
 
+	bool gameDraw;
+
 };
 
 #endif /* GAMEINFO_H_ */
