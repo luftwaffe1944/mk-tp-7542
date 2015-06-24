@@ -148,7 +148,7 @@ void LayerManager::refresh() {
 		if ( (offsetRightMargin < (WINDOW_MARGIN) * ratioX) &&
 				!layerReachedStageLimit( windowWidth / ratioX, true) &&
 				isCharMovingRight &&
-				!pCLimitLeft ) {
+				!pCLimitLeft && !characters[i]->isLazy) {
 			refresh = true;
 			rightOrientation = true;
 			orientation = 1;
@@ -156,7 +156,7 @@ void LayerManager::refresh() {
 		else if  ( (offsetLeftMargin < (WINDOW_MARGIN)* ratioX) &&
 				!layerReachedStageLimit( windowWidth / ratioX, false) &&
 				isCharMovingLeft &&
-				!pCLimitRight)  {
+				!pCLimitRight && !characters[i]->isLazy)  {
 			refresh = true;
 			leftOrientation = true;
 			orientation = -1;
