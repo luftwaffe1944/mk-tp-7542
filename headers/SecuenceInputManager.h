@@ -82,6 +82,7 @@ private:
 	void cleanVectorColorChar(int num);
 	void setColorChar(int index,int num);
 	void setColorPhrase(int index,int num);
+	void setOffNamesSpecialMoves();
 
 
 	std::vector<std::string> specialMoves;
@@ -95,7 +96,8 @@ private:
 	bool isSetMoveTwo;
 	std::vector<bool> colorCharOne;
 	std::vector<bool> colorCharTwo;
-
+	bool drawNameSpecialMove1;
+	bool drawNameSpecialMove2;
 
 
 };

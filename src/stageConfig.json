@@ -79,5 +79,5 @@
 		{ "secuence_for_special_move": "DDDD"	}
 	],
 	"tiempo_secuencias": 1,
-	"tolerancia_secuencias": 1	
+	"tolerancia_secuencias": 3	
 }

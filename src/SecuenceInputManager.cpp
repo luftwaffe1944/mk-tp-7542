@@ -53,32 +53,10 @@ SecuenceInputManager::SecuenceInputManager(){
 
 	this->firstPlayerRightOrientation = true;
 	this->secondPlayerRightOrientation = false;
+
+	this->drawNameSpecialMove1 = false;
+	this->drawNameSpecialMove2 = false;
 }
-
-/*
-bool SecuenceInputManager::load() {
-	SDL_Renderer* render = MKGame::Instance()->getRenderer();
-	TTF_Font* font = TTF_OpenFont( "fonts/mk1.ttf", 50 );
-	string secuencia = "";
-
-	SDL_Color textColor = {255, 255, 255};
-	//secuencia 1
-	if (this->specialSecuenceOneActive){
-		secuencia = this->specialSecuenceOne.substr(this->specialSecuenceOne.length()-SIMBOLS_TO_SHOW_SPECIAL_MOVES,SIMBOLS_TO_SHOW_SPECIAL_MOVES);
-		this->specialSecuenceOnePreview = secuencia;
-		std::transform(secuencia.begin(), secuencia.end(), secuencia.begin(), ::toupper);
-		TextureManager::Instance()->loadFromRenderedText( this->textureID+"secuencia1", secuencia, textColor, font, render);
-	}
-	//secuencia 2
-	if (this->specialSecuenceTwoActive){
-		secuencia = this->specialSecuenceTwo.substr(this->specialSecuenceTwo.length()-SIMBOLS_TO_SHOW_SPECIAL_MOVES,SIMBOLS_TO_SHOW_SPECIAL_MOVES);
-		this->specialSecuenceTwoPreview = this->specialSecuenceTwo;
-		std::transform(secuencia.begin(), secuencia.end(), secuencia.begin(), ::toupper);
-		TextureManager::Instance()->loadFromRenderedText( this->textureID+"secuencia2", secuencia, textColor, font, render);
-	}
-	TTF_CloseFont(font);
-	return true;
-}*/
 
 bool SecuenceInputManager::load() {
 	SDL_Renderer* render = MKGame::Instance()->getRenderer();
@@ -116,6 +94,10 @@ bool SecuenceInputManager::load() {
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", CHARACTER_FOR_SPECIAL_MOVE_BACKWARD, textColor, font, render);
 	TextureManager::Instance()->loadFromRenderedText( this->textureID+"sec_v", "-", textColor, font, render);
 
+	//nombres movimientos
+	TextureManager::Instance()->loadFromRenderedText( this->textureID, NAME_SPECIAL_MOVE_0, textColor, font, render);
+	TextureManager::Instance()->loadFromRenderedText( this->textureID, NAME_SPECIAL_MOVE_1, textColor, font, render);
+
 	TTF_CloseFont(font);
 	return true;
 }
@@ -145,6 +127,20 @@ void SecuenceInputManager::draw() {
 			x = x - width;
 			TextureManager::Instance()->draw( id, x, y, width, height, render);
 			//cout<<"one id ; x ; y ; w ; h :"<<id<<" ; "<<x<<" ; "<<y<<" ; "<<width<<" ; "<<height<<"\n";
+		}
+		if ((this->drawNameSpecialMove1) || (this->drawNameSpecialMove2)){
+			std::string nombreMovimiento;
+			if (this->drawNameSpecialMove1){
+				nombreMovimiento = NAME_SPECIAL_MOVE_0;
+			}else if (this->drawNameSpecialMove2){
+				nombreMovimiento = NAME_SPECIAL_MOVE_1;
+			}
+			id = this->textureID + nombreMovimiento;
+			width = (WINDOW_MARGIN * 6/7);
+			anchoTotal = (WINDOW_MARGIN * 6/7)*nombreMovimiento.length();
+			x = anchoTotal + (window->widthPx*0.02);
+			y = window->heightPx* 0.06 + (width*2);
+			TextureManager::Instance()->draw( id, x, y, anchoTotal, height, render);
 		}
 	}
 	//secuencia 2
@@ -189,7 +185,7 @@ void SecuenceInputManager::update() {
 		this->elapsedTimeOne += (this->timerOne.getTicks()-this->elapsedTimeOne);
 		float timeLimit;
 		if (this->isMatchOne){
-			timeLimit = this->elapsedTimeToShowMatchOne + 0.1f;
+			timeLimit = this->elapsedTimeToShowMatchOne + 0.2f;
 		}else{
 			timeLimit = this->timeForSecuence;
 			this->elapsedTimeToShowMatchOne = (this->elapsedTimeOne/1000.0f);
@@ -232,6 +228,8 @@ void SecuenceInputManager::reset(int secNum) {
 		this->isMatchOne=false;
 		this->isSetMoveOne=false;
 		this->cleanVectorColorChar(0);
+		this->drawNameSpecialMove1 = false;
+		this->drawNameSpecialMove2 = false;
 	}else if (secNum==2){
 		if (this->specialSecuenceTwo.length()>100){
 			this->specialSecuenceTwo.erase(0,100-SIMBOLS_TO_SHOW_SPECIAL_MOVES);
@@ -290,6 +288,11 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 					this->isSetMoveOne = false;
 					specialMoveNumber = -1;
 					this->cleanVectorColorChar(0);
+				}
+				if (specialMoveNumber == 0){
+					this->drawNameSpecialMove1 = true;
+				}else if (specialMoveNumber == 1){
+					this->drawNameSpecialMove2 = true;
 				}
 			}
 		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo)){
@@ -356,6 +359,11 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 				if (!isMatch){
 					this->cleanVectorColorChar(0);
 				}
+				if (specialMoveNumber == 0){
+					this->drawNameSpecialMove1 = true;
+				}else if (specialMoveNumber == 1){
+					this->drawNameSpecialMove2 = true;
+				}
 			}
 		}else if ((playerNum==1) && (this->specialSecuenceTwoActive) && (!this->isSetMoveTwo)){
 			i=0;
@@ -403,6 +411,7 @@ int SecuenceInputManager::detectSpecialSecuence(int playerNum) {
 			}
 		}
 	}
+
 	return specialMoveNumber;
 }
 
@@ -441,4 +450,9 @@ void SecuenceInputManager::setColorPhrase(int index,int num){
 			 this->colorCharTwo[100-i] = true;
 		 }
 	}
+}
+
+void SecuenceInputManager::setOffNamesSpecialMoves(){
+	this->drawNameSpecialMove1 = true;
+	this->drawNameSpecialMove2 = true;
 }

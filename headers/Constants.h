@@ -42,6 +42,9 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 #define FALATITY_NUMBER_SPECIAL_MOVE 10
 
+#define NAME_SPECIAL_MOVE_0 "La Krupoviesa Move"
+#define NAME_SPECIAL_MOVE_1 "Copperfield Move"
+
 
 //Draw collitionable boxes
 const bool DRAW_COLLITIONABLE_BOXES = false;
