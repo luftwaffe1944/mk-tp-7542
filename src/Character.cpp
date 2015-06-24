@@ -1325,7 +1325,7 @@ void Character::doFinisher() {
 		}
 
 		if (this->isFriendship && currentFrame == framesAmount - 1) {
-			sleepSafe(90000000);
+			SDL_Delay(500);
 			this->finishMove->onPostFinish(this->name);
 			this->isFinishingMove = false;
 			MKGame::Instance()->showFriendship = true;
