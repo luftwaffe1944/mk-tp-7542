@@ -660,6 +660,7 @@ std::string Menu::identify_event() {
 		nameTwoSet = true;
 		selectedTwo->setColor(150, 150, 150, 150);
 		selectedTwo->drawBox(render);
+		playerTwoSelected = true;
 	}
 	renderTextOne = false;
 	renderTextTwo = false;
