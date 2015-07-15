@@ -20,11 +20,13 @@
 #include "LayerManager.h"
 #include <algorithm>
 #include "Log.h"
-#include "GameInfo.h"
 #include "SDL_ttf.h"
 #include "CollitionManager.h"
+#include "Menu.h"
+#include "GameInfo.h"
 #include "AIMovement.h"
 #include "../headers/SoundManager.h"
+#include <ctime>
 
 
 //#include "SDL_gamecontroller.h"
@@ -43,6 +45,7 @@ private:
 	static MKGame* mk_pInstance;
 	bool m_bRunning;
 	bool m_bReset;
+	bool allowPlayerMovements;
 	vector<SDLObjectGUI*> objectList;
 	GameGUI* gameGui;
 	InputControl keyboardControl;
@@ -56,6 +59,10 @@ private:
 
 	float offSetPosY;
 
+	Menu* menuMk;
+	Menu* menuNewGame;
+	Menu* menuCharacterSelect;
+
 	MKGame() {
 		m_bRunning = false;
 		m_bReset = false;
@@ -63,11 +70,14 @@ private:
 		m_pRenderer = NULL;
 		gameGui = NULL;
 		shouldBeShaking = false;
+		allowPlayerMovements = false;
 		shakeIntensity = 5;
 		shakeLength = 10;
 		offSetPosY = 0;
 		//gGameController = NULL;
 	}
+	
+	std::string randomCharacter(vector<string> characters);
 
 public:
 	static MKGame* Instance();
@@ -94,6 +104,7 @@ public:
 
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
 	vector<SDLObjectGUI*>& getObjectList();
+	void configureFight(std::string fighterOneName, std::string fighterTwoName, std::string, std::string);
 	void draw();
 	void render();
 	void update();
@@ -109,9 +120,40 @@ public:
 	bool reset() {
 			return m_bReset;
 	}
-	void setOnReset(){m_bReset=true;}
+	void setOnReset() {
+		m_bReset=true;
+		this->allowPlayerMovements = false;
+	}
 	void setOffReset(){m_bReset=false;}
+	void setAllowPlayerMovements(bool allowPlayerMovements){
+		this->allowPlayerMovements = allowPlayerMovements;
+	}
+
+	bool getAllowPlayerMovements(){
+		return this->allowPlayerMovements;
+	}
+
+	void menuInit();
+	void drawMenu(Menu* menu, int opacity);
+	void menuActions(std::string action);
+	bool menu();
+
+	bool menuPpal;
+	bool menuGame;
+	bool menuCharacter;
+	bool menuIA;
+	bool iaActive;
+
+	bool showFatality = false;
+	bool showBabality = false;
+	bool showFriendship = false;
+
+	bool isFinishimMoment = false;
+	bool lazyAnimationAlreadyTriggered = false;
+
+	void getJoystickInput(SDL_Event event);
 	void handleAI();
+	bool practiceMode;
 };
 
 #endif /* MKGAME_H_ */

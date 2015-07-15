@@ -11,6 +11,7 @@
 #include "GameGUI.h"
 #include "LayerManager.h"
 #include "SoundManager.h"
+#include "MKGame.h"
 using namespace std;
 
 class CharacterManager {

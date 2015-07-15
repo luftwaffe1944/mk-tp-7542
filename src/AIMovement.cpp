@@ -28,7 +28,10 @@ AIMovement* AIMovement::Instance() {
 void AIMovement::init() {
 	character = GameGUI::getInstance()->getCharacters().at(1);
 	opponent = GameGUI::getInstance()->getCharacters().at(0);
+	AIMovement::createMovementMap(movementMap);
 	isInitialized = true;
+	movementRepetitions = 0;
+	isRepeatingMovement = false;
 }
 
 void AIMovement::clean() {
@@ -38,6 +41,10 @@ void AIMovement::clean() {
 
 void AIMovement::solveAIMovement() {
 
+	if (character->isLazy) {
+		InputControl::Instance()->setSecondPlayerMove(NO_INPUT);
+		return;
+	}
 	float distance = CharacterManager::Instance()->getCharacterDistance();
 	float jumpDistance = character->getJumpDistance(); // Distancia en X de un salto en diagonal
 	float underKickDistance = (character->getWidth() ) / 3; // Ancho de la hitbox de under_kick (es la de mayor alcance)
@@ -45,14 +52,28 @@ void AIMovement::solveAIMovement() {
 	float punchDistance = (character->getWidth() ) / 8;
 	string opponentMovement = opponent->getMovement();
 
-
-	if ( rand() % 100 < chanceOfIdle) {
+	if (isRepeatingMovement) {
+		movementRepetitions--;
+		InputCommand OrientationFixedMovement = fixMovementOrientation(lastAction);
+		InputControl::Instance()->setSecondPlayerMove(OrientationFixedMovement);
+		if (movementRepetitions == 0) {
+			isRepeatingMovement = false;
+			lastAction = NO_INPUT;
+		}
+	}
+	else if ( rand() % 100 < chanceOfIdle) {
 		this->setMovementBySituation("none");
 	}
 
 	// Si estaba lejos y saltó hacia adelante, repito el movimiento hasta llegar al oponente
-	else if ( distance > kickDistance && ( lastAction == FIRST_PLAYER_AIR_PUNCH_R || lastAction == FIRST_PLAYER_AIR_LOW_kICK_R)) {
-		this->setMovementBySituation("closingUp");
+	else if ( distance > kickDistance && ( lastAction == FIRST_PLAYER_AIR_PUNCH_R || lastAction == FIRST_PLAYER_AIR_LOW_kICK_R || lastAction == FIRST_PLAYER_MOVE_RIGHT)) {
+
+		if (lastAction == FIRST_PLAYER_MOVE_RIGHT && !isRepeatingMovement) {
+			this->setRepeatMovement(8);
+		}else {
+			this->setMovementBySituation("closingUp");
+		}
+
 	}
 
 	//Distancia lejana
@@ -77,6 +98,11 @@ void AIMovement::solveAIMovement() {
 		this->setMovementBySituation("punchDistance");
 	}
 
+}
+
+void AIMovement::setRepeatMovement(int repetitions) {
+	movementRepetitions = repetitions;
+	isRepeatingMovement = true;
 }
 
 InputCommand AIMovement::getMovementBySituation(std::string situation) {

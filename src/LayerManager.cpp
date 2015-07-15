@@ -117,9 +117,7 @@ void LayerManager::refresh() {
 	//int passiveCharacter = -1;
 	int standingCharacter = -1;
 	Character* passiveCharacter;
-
-
-
+	this->characters = GameGUI::getInstance()->getCharacters();
 	for (unsigned int i = 0; i < this->characters.size() ; i++) {
 
 		if ( i == 0) passiveCharacter = this->characters[1];
@@ -130,6 +128,8 @@ void LayerManager::refresh() {
 
 		float ratioX = this->characters[i]->getRatioX();
 		float posXCharacter = this->characters[i]->posXBox;
+		float posX = this->characters[i]->getPositionX();
+
 		int windowWidth = this->window->widthPx;
 		float characterWidth = this->characters[i]->widthBox;
 
@@ -148,7 +148,7 @@ void LayerManager::refresh() {
 		if ( (offsetRightMargin < (WINDOW_MARGIN) * ratioX) &&
 				!layerReachedStageLimit( windowWidth / ratioX, true) &&
 				isCharMovingRight &&
-				!pCLimitLeft ) {
+				!pCLimitLeft && !characters[i]->isLazy) {
 			refresh = true;
 			rightOrientation = true;
 			orientation = 1;
@@ -156,7 +156,7 @@ void LayerManager::refresh() {
 		else if  ( (offsetLeftMargin < (WINDOW_MARGIN)* ratioX) &&
 				!layerReachedStageLimit( windowWidth / ratioX, false) &&
 				isCharMovingLeft &&
-				!pCLimitRight)  {
+				!pCLimitRight && !characters[i]->isLazy)  {
 			refresh = true;
 			leftOrientation = true;
 			orientation = -1;
@@ -166,6 +166,7 @@ void LayerManager::refresh() {
 		}
 
 	}
+
 
 	if (rightOrientation && leftOrientation) refresh = false; //Si hay un personaje en cada esquina no muevo la cámara
 	for(unsigned int index=0; index < this->layers.size(); ++index) {

@@ -12,6 +12,7 @@
 #include <string>
 #include <map>
 #include "SDL.h"
+#include "Constants.h"
 
 
 
@@ -46,8 +47,29 @@ enum InputCommand {
 	FIRST_PLAYER_AIR_PUNCH_R,
 	FIRST_PLAYER_AIR_PUNCH,
 	FIRST_PLAYER_AIR_PUNCH_L,
-	FIRST_PLAYER_FIRE
+	FIRST_PLAYER_FIRE,
+	SUBZERO_SWEEP,
+	BABALITY,
+	FATALITY,
+	HEADLESS,
+	HEADLESS_BLOOD,
+	FRIENDSHIP,
+	LAZY,
+	SPECIAL
 
+};
+
+enum SpecialMove {
+	SPECIAL_MOVE_0,
+	SPECIAL_MOVE_1,
+	SPECIAL_MOVE_2,
+	SPECIAL_MOVE_3,
+	SPECIAL_MOVE_4,
+	SPECIAL_MOVE_5,
+	SPECIAL_MOVE_6,
+	SPECIAL_MOVE_7,
+	SPECIAL_MOVE_8,
+	SPECIAL_MOVE_9,
 };
 
 class InputControl {
@@ -58,9 +80,10 @@ private:
 	std::vector<InputCommand> playerMove;
 
 	void validateButtonsRange(int joyNum, int joyButtonCount);
+
+public:
 	bool someJoyKickButtonPressed(int joy);
 	bool someJoyPunchButtonPressed(int joy);
-public:
 	static InputControl* Instance() {
 		static InputControl t_pInstance;
 		return &t_pInstance;
@@ -92,6 +115,9 @@ public:
 	InputCommand getPlayerMove(int joy);
 	void setPlayerMove(int joy, InputCommand action);
 	void loadDefaultButtons(int joyNum);
+	void loadSpecialSecuence(int joyNum);
+	void detectSpecialMove(int joyNum);
+	void setPlayerSpecialMove(int joy, int specialAction);
 };
 
 #endif /* INPUTCONTROL_H_ */

@@ -30,9 +30,9 @@
 			"alto": 70,
 			"zindex": 99,
 			"color-alternativo": {
-				"h-inicial": 180,
-				"h-final": 300,
-				"desplazamiento": 0.01
+				"h-inicial": 0,
+				"h-final": 360,
+				"desplazamiento": 180
 			}
 		},
 		{
@@ -41,14 +41,14 @@
 			"alto": 70,
 			"zindex": 99,
 			"color-alternativo": {
-				"h-inicial": 180,
-				"h-final": 300,
+				"h-inicial": 0,
+				"h-final": 360,
 				"desplazamiento": 180
 			}
 		}
 	],
 	"pelea": {
-		"luchador1": "subzero",
+		"luchador1": "scorpion",
 		"luchador2": "subzero"
 	},
 	"joysticks": [ 
@@ -58,7 +58,9 @@
 			"patada_alta": 3,
 			"patada_baja": 2,
 			"bloquear": 4,
-			"disparar": 5
+			"disparar": 5,
+			"salir": 6,
+			"reiniciar_practice": 7
 		},
 		{
 			"piña_alta": 0,
@@ -66,7 +68,18 @@
 			"patada_alta": 3,
 			"patada_baja": 2,
 			"bloquear": 4,
-			"disparar": 5
+			"disparar": 5,
+			"salir": 6,
+			"reiniciar_practice": 7 
 		}
-	]	
+	],
+	"secuencias": [
+		{ "secuence_for_special_move": "KKKK"	}, 
+		{ "secuence_for_special_move": "HHHH"	}, 
+		{ "secuence_for_special_move": "DJDJ"	},
+		{ "secuence_for_special_move": "DHDH"	},
+		{ "secuence_for_special_move": "DDDD"	} 
+	],
+	"tiempo_secuencias": 1,
+	"tolerancia_secuencias": 3	
 }

@@ -64,3 +64,6 @@ Fight* GameGUI::getFight() {
 }
 
 
+void GameGUI::setVisualEffects(vector<VisualEffect*> visualEffects) {
+	this->visualEffects = visualEffects;
+}

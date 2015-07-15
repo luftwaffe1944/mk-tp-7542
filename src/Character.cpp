@@ -19,12 +19,14 @@
 #include "../headers/Stage.h"
 #include "../headers/TextureManager.h"
 #include "../headers/Window.h"
+#include <cmath>        // std::abs
 
 using namespace std;
 
 float gravity = 14.0f;
 float jumpVel = 60.0f;
 float jumpVelFalling = 40.0f;
+float jumpVelRoof = 80.0f;
 float jumpVelFallingUpper = 50.0f;
 
 
@@ -52,12 +54,14 @@ Character::Character(const LoaderParams* pParams, bool isRightOriented) :
 		jumpVel = 60.0f;
 		this->smoothOffsetX = 0;
 		this->beingPushed = false;
+		this->allowMovements = false;
 }
 
 Character::Character(const LoaderParams* pParams) :
 		SDLObjectGUI(pParams) {
 		this->name = pParams->getTextureID();
 		this->yGround = (GameGUI::getInstance()->getStage()->getYGround() - this->height) * ratioY;
+		this->originalPosY =  this->yGround;
 		this->imagePath = ROOT_IMAGE_PATH;
 		this->isAltPlayer = false;
 		//TODO: Review positions according to logic and pixels measures.
@@ -73,6 +77,7 @@ Character::Character(const LoaderParams* pParams) :
 		jumpVel = 60.0f;
 		this->smoothOffsetX = 0;
 		this->beingPushed = false;
+		this->allowMovements = false;
 }
 
 
@@ -135,6 +140,32 @@ bool Character::load(SDL_Renderer* render) {
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 9, this->isAltPlayer, this->altColor);
 	Sprite* spriteGetUp = new Sprite(this->name+this->playerNumber+GET_UP_SUFFIX, characterPath+GET_UP_SPRITE,
 			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 7, this->isAltPlayer, this->altColor);
+	Sprite* spriteSweep = new Sprite(this->name+this->playerNumber+SWEEP_SUFFIX, characterPath+SWEEP_SPRITE,
+				renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteFire = new Sprite(this->name+this->playerNumber+FIRE_SUFFIX, characterPath+FIRE_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteBabality = new Sprite(this->name+this->playerNumber+BABALITY_SUFFIX, characterPath+BABALITY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 3, this->isAltPlayer, this->altColor);
+	Sprite* spriteReptile = new Sprite(this->name+this->playerNumber+REPTILE_SUFFIX, characterPath+REPTILE_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
+	Sprite* spriteBurning = new Sprite(this->name+this->playerNumber+BURNING_SUFFIX, characterPath+BURNING_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 16, this->isAltPlayer, this->altColor);
+	Sprite* spriteHeadless = new Sprite(this->name+this->playerNumber+HEADLESS_SUFFIX, characterPath+HEADLESS_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteHeadlessBlood = new Sprite(this->name+this->playerNumber+HEADLESS_BLOOD_SUFFIX, characterPath+HEADLESS_BLOOD_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
+	Sprite* spriteFriendship = new Sprite(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, characterPath+FRIENDSHIP_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 19, this->isAltPlayer, this->altColor);
+	Sprite* spriteVictory = new Sprite(this->name+this->playerNumber+VICTORY_SUFFIX, characterPath+VICTORY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
+	Sprite* spriteLazy = new Sprite(this->name+this->playerNumber+LAZY_SUFFIX, characterPath+LAZY_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 8, this->isAltPlayer, this->altColor);
+	Sprite* spriteFalling = new Sprite(this->name+this->playerNumber+FALLING_SUFFIX, characterPath+FALLING_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 6, this->isAltPlayer, this->altColor);
+	Sprite* spriteSpecial = new Sprite(this->name+this->playerNumber+SPECIAL_SUFFIX, characterPath+SPECIAL_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 5, this->isAltPlayer, this->altColor);
+	Sprite* spriteSpecialHint = new Sprite(this->name+this->playerNumber+SPECIAL_HINT_SUFFIX, characterPath+SPECIAL_HINT_SPRITE,
+			renderer, SPRITE_WIDTH, SPRITE_HEIGHT, 1, this->isAltPlayer, this->altColor);
 
 	//TODO: Files path must be generated depending on the character
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+WALK_SUFFIX, spriteWalk));
@@ -162,6 +193,20 @@ bool Character::load(SDL_Renderer* render) {
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BEING_HINT_FALLING_UNDER_KICK_SUFFIX, spriteBeingHintFallingUnderKick));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HINT_FLYING_SUFFIX, spriteHintFlying));
 	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+GET_UP_SUFFIX, spriteGetUp));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SWEEP_SUFFIX, spriteSweep));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FIRE_SUFFIX, spriteFire));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BABALITY_SUFFIX, spriteBabality));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+REPTILE_SUFFIX, spriteReptile));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_SUFFIX, spriteHeadless));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+HEADLESS_BLOOD_SUFFIX, spriteHeadlessBlood));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FRIENDSHIP_SUFFIX, spriteFriendship));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+VICTORY_SUFFIX, spriteVictory));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+LAZY_SUFFIX, spriteLazy));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+BURNING_SUFFIX, spriteBurning));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+FALLING_SUFFIX, spriteFalling));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SPECIAL_SUFFIX, spriteSpecial));
+	this->characterSprites.insert(std::map<std::string, Sprite*>::value_type(this->name+this->playerNumber+SPECIAL_HINT_SUFFIX, spriteSpecialHint));
+
 	return true;
 }
 
@@ -171,11 +216,28 @@ void Character::render(SDL_Renderer* render) {
 
 void Character::draw() {
 	int currentFrame;
-	if(this->isDucking) {
+	if(this->isDucking || this->isHeadless || this->isVictory || this->isBabality || this->isFalling) {
 		currentFrame = currentSprite->getNextFrameWithLimit();
 	} else {
 		if (shouldMoveForward()) {
-			currentFrame = currentSprite->getNextForwardingFrame();
+			if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(4, 8, 6);
+			}
+			else if (this->getMovement() == REPTILE_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndShowFrame(3);
+			}
+			else if (this->getMovement() == BURNING_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(4, 9, 5);
+			}
+			else if (this->getMovement() == FRIENDSHIP_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndLoop(3, 18, 4);
+			}
+			else if (this->getMovement() == SPECIAL_HINT_MOVEMENT){
+				currentFrame = currentSprite->getNextFrameWithLimitAndShowFrame(0);
+			}
+			else {
+				currentFrame = currentSprite->getNextForwardingFrame();
+			}
 		} else {
 			currentFrame = currentSprite->getNextBackwardingFrame();
 		}
@@ -244,7 +306,8 @@ void Character::draw() {
 bool Character::shouldMoveForward() {
 	if ( (this->isRightOriented && (isJumpingRight || isWalkingRight)) || this->isUnderKick ||
 			this->isKickingSuper || (!this->isRightOriented && (isJumpingLeft || isWalkingLeft))
-			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper) {
+			|| isBeingHintFallingUnderKick || isGettingUp || isHintFlying || isHintFlyingUpper || isReptile
+			|| isFriendship || isHeadlessBlood || isBurning || isSpecial) {
 		return true;
 	} else {
 		return false;
@@ -265,16 +328,19 @@ bool Character::reachedWindowRightLimit(){
 void Character::fixOrientation() {
 	Character * p1 = GameGUI::getInstance()->getCharacters()[0];
 	Character * p2 = GameGUI::getInstance()->getCharacters()[1];
-	if ( p1->posXBox < p2->posXBox) {
-		p1->isRightOriented = true;
-		p2->isRightOriented = false;
-	} else {
-		p1->isRightOriented = false;
-		p2->isRightOriented = true;
+	if ((p1->movement != SWEEP_MOVEMENT && p2->movement != SWEEP_MOVEMENT)) {
+		if (p1->posXBox < p2->posXBox) {
+			p1->isRightOriented = true;
+			p2->isRightOriented = false;
+		} else {
+			p1->isRightOriented = false;
+			p2->isRightOriented = true;
+		}
 	}
 }
 
 void Character::update() {
+
 	this->previousMovement = getMovement();
 	this->beingPushed = false;
 	if (this->orientationPosXFix != 0) { //acomoda la posX si se desplaza la cámara
@@ -289,11 +355,121 @@ void Character::update() {
 	} else {
 		playerCommand = InputControl::Instance()->getSecondPlayerMove();
 	}
-//	cout << "plyerCommand: " << playerCommand << "Move: " << getMovement() << endl;
+
+	Character* victim = getVictim();
+
+	//cout << "plyer: " << this->getName() << " Move: " << getMovement() << endl;
 	//InputCommand optionCommand = keyboardControl.getControlOption();
 	// Check if critical movements have finished
 
-	if (isBeingHintStanceUp){
+	if (this->allowMovements){
+		//BUG: sweep elavado
+		//if (playerCommand == SUBZERO_SWEEP){
+		if (playerCommand == SUBZERO_SWEEP && this->isTouchingGround(this->getPositionY())){
+			this->setMovement(SWEEP_MOVEMENT);
+			setCurrentSprite();
+			sweepMovement();
+		}
+		//bug fix copperfield saltando, si el que la hace esta saltando no realiza
+		//BUG: if (playerCommand == SPECIAL && victim->isTouchingGround(victim->getPositionY())){
+		if (playerCommand == SPECIAL && victim->isTouchingGround(victim->getPositionY()) && this->isTouchingGround(this->getPositionY())){
+
+			if (victim->getMovement() == LAZY_MOVEMENT && MKGame::Instance()->isFinishimMoment){
+				victim->completeMovementAndChangeFalling = true;
+				completeMovementAndChangeVictory = true;
+			}
+			setMovement(SPECIAL_MOVEMENT);
+			setCurrentSprite();
+			completeMovement();
+			if (victim->movement != BLOCK_MOVEMENT){
+				victim->setMovement(SPECIAL_HINT_MOVEMENT);
+				SoundManager::Instance()->playSound("hit_roof", 0);
+				victim->setCurrentSprite();
+				victim->clearMovementsFlags();
+				victim->isSpecial_hint = true;
+			}
+		}
+	}
+
+
+	if (this->isFinishingMove){
+		doFinisher();
+	}
+
+	if (getMovement() == "stance" && completeMovementAndChangeFalling){
+		setMovement(FALLING_MOVEMENT);
+		setCurrentSprite();
+		isFalling = true;
+		completeMovementAndChangeFalling = false;
+	}
+
+	if (getMovement() == "stance" && completeMovementAndChangeLazy){
+		this->setMovement(LAZY_MOVEMENT);
+		this->isLazy = true;
+		this->setCurrentSprite();
+		completeMovementAndChangeLazy = false;
+	}
+
+	if (getMovement() == "stance" && completeMovementAndChangeVictory){
+		this->setMovement(VICTORY_MOVEMENT);
+		this->setCurrentSprite();
+		this->isVictory = true;
+		completeMovementAndChangeVictory = false;
+	}
+
+	else if (isSubzeroSweeping){
+		sweepMovement();
+	}
+
+	else if (isReptile){
+		isReptile = true;
+	}
+	else if (isBurning){
+		setMovement(BURNING_MOVEMENT);
+		setCurrentSprite();
+	}
+	else if (isLazy){
+		completeMovement();
+	}
+
+	else if (isSpecial){
+		completeMovement();
+	}
+
+	else if (isSubzeroFiring) {
+		completeMovement();
+	}
+	else if (isHeadless){
+		isHeadless = true;
+	}
+	else if (isFalling){
+		isFalling = true;
+	}
+
+	else if (isHeadlessBlood){
+		setMovement(HEADLESS_BLOOD_MOVEMENT);
+		setCurrentSprite();
+//		completeMovement();
+	}
+
+	else if (isBabality){
+		isBabality = true;
+	}
+
+	else if (isFriendship) {
+		isFriendship = true;
+
+	}
+
+	else if (isVictory) {
+		isVictory = true;
+	}
+
+	else if (isSpecial_hint){
+		hitWithRoof();
+	}
+
+	else if (isBeingHintStanceUp){
 		completeMovement();
 	}
 
@@ -435,172 +611,217 @@ void Character::update() {
 
 		this->clearMovementsFlags();
 
-		switch (playerCommand) {
-		case FIRST_PLAYER_MOVE_RIGHT:
-			this->setMovement(WALKING_RIGHT_MOVEMENT);
-			setCurrentSprite();
-			walkRight();
-			break;
-		case FIRST_PLAYER_MOVE_LEFT:
-			this->setMovement(WALKING_LEFT_MOVEMENT);
-			setCurrentSprite();
-			walkLeft();
-			break;
-		case FIRST_PLAYER_MOVE_UP:
-			this->setMovement(JUMPING_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			jump();
-			break;
-		case FIRST_PLAYER_MOVE_DOWN:
-			this->setMovement(DUCKING_MOVEMENT);
-			setCurrentSprite();
-			this->isDucking = true;
-			break;
-		case FIRST_PLAYER_MOVE_DOWN_LEFT:
-			this->setMovement(DUCKING_MOVEMENT);
-			setCurrentSprite();
-			this->isDucking = true;
-			break;
-		case FIRST_PLAYER_MOVE_DOWN_RIGHT:
-			this->setMovement(DUCKING_MOVEMENT);
-			setCurrentSprite();
-			this->isDucking = true;
-			break;
-		case FIRST_PLAYER_MOVE_UP_RIGHT:
-			this->setMovement(JUMPING_RIGHT_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			jumpRight();
-			break;
-		case FIRST_PLAYER_MOVE_UP_LEFT:
-			this->setMovement(JUMPING_LEFT_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			jumpLeft();
-			break;
-		case FIRST_PLAYER_CHANGE_ORIENTATION:
-			isRightOriented = !isRightOriented;
-			break;
-		case FIRST_PLAYER_HI_PUNCH:
-			this->setMovement(PUNCHING_HIGH_MOVEMENT);
-			talk("missPunch",1);
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_LO_PUNCH:
-			this->setMovement(PUNCHING_LOW_MOVEMENT);
-			talk("missPunch",1);
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_DUCK_PUNCH:
-			this->setMovement(PUNCHING_DUCK_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_UPPERCUT:
-			this->setMovement(UPPERCUT_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_LOW_KICK:
-			this->setMovement(LOW_KICK_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_HIGH_KICK:
-			this->setMovement(HIGH_KICK_MOVEMENT);
-			talk("missKick");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_DUCK_LOW_kICK:
-			this->setMovement(DUCK_LOW_KICK_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_DUCK_HIGH_kICK:
-			this->setMovement(DUCK_HIGH_KICK_MOVEMENT);
-			talk("missPunch");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_SUPER_kICK:
-			this->setMovement(SUPER_KICK_MOVEMENT);
-			talk("missKick");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_UNDER_KICK:
-			this->setMovement(UNDER_KICK_MOVEMENT);
-			talk("missKick");
-			setCurrentSprite();
-			completeMovement();
-			break;
-		case FIRST_PLAYER_AIR_LOW_kICK_R:
-			this->setMovement(AIR_LOW_kICK_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airLowKickRight();
-			break;
-		case FIRST_PLAYER_AIR_LOW_kICK_L:
-			this->setMovement(AIR_LOW_kICK_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airLowKickLeft();
-			break;
-		case FIRST_PLAYER_AIR_HIGH_kICK:
-			this->setMovement(AIR_HIGH_kICK_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airHighKick();
-			break;
-		case FIRST_PLAYER_BLOCK:
-			this->setMovement(BLOCK_MOVEMENT);
-			setCurrentSprite();
-			break;
-		case FIRST_PLAYER_DUCK_BLOCK:
-			this->setMovement(DUCK_BLOCK_MOVEMENT);
-			setCurrentSprite();
-			break;
-		case FIRST_PLAYER_AIR_PUNCH:
-			this->setMovement(AIR_PUNCH_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airPunch();
-			break;
-		case FIRST_PLAYER_AIR_PUNCH_R:
-			this->setMovement(AIR_PUNCH_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airPunchRight();
-			break;
-		case FIRST_PLAYER_AIR_PUNCH_L:
-			this->setMovement(AIR_PUNCH_MOVEMENT);
-			talk("jump");
-			setCurrentSprite();
-			airPunchLeft();
-			break;
-		case FIRST_PLAYER_FIRE:
-			this->fire = true;
-			SoundManager::Instance()->playSoundByAction("fire",0);
-			break;
-		case FIRST_PLAYER_DUCK_FIRE:
-			this->setMovement(DUCKING_MOVEMENT);
-			setCurrentSprite();
-			this->isDucking = true;
-			this->fire = true;
-			SoundManager::Instance()->playSoundByAction("fire",0);
-			break;
-		case NO_INPUT:
+
+		if (this->allowMovements) {
+			switch (playerCommand) {
+			case FIRST_PLAYER_MOVE_RIGHT:
+				this->setMovement(WALKING_RIGHT_MOVEMENT);
+				setCurrentSprite();
+				walkRight();
+				break;
+			case FIRST_PLAYER_MOVE_LEFT:
+				this->setMovement(WALKING_LEFT_MOVEMENT);
+				setCurrentSprite();
+				walkLeft();
+				break;
+			case FIRST_PLAYER_MOVE_UP:
+				this->setMovement(JUMPING_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				jump();
+				break;
+			case FIRST_PLAYER_MOVE_DOWN:
+				this->setMovement(DUCKING_MOVEMENT);
+				setCurrentSprite();
+				this->isDucking = true;
+				break;
+			case FIRST_PLAYER_MOVE_DOWN_LEFT:
+				this->setMovement(DUCKING_MOVEMENT);
+				setCurrentSprite();
+				this->isDucking = true;
+				break;
+			case FIRST_PLAYER_MOVE_DOWN_RIGHT:
+				this->setMovement(DUCKING_MOVEMENT);
+				setCurrentSprite();
+				this->isDucking = true;
+				break;
+			case FIRST_PLAYER_MOVE_UP_RIGHT:
+				this->setMovement(JUMPING_RIGHT_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				jumpRight();
+				break;
+			case FIRST_PLAYER_MOVE_UP_LEFT:
+				this->setMovement(JUMPING_LEFT_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				jumpLeft();
+				break;
+			case FIRST_PLAYER_CHANGE_ORIENTATION:
+				isRightOriented = !isRightOriented;
+				break;
+			case FIRST_PLAYER_HI_PUNCH:
+				this->setMovement(PUNCHING_HIGH_MOVEMENT);
+				talk("missPunch",1);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_LO_PUNCH:
+				this->setMovement(PUNCHING_LOW_MOVEMENT);
+				talk("missPunch",1);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_DUCK_PUNCH:
+				this->setMovement(PUNCHING_DUCK_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_UPPERCUT:
+				this->setMovement(UPPERCUT_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_LOW_KICK:
+				this->setMovement(LOW_KICK_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_HIGH_KICK:
+				this->setMovement(HIGH_KICK_MOVEMENT);
+				talk("missKick");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_DUCK_LOW_kICK:
+				this->setMovement(DUCK_LOW_KICK_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_DUCK_HIGH_kICK:
+				this->setMovement(DUCK_HIGH_KICK_MOVEMENT);
+				talk("missPunch");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_SUPER_kICK:
+				this->setMovement(SUPER_KICK_MOVEMENT);
+				talk("missKick");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_UNDER_KICK:
+				this->setMovement(UNDER_KICK_MOVEMENT);
+				talk("missKick");
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FIRST_PLAYER_AIR_LOW_kICK_R:
+				this->setMovement(AIR_LOW_kICK_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airLowKickRight();
+				break;
+			case FIRST_PLAYER_AIR_LOW_kICK_L:
+				this->setMovement(AIR_LOW_kICK_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airLowKickLeft();
+				break;
+			case FIRST_PLAYER_AIR_HIGH_kICK:
+				this->setMovement(AIR_HIGH_kICK_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airHighKick();
+				break;
+			case FIRST_PLAYER_BLOCK:
+				this->setMovement(BLOCK_MOVEMENT);
+				setCurrentSprite();
+				break;
+			case FIRST_PLAYER_DUCK_BLOCK:
+				this->setMovement(DUCK_BLOCK_MOVEMENT);
+				setCurrentSprite();
+				break;
+			case FIRST_PLAYER_AIR_PUNCH:
+				this->setMovement(AIR_PUNCH_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airPunch();
+				break;
+			case FIRST_PLAYER_AIR_PUNCH_R:
+				this->setMovement(AIR_PUNCH_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airPunchRight();
+				break;
+			case FIRST_PLAYER_AIR_PUNCH_L:
+				this->setMovement(AIR_PUNCH_MOVEMENT);
+				talk("jump");
+				setCurrentSprite();
+				airPunchLeft();
+				break;
+			case FIRST_PLAYER_FIRE:
+				this->fire = true;
+				//this->setMovement(FIRE_MOVEMENT);
+				setCurrentSprite();
+				fireMovement();
+				SoundManager::Instance()->playSoundByAction("fire",0);
+				break;
+			case FIRST_PLAYER_DUCK_FIRE:
+				this->setMovement(DUCKING_MOVEMENT);
+				setCurrentSprite();
+				this->isDucking = true;
+				this->fire = true;
+				SoundManager::Instance()->playSoundByAction("fire",0);
+				break;
+			case SUBZERO_SWEEP:
+				this->setMovement(SWEEP_MOVEMENT);
+				setCurrentSprite();
+				sweepMovement();
+				break;
+//			case SPECIAL:
+//				this->setMovement(SPECIAL_MOVEMENT);
+//				setCurrentSprite();
+//				completeMovement();
+//				victim->setMovement(SPECIAL_HINT_MOVEMENT);
+//				SoundManager::Instance()->playSound("hit_roof", 0);
+//				victim->setCurrentSprite();
+//				victim->isSpecial_hint = true;
+//				break;
+			case BABALITY:
+				this->finishMove = new Babality();
+				doFinisher();
+				break;
+			case FATALITY:
+				this->finishMove = new Fatality();
+				doFinisher();
+				break;
+			case HEADLESS:
+				this->setMovement(HEADLESS_MOVEMENT);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case HEADLESS_BLOOD:
+				this->setMovement(HEADLESS_BLOOD_MOVEMENT);
+				setCurrentSprite();
+				completeMovement();
+				break;
+			case FRIENDSHIP:
+				this->finishMove = new Friendship();
+				doFinisher();
+				break;
+			case NO_INPUT:
+				this->setMovement(STANCE);
+				setCurrentSprite();
+				break;
+			}
+		} else {
 			this->setMovement(STANCE);
 			setCurrentSprite();
-			break;
 		}
 	}
 	//refresh Collition Shapes positions
@@ -641,6 +862,21 @@ void Character::clearMovementsFlags(){
 	isHintFlying = false;
 	isGettingUp = false;
 	isHintFlyingUpper = false;
+	isSubzeroSweeping = false;
+	isBabality = false;
+	isFatality = false;
+	isHeadless = false;
+	isHeadlessBlood = false;
+	isFriendship = false;
+	isSubzeroFiring = false;
+	isVictory = false;
+	isBurning = false;
+	isLazy = false;
+	isFinishingMove = false;
+	isReptile = false;
+	isFalling = false;
+	isSpecial = false;
+	isSpecial_hint = false;
 	//this->beingPushed = false;
 }
 
@@ -886,6 +1122,24 @@ void Character::walkRight() {
 
 }
 
+void Character::sweepMovement() {
+	isSubzeroSweeping = true;
+
+	if (isRightOriented && !this->reachedWindowRightLimit()){
+		positionX = positionX + (SWEEP_X_SPEED * ratioX);
+	}
+	else if (!isRightOriented && !this->reachedWindowLeftLimit()){
+		positionX = positionX - (SWEEP_X_SPEED * ratioX);
+
+	}else {
+		isSubzeroSweeping = false;
+	}
+}
+
+void Character::fireMovement() {
+
+}
+
 void Character::walkLeft() {
 	isWalkingLeft = true;
 	if (!this->reachedWindowLeftLimit()){
@@ -952,19 +1206,152 @@ bool Character::isMovingLeft(){
 	return false;
 }
 
+void Character::hitWithRoof(){
+
+	this->setEnergy(this->getEnergy() - 0.01f);
+	isSpecial_hint = true;
+	positionY = positionY - jumpVelRoof;
+	jumpVelRoof -= gravity;
+	cout << positionY << endl;
+	if (positionY > 120 && positionY < 130) SoundManager::Instance()->playSound("fireHit3", 0);
+	if (this->isTouchingGround(positionY)) {
+		isSpecial_hint = false;
+		jumpVelRoof = 80.0f;
+		this->setMovement(STANCE);
+		this->positionY = yGround;
+	}
+}
+
 void Character::completeMovement(){
 	incrementCounter(getMovement());
 	setMoveFlag(true);
 	int moveCounter = movesCounter.at(getMovement());
 	int spriteAmount = currentSprite->getFramesAmount();
-	if (moveCounter == spriteAmount) {
-		setMoveFlag(false);
+	if (moveCounter > spriteAmount) {
+		if (!isLazy) setMoveFlag(false);
 		if (isTouchingGround(positionY)){
-			clearMovementsFlags();
+			if (!isLazy) clearMovementsFlags();
 		}
 		resetCounter(getMovement());
-		this->movement="";
+		if (!isLazy) this->movement="";
 	}
+}
+
+
+void sleepSafe(int limit);
+
+void Character::doFinisher() {
+
+	isFinishingMove = true;
+
+	Character* victim = getVictim();
+
+	//FATALITY
+	if (finishMove->getID() == 0) {
+
+		//Scorpion hace la fatality
+		if (this->name == "scorpion") {
+
+			if (victim->isLazy) {
+				this->finishMove->onPreFinish(this->name);
+
+			} else if (victim->isBurning) {
+				this->finishMove->onFinish(this->name);
+
+			}
+			Sprite* victimCurrentSprite = victim->currentSprite;
+			int currentFrame = victimCurrentSprite->getCurrentFrame();
+			int framesAmount = victimCurrentSprite->getFramesAmount();
+			if (victim->isBurning && victimCurrentSprite->isLooped && currentFrame == framesAmount - 1 && oneTime) {
+				oneTime = false;
+				SDL_Delay(2000);
+				this->finishMove->onPostFinish(this->name);
+				MKGame::Instance()->showFatality = true;
+			}
+
+			//Subzero hace la fatality
+		} else {
+
+			int distance = std::abs ( (this->getPosX() - victim->getPosX()) );
+			cout << "DISTANCE: " << distance << endl;
+			if (distance <= 140) {
+				if (victim->isLazy && this->getMovement() != REPTILE_MOVEMENT) {
+					this->finishMove->onPreFinish(this->name);
+
+				}
+				if (victim->isLazy
+						&& this->currentSprite->getCurrentFrame()
+								== this->currentSprite->getFramesAmount() - 1) {
+					this->finishMove->onFinish(this->name);
+
+				} else if (victim->isHeadlessBlood
+						&& victim->currentSprite->isLooped
+						&& victim->currentSprite->getCurrentFrame() == victim->currentSprite->getFramesAmount() - 1) {
+					this->finishMove->onPostFinish(this->name);
+					MKGame::Instance()->showFatality = true;
+				}
+			} else {
+				clearMovementsFlags();
+				victim->isLazy = true;
+			}
+
+		}
+	}
+
+
+	//BABALITY
+	if (finishMove->getID() == 1) {
+
+		if (victim->isLazy) {
+			this->finishMove->onPreFinish(this->name);
+		}
+
+		Sprite* victimCurrentSprite = victim->currentSprite;
+		int currentFrame = victimCurrentSprite->getCurrentFrame();
+		int framesAmount = victimCurrentSprite->getFramesAmount();
+
+		if ((this->getMovement() == "stance" || this->getMovement() == "") && victim->isBabality && currentFrame == framesAmount - 1) {
+			this->finishMove->onFinish(this->name);
+
+		}
+
+		else if(this->isVictory && currentFrame == framesAmount - 1){
+			SDL_Delay(2000);
+			this->finishMove->onPostFinish(this->name);
+			this->isVictory = false;
+			MKGame::Instance()->showBabality = true;
+
+		}
+
+	}
+
+	//FRIENDSHIP
+	else if (finishMove->getID() == 2){
+
+
+		Sprite* winnerCurrentSprite = this->currentSprite;
+		int currentFrame = winnerCurrentSprite->getCurrentFrame();
+		int framesAmount = winnerCurrentSprite->getFramesAmount();
+
+		if (victim->isLazy && !this->isFriendship) {
+			this->finishMove->onPreFinish(this->name);
+		}
+
+		else if (this->isFriendship && victim->isLazy) {
+			this->finishMove->onFinish(this->name);
+
+		}
+
+		if (this->isFriendship && currentFrame == framesAmount - 1) {
+			SDL_Delay(500);
+			this->finishMove->onPostFinish(this->name);
+			this->isFinishingMove = false;
+			MKGame::Instance()->showFriendship = true;
+		}
+
+
+	}
+
 }
 
 
@@ -978,6 +1365,7 @@ void Character::incrementCounter(string key){
 	}
 	movesCounter.insert({key, value});
 }
+
 
 void Character::resetCounter(string key){
 	movesCounter.erase(key);
@@ -1120,7 +1508,54 @@ void Character::setCurrentSprite(){
 		} else if (this->getMovement() == GET_UP_MOVEMENT) {
 			currentSprite = this->characterSprites[this->name+this->playerNumber+GET_UP_SUFFIX];
 
-		} else{
+		} else if (this->getMovement() == SWEEP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+SWEEP_SUFFIX];
+
+		} else if (this->getMovement() == FIRE_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name+this->playerNumber+FIRE_SUFFIX];
+
+		} else if (this->getMovement() == BABALITY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ BABALITY_SUFFIX];
+
+		} else if (this->getMovement() == REPTILE_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ REPTILE_SUFFIX];
+		}
+
+		else if (this->getMovement() == HEADLESS_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ HEADLESS_SUFFIX];
+		}
+
+		else if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ HEADLESS_BLOOD_SUFFIX];
+		}
+
+		else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ FRIENDSHIP_SUFFIX];
+		}
+
+		else if (this->getMovement() == VICTORY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ VICTORY_SUFFIX];
+		}
+
+		else if (this->getMovement() == LAZY_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ LAZY_SUFFIX];
+		}
+
+		else if (this->getMovement() == BURNING_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ BURNING_SUFFIX];
+			isLazy = false;
+		}
+
+		else if (this->getMovement() == FALLING_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ FALLING_SUFFIX];
+		}
+		else if (this->getMovement() == SPECIAL_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ SPECIAL_SUFFIX];
+		}
+		else if (this->getMovement() == SPECIAL_HINT_MOVEMENT) {
+			currentSprite = this->characterSprites[this->name + this->playerNumber+ SPECIAL_HINT_SUFFIX];
+		}
+		else{
 			//TODO: review
 		}
 }
@@ -1177,7 +1612,46 @@ void Character::setMoveFlag(bool trueOrFalse){
 	} else if (this->getMovement() == GET_UP_MOVEMENT) {
 		isGettingUp = trueOrFalse;
 
-	} else {
+	} else if (this->getMovement() == SWEEP_MOVEMENT) {
+		isSubzeroSweeping = trueOrFalse;
+
+	} else if (this->getMovement() == FIRE_MOVEMENT) {
+		isSubzeroSweeping = trueOrFalse;
+
+	} else if (this->getMovement() == BABALITY_MOVEMENT) {
+		isBabality = trueOrFalse;
+	}
+	else if (this->getMovement() == REPTILE_MOVEMENT) {
+		isReptile = trueOrFalse;
+	}
+	else if (this->getMovement() == HEADLESS_MOVEMENT) {
+		isHeadless = trueOrFalse;
+	}
+	else if (this->getMovement() == HEADLESS_BLOOD_MOVEMENT) {
+		isHeadlessBlood = trueOrFalse;
+	}
+	else if (this->getMovement() == FRIENDSHIP_MOVEMENT) {
+		isFriendship = trueOrFalse;
+	}
+	else if (this->getMovement() == VICTORY_MOVEMENT) {
+		isVictory = trueOrFalse;
+	}
+	else if (this->getMovement() == LAZY_MOVEMENT) {
+		isLazy = trueOrFalse;
+	}
+	else if (this->getMovement() == BURNING_MOVEMENT) {
+		isBurning = trueOrFalse;
+	}
+	else if (this->getMovement() == FALLING_MOVEMENT) {
+		isFalling = trueOrFalse;
+	}
+	else if (this->getMovement() == SPECIAL_MOVEMENT) {
+		isSpecial = trueOrFalse;
+	}
+	else if (this->getMovement() == SPECIAL_HINT_MOVEMENT) {
+		isSpecial_hint = trueOrFalse;
+	}
+	else {
 		//TODO: review
 	}
 
@@ -1496,6 +1970,12 @@ void Character::updateShapesOnStatus(){
 		if (true){secY=(centerY+charHeight/4)+(heightBox/2)-(heightBox2/2);}else{secY=(centerY+charHeight/4)-(heightBox/2)+(heightBox2/2);}
 		posXBox2 = secX - widthBox2/2;
 		posYBox2 = secY - heightBox2/2;
+	} else if (isSubzeroSweeping) {
+		this->updateCShapesPosition(centerX, (centerY + charHeight / 3), charWidht / 1.8, charHeight / 4);
+		posXBox = centerX - widthBox / 2;
+		posYBox = (centerY + charHeight / 3) - heightBox / 2;
+		widthBox = charWidht / 1.8;
+		heightBox = charHeight / 4;
 	}else{
 		this->updateCShapesPosition(centerX, (centerY  + charHeight/8), charWidht/3,charHeight*3/4);
 		posXBox = centerX - widthBox/2;
@@ -1570,7 +2050,17 @@ float Character::getWidthBox2UL() {
 }
 
 void Character::talk(std::string action, int repetitions) {
-	if (this->movement != this->previousMovement) {
+	if (this->movement != this->previousMovement || action == "toasty") {
 		SoundManager::Instance()->playSoundByAction(action,repetitions);
 	}
+}
+
+Character* Character::getVictim(){
+
+	Character* character = GameGUI::getInstance()->getCharacters()[0];
+	if (character->name == this->name){
+		return GameGUI::getInstance()->getCharacters()[1];
+	}
+	return character;
+
 }

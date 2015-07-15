@@ -66,6 +66,25 @@ void pushCharacter(Character* character1, Character* character2, bool pushChar1,
 	}
 }
 
+bool isHitting(Character* character){
+	return ( character->getMovement() == PUNCHING_HIGH_MOVEMENT ||
+			character->getMovement() == HIGH_KICK_MOVEMENT ||
+			character->getMovement() == LOW_KICK_MOVEMENT ||
+			character->getMovement() == DUCK_LOW_KICK_MOVEMENT ||
+			character->getMovement() == DUCK_HIGH_KICK_MOVEMENT ||
+			character->getMovement() == UPPERCUT_MOVEMENT ||
+			character->getMovement() == PUNCHING_DUCK_MOVEMENT ||
+			character->getMovement() == AIR_HIGH_kICK_MOVEMENT ||
+			character->getMovement() == AIR_LOW_kICK_MOVEMENT ||
+			character->getMovement() == UNDER_KICK_MOVEMENT ||
+			character->getMovement() == AIR_PUNCH_MOVEMENT ||
+			character->getMovement() == PUNCHING_LOW_MOVEMENT ||
+			character->getMovement() == SUPER_KICK_MOVEMENT ||
+			character->getMovement() == FIRE_MOVEMENT ||
+			character->getMovement() == SPECIAL_MOVEMENT ||
+			character->getMovement() == SWEEP_MOVEMENT );
+}
+
 
 void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject* nextObj){
 
@@ -86,9 +105,22 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 
 	if ((actualObj->isCharacter()) && (nextObj->isCharacter())){
 		//GOLPES CHARACTER 1
-		if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
+
+		if (character2->getMovement() == LAZY_MOVEMENT && isHitting(character1) && MKGame::Instance()->isFinishimMoment ){
+			character2->setMovement(FALLING_MOVEMENT);
+			character2->setCurrentSprite();
+			character2->isFalling = true;
+			character1->completeMovementAndChangeVictory = true;
+//			character1->completeMovemenAndChangeToVictory();
+//			character1->setMovement(VICTORY_MOVEMENT);
+//			character1->setCurrentSprite();
+//			character1->isVictory = true;
+		}
+
+		else if ((character1->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character2->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 			character1->talk("punchHit",1);
+			//GameGUI::getInstance()->visualEffects[0]->animateToasty();
 		}
 
 		else if ( (character1->getMovement() == HIGH_KICK_MOVEMENT || character1->getMovement() == AIR_PUNCH_MOVEMENT) &&
@@ -122,17 +154,40 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		}
 
 		else if (character1->getMovement() == UPPERCUT_MOVEMENT && character2->getMovement() != BLOCK_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT){
+
 			character2->setMovement(HINT_FLYING_UPPER_MOVEMENT);
-			int random = rand() % 3;
-			if (random == 1)  character1->talk("toasty");
 			character1->talk("uppercut");
+			int random = rand() % 10;
+			if (random == 0)  {
+				character1->talk("toasty");
+				GameGUI::getInstance()->visualEffects[0]->animateToasty();
+			}
 
 		}
 
+		else if (character1->getMovement() == SWEEP_MOVEMENT && character2->getMovement() != DUCK_BLOCK_MOVEMENT && character2->getMovement() != SWEEP_MOVEMENT){
+			character2->setMovement(HINT_FLYING_MOVEMENT);
+			character1->clearMovementsFlags();
+			SoundManager::Instance()->playSound("gancho", 0);
+		}
+
 		//GOLPES CHARACTER 2
-		if ((character2->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
+
+		if (character1->getMovement() == LAZY_MOVEMENT && isHitting(character2) && MKGame::Instance()->isFinishimMoment ){
+			character1->setMovement(FALLING_MOVEMENT);
+			character1->setCurrentSprite();
+			character1->isFalling = true;
+			character1->completeMovementAndChangeVictory = true;
+//			character2->setMovement(VICTORY_MOVEMENT);
+//			character2->setCurrentSprite();
+//			character2->isVictory = true;
+		}
+
+
+		else if ((character2->getMovement() == PUNCHING_HIGH_MOVEMENT ) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(BEING_HINT_STANCE_UP_MOVEMENT);
 			character2->talk("punchHit",1);
+			//GameGUI::getInstance()->visualEffects[1]->animateToasty();
 		}
 		else if (( character2->getMovement() == HIGH_KICK_MOVEMENT
 				|| character2->getMovement() == AIR_PUNCH_MOVEMENT) && character1->getMovement() != BLOCK_MOVEMENT  && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
@@ -163,8 +218,18 @@ void CharacterManager::solveMovesBeignHint(DamageObject* actualObj, DamageObject
 		else if (character2->getMovement() == UPPERCUT_MOVEMENT && character1->getMovement() != BLOCK_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT){
 			character1->setMovement(HINT_FLYING_UPPER_MOVEMENT);
 			character2->talk("uppercut");
-			int random = rand() % 3;
-			if (random == 1)  character1->talk("toasty");
+
+			int random = rand() % 10;
+			if (random == 0)  {
+				GameGUI::getInstance()->visualEffects[0]->animateToasty();
+				character1->talk("toasty");
+			}
+		}
+
+		else if (character2->getMovement() == SWEEP_MOVEMENT && character1->getMovement() != DUCK_BLOCK_MOVEMENT && character1->getMovement() != SWEEP_MOVEMENT){
+				character1->setMovement(HINT_FLYING_MOVEMENT);
+				character2->clearMovementsFlags();
+				SoundManager::Instance()->playSound("gancho", 0);
 		}
 
 		bool rightOrientation = false;

@@ -12,10 +12,11 @@ SoundManager* SoundManager::s_pInstance = 0;
 
 
 void SoundManager::init() {
-	//default: Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
+	Mix_OpenAudio(22050, AUDIO_S16, 2, 4096);
 	//loadBattleSounds();
 	//load("sounds/music/fightMusic64.ogg","fightMusic64",SOUND_MUSIC);
-	Mix_OpenAudio(22050, AUDIO_S16, 2, 128);
+	//Mix_OpenAudio(22050, AUDIO_S16, 2, 128);
+	createSituationalSoundsMap(situationalSounds);
 	loadBattleSounds();
 }
 
@@ -43,6 +44,14 @@ SoundManager* SoundManager::Instance() {
 */
 void SoundManager::clean() {
 	//
+	for (std::map<std::string, Mix_Chunk*>::iterator iter=m_sfxs.begin() ; iter != m_sfxs.end() ; ++iter) {
+		Mix_FreeChunk(iter->second);
+	}
+	/*
+	for (std::map<std::string, Mix_Chunk*>::iterator iter=m_sfxs.begin() ; iter != m_sfxs.end() ; ++iter) {
+		Mix_FreeChunk(iter->second);
+	}*/
+
 	Mix_CloseAudio();
 	if (this->s_pInstance) {
 		delete this->s_pInstance;
@@ -84,9 +93,18 @@ void SoundManager::playSound(std::string id, int loop) {
 	Mix_PlayChannel(-1, m_sfxs[id], loop);
 }
 
+void SoundManager::playSoundOnce(std::string id, int loop) {
+	int containKey = soundsPlayed.count(id);
+	if (containKey == 0) {
+		Mix_PlayChannel(-1, m_sfxs[id], loop);
+	}
+	incrementSound(id);
+
+}
+
 
 void SoundManager::loadBattleSounds() {
-	for (std::map<std::string, std::vector<std::string>>::iterator iter = situationalSounds.begin() ; iter  != situationalSounds.end() ; ++iter)
+	for (std::map<std::string, std::vector<std::string> >::iterator iter = situationalSounds.begin() ; iter  != situationalSounds.end() ; ++iter)
 	{
 		std::vector<std::string> situationSounds = iter->second;
 		for (unsigned int i = 0; i < situationSounds.size() ; ++i) {
@@ -99,4 +117,15 @@ void SoundManager::playSoundByAction(std::string action, int loop) {
 	int randPos = rand() % situationalSounds.at(action).size();
 	std::string idSound = situationalSounds.at(action)[randPos];
 	playSound(idSound,loop);
+}
+
+void SoundManager::incrementSound(std::string id) {
+	int value = 1;
+	int containKey = soundsPlayed.count(id);
+	if (containKey == 1) {
+		value = soundsPlayed.at(id);
+		soundsPlayed.erase(id);
+		value++;
+	}
+	soundsPlayed.insert( { id, value });
 }

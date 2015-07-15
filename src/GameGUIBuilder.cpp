@@ -237,6 +237,7 @@ vector<Layer*> jsonGetLayers(Json::Value root, float ratioX, float ratioY, Windo
 	return layers;
 }
 
+
 vector<Character*> jsonGetCharacters(Json::Value root, float ratioX, float ratioY, Stage* stage) {
 	FILE_LOG(logDEBUG) << "CHARACTERS CONFIGURATION";
 	int stage_win_ypiso = stage->getYGround();
@@ -436,6 +437,8 @@ void jsonGetJoysticks(Json::Value root) {
 		string high_kick = array[joyNum].get(JSON_KEY_HIGH_KICK, "").asString();
 		string block = array[joyNum].get(JSON_KEY_BLOCK, "").asString();
 		string fire = array[joyNum].get(JSON_KEY_FIRE, "").asString();
+		string quit = array[joyNum].get(JSON_KEY_QUIT, "").asString();
+		string resetP = array[joyNum].get(JSON_KEY_RESET_PRACTICE, "").asString();
 
 		int intLow_punch = atoi(low_punch.c_str()) ;
 		int intHigh_punch = atoi(high_punch.c_str());
@@ -443,6 +446,8 @@ void jsonGetJoysticks(Json::Value root) {
 		int intHigh_kick = atoi(high_kick.c_str()) ;
 		int intBlock = atoi(block.c_str()) ;
 		int intFire = atoi(fire.c_str()) ;
+		int intQuit = atoi(quit.c_str()) ;
+		int intResetP = atoi(resetP.c_str()) ;
 
 		map<int,bool> repeatedButtonsValidator;
 
@@ -452,6 +457,8 @@ void jsonGetJoysticks(Json::Value root) {
 		repeatedButtonsValidator[intHigh_kick];
 		repeatedButtonsValidator[intBlock];
 		repeatedButtonsValidator[intFire];
+		repeatedButtonsValidator[intQuit];
+		repeatedButtonsValidator[intResetP];
 
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Piña baja: " << intLow_punch;
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Piña alta: " << intHigh_punch;
@@ -459,8 +466,10 @@ void jsonGetJoysticks(Json::Value root) {
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Patada alta: " << intHigh_kick;
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Bloqueo: " << intBlock;
 		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Disparo: " << intFire;
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Salir: " << intQuit;
+		FILE_LOG(logDEBUG) << "JSON - Joystick: " << joyNum << " - Resetear Practice Mode " << intResetP;
 
-		if ( repeatedButtonsValidator.size() < 6 || intLow_punch < 0 || intHigh_punch < 0 || intHigh_kick < 0 || intLow_kick < 0 || intBlock < 0 || intFire < 0 ) {
+		if ( repeatedButtonsValidator.size() < 8 || intResetP < 0 ||intQuit < 0 || intLow_punch < 0 || intHigh_punch < 0 || intHigh_kick < 0 || intLow_kick < 0 || intBlock < 0 || intFire < 0 ) {
 			FILE_LOG(logERROR) << "Bad buttons configuration in joystick " << joyNum << ", default configuration loaded";
 			InputControl::Instance()->loadDefaultButtons(joyNum);
 		} else {
@@ -470,12 +479,14 @@ void jsonGetJoysticks(Json::Value root) {
 			InputControl::Instance()->setActionButton(joyNum, HIGH_KICK, intHigh_kick );
 			InputControl::Instance()->setActionButton(joyNum, BLOCK, intBlock );
 			InputControl::Instance()->setActionButton(joyNum, FIRE, intFire );
-		}
+			InputControl::Instance()->setActionButton(joyNum, QUIT, intQuit );
+			InputControl::Instance()->setActionButton(joyNum, RESET_PRACTICE, intResetP );
+			}
 	}
 	return;
 }
 
-void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
+/*void createGameInfo(Window* window, vector<Character*> characters, float ratioX, float ratioY) {
 	float windowWidth = window->getWidth();
 	float windowHeight = window->getHeightPx();
 	/*
@@ -483,12 +494,12 @@ void createGameInfo(Window* window, vector<Character*> characters, float ratioX,
 	for(unsigned int i = 0; i < characters.size(); ++i ) {
 		playerName.push_back(characters[i]->getName());
 	}*/
-	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
+/*	LoaderParams* params = new LoaderParams(WINDOW_MARGIN, 0, windowWidth, windowHeight * 0.10 , 100, ratioX, ratioY, "gameInfo");
 	GameInfo* info = new GameInfo(params, characters);
 	MKGame::Instance()->getObjectList().push_back(info);
-}
+}*/
 
-void createThrowableObject(vector<Character*> characters, Window* window, float ratioX, float ratioY) {
+/*void createThrowableObject(vector<Character*> characters, Window* window, float ratioX, float ratioY) {
 	float windowWidth = window->getWidth();
 	float throwableHeight1 = characters[0]->getHeight();
 	float throwableHeight2 = characters[1]->getHeight();
@@ -500,13 +511,13 @@ void createThrowableObject(vector<Character*> characters, Window* window, float 
 
 	tObject1->setReleaser(characters[0]);
 	tObject1->setReceiver(characters[1]);
-	tObject1->setImagePath("images/subzero/throwable.gif");
+	tObject1->setImagePath("images/subzero/throwable.png");
 	MKGame::Instance()->getObjectList().push_back(tObject1);
 
 
 	tObject2->setReleaser(characters[1]);
 	tObject2->setReceiver(characters[0]);
-	tObject2->setImagePath("images/subzero/throwable.gif");
+	tObject2->setImagePath("images/subzero/throwable.png");
 	MKGame::Instance()->getObjectList().push_back(tObject2);
 
 
@@ -514,6 +525,32 @@ void createThrowableObject(vector<Character*> characters, Window* window, float 
 	GameGUI::getInstance()->vCollitionable.push_back(characters[1]);
 	GameGUI::getInstance()->vCollitionable.push_back(tObject1);
 	GameGUI::getInstance()->vCollitionable.push_back(tObject2);
+}*/
+
+
+vector<VisualEffect*> createVisualEffects(float ratioX, float ratioY, Window* window, Stage* stage){
+
+	vector<VisualEffect*> visualEffects;
+	int width = 25;
+	int height = 50;
+	int zIndex = 100; // bien hardcodeado un numero más que el zindex de los character
+/*
+	VisualEffect* visualEffectBlood = new VisualEffect(new LoaderParams( 0, 0, width, height, zIndex, ratioX, ratioY, "blood")) ;
+	visualEffectBlood->setImagePath(BLOOD_IMAGE_SPRITE );
+	visualEffectBlood->windowWidth = GameGUI::getInstance()->getWindow()->getWidthPx();
+	visualEffectBlood->windowHeight = GameGUI::getInstance()->getWindow()->getHeightPx();
+	visualEffectBlood->isToasty = true;
+*/
+	VisualEffect* visualEffect = new VisualEffect(new LoaderParams( 0, 0, width, height, zIndex, ratioX, ratioY, "toasty")) ;
+	visualEffect->setImagePath(TOASTY_IMAGE_SPRITE );
+	visualEffect->windowWidth = GameGUI::getInstance()->getWindow()->getWidthPx();
+	visualEffect->windowHeight = GameGUI::getInstance()->getWindow()->getHeightPx();
+	visualEffect->isToasty = true;
+	MKGame::Instance()->getObjectList().push_back(visualEffect);
+//	MKGame::Instance()->getObjectList().push_back(visualEffectBlood);
+	visualEffects.push_back( visualEffect );
+//	visualEffects.push_back( visualEffectBlood );
+	return visualEffects;
 }
 
 GameGUI* GameGUIBuilder::create() {
@@ -545,6 +582,7 @@ GameGUI* GameGUIBuilder::create() {
 		Json::Value value14 = root[JSON_KEY_VENTANA];
 		Json::Value value5 = root[JSON_KEY_PELEA];
 		Json::Value value6 = root[JSON_KEY_JOYSTICKS];
+		Json::Value value7 = root[JSON_KEY_SECUENCES];
 	}catch(std::exception const & e){
 		FILE_LOG(logDEBUG) << "Corrupt JSON File. Exception: "<<e.what();
 		return createDefault(); //TODO: Validate create default
@@ -566,30 +604,42 @@ GameGUI* GameGUIBuilder::create() {
 
 	vector<Character*> characters = jsonGetCharacters(root, ratioX, ratioY, stage);
 	gameGUI->setCharacters(characters);
-	Fight* fight = jsonGetFight(root);
+
+	//The fight is now being triggered by the MENU
+	/*Fight* fight = jsonGetFight(root);
 	gameGUI->setFight(fight);
 	if (fight->getFighterOne()->getName() == fight->getFighterTwo()->getName()) {
 		fight->getFighterTwo()->setIsAlternativePlayer(true);
 	}
 	fight->getFighterOne()->setIsRightOriented(true);
 	MKGame::Instance()->getObjectList().push_back(fight->getFighterOne());
-	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());
+	MKGame::Instance()->getObjectList().push_back(fight->getFighterTwo());*/
+
 	gameGUI->setLayers(layers);
 
-	vector<Character*> fightingCharacters;
-	fightingCharacters.push_back(fight->getFighterOne());
-	fightingCharacters.push_back(fight->getFighterTwo());
-	gameGUI->setCharacters(fightingCharacters);
+	//The fight is now being triggered by the MENU
+	//vector<Character*> fightingCharacters;
+	//fightingCharacters.push_back(fight->getFighterOne());
+	//fightingCharacters.push_back(fight->getFighterTwo());
+	/*gameGUI->setCharacters(fightingCharacters);
 	createGameInfo(window, fightingCharacters, ratioX, ratioY);
-	createThrowableObject(fightingCharacters, window, ratioX, ratioY);
+	createThrowableObject(fightingCharacters, window, ratioX, ratioY);*/
 
 
 	jsonGetJoysticks(root);
+
+	jsonGetSecuences(root);
+
+	vector<VisualEffect*> visualEffects = createVisualEffects(ratioX, ratioY, window, stage);
+
+	gameGUI->setVisualEffects(visualEffects);
 
 	FILE_LOG(logDEBUG) << "CONFIGURATION FINISHED";
 
 	return gameGUI;
 }
+
+
 
 GameGUI* GameGUIBuilder::createDefault() {
 
@@ -662,9 +712,9 @@ GameGUI* GameGUIBuilder::createDefault() {
 	//Add layers to the game loop
 	gameGUI->setLayers(buildLayersByDefault(ratioX, ratioY, ptrWindow, ptrStage));
 
-	createGameInfo(ptrWindow, characters, ratioX, ratioY);
+	//createGameInfo(ptrWindow, characters, ratioX, ratioY);
 
-	createThrowableObject(characters, ptrWindow, ratioX, ratioY);
+	//createThrowableObject(characters, ptrWindow, ratioX, ratioY);
 
 	InputControl::Instance()->loadDefaultButtons(0);
 	InputControl::Instance()->loadDefaultButtons(1);
@@ -734,6 +784,43 @@ void GameGUIBuilder::handleError(string msgError) {
 
 	//TODO log msg in level ERROR
 	cout << msgError << endl;
+
+}
+
+void GameGUIBuilder::jsonGetSecuences(Json::Value root){
+
+		FILE_LOG(logDEBUG) << "SECUNCES CONFIGURATION";
+
+
+		const Json::Value secuencesArray = root.get(JSON_KEY_SECUENCES,0);
+		FILE_LOG(logDEBUG) << "JSON - Number of Secunces to process: " << secuencesArray.size();
+
+		vector<std::string> secuences;
+		int secuenceTime;
+		int errorTolerance;
+		for (unsigned int index = 0; index < secuencesArray.size(); ++index) {
+			Json::Value secuenceValue = secuencesArray[index];
+			std::string secuence;
+			try {
+				secuence = secuenceValue.get(JSON_KEY_SPECIAL_MOVE, "").asString();
+				secuences.push_back(secuence);
+			}catch(std::exception const & e){
+
+			}
+		}
+		try {
+			secuenceTime = atoi(root.get(JSON_KEY_TIME_SECUENCES, "").asString().c_str());
+		}catch(std::exception const & e){
+			cout<<"error con tiempo secuencia";
+		}
+		try {
+			errorTolerance = atoi(root.get(JSON_KEY_TOLERANCE_SECUENCES, "").asString().c_str());
+		}catch(std::exception const & e){
+			cout<<"error con tolerancia secuencia";
+		}
+		SecuenceInputManager::Instance()->setSpecialMoves(secuences);
+		SecuenceInputManager::Instance()->errorTolerance = errorTolerance;
+		SecuenceInputManager::Instance()->timeForSecuence = secuenceTime;
 
 }
 

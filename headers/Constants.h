@@ -15,8 +15,39 @@ using namespace std;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
+//Parameters for Special Moves
+#define TIME_TOLERANCE_SPECIAL_MOVES 5 //seconds
+#define ERROR_TOLERANCE_SPECIAL_MOVES 2 //quantity
+#define SIMBOLS_TO_SHOW_SPECIAL_MOVES 10 //quantity
+
+#define CHARACTER_FOR_SPECIAL_MOVE_FORWARD "F"
+#define CHARACTER_FOR_SPECIAL_MOVE_BACKWARD "B"
+#define CHARACTER_FOR_SPECIAL_MOVE_UP "U"
+#define CHARACTER_FOR_SPECIAL_MOVE_DOWN "D"
+#define CHARACTER_FOR_SPECIAL_MOVE_LEFT "L"
+#define CHARACTER_FOR_SPECIAL_MOVE_RIGHT "R"
+#define CHARACTER_FOR_SPECIAL_MOVE_FIRE "W"
+#define CHARACTER_FOR_SPECIAL_MOVE_BLOCK "O"
+#define CHARACTER_FOR_SPECIAL_MOVE_KICKHIGH "K"
+#define CHARACTER_FOR_SPECIAL_MOVE_KICKLOW "H"
+#define CHARACTER_FOR_SPECIAL_MOVE_PUNCHHIGH "P"
+#define CHARACTER_FOR_SPECIAL_MOVE_PUNCHLOW "J"
+
+#define SECUENCE_FOR_SPECIAL_MOVE_0 "KKKK" //sweep
+#define SECUENCE_FOR_SPECIAL_MOVE_1 "HHHH" //levitar
+#define SECUENCE_FOR_SPECIAL_MOVE_2 "DJDJ" //friendship
+#define SECUENCE_FOR_SPECIAL_MOVE_3 "DHDH" //babality
+#define SECUENCE_FOR_SPECIAL_MOVE_4 "DKDK" //fatality
+
+
+#define FALATITY_NUMBER_SPECIAL_MOVE 2
+
+#define NAME_SPECIAL_MOVE_0 "La Krupoviesa Move"
+#define NAME_SPECIAL_MOVE_1 "Copperfield Move"
+
+
 //Draw collitionable boxes
-const bool DRAW_COLLITIONABLE_BOXES = true;
+const bool DRAW_COLLITIONABLE_BOXES = false;
 
 //Throwable Speed Object
 #define OBJECT_SPEED 120
@@ -92,7 +123,22 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define HINT_FLYING_MOVEMENT "hintFlying"
 #define HINT_FLYING_UPPER_MOVEMENT "hintFlyingUpper"
 #define GET_UP_MOVEMENT "getUp"
+#define SWEEP_MOVEMENT "sweep"
+#define FIRE_MOVEMENT "fire"
+#define BABALITY_MOVEMENT "babality"
+#define FATALITY_MOVEMENT "fatality"
+#define HEADLESS_MOVEMENT "headless"
+#define HEADLESS_BLOOD_MOVEMENT "headless_blood"
+#define BURNING_MOVEMENT "burning"
+#define LAZY_MOVEMENT "lazy"
+#define FRIENDSHIP_MOVEMENT "friendship"
+#define VICTORY_MOVEMENT "victory"
+#define REPTILE_MOVEMENT "reptile"
+#define FALLING_MOVEMENT "falling"
+#define SPECIAL_MOVEMENT "special"
+#define SPECIAL_HINT_MOVEMENT "special_hint"
 #define JUMPING_X_SPEED 4
+#define SWEEP_X_SPEED 8
 
 //Movement suffixes
 #define WALK_SUFFIX "Walk"
@@ -120,6 +166,20 @@ const float FRONTAL_LAYER_SPEED = 2;
 #define BEING_HINT_FALLING_UNDER_KICK_SUFFIX "beingHintFallingUnderKick"
 #define HINT_FLYING_SUFFIX "hintFlying"
 #define GET_UP_SUFFIX "getUp"
+#define SWEEP_SUFFIX "sweep"
+#define FIRE_SUFFIX "fire"
+#define BABALITY_SUFFIX "babality"
+#define FATALITY_SUFFIX "fatality"
+#define HEADLESS_SUFFIX "headless"
+#define HEADLESS_BLOOD_SUFFIX "headless_blood"
+#define BURNING_SUFFIX "burning"
+#define FRIENDSHIP_SUFFIX "friendship"
+#define VICTORY_SUFFIX "victory"
+#define LAZY_SUFFIX "lazy"
+#define REPTILE_SUFFIX "reptile"
+#define FALLING_SUFFIX "falling"
+#define SPECIAL_SUFFIX "special"
+#define SPECIAL_HINT_SUFFIX "special_hint"
 //Commons Strings
 #define EMPTY_STRING ""
 #define WHITE_SPACE " "
@@ -151,14 +211,39 @@ const string BEING_HINT_STANCE_DOWN_SPRITE = "/hintStance2.png";
 const string BEING_HINT_FALLING_UNDER_KICK_SPRITE = "/hintFallingUnderKick.png";
 const string HINT_FLYING_SPRITE = "/hintSuperDamage2.png";
 const string GET_UP_SPRITE ="/getUp.png";
+const string SWEEP_SPRITE ="/sweep.png";
+const string FIRE_SPRITE = "/fire.png";
+const string BABALITY_SPRITE ="/babality.png";
+const string FATALITY_SPRITE ="/fatality.png";
+const string BURNING_SPRITE ="/burning.png";
+const string HEADLESS_SPRITE ="/headless.png";
+const string HEADLESS_BLOOD_SPRITE ="/headless_blood.png";
+const string FRIENDSHIP_SPRITE ="/friendship.png";
+const string VICTORY_SPRITE ="/victory.png";
+const string LAZY_SPRITE ="/lazy.png";
+const string REPTILE_SPRITE ="/reptile.png";
+const string SPECIAL_SPRITE = "/special.png";
+const string SPECIAL_HINT_SPRITE = "/special_hint.png";
 const string DEFAULT_PATH_SPRITE_CONTAINER = "default";
 const string ROOT_IMAGE_PATH = "images/";
+const string FIGHT_IMAGE_SPRITE = "images/fight/fight.png";
+const string FIGHT2_IMAGE_SPRITE = "images/fight/fight2.png";
+const string FINISH_HIM_IMAGE_SPRITE = "images/fight/finishHim.png";
+const string FATALITY_IMAGE_SPRITE = "images/fight/fatality.png";
+const string BABALITY_IMAGE_SPRITE = "images/fight/babality.png";
+const string FRIENDSHIP_IMAGE_SPRITE = "images/fight/friendship.png";
+const string TOASTY_IMAGE_SPRITE = "images/effects/toasty.png";
+const string BLOOD_IMAGE_SPRITE = "images/effects/doge2.png";
+const string FALLING_SPRITE = "/falling.png";
 const string LOW_PUNCH = "low_punch";
 const string HIGH_PUNCH = "high_punch";
 const string LOW_KICK = "low_kick";
 const string HIGH_KICK = "high_kick";
 const string FIRE = "fire";
 const string BLOCK = "block";
+const string QUIT = "quit";
+const string RESET_PRACTICE = "reset_practice";
+
 
 // Json config constants
 
@@ -194,6 +279,13 @@ const string BLOCK = "block";
 #define JSON_KEY_LOW_KICK "patada_baja"
 #define JSON_KEY_BLOCK "bloquear"
 #define JSON_KEY_FIRE "disparar"
+#define JSON_KEY_QUIT "salir"
+#define JSON_KEY_RESET_PRACTICE "reiniciar_practice"
+
+#define JSON_KEY_SECUENCES "secuencias"
+#define JSON_KEY_SPECIAL_MOVE "secuence_for_special_move"
+#define JSON_KEY_TOLERANCE_SECUENCES "tolerancia_secuencias"
+#define JSON_KEY_TIME_SECUENCES "tiempo_secuencias"
 
 #define SPRITE_WIDTH 200
 #define SPRITE_HEIGHT 170

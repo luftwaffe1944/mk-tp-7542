@@ -24,10 +24,12 @@ public:
 
 	void resetInstance();
 	void solveCollitions(vector<Collitionable*> objects);
+	bool collitionEnabled;
 
 private:
 	static CollitionManager* cm_pInstance;
 	CollitionManager();
+
 };
 
 #endif /* COLLITIONMANAGER_H_ */
